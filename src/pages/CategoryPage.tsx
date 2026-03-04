@@ -43,9 +43,9 @@ const CategoryPage = () => {
       <section className="py-16">
         <div className="container">
           <AnimateOnScroll>
-            <div className="text-center">
+            <div className="text-center stagger-in">
               <span className="text-4xl">{category.icon}</span>
-              <h1 className="mt-4 font-heading text-3xl font-bold md:text-5xl">{category.name}</h1>
+              <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">{category.name}</h1>
               <p className="mt-3 text-muted-foreground">{category.description}</p>
               <span className="mt-3 inline-block rounded-button bg-muted px-3 py-1 text-xs text-muted-foreground">
                 {sorted.length} Sites Reviewed
