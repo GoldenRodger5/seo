@@ -3,10 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "Top Sites", to: "/top-sites" },
-  { label: "Reviews", to: "/top-sites" },
-  { label: "Best Deals", to: "/category/best-value" },
+  { label: "Home", to: "/", gold: false },
+  { label: "Top Sites", to: "/top-sites", gold: false },
+  { label: "Reviews", to: "/top-sites", gold: false },
+  { label: "Best Deals 🔥", to: "/best-deals", gold: true },
 ];
 
 const Navbar = () => {
@@ -27,6 +27,7 @@ const Navbar = () => {
               key={link.to + link.label}
               to={link.to}
               className={`nav-link hover:text-secondary ${
+                link.gold ? "gold-gradient-text" : 
                 location.pathname === link.to ? "text-secondary" : "text-muted-foreground"
               }`}
             >
@@ -55,6 +56,7 @@ const Navbar = () => {
                 to={link.to}
                 onClick={() => setOpen(false)}
                 className={`nav-link rounded-button px-4 py-3 hover:bg-muted ${
+                  link.gold ? "gold-gradient-text" :
                   location.pathname === link.to ? "text-secondary" : "text-muted-foreground"
                 }`}
               >
