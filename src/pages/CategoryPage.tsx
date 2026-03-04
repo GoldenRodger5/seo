@@ -43,9 +43,9 @@ const CategoryPage = () => {
       <section className="py-16">
         <div className="container">
           <AnimateOnScroll>
-            <div className="text-center">
+            <div className="text-center stagger-in">
               <span className="text-4xl">{category.icon}</span>
-              <h1 className="mt-4 font-heading text-3xl font-bold md:text-5xl">{category.name}</h1>
+              <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">{category.name}</h1>
               <p className="mt-3 text-muted-foreground">{category.description}</p>
               <span className="mt-3 inline-block rounded-button bg-muted px-3 py-1 text-xs text-muted-foreground">
                 {sorted.length} Sites Reviewed
@@ -59,7 +59,7 @@ const CategoryPage = () => {
               <button
                 key={opt}
                 onClick={() => setSort(opt)}
-                className={`rounded-button px-4 py-2 text-sm font-medium transition-all ${
+                className={`rounded-button px-4 py-2 text-xs font-medium uppercase tracking-wider transition-all ${
                   sort === opt
                     ? "gold-gradient text-secondary-foreground"
                     : "bg-muted text-muted-foreground hover:text-foreground"
@@ -74,7 +74,7 @@ const CategoryPage = () => {
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             {sorted.map((site) => (
               <AnimateOnScroll key={site.id}>
-                <div className="card-glow rounded-lg border border-card-border bg-card p-6">
+                <div className="card-glow glass-card rounded-lg p-6">
                   <div className="flex items-start justify-between">
                     <div>
                       <h2 className="font-heading text-xl font-bold">{site.name}</h2>
@@ -99,7 +99,9 @@ const CategoryPage = () => {
                     </Link>
                     <Link
                       to={`/go/${site.slug}`}
-                      className="gold-gradient inline-flex items-center gap-1 rounded-button px-4 py-2 text-sm font-semibold text-secondary-foreground"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cta-btn gold-gradient inline-flex items-center gap-1 rounded-button px-4 py-2 text-sm font-semibold text-secondary-foreground"
                     >
                       Visit Site <ArrowRight size={12} />
                     </Link>

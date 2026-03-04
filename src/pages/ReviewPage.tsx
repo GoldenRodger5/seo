@@ -3,6 +3,7 @@ import { Check, X as XIcon, ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
+import ScoreRing from "../components/ScoreRing";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import { getSiteBySlug, sites } from "../data/sites";
 
@@ -14,7 +15,7 @@ const ScoreBar = ({ label, value }: { label: string; value: number }) => (
     </div>
     <div className="mt-1 h-2 overflow-hidden rounded-full bg-muted">
       <div
-        className="h-full rounded-full bg-primary transition-all"
+        className="h-full rounded-full bg-primary transition-all duration-1000"
         style={{ width: `${value}%` }}
       />
     </div>
@@ -58,7 +59,7 @@ const ReviewPage = () => {
       </Helmet>
 
       {/* Affiliate disclosure */}
-      <div className="border-b border-border bg-secondary/5">
+      <div className="border-b border-primary/10 bg-secondary/5">
         <div className="container py-2 text-center text-xs text-muted-foreground">
           Disclosure: We earn commissions from affiliate links. This doesn't affect our rankings.
         </div>
@@ -70,52 +71,56 @@ const ReviewPage = () => {
           <div className="flex-1">
             {/* Breadcrumb */}
             <nav className="mb-6 text-sm text-muted-foreground">
-              <Link to="/" className="hover:text-foreground">Home</Link>
-              <span className="mx-2">/</span>
-              <Link to="/top-sites" className="hover:text-foreground">Reviews</Link>
-              <span className="mx-2">/</span>
+              <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
+              <span className="mx-2 text-muted-foreground/30">/</span>
+              <Link to="/top-sites" className="hover:text-foreground transition-colors">Reviews</Link>
+              <span className="mx-2 text-muted-foreground/30">/</span>
               <span className="text-foreground">{site.name}</span>
             </nav>
 
             <AnimateOnScroll>
-              <h1 className="font-heading text-3xl font-bold md:text-5xl">{site.name}</h1>
-              <div className="mt-3 flex flex-wrap items-center gap-4">
-                <StarRating score={site.overall_score} size={20} />
-                <span className="text-sm text-muted-foreground">Expert review</span>
-              </div>
+              <div className="stagger-in">
+                <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">{site.name}</h1>
+                <div className="mt-3 flex flex-wrap items-center gap-4">
+                  <StarRating score={site.overall_score} size={20} />
+                  <span className="text-sm text-muted-foreground">Expert review</span>
+                </div>
 
-              {/* Quick stats */}
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <ScoreBar label="Content Quality" value={site.content_quality} />
-                <ScoreBar label="Update Frequency" value={site.update_frequency} />
-                <ScoreBar label="Value for Money" value={site.value_score} />
-                <ScoreBar label="Mobile Experience" value={site.mobile_score} />
-              </div>
+                {/* Quick stats */}
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  <ScoreBar label="Content Quality" value={site.content_quality} />
+                  <ScoreBar label="Update Frequency" value={site.update_frequency} />
+                  <ScoreBar label="Value for Money" value={site.value_score} />
+                  <ScoreBar label="Mobile Experience" value={site.mobile_score} />
+                </div>
 
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  to={`/go/${site.slug}`}
-                  className="gold-gradient inline-flex items-center gap-2 rounded-button px-8 py-3 text-sm font-semibold text-secondary-foreground"
-                >
-                  Visit {site.name} <ArrowRight size={14} />
-                </Link>
-                <Link
-                  to="/top-sites"
-                  className="inline-flex items-center gap-2 rounded-button border border-border px-8 py-3 text-sm font-semibold text-foreground hover:bg-muted"
-                >
-                  See All Reviews
-                </Link>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Link
+                    to={`/go/${site.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cta-btn gold-gradient inline-flex items-center gap-2 rounded-button px-8 py-3 text-sm font-semibold text-secondary-foreground"
+                  >
+                    Visit {site.name} <ArrowRight size={14} />
+                  </Link>
+                  <Link
+                    to="/top-sites"
+                    className="inline-flex items-center gap-2 rounded-button border border-border px-8 py-3 text-sm font-semibold text-foreground hover:bg-muted transition-colors"
+                  >
+                    See All Reviews
+                  </Link>
+                </div>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  We may earn a commission if you sign up through our links.
+                </p>
               </div>
-              <p className="mt-3 text-xs text-muted-foreground">
-                We may earn a commission if you sign up through our links.
-              </p>
             </AnimateOnScroll>
 
             {/* Summary */}
             <AnimateOnScroll className="mt-10">
-              <div className="rounded-lg border border-card-border bg-card p-6">
-                <div className="flex items-center gap-4">
-                  <span className="font-heading text-4xl font-bold text-secondary">{site.overall_score}</span>
+              <div className="glass-card rounded-lg p-6">
+                <div className="flex items-center gap-6">
+                  <ScoreRing score={site.overall_score} size={80} />
                   <div>
                     <p className="font-medium">{site.short_description}</p>
                     <p className="mt-1 text-sm text-muted-foreground">
@@ -129,18 +134,18 @@ const ReviewPage = () => {
             {/* Pros & Cons */}
             <AnimateOnScroll className="mt-8">
               <div className="grid gap-6 sm:grid-cols-2">
-                <div className="rounded-lg border border-green-500/20 bg-green-500/5 p-5">
-                  <h3 className="font-heading text-lg font-semibold text-green-400">Pros</h3>
+                <div className="glass-card rounded-lg border-l-4 border-l-emerald-500 p-5">
+                  <h3 className="font-heading text-lg font-semibold text-emerald-400">Pros</h3>
                   <div className="mt-3 space-y-2">
                     {site.pros.map((p) => (
                       <div key={p} className="flex items-start gap-2 text-sm">
-                        <Check size={14} className="mt-0.5 shrink-0 text-green-500" />
+                        <Check size={14} className="mt-0.5 shrink-0 text-emerald-400" />
                         <span>{p}</span>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="rounded-lg border border-destructive/20 bg-destructive/5 p-5">
+                <div className="glass-card rounded-lg border-l-4 border-l-destructive p-5">
                   <h3 className="font-heading text-lg font-semibold text-destructive">Cons</h3>
                   <div className="mt-3 space-y-2">
                     {site.cons.map((c) => (
@@ -157,54 +162,56 @@ const ReviewPage = () => {
             {/* Review body */}
             <AnimateOnScroll className="mt-10 space-y-8">
               <section>
-                <h2 className="font-heading text-2xl font-bold">Content Quality</h2>
+                <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Content Quality</h2>
                 <p className="mt-3 text-muted-foreground leading-relaxed">{site.description}</p>
               </section>
               <section>
-                <h2 className="font-heading text-2xl font-bold">Site Design & Usability</h2>
+                <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Site Design & Usability</h2>
                 <p className="mt-3 text-muted-foreground leading-relaxed">
                   The site features a modern, easy-to-navigate interface that works well across all devices. Content is well-organized with intuitive search and filtering options. The streaming player supports multiple quality settings and provides a smooth viewing experience.
                 </p>
               </section>
               <section>
-                <h2 className="font-heading text-2xl font-bold">Pricing & Value</h2>
-                <div className="mt-4 overflow-x-auto">
+                <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Pricing & Value</h2>
+                <div className="mt-4 overflow-x-auto glass-card rounded-lg">
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-border">
-                        <th className="py-3 text-left font-semibold">Plan</th>
-                        <th className="py-3 text-left font-semibold">Price</th>
-                        <th className="py-3 text-left font-semibold">Per Month</th>
+                        <th className="px-4 py-3 text-left font-semibold">Plan</th>
+                        <th className="px-4 py-3 text-left font-semibold">Price</th>
+                        <th className="px-4 py-3 text-left font-semibold">Per Month</th>
                       </tr>
                     </thead>
                     <tbody className="text-muted-foreground">
-                      <tr className="border-b border-border/50">
-                        <td className="py-3">Monthly</td>
-                        <td className="py-3">{site.price_from}</td>
-                        <td className="py-3">{site.price_from}</td>
+                      <tr className="border-b border-border/30">
+                        <td className="px-4 py-3">Monthly</td>
+                        <td className="px-4 py-3">{site.price_from}</td>
+                        <td className="px-4 py-3">{site.price_from}</td>
                       </tr>
-                      <tr className="border-b border-border/50">
-                        <td className="py-3">Quarterly</td>
-                        <td className="py-3">$24.99</td>
-                        <td className="py-3">$8.33/mo</td>
+                      <tr className="border-b border-border/30 bg-muted/20">
+                        <td className="px-4 py-3">Quarterly</td>
+                        <td className="px-4 py-3">$24.99</td>
+                        <td className="px-4 py-3">$8.33/mo</td>
                       </tr>
                       <tr>
-                        <td className="py-3">Annual</td>
-                        <td className="py-3">$79.99</td>
-                        <td className="py-3">$6.67/mo</td>
+                        <td className="px-4 py-3">Annual</td>
+                        <td className="px-4 py-3">$79.99</td>
+                        <td className="px-4 py-3">$6.67/mo</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </section>
               <section>
-                <h2 className="font-heading text-2xl font-bold">Our Verdict</h2>
+                <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Our Verdict</h2>
                 <p className="mt-3 text-muted-foreground leading-relaxed">
                   {site.name} earns a strong {site.overall_score}/5 rating. {site.short_description} If you're looking for quality {site.categories[0]?.replace(/-/g, " ")} content, this is a solid choice worth considering.
                 </p>
-                <div className="mt-4 rounded-lg bg-muted/50 p-4 text-center">
+                <div className="mt-4 glass-card rounded-lg p-6 text-center">
                   <span className="text-sm text-muted-foreground">Final Score</span>
-                  <p className="font-heading text-3xl font-bold text-secondary">{site.overall_score}/5</p>
+                  <div className="mt-2 flex justify-center">
+                    <ScoreRing score={site.overall_score} />
+                  </div>
                 </div>
               </section>
               <p className="text-xs text-muted-foreground">Last Updated: January 2025</p>
@@ -212,13 +219,13 @@ const ReviewPage = () => {
 
             {/* Similar Sites */}
             <AnimateOnScroll className="mt-12">
-              <h2 className="font-heading text-2xl font-bold">You Might Also Like</h2>
+              <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">You Might Also Like</h2>
               <div className="mt-6 grid gap-4 sm:grid-cols-3">
                 {similar.map((s) => (
                   <Link
                     key={s.id}
                     to={`/reviews/${s.slug}`}
-                    className="card-glow rounded-lg border border-card-border bg-card p-4"
+                    className="card-glow glass-card rounded-lg p-4"
                   >
                     <h3 className="font-heading font-semibold">{s.name}</h3>
                     <StarRating score={s.overall_score} size={12} />
@@ -231,15 +238,24 @@ const ReviewPage = () => {
 
           {/* Sticky Sidebar - desktop only */}
           <aside className="hidden lg:block lg:w-72">
-            <div className="sticky top-24 rounded-lg border border-card-border bg-card p-6">
+            <div className="sticky top-24 glass-card rounded-lg p-6">
               <h3 className="font-heading text-xl font-bold">{site.name}</h3>
-              <div className="mt-2">
+              <div className="mt-3 flex justify-center">
+                <ScoreRing score={site.overall_score} />
+              </div>
+              <div className="mt-3 text-center">
                 <StarRating score={site.overall_score} />
               </div>
-              <p className="mt-3 text-lg font-semibold">{site.price_from}</p>
+              <div className="mt-3 flex justify-center">
+                <span className="rounded-button border border-border bg-muted/50 px-3 py-1.5 text-lg font-semibold">
+                  {site.price_from}
+                </span>
+              </div>
               <Link
                 to={`/go/${site.slug}`}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cta-btn mt-4 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
               >
                 Visit Site <ArrowRight size={14} />
               </Link>
@@ -249,13 +265,21 @@ const ReviewPage = () => {
       </div>
 
       {/* Mobile sticky CTA */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 backdrop-blur-sm lg:hidden">
-        <Link
-          to={`/go/${site.slug}`}
-          className="flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3.5 text-sm font-semibold text-secondary-foreground"
-        >
-          Visit {site.name} <ArrowRight size={14} />
-        </Link>
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border glass-card p-3 lg:hidden">
+        <div className="flex items-center gap-3">
+          <div className="flex-1">
+            <p className="text-sm font-semibold">{site.name}</p>
+            <StarRating score={site.overall_score} size={12} showNumber={false} animate={false} />
+          </div>
+          <Link
+            to={`/go/${site.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-btn flex items-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
+          >
+            Visit Site <ArrowRight size={14} />
+          </Link>
+        </div>
       </div>
     </Layout>
   );
