@@ -59,7 +59,7 @@ const CategoryPage = () => {
               <button
                 key={opt}
                 onClick={() => setSort(opt)}
-                className={`rounded-button px-4 py-2 text-sm font-medium transition-all ${
+                className={`rounded-button px-4 py-2 text-xs font-medium uppercase tracking-wider transition-all ${
                   sort === opt
                     ? "gold-gradient text-secondary-foreground"
                     : "bg-muted text-muted-foreground hover:text-foreground"
