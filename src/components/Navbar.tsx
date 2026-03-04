@@ -3,10 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "Top Sites", to: "/top-sites" },
-  { label: "Reviews", to: "/top-sites" },
-  { label: "Best Deals", to: "/category/best-value" },
+  { label: "Home", to: "/", gold: false },
+  { label: "Top Sites", to: "/top-sites", gold: false },
+  { label: "Reviews", to: "/top-sites", gold: false },
+  { label: "Best Deals 🔥", to: "/best-deals", gold: true },
 ];
 
 const Navbar = () => {
