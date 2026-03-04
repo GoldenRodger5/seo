@@ -74,7 +74,7 @@ const CategoryPage = () => {
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             {sorted.map((site) => (
               <AnimateOnScroll key={site.id}>
-                <div className="card-glow rounded-lg border border-card-border bg-card p-6">
+                <div className="card-glow glass-card rounded-lg p-6">
                   <div className="flex items-start justify-between">
                     <div>
                       <h2 className="font-heading text-xl font-bold">{site.name}</h2>
