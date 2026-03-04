@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import StarRating from "../components/StarRating";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import SocialProofStrip from "../components/SocialProofStrip";
+import InlineEmailCapture from "../components/InlineEmailCapture";
 import Layout from "../components/Layout";
 import { getFeaturedSites, categories, sites } from "../data/sites";
 
