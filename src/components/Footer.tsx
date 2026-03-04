@@ -9,6 +9,8 @@ const Footer = () => (
         </Link>
 
         <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+          <Link to="/top-sites" className="nav-link hover:text-foreground">Top Sites</Link>
+          <Link to="/best-deals" className="nav-link hover:text-foreground gold-gradient-text">Best Deals 🔥</Link>
           <Link to="/about" className="nav-link hover:text-foreground">About</Link>
           <Link to="/privacy" className="nav-link hover:text-foreground">Privacy Policy</Link>
           <Link to="/affiliate-disclosure" className="nav-link hover:text-foreground">Affiliate Disclosure</Link>

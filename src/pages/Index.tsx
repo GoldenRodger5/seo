@@ -195,6 +195,7 @@ const Index = () => (
     <TopPicksSection />
     <CategoriesSection />
     <LatestReviewsSection />
+    <InlineEmailCapture />
     <TrustSection />
   </Layout>
 );

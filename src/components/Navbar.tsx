@@ -56,6 +56,7 @@ const Navbar = () => {
                 to={link.to}
                 onClick={() => setOpen(false)}
                 className={`nav-link rounded-button px-4 py-3 hover:bg-muted ${
+                  link.gold ? "gold-gradient-text" :
                   location.pathname === link.to ? "text-secondary" : "text-muted-foreground"
                 }`}
               >
