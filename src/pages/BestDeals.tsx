@@ -17,11 +17,11 @@ interface Deal {
 
 const deals: Deal[] = [
   { siteSlug: "helix-studios", siteName: "Helix Studios", description: "67% off annual membership", originalPrice: "$29.99/mo", dealPrice: "$9.99/mo", discountPercent: 67, expiry: "limited" as const },
-  { siteSlug: "twink-in-shorts", siteName: "Twink In Shorts", description: "50% off first 3 months", originalPrice: "$15.99/mo", dealPrice: "$7.99/mo", discountPercent: 50, expiry: "limited" },
-  { siteSlug: "athletic-twinks", siteName: "Athletic Twinks", description: "40% off quarterly plan", originalPrice: "$21.99/mo", dealPrice: "$12.99/mo", discountPercent: 40, expiry: "ongoing" },
-  { siteSlug: "southern-strokes", siteName: "Southern Strokes", description: "55% off annual plan", originalPrice: "$19.99/mo", dealPrice: "$8.99/mo", discountPercent: 55, expiry: "limited" },
-  { siteSlug: "twinks-bareback", siteName: "Twinks Bareback", description: "Free 2-day trial + 45% off", originalPrice: "$14.99/mo", dealPrice: "$7.99/mo", discountPercent: 45, expiry: "ongoing" },
-  { siteSlug: "touch-that-boy", siteName: "Touch That Boy", description: "35% off all plans", originalPrice: "$16.99/mo", dealPrice: "$10.99/mo", discountPercent: 35, expiry: "ongoing" },
+  { siteSlug: "twink-in-shorts", siteName: "Twink In Shorts", description: "50% off first 3 months", originalPrice: "$15.99/mo", dealPrice: "$7.99/mo", discountPercent: 50, expiry: "limited" as const },
+  { siteSlug: "athletic-twinks", siteName: "Athletic Twinks", description: "40% off quarterly plan", originalPrice: "$21.99/mo", dealPrice: "$12.99/mo", discountPercent: 40, expiry: "ongoing" as const },
+  { siteSlug: "southern-strokes", siteName: "Southern Strokes", description: "55% off annual plan", originalPrice: "$19.99/mo", dealPrice: "$8.99/mo", discountPercent: 55, expiry: "limited" as const },
+  { siteSlug: "twinks-bareback", siteName: "Twinks Bareback", description: "Free 2-day trial + 45% off", originalPrice: "$14.99/mo", dealPrice: "$7.99/mo", discountPercent: 45, expiry: "ongoing" as const },
+  { siteSlug: "touch-that-boy", siteName: "Touch That Boy", description: "35% off all plans", originalPrice: "$16.99/mo", dealPrice: "$10.99/mo", discountPercent: 35, expiry: "ongoing" as const },
 ].sort((a, b) => b.discountPercent - a.discountPercent);
 
 const CountdownTimer = () => (
