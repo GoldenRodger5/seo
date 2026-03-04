@@ -27,6 +27,7 @@ const Navbar = () => {
               key={link.to + link.label}
               to={link.to}
               className={`nav-link hover:text-secondary ${
+                link.gold ? "gold-gradient-text" : 
                 location.pathname === link.to ? "text-secondary" : "text-muted-foreground"
               }`}
             >
