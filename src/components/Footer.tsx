@@ -1,18 +1,18 @@
 import { Link } from "react-router-dom";
 
 const Footer = () => (
-  <footer className="border-t border-border bg-card">
+  <footer className="border-t border-border bg-card/50">
     <div className="container py-12">
       <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between">
         <Link to="/" className="font-heading text-xl font-bold">
-          Twink<span className="gold-gradient-text">Vault</span>
+          Twink<span className="gold-shimmer">Vault</span>
         </Link>
 
         <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-          <Link to="/about" className="hover:text-foreground transition-colors">About</Link>
-          <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-          <Link to="/affiliate-disclosure" className="hover:text-foreground transition-colors">Affiliate Disclosure</Link>
-          <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
+          <Link to="/about" className="nav-link hover:text-foreground">About</Link>
+          <Link to="/privacy" className="nav-link hover:text-foreground">Privacy Policy</Link>
+          <Link to="/affiliate-disclosure" className="nav-link hover:text-foreground">Affiliate Disclosure</Link>
+          <Link to="/contact" className="nav-link hover:text-foreground">Contact</Link>
         </div>
       </div>
 

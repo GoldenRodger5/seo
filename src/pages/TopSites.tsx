@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Check, X as XIcon, ArrowRight } from "lucide-react";
+import { Check, X as XIcon, ArrowRight, Crown } from "lucide-react";
 import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
+import ScoreRing from "../components/ScoreRing";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import { sites } from "../data/sites";
 
@@ -17,6 +18,16 @@ const filterMap: Record<string, string | null> = {
   "Free Trial": "free-trials",
 };
 
+const badgeStyle = (badge: string | null) => {
+  if (!badge) return "";
+  if (badge.includes("Value") || badge.includes("Deal")) return "gold-gradient text-secondary-foreground";
+  if (badge.includes("Choice")) return "gold-gradient text-secondary-foreground";
+  if (badge.includes("Popular")) return "bg-primary/20 text-primary";
+  if (badge.includes("Trial")) return "bg-emerald-500/20 text-emerald-400";
+  if (badge.includes("Top")) return "gold-gradient text-secondary-foreground";
+  return "bg-primary/15 text-primary";
+};
+
 const TopSites = () => {
   const [active, setActive] = useState("All");
 
@@ -29,9 +40,9 @@ const TopSites = () => {
       <section className="py-16">
         <div className="container">
           <AnimateOnScroll>
-            <div className="text-center">
-              <h1 className="font-heading text-3xl font-bold md:text-5xl">
-                Best Twink Porn Sites — <span className="gold-gradient-text">2025 Rankings</span>
+            <div className="text-center stagger-in">
+              <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">
+                Best Twink Porn Sites — 2025 Rankings
               </h1>
               <p className="mt-4 text-muted-foreground">
                 We tested and ranked the top twink content sites so you don't have to. Updated monthly.
@@ -48,7 +59,7 @@ const TopSites = () => {
               <button
                 key={f}
                 onClick={() => setActive(f)}
-                className={`rounded-button px-4 py-2 text-sm font-medium transition-all ${
+                className={`rounded-button px-4 py-2 text-xs font-medium uppercase tracking-wider transition-all ${
                   active === f
                     ? "gold-gradient text-secondary-foreground"
                     : "bg-muted text-muted-foreground hover:text-foreground"
@@ -59,15 +70,83 @@ const TopSites = () => {
             ))}
           </div>
 
+          {/* Comparison Table (top 5) */}
+          <AnimateOnScroll className="mt-10">
+            <div className="overflow-x-auto rounded-lg glass-card">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border text-left">
+                    <th className="sticky top-0 bg-card/90 backdrop-blur px-4 py-3 font-semibold">#</th>
+                    <th className="sticky top-0 bg-card/90 backdrop-blur px-4 py-3 font-semibold">Site</th>
+                    <th className="sticky top-0 bg-card/90 backdrop-blur px-4 py-3 font-semibold">Score</th>
+                    <th className="sticky top-0 bg-card/90 backdrop-blur px-4 py-3 font-semibold hidden sm:table-cell">Price</th>
+                    <th className="sticky top-0 bg-card/90 backdrop-blur px-4 py-3 font-semibold hidden md:table-cell">HD</th>
+                    <th className="sticky top-0 bg-card/90 backdrop-blur px-4 py-3 font-semibold hidden md:table-cell">Free Trial</th>
+                    <th className="sticky top-0 bg-card/90 backdrop-blur px-4 py-3 font-semibold"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.slice(0, 5).map((site, i) => (
+                    <tr
+                      key={site.id}
+                      className={`border-b border-border/30 transition-colors hover:bg-primary/5 ${
+                        i % 2 === 0 ? "bg-transparent" : "bg-muted/20"
+                      }`}
+                    >
+                      <td className="px-4 py-3 font-heading font-bold text-muted-foreground">{site.rank}</td>
+                      <td className="px-4 py-3 font-semibold">{site.name}</td>
+                      <td className="px-4 py-3 font-semibold text-secondary">{site.overall_score}</td>
+                      <td className="px-4 py-3 text-muted-foreground hidden sm:table-cell">{site.price_from}</td>
+                      <td className="px-4 py-3 hidden md:table-cell">
+                        {site.categories.includes("hd-quality") ? (
+                          <Check size={14} className="text-emerald-400" />
+                        ) : (
+                          <XIcon size={14} className="text-muted-foreground/30" />
+                        )}
+                      </td>
+                      <td className="px-4 py-3 hidden md:table-cell">
+                        {site.categories.includes("free-trials") ? (
+                          <Check size={14} className="text-emerald-400" />
+                        ) : (
+                          <XIcon size={14} className="text-muted-foreground/30" />
+                        )}
+                      </td>
+                      <td className="px-4 py-3">
+                        <Link
+                          to={`/reviews/${site.slug}`}
+                          className="text-xs text-secondary hover:underline"
+                        >
+                          Review →
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </AnimateOnScroll>
+
           {/* Ranked List */}
           <div className="mt-10 space-y-4">
-            {filtered.map((site, i) => (
+            {filtered.map((site) => (
               <AnimateOnScroll key={site.id}>
-                <div className="card-glow rounded-lg border border-card-border bg-card p-6">
+                <div
+                  className={`card-glow glass-card rounded-lg p-6 ${
+                    site.rank === 1
+                      ? "gold-pulse-border border-l-4 border-l-secondary"
+                      : site.rank <= 3
+                      ? "border-l-4 border-l-secondary/50"
+                      : ""
+                  }`}
+                >
                   <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-                    {/* Rank */}
-                    <div className="flex items-center gap-4 lg:w-16 lg:flex-col lg:items-center">
-                      <span className="font-heading text-4xl font-bold text-muted-foreground/40">#{site.rank}</span>
+                    {/* Rank + Score Ring */}
+                    <div className="flex items-center gap-4 lg:w-28 lg:flex-col lg:items-center">
+                      <div className="flex items-center gap-2">
+                        {site.rank === 1 && <Crown size={20} className="text-secondary" />}
+                        <span className="font-heading text-4xl font-bold text-muted-foreground/40">#{site.rank}</span>
+                      </div>
+                      <ScoreRing score={site.overall_score} size={64} />
                     </div>
 
                     {/* Main content */}
@@ -75,12 +154,8 @@ const TopSites = () => {
                       <div className="flex flex-wrap items-center gap-3">
                         <h2 className="font-heading text-2xl font-bold">{site.name}</h2>
                         {site.badge && (
-                          <span className={`rounded-button px-2.5 py-1 text-xs font-semibold ${
-                            site.rank === 1
-                              ? "gold-gradient text-secondary-foreground"
-                              : "bg-primary/15 text-primary"
-                          }`}>
-                            {site.badge}
+                          <span className={`rounded-button px-2.5 py-1 text-xs font-semibold ${badgeStyle(site.badge)}`}>
+                            {site.rank === 1 ? "👑 " : ""}{site.badge}
                           </span>
                         )}
                       </div>
@@ -91,6 +166,11 @@ const TopSites = () => {
 
                       {/* Tags */}
                       <div className="mt-3 flex flex-wrap gap-2">
+                        {site.categories.includes("free-trials") && (
+                          <span className="rounded-button bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-400">
+                            FREE TRIAL
+                          </span>
+                        )}
                         {site.categories.map((cat) => (
                           <span key={cat} className="rounded-button bg-muted px-2.5 py-1 text-xs text-muted-foreground">
                             {cat.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
@@ -103,7 +183,7 @@ const TopSites = () => {
                         <div className="space-y-1.5">
                           {site.pros.map((pro) => (
                             <div key={pro} className="flex items-start gap-2 text-sm">
-                              <Check size={14} className="mt-0.5 shrink-0 text-green-500" />
+                              <Check size={14} className="mt-0.5 shrink-0 text-emerald-400" />
                               <span className="text-muted-foreground">{pro}</span>
                             </div>
                           ))}
@@ -121,10 +201,14 @@ const TopSites = () => {
 
                     {/* CTA column */}
                     <div className="flex flex-col items-center gap-3 lg:w-44">
-                      <span className="text-lg font-semibold">{site.price_from}</span>
+                      <div className="rounded-button border border-border bg-muted/50 px-3 py-1.5">
+                        <span className="text-lg font-semibold">{site.price_from}</span>
+                      </div>
                       <Link
                         to={`/go/${site.slug}`}
-                        className={`inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold transition-opacity hover:opacity-90 ${
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`cta-btn inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold ${
                           site.rank === 1
                             ? "gold-gradient text-secondary-foreground"
                             : "bg-primary text-primary-foreground"

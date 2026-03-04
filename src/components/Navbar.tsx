@@ -14,10 +14,10 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
+    <nav className="sticky top-0 z-50 border-b border-border glass-card">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="font-heading text-2xl font-bold tracking-tight">
-          Twink<span className="gold-gradient-text">Vault</span>
+          Twink<span className="gold-shimmer">Vault</span>
         </Link>
 
         {/* Desktop */}
@@ -26,7 +26,7 @@ const Navbar = () => {
             <Link
               key={link.to + link.label}
               to={link.to}
-              className={`text-sm font-medium transition-colors hover:text-secondary ${
+              className={`nav-link hover:text-secondary ${
                 location.pathname === link.to ? "text-secondary" : "text-muted-foreground"
               }`}
             >
@@ -54,7 +54,7 @@ const Navbar = () => {
                 key={link.to + link.label}
                 to={link.to}
                 onClick={() => setOpen(false)}
-                className={`rounded-button px-4 py-3 text-sm font-medium transition-colors hover:bg-muted ${
+                className={`nav-link rounded-button px-4 py-3 hover:bg-muted ${
                   location.pathname === link.to ? "text-secondary" : "text-muted-foreground"
                 }`}
               >
