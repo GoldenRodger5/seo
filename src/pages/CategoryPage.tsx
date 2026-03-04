@@ -99,7 +99,9 @@ const CategoryPage = () => {
                     </Link>
                     <Link
                       to={`/go/${site.slug}`}
-                      className="gold-gradient inline-flex items-center gap-1 rounded-button px-4 py-2 text-sm font-semibold text-secondary-foreground"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cta-btn gold-gradient inline-flex items-center gap-1 rounded-button px-4 py-2 text-sm font-semibold text-secondary-foreground"
                     >
                       Visit Site <ArrowRight size={12} />
                     </Link>
