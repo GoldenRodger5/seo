@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import AnimateOnScroll from "../components/AnimateOnScroll";
+import CommunityRating from "../components/CommunityRating";
 import { getSiteBySlug, sites } from "../data/sites";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
