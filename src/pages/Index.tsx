@@ -272,12 +272,12 @@ const LatestReviewsSection = () => {
                     </Link>
                   </MotionButton>
                   <MotionButton className="flex-1">
-                    <Link to={`/go/${site.slug}`} target="_blank" rel="noopener noreferrer" className="cta-btn block gold-gradient rounded-button px-4 py-2 text-center text-sm font-semibold text-secondary-foreground">
+                    <Link to={getVisitUrl(site)} target="_blank" rel="noopener noreferrer" className={`cta-btn block gold-gradient rounded-button px-4 py-2 text-center text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}>
                       Visit Site
                     </Link>
                   </MotionButton>
                 </div>
-                <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab · Affiliate link</p>
+                <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab{isAffiliated(site) ? " · Affiliate link" : ""}</p>
               </MotionCard>
             </StaggerChild>
           ))}
