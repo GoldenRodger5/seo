@@ -23,12 +23,12 @@ const tickerItems = [
 ];
 
 const categoryIcons: Record<string, ReactNode> = {
-  "amateur-twinks": <Flame size={18} className="text-secondary" />,
-  "premium-studios": <Film size={18} className="text-secondary" />,
-  "best-value": <DollarSign size={18} className="text-secondary" />,
-  "hd-quality": <Play size={18} className="text-secondary" />,
-  "free-trials": <Gift size={18} className="text-secondary" />,
-  "mobile-friendly": <Smartphone size={18} className="text-secondary" />,
+  "amateur-twinks": <Flame size={18} weight="bold" className="text-secondary" />,
+  "premium-studios": <FilmStrip size={18} weight="bold" className="text-secondary" />,
+  "best-value": <CurrencyDollar size={18} weight="bold" className="text-secondary" />,
+  "hd-quality": <Play size={18} weight="bold" className="text-secondary" />,
+  "free-trials": <Gift size={18} weight="bold" className="text-secondary" />,
+  "mobile-friendly": <DeviceMobileCamera size={18} weight="bold" className="text-secondary" />,
 };
 
 const categoryVibes: Record<string, string> = {
