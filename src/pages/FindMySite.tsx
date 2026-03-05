@@ -4,6 +4,7 @@ import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import ScoreRing from "../components/ScoreRing";
+import VisitSiteButton from "../components/VisitSiteButton";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import { sites, SiteData } from "../data/sites";
 
