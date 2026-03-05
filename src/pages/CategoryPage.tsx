@@ -105,14 +105,12 @@ const CategoryPage = () => {
                     >
                       Read Review
                     </Link>
-                    <Link
-                      to={`/go/${site.slug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <OutboundLink
+                      site={site}
                       className="cta-btn gold-gradient inline-flex items-center gap-1 rounded-button px-4 py-2 text-sm font-semibold text-secondary-foreground"
                     >
                       Visit Site <ArrowRight size={12} />
-                    </Link>
+                    </OutboundLink>
                   </div>
                   <p className="mt-1 text-[9px] text-muted-foreground">Opens in new tab · Affiliate link</p>
                 </div>

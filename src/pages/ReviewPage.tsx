@@ -377,14 +377,12 @@ const ReviewPage = () => {
               <p className="text-sm font-semibold truncate">{site.name}</p>
               <span className="text-xs text-secondary">{site.overall_score}/5</span>
             </div>
-            <Link
-              to={getVisitUrl(site)}
-              target="_blank"
-              rel="noopener noreferrer"
+            <OutboundLink
+              site={site}
               className={`cta-btn flex items-center gap-2 rounded-button gold-gradient px-6 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap ${!isAffiliated(site) ? "opacity-85" : ""}`}
             >
               Visit Site <ArrowRight size={14} />
-            </Link>
+            </OutboundLink>
           </div>
         </div>
       )}

@@ -128,14 +128,21 @@ const BestDeals = () => (
                       const affiliated = site ? isAffiliated(site) : true;
                       return (
                         <>
-                          <Link
-                            to={url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`cta-btn flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!affiliated ? "opacity-85" : ""}`}
-                          >
-                            Claim Deal <ArrowRight size={14} />
-                          </Link>
+                          {site ? (
+                            <OutboundLink
+                              site={site}
+                              className={`cta-btn flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!affiliated ? "opacity-85" : ""}`}
+                            >
+                              Claim Deal <ArrowRight size={14} />
+                            </OutboundLink>
+                          ) : (
+                            <Link
+                              to={url}
+                              className="cta-btn flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
+                            >
+                              Claim Deal <ArrowRight size={14} />
+                            </Link>
+                          )}
                           <p className="mt-1 text-center text-[10px] text-muted-foreground">Opens in new tab{affiliated ? " · Affiliate link" : ""}</p>
                         </>
                       );

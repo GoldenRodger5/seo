@@ -74,8 +74,6 @@ const ExitIntentDealPopup = () => {
             <MotionButtonWrap>
               <Link
                 to="/go/helix-studios"
-                target="_blank"
-                rel="noopener noreferrer"
                 className="cta-btn mt-6 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
                 onClick={() => setShow(false)}
               >

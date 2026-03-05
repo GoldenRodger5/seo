@@ -21,8 +21,6 @@ const StickyDealBar = () => {
         <span className="sm:hidden">🔥 Helix Studios — 67% Off</span>
         <Link
           to="/go/helix-studios"
-          target="_blank"
-          rel="noopener noreferrer"
           className="inline-flex items-center gap-1 underline underline-offset-2 hover:opacity-80"
         >
           Claim Now <ArrowRight size={12} />
