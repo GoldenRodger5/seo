@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Star, ArrowRight, Sparkles, Flame, Film, DollarSign, Play, Gift, Smartphone } from "lucide-react";
+import { Star, ArrowRight, Sparkles } from "lucide-react";
+import { Flame, FilmStrip, CurrencyDollar, Play, Gift, DeviceMobileCamera, MagnifyingGlass, ArrowsClockwise, ShieldCheck } from "@phosphor-icons/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import StarRating from "../components/StarRating";
@@ -11,7 +12,6 @@ import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import VisitSiteButton from "../components/VisitSiteButton";
 import Layout from "../components/Layout";
 import { getFeaturedSites, categories, sites, getVisitUrl, isAffiliated } from "../data/sites";
-import { Search, CalendarSync, ShieldCheck } from "lucide-react";
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { ReactNode } from "react";
 
