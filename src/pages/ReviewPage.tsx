@@ -250,15 +250,7 @@ const ReviewPage = () => {
                   <div className="mt-2 flex justify-center">
                     <ScoreRing score={site.overall_score} />
                   </div>
-                  <Link
-                    to={`/go/${site.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cta-btn mt-4 inline-flex items-center gap-2 rounded-button gold-gradient px-8 py-3 text-sm font-semibold text-secondary-foreground"
-                  >
-                    Visit {site.name} <ArrowRight size={14} />
-                  </Link>
-                  <p className="mt-2 text-xs text-muted-foreground">Opens in new tab · Affiliate link</p>
+                  <VisitSiteButton site={site} className="mt-4" />
                 </div>
               </section>
 
