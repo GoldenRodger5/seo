@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import OutboundLink from "../components/OutboundLink";
 import { Star, ArrowRight, Sparkles, Flame, Film, DollarSign, Play, Gift, Smartphone, Search, ShieldCheck, RefreshCw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";

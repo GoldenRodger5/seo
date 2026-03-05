@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import OutboundLink from "../components/OutboundLink";
 import { ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";

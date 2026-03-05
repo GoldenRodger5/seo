@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import OutboundLink from "../components/OutboundLink";
 import { Check, X as XIcon, ArrowRight, ThumbsUp } from "lucide-react";
 import {
   Accordion,

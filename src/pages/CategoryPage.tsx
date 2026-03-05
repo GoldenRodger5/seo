@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import OutboundLink from "../components/OutboundLink";
 import { ArrowRight, Star } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
