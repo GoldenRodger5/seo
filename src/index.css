@@ -333,4 +333,13 @@ body::before {
     font-size: clamp(2.5rem, 6vw, 5rem);
     line-height: 1.1;
   }
+
+  /* Slide up animation for mobile CTA */
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out forwards;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
 }
