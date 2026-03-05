@@ -42,7 +42,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="hero-mesh relative overflow-hidden" style={{ minHeight: "85vh", display: "flex", alignItems: "center" }}>
+    <section className="hero-mesh relative overflow-hidden" style={{ minHeight: "70vh", display: "flex", alignItems: "center" }}>
       {/* Background floating cards */}
       <div className="pointer-events-none absolute inset-0">
         <motion.div className="absolute left-[10%] top-[15%] h-48 w-36 rotate-[-8deg] rounded-lg bg-card/15 blur-[2px] border border-border/10" animate={{ y: [0, -20, 0] }} transition={{ duration: 6, repeat: Infinity }} />

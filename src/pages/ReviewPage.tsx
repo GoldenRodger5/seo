@@ -85,7 +85,7 @@ const ReviewPage = () => {
   return (
     <Layout>
       <Helmet>
-        <title>{site.name} Review 2025 — Is It Worth It? | TwinkVault</title>
+        <title>{site.name} Review 2026 — Is It Worth It? | TwinkVault</title>
         <meta name="description" content={`Read our honest ${site.name} review. We tested the content, pricing, and usability so you know exactly what you're getting.`} />
         <link rel="canonical" href={`https://twinkvault.com/reviews/${site.slug}`} />
         <script type="application/ld+json">
@@ -95,6 +95,17 @@ const ReviewPage = () => {
             itemReviewed: { "@type": "WebSite", name: site.name },
             reviewRating: { "@type": "Rating", ratingValue: site.overall_score, bestRating: 5 },
             author: { "@type": "Organization", name: "TwinkVault" },
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
+              { "@type": "ListItem", position: 2, name: "Reviews", item: "https://twinkvault.com/reviews" },
+              { "@type": "ListItem", position: 3, name: site.name, item: `https://twinkvault.com/reviews/${site.slug}` },
+            ]
           })}
         </script>
       </Helmet>
@@ -274,6 +285,36 @@ const ReviewPage = () => {
               </div>
 
               <p className="text-xs text-muted-foreground">Last Updated: March 2026</p>
+
+              {/* FAQ Section */}
+              <section className="mt-8">
+                <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Frequently Asked Questions</h2>
+                <div className="mt-4 space-y-4">
+                  {[
+                    { q: `Is ${site.name} worth it?`, a: `${site.name} scores ${site.overall_score}/5 in our testing. ${site.short_description} At ${site.price_from}, it ${site.value_score >= 85 ? "offers excellent value for money" : site.value_score >= 75 ? "offers decent value" : "is on the pricier side"}. We'd recommend it if you're looking for quality ${site.categories[0]?.replace(/-/g, " ")} content.` },
+                    { q: `How much does ${site.name} cost?`, a: `${site.name} starts at ${site.price_from} for a monthly subscription. Quarterly and annual plans are available at a discount. Check their site for the latest pricing and any active promotions.` },
+                    { q: `Does ${site.name} have a free trial?`, a: site.categories.includes("free-trials") ? `Yes, ${site.name} offers a free trial period so you can explore the content before committing to a paid subscription.` : `${site.name} does not currently offer a free trial. However, they do offer competitive monthly pricing starting at ${site.price_from}.` },
+                    { q: `What is the best alternative to ${site.name}?`, a: `The best alternative depends on what you're looking for. ${similar[0]?.name} (${similar[0]?.overall_score}/5) and ${similar[1]?.name} (${similar[1]?.overall_score}/5) are both strong alternatives. Check our full rankings for more options.` },
+                    { q: `Is ${site.name} updated regularly?`, a: `${site.name} has an update frequency score of ${site.update_frequency}/100. ${site.update_frequency >= 85 ? "They update very frequently with fresh content." : site.update_frequency >= 75 ? "They update regularly with new content." : "Updates come less frequently than some competitors."}` },
+                  ].map((faq, i) => (
+                    <div key={i} className="glass-card rounded-lg p-4">
+                      <h3 className="font-heading font-semibold">{faq.q}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
+                    </div>
+                  ))}
+                </div>
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: [
+                    { "@type": "Question", name: `Is ${site.name} worth it?`, acceptedAnswer: { "@type": "Answer", text: `${site.name} scores ${site.overall_score}/5 in our testing.` } },
+                    { "@type": "Question", name: `How much does ${site.name} cost?`, acceptedAnswer: { "@type": "Answer", text: `${site.name} starts at ${site.price_from}.` } },
+                    { "@type": "Question", name: `Does ${site.name} have a free trial?`, acceptedAnswer: { "@type": "Answer", text: site.categories.includes("free-trials") ? "Yes, a free trial is available." : "No free trial is currently offered." } },
+                    { "@type": "Question", name: `What is the best alternative to ${site.name}?`, acceptedAnswer: { "@type": "Answer", text: `Top alternatives include ${similar[0]?.name} and ${similar[1]?.name}.` } },
+                    { "@type": "Question", name: `Is ${site.name} updated regularly?`, acceptedAnswer: { "@type": "Answer", text: `Update frequency score: ${site.update_frequency}/100.` } },
+                  ]
+                }) }} />
+              </section>
 
               {/* Community Rating & Emoji Reactions */}
               <CommunityRating siteSlug={site.slug} />

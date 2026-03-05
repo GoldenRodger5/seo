@@ -137,7 +137,7 @@ const ComparePage = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>{siteA.name} vs {siteB.name} — Which Is Worth It? (2025) | TwinkVault</title>
+          <title>{siteA.name} vs {siteB.name} — Which Is Worth It? (2026) | TwinkVault</title>
           <meta name="description" content={`Compare ${siteA.name} vs ${siteB.name} side by side. Scores, pricing, pros and cons to help you decide.`} />
         </Helmet>
         <section className="py-16">
@@ -145,7 +145,33 @@ const ComparePage = () => {
             <h1 className="text-center font-heading text-2xl font-bold md:text-4xl heading-gradient inline-block w-full">
               {siteA.name} vs {siteB.name}
             </h1>
-            <p className="mt-2 text-center text-muted-foreground">Which Is Worth It? (2025)</p>
+            <p className="mt-2 text-center text-muted-foreground">Which Is Worth It? (2026)</p>
+
+            {/* BLUF Summary */}
+            <div className="mt-8 glass-card rounded-lg p-6 border-l-4 border-l-secondary">
+              <h2 className="font-heading text-lg font-bold text-secondary">Bottom Line Up Front</h2>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                {winner.name} takes the overall win with a {winner.overall_score}/5 score, excelling in {winner.content_quality >= winner.value_score ? "content quality" : "value for money"}.
+                {budgetPick.id !== winner.id
+                  ? ` However, ${budgetPick.name} at ${budgetPick.price_from} is the smarter pick if you're watching your budget.`
+                  : ` It also happens to be the more affordable option at ${winner.price_from}.`}
+              </p>
+            </div>
+
+            {/* Intro section */}
+            <div className="mt-6 text-sm text-muted-foreground leading-relaxed space-y-4">
+              <p>
+                Choosing between {siteA.name} vs {siteB.name} comes down to what you value most in a twink content site.
+                Both are popular choices in the space, but they serve different audiences and priorities. We've tested both
+                with active paid subscriptions to give you an honest, side-by-side comparison.
+              </p>
+              <p>
+                {siteA.name} scores {siteA.overall_score}/5 overall with a content quality rating of {siteA.content_quality}/100,
+                while {siteB.name} comes in at {siteB.overall_score}/5 with {siteB.content_quality}/100 for content quality.
+                At {siteA.price_from} vs {siteB.price_from}, pricing is also a factor worth considering. Below, we break
+                down every category so you can decide which site is right for you.
+              </p>
+            </div>
 
             {/* Side by side cards */}
             <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-start">

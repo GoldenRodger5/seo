@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import AnimateOnScroll from "../components/AnimateOnScroll";
+import VisitSiteButton from "../components/VisitSiteButton";
 import { sites, categories } from "../data/sites";
 
 const sortOptions = ["Top Rated", "Newest", "Alphabetical"];
@@ -24,7 +25,7 @@ const ReviewsIndex = () => {
   return (
     <Layout>
       <Helmet>
-        <title>All Twink Site Reviews — 2025 | TwinkVault</title>
+        <title>All Twink Site Reviews — 2026 | TwinkVault</title>
         <meta name="description" content="Browse all our honest, independent twink site reviews. Sorted by rating, filtered by category." />
         <link rel="canonical" href="https://twinkvault.com/reviews" />
       </Helmet>
@@ -107,12 +108,15 @@ const ReviewsIndex = () => {
                     <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Staff Verified</span>
                     <span className="text-xs text-muted-foreground">{site.price_from}</span>
                   </div>
-                  <Link
-                    to={`/reviews/${site.slug}`}
-                    className="mt-4 rounded-button border border-primary px-4 py-2 text-center text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
-                  >
-                    Read Review
-                  </Link>
+                  <div className="mt-4 flex gap-2">
+                    <Link
+                      to={`/reviews/${site.slug}`}
+                      className="flex-1 rounded-button border border-primary px-4 py-2 text-center text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
+                    >
+                      Read Review
+                    </Link>
+                    <VisitSiteButton site={site} className="flex-1" showDisclosure={false} />
+                  </div>
                 </div>
               </AnimateOnScroll>
             ))}

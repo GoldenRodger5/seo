@@ -54,13 +54,13 @@ const BentoGrid = () => (
           transition={{ delay: 0.1 }}
           whileHover={{ borderColor: "hsl(263, 70%, 58%, 0.5)", boxShadow: "0 8px 40px hsl(263, 70%, 58%, 0.2)" }}
         >
-          <h3 className="font-heading text-lg font-bold">Sites Tested</h3>
+          <h3 className="font-heading text-lg font-bold">Hours Tested</h3>
           <div className="mt-2">
             <span className="font-heading text-5xl font-bold gold-gradient-text">
-              <AnimatedCounter target={50} suffix="+" />
+              <AnimatedCounter target={100} suffix="+" />
             </span>
           </div>
-          <p className="mt-2 text-xs text-muted-foreground">memberships paid out of pocket</p>
+          <p className="mt-2 text-xs text-muted-foreground">hours of hands-on testing</p>
         </motion.div>
 
         {/* Medium tile - Updated */}
