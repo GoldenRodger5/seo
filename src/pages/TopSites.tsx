@@ -7,7 +7,8 @@ import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
-import { sites } from "../data/sites";
+import VisitSiteButton from "../components/VisitSiteButton";
+import { sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
 
 const filters = ["All", "Best Value", "HD Quality", "Amateur", "Premium Studio", "Free Trial"];
