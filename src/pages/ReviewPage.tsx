@@ -97,6 +97,17 @@ const ReviewPage = () => {
             author: { "@type": "Organization", name: "TwinkVault" },
           })}
         </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
+              { "@type": "ListItem", position: 2, name: "Reviews", item: "https://twinkvault.com/reviews" },
+              { "@type": "ListItem", position: 3, name: site.name, item: `https://twinkvault.com/reviews/${site.slug}` },
+            ]
+          })}
+        </script>
       </Helmet>
 
       {/* Affiliate disclosure */}

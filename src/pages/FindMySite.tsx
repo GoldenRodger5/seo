@@ -190,14 +190,7 @@ const FindMySite = () => {
                         </div>
                       </div>
                       <div className="mt-4 flex gap-3">
-                        <Link
-                          to={`/go/${site.slug}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="cta-btn gold-gradient flex-1 inline-flex items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground"
-                        >
-                          Visit Site <ArrowRight size={14} />
-                        </Link>
+                        <VisitSiteButton site={site} className="flex-1" />
                         <Link
                           to={`/reviews/${site.slug}`}
                           className="rounded-button border border-primary px-4 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
@@ -205,7 +198,6 @@ const FindMySite = () => {
                           Read Review
                         </Link>
                       </div>
-                      <p className="mt-2 text-center text-xs text-muted-foreground">Opens in new tab · Affiliate link</p>
                     </div>
                   ))}
                 </div>
