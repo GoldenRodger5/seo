@@ -11,11 +11,11 @@ import { sites, SiteData } from "../data/sites";
 type Step = 1 | 2 | 3 | "result";
 
 const step1Options = [
-  { value: "value", label: "Best value for money", icon: "💰" },
-  { value: "quality", label: "Highest quality video", icon: "🎬" },
-  { value: "niche", label: "Specific niche content", icon: "😈" },
-  { value: "mobile", label: "Works great on mobile", icon: "📱" },
-  { value: "trial", label: "Free trial first", icon: "🆓" },
+  { value: "value", label: "Best value for money" },
+  { value: "quality", label: "Highest quality video" },
+  { value: "niche", label: "Specific niche content" },
+  { value: "mobile", label: "Works great on mobile" },
+  { value: "trial", label: "Free trial first" },
 ];
 
 const step2Options = [
@@ -99,7 +99,6 @@ const FindMySite = () => {
                         priority === opt.value ? "border-primary" : ""
                       }`}
                     >
-                      <span className="text-2xl">{opt.icon}</span>
                       <span className="font-semibold">{opt.label}</span>
                     </button>
                   ))}

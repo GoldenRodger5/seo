@@ -1,8 +1,10 @@
+import { Star, RefreshCw, Lock, Trophy } from "lucide-react";
+
 const proofItems = [
-  "⭐ 50+ Sites Reviewed",
-  "🔄 Updated Monthly",
-  "👁 Trusted by 10,000+ Readers",
-  "🔒 100% Independent",
+  { icon: <Star size={14} className="text-secondary shrink-0" />, text: "50+ Sites Reviewed" },
+  { icon: <RefreshCw size={14} className="text-secondary shrink-0" />, text: "Updated Monthly" },
+  { icon: <Trophy size={14} className="text-secondary shrink-0" />, text: "Trusted by 10,000+ Readers" },
+  { icon: <Lock size={14} className="text-secondary shrink-0" />, text: "100% Independent" },
 ];
 
 const SocialProofStrip = () => (
@@ -11,7 +13,8 @@ const SocialProofStrip = () => (
     <div className="container hidden py-3 md:flex items-center justify-center gap-6">
       {proofItems.map((item, i) => (
         <span key={i} className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">{item}</span>
+          {item.icon}
+          <span className="text-sm text-muted-foreground">{item.text}</span>
           {i < proofItems.length - 1 && <span className="text-muted-foreground/30">·</span>}
         </span>
       ))}
@@ -20,7 +23,9 @@ const SocialProofStrip = () => (
     <div className="overflow-hidden py-3 md:hidden">
       <div className="marquee-track">
         {[...proofItems, ...proofItems].map((item, i) => (
-          <span key={i} className="mx-6 whitespace-nowrap text-sm text-muted-foreground">{item}</span>
+          <span key={i} className="mx-6 flex items-center gap-1.5 whitespace-nowrap text-sm text-muted-foreground">
+            {item.icon} {item.text}
+          </span>
         ))}
       </div>
     </div>

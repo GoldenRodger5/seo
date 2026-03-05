@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Star, ArrowRight, Sparkles } from "lucide-react";
+import { Star, ArrowRight, Sparkles, Flame, Film, DollarSign, Play, Gift, Smartphone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import StarRating from "../components/StarRating";
@@ -13,6 +13,7 @@ import Layout from "../components/Layout";
 import { getFeaturedSites, categories, sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { Search, CalendarSync, ShieldCheck } from "lucide-react";
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
+import { ReactNode } from "react";
 
 const tickerItems = [
   "🔥 New: Helix Studios Review",
@@ -21,13 +22,22 @@ const tickerItems = [
   "🆕 Athletic Twinks added",
 ];
 
+const categoryIcons: Record<string, ReactNode> = {
+  "amateur-twinks": <Flame size={18} className="text-secondary" />,
+  "premium-studios": <Film size={18} className="text-secondary" />,
+  "best-value": <DollarSign size={18} className="text-secondary" />,
+  "hd-quality": <Play size={18} className="text-secondary" />,
+  "free-trials": <Gift size={18} className="text-secondary" />,
+  "mobile-friendly": <Smartphone size={18} className="text-secondary" />,
+};
+
 const categoryVibes: Record<string, string> = {
-  "amateur-twinks": "🔥 Raw & Real",
-  "premium-studios": "✨ Cinematic Vibes",
-  "best-value": "💰 Bang For Your Buck",
-  "hd-quality": "🎬 Crystal Clear",
-  "free-trials": "🆓 Try Before You Buy",
-  "mobile-friendly": "📱 Scroll & Watch",
+  "amateur-twinks": "Raw & Real",
+  "premium-studios": "Cinematic Vibes",
+  "best-value": "Bang For Your Buck",
+  "hd-quality": "Crystal Clear",
+  "free-trials": "Try Before You Buy",
+  "mobile-friendly": "Scroll & Watch",
 };
 
 const HeroSection = () => {
@@ -226,7 +236,9 @@ const CategoriesSection = () => (
           <StaggerChild key={cat.slug}>
             <MotionCard className="glass-card flex items-center gap-4 rounded-lg p-5">
               <Link to={`/category/${cat.slug}`} className="flex items-center gap-4 w-full">
-                <span className="text-2xl">{categoryVibes[cat.slug]?.split(" ")[0] || cat.icon}</span>
+                <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-muted">
+                  {categoryIcons[cat.slug] || <Star size={18} className="text-secondary" />}
+                </span>
                 <div>
                   <h3 className="font-heading text-lg font-semibold">{categoryVibes[cat.slug] || cat.name}</h3>
                   <p className="text-xs text-muted-foreground">{cat.description}</p>
