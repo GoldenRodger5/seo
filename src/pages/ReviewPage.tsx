@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import AnimateOnScroll from "../components/AnimateOnScroll";
+import CommunityRating from "../components/CommunityRating";
 import { getSiteBySlug, sites } from "../data/sites";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
@@ -290,6 +291,9 @@ const ReviewPage = () => {
               </div>
 
               <p className="text-xs text-muted-foreground">Last Updated: March 2026</p>
+
+              {/* Community Rating & Emoji Reactions */}
+              <CommunityRating siteSlug={site.slug} />
             </AnimateOnScroll>
 
             {/* Similar Sites */}

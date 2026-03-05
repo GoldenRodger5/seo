@@ -53,6 +53,53 @@
     --sidebar-border: 240 15% 15%;
     --sidebar-ring: 263 70% 58%;
   }
+
+  /* Light mode */
+  .light {
+    --background: 210 20% 98%;
+    --foreground: 240 20% 6%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 20% 6%;
+    --card-border: 220 13% 87%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 20% 6%;
+
+    --primary: 263 70% 58%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 38 92% 50%;
+    --secondary-foreground: 0 0% 5%;
+
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 263 70% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 142 71% 20%;
+
+    --border: 220 13% 87%;
+    --input: 220 13% 87%;
+    --ring: 263 70% 58%;
+
+    --gold-start: 38 92% 50%;
+    --gold-end: 32 95% 44%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 20% 6%;
+    --sidebar-primary: 263 70% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 92%;
+    --sidebar-accent-foreground: 240 20% 6%;
+    --sidebar-border: 220 13% 87%;
+    --sidebar-ring: 263 70% 58%;
+  }
 }
 
 @layer base {
@@ -67,6 +114,7 @@
   body {
     @apply bg-background text-foreground font-body antialiased;
     line-height: 1.75;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -116,6 +164,31 @@ body::before {
   background-repeat: repeat;
   background-size: 256px 256px;
 }
+.light body::before {
+  opacity: 0.015;
+}
+
+/* Light mode specific overrides */
+.light .glass-card::before {
+  background: linear-gradient(90deg, transparent, hsl(263 70% 58% / 0.15), transparent);
+}
+.light .hero-mesh {
+  background: linear-gradient(
+    135deg,
+    hsl(210 20% 98%) 0%,
+    hsl(263 30% 95%) 50%,
+    hsl(210 20% 98%) 100%
+  );
+}
+.light ::-webkit-scrollbar-track {
+  background: hsl(210 20% 96%);
+}
+.light ::-webkit-scrollbar-thumb {
+  background: hsl(263 70% 58% / 0.3);
+}
+.light .gold-pulse-border {
+  box-shadow: 0 0 15px hsl(var(--secondary) / 0.15);
+}
 
 @layer utilities {
   /* Gold shimmer on the logo word "Vault" */
@@ -152,7 +225,7 @@ body::before {
 
   /* Heading gradient: off-white to violet */
   .heading-gradient {
-    background: linear-gradient(90deg, hsl(210 40% 96%) 0%, hsl(263 70% 58%) 100%);
+    background: linear-gradient(90deg, hsl(var(--foreground)) 0%, hsl(var(--primary)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -160,12 +233,13 @@ body::before {
 
   /* Glass card style */
   .glass-card {
-    background: hsl(240 20% 7% / 0.6);
+    background: hsl(var(--card) / 0.6);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid hsl(var(--card-border));
     position: relative;
     overflow: hidden;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
   .glass-card::before {
     content: '';

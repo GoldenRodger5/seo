@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
 
 interface ScoreRingProps {
   score: number;
@@ -6,11 +7,16 @@ interface ScoreRingProps {
 }
 
 const ScoreRing = ({ score, size = 80 }: ScoreRingProps) => {
-  const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true });
   const radius = (size - 8) / 2;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (score / 5) * circumference;
+  const targetOffset = circumference - (score / 5) * circumference;
+
+  const dashOffset = useMotionValue(circumference);
+  const springOffset = useSpring(dashOffset, { stiffness: 60, damping: 20, mass: 1 });
+
+  const [count, setCount] = useState(0);
 
   const color = score >= 4.5
     ? "hsl(142, 71%, 45%)"
@@ -19,16 +25,21 @@ const ScoreRing = ({ score, size = 80 }: ScoreRingProps) => {
     : "hsl(0, 84%, 60%)";
 
   useEffect(() => {
-    const duration = 1200;
-    const start = performance.now();
-    const animate = (now: number) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      setCount(parseFloat((progress * score).toFixed(1)));
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }, [score]);
+    if (isInView) {
+      dashOffset.set(targetOffset);
+
+      // Animate counter
+      const duration = 1500;
+      const start = performance.now();
+      const animate = (now: number) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        setCount(parseFloat((progress * score).toFixed(1)));
+        if (progress < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    }
+  }, [isInView, score, targetOffset, dashOffset]);
 
   return (
     <div ref={ref} className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
@@ -38,10 +49,10 @@ const ScoreRing = ({ score, size = 80 }: ScoreRingProps) => {
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="hsl(240, 15%, 15%)"
+          stroke="hsl(var(--muted))"
           strokeWidth={4}
         />
-        <circle
+        <motion.circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
@@ -50,9 +61,7 @@ const ScoreRing = ({ score, size = 80 }: ScoreRingProps) => {
           strokeWidth={4}
           strokeLinecap="round"
           strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          className="score-ring-animated"
-          style={{ "--ring-offset": offset } as React.CSSProperties}
+          style={{ strokeDashoffset: springOffset }}
         />
       </svg>
       <span className="absolute font-heading text-lg font-bold">{count}</span>
