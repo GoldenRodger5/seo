@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Search } from "lucide-react";
 import SearchOverlay from "./SearchOverlay";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { label: "Home", to: "/", gold: false },
