@@ -313,15 +313,7 @@ const ReviewPage = () => {
                   {site.price_from}
                 </span>
               </div>
-              <Link
-                to={`/go/${site.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cta-btn mt-4 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
-              >
-                Visit Site <ArrowRight size={14} />
-              </Link>
-              <p className="mt-2 text-center text-[10px] text-muted-foreground">Opens in new tab · Affiliate link</p>
+              <VisitSiteButton site={site} className="mt-4" />
             </div>
           </aside>
         </div>
