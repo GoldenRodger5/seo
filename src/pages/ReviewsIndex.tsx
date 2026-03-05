@@ -25,7 +25,7 @@ const ReviewsIndex = () => {
   return (
     <Layout>
       <Helmet>
-        <title>All Twink Site Reviews — 2025 | TwinkVault</title>
+        <title>All Twink Site Reviews — 2026 | TwinkVault</title>
         <meta name="description" content="Browse all our honest, independent twink site reviews. Sorted by rating, filtered by category." />
         <link rel="canonical" href="https://twinkvault.com/reviews" />
       </Helmet>
