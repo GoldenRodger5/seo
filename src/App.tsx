@@ -62,7 +62,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <CustomCursor />
+        
         <AgeVerification />
         <EmailCapturePopup />
         <BrowserRouter>
