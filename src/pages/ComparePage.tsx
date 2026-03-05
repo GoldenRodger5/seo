@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Layout from "../components/Layout";
 import ScoreRing from "../components/ScoreRing";
 import StarRating from "../components/StarRating";
-import { getSiteBySlug, sites, SiteData } from "../data/sites";
+import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
 import { PageTransition } from "../components/MotionWrappers";
 
 const comparePairs = [
