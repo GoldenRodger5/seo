@@ -85,7 +85,7 @@ const ReviewPage = () => {
   return (
     <Layout>
       <Helmet>
-        <title>{site.name} Review 2025 — Is It Worth It? | TwinkVault</title>
+        <title>{site.name} Review 2026 — Is It Worth It? | TwinkVault</title>
         <meta name="description" content={`Read our honest ${site.name} review. We tested the content, pricing, and usability so you know exactly what you're getting.`} />
         <link rel="canonical" href={`https://twinkvault.com/reviews/${site.slug}`} />
         <script type="application/ld+json">
