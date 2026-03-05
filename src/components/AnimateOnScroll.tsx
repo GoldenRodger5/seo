@@ -1,6 +1,6 @@
 import { useEffect, useRef, ReactNode } from "react";
 
-const AnimateOnScroll = ({ children, className = "" }: { children: ReactNode; className?: string }) => {
+const AnimateOnScroll = ({ children, className = "", id }: { children: ReactNode; className?: string; id?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
