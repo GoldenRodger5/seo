@@ -13,19 +13,19 @@ interface Deal {
   originalPrice: string;
   dealPrice: string;
   discountPercent: number;
-  expiry: "limited" | "ongoing";
+  expiry: "limited" | "flash" | "ongoing";
 }
 
 const deals: Deal[] = ([
   { siteSlug: "helix-studios", siteName: "Helix Studios", description: "67% off annual membership", originalPrice: "$29.99/mo", dealPrice: "$9.99/mo", discountPercent: 67, expiry: "limited" as const },
-  { siteSlug: "twink-in-shorts", siteName: "Twink In Shorts", description: "50% off first 3 months", originalPrice: "$15.99/mo", dealPrice: "$7.99/mo", discountPercent: 50, expiry: "ongoing" as const },
+  { siteSlug: "twink-in-shorts", siteName: "Twink In Shorts", description: "50% off first 3 months", originalPrice: "$15.99/mo", dealPrice: "$7.99/mo", discountPercent: 50, expiry: "flash" as const },
   { siteSlug: "athletic-twinks", siteName: "Athletic Twinks", description: "40% off quarterly plan", originalPrice: "$21.99/mo", dealPrice: "$12.99/mo", discountPercent: 40, expiry: "ongoing" as const },
   { siteSlug: "southern-strokes", siteName: "Southern Strokes", description: "55% off annual plan", originalPrice: "$19.99/mo", dealPrice: "$8.99/mo", discountPercent: 55, expiry: "ongoing" as const },
   { siteSlug: "twinks-bareback", siteName: "Twinks Bareback", description: "Free 2-day trial + 45% off", originalPrice: "$14.99/mo", dealPrice: "$7.99/mo", discountPercent: 45, expiry: "ongoing" as const },
   { siteSlug: "touch-that-boy", siteName: "Touch That Boy", description: "35% off all plans", originalPrice: "$16.99/mo", dealPrice: "$10.99/mo", discountPercent: 35, expiry: "ongoing" as const },
 ] as Deal[]).sort((a, b) => b.discountPercent - a.discountPercent);
 
-const StatusIndicator = ({ expiry }: { expiry: "limited" | "ongoing" }) => (
+const StatusIndicator = ({ expiry }: { expiry: "limited" | "flash" | "ongoing" }) => (
   <div className="flex items-center gap-2 text-xs">
     {expiry === "limited" ? (
       <>
@@ -34,6 +34,14 @@ const StatusIndicator = ({ expiry }: { expiry: "limited" | "ongoing" }) => (
           <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive" />
         </span>
         <span className="text-destructive font-medium">Expires Soon</span>
+      </>
+    ) : expiry === "flash" ? (
+      <>
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-75" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-secondary" />
+        </span>
+        <span className="text-secondary font-medium">Flash Deal — 48 hours</span>
       </>
     ) : (
       <>
@@ -92,9 +100,9 @@ const BestDeals = () => (
                       <div className="flex items-center gap-2">
                         <h2 className="font-heading text-xl font-bold">{deal.siteName}</h2>
                         <span className={`rounded-button px-2 py-0.5 text-xs font-semibold ${
-                          deal.expiry === "limited" ? "bg-destructive/20 text-destructive" : "bg-muted text-muted-foreground"
+                          deal.expiry === "limited" ? "bg-destructive/20 text-destructive" : deal.expiry === "flash" ? "bg-secondary/20 text-secondary" : "bg-muted text-muted-foreground"
                         }`}>
-                          {deal.expiry === "limited" ? "Limited Time" : "Ongoing"}
+                          {deal.expiry === "limited" ? "Limited Time" : deal.expiry === "flash" ? "Flash Deal" : "Ongoing"}
                         </span>
                       </div>
                       <p className="mt-1 text-sm text-muted-foreground">{deal.description}</p>
