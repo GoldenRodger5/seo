@@ -7,7 +7,8 @@ import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import CommunityRating from "../components/CommunityRating";
-import { getSiteBySlug, sites } from "../data/sites";
+import VisitSiteButton from "../components/VisitSiteButton";
+import { getSiteBySlug, sites, getVisitUrl, isAffiliated } from "../data/sites";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
