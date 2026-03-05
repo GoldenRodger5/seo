@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
@@ -44,7 +44,7 @@ const CategoryPage = () => {
         <div className="container">
           <AnimateOnScroll>
             <div className="text-center stagger-in">
-              <span className="text-4xl">{category.icon}</span>
+              <Star size={36} className="text-primary mx-auto" />
               <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">{category.name}</h1>
               <p className="mt-3 text-muted-foreground">{category.description}</p>
               <div className="mt-3 flex items-center justify-center gap-4">
@@ -82,7 +82,10 @@ const CategoryPage = () => {
                 <div className="card-glow glass-card rounded-lg p-6">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h2 className="font-heading text-xl font-bold">{site.name}</h2>
+                      <div className="flex items-center gap-2">
+                        <h2 className="font-heading text-xl font-bold">{site.name}</h2>
+                        <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Verified</span>
+                      </div>
                       <StarRating score={site.overall_score} size={14} />
                     </div>
                     <span className="text-sm font-semibold">{site.price_from}</span>
@@ -98,7 +101,7 @@ const CategoryPage = () => {
                   <div className="mt-4 flex gap-3">
                     <Link
                       to={`/reviews/${site.slug}`}
-                      className="rounded-button border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-muted"
+                      className="rounded-button border border-primary px-4 py-2 text-sm font-medium text-primary hover:bg-primary/10 transition-colors"
                     >
                       Read Review
                     </Link>
@@ -111,6 +114,7 @@ const CategoryPage = () => {
                       Visit Site <ArrowRight size={12} />
                     </Link>
                   </div>
+                  <p className="mt-1 text-[9px] text-muted-foreground">Opens in new tab · Affiliate link</p>
                 </div>
               </AnimateOnScroll>
             ))}
@@ -128,9 +132,9 @@ const CategoryPage = () => {
                 <Link
                   key={cat.slug}
                   to={`/category/${cat.slug}`}
-                  className="rounded-button border border-border px-5 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  className="rounded-button border border-primary px-5 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
                 >
-                  {cat.icon} {cat.name}
+                  {cat.name}
                 </Link>
               ))}
             </div>
