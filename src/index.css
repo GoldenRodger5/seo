@@ -200,7 +200,7 @@ body::before {
 
   /* Heading gradient: off-white to violet */
   .heading-gradient {
-    background: linear-gradient(90deg, hsl(210 40% 96%) 0%, hsl(263 70% 58%) 100%);
+    background: linear-gradient(90deg, hsl(var(--foreground)) 0%, hsl(var(--primary)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
