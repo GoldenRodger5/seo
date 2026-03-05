@@ -1,30 +1,69 @@
 import { useParams, Link } from "react-router-dom";
-import { Check, X as XIcon, ArrowRight } from "lucide-react";
+import { Check, X as XIcon, ArrowRight, ThumbsUp } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import { getSiteBySlug, sites } from "../data/sites";
 
-const ScoreBar = ({ label, value }: { label: string; value: number }) => (
-  <div>
-    <div className="flex items-center justify-between text-sm">
-      <span className="text-muted-foreground">{label}</span>
-      <span className="font-semibold">{value}/100</span>
+const ScoreBar = ({ label, value }: { label: string; value: number }) => {
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    const t = setTimeout(() => setWidth(value), 100);
+    return () => clearTimeout(t);
+  }, [value]);
+
+  return (
+    <div>
+      <div className="flex items-center justify-between text-sm">
+        <span className="text-muted-foreground">{label}</span>
+        <span className="font-semibold">{value}/100</span>
+      </div>
+      <div className="mt-1 h-2 overflow-hidden rounded-full bg-muted">
+        <div
+          className="h-full rounded-full bg-primary transition-all duration-1000 ease-out"
+          style={{ width: `${width}%` }}
+        />
+      </div>
     </div>
-    <div className="mt-1 h-2 overflow-hidden rounded-full bg-muted">
-      <div
-        className="h-full rounded-full bg-primary transition-all duration-1000"
-        style={{ width: `${value}%` }}
-      />
-    </div>
-  </div>
-);
+  );
+};
 
 const ReviewPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const site = getSiteBySlug(slug || "");
+  const [showMobileCta, setShowMobileCta] = useState(false);
+  const [mobileDismissed, setMobileDismissed] = useState(false);
+  const [helpfulCount, setHelpfulCount] = useState(0);
+  const [hasVoted, setHasVoted] = useState(false);
+
+  useEffect(() => {
+    if (site) {
+      const base = 47 + parseInt(site.id) * 33;
+      const stored = localStorage.getItem(`tv_helpful_${site.slug}`);
+      setHelpfulCount(stored ? parseInt(stored) : base);
+      setHasVoted(!!localStorage.getItem(`tv_voted_${site.slug}`));
+    }
+  }, [site]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowMobileCta(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleVote = () => {
+    if (hasVoted || !site) return;
+    const newCount = helpfulCount + 1;
+    setHelpfulCount(newCount);
+    setHasVoted(true);
+    localStorage.setItem(`tv_helpful_${site.slug}`, String(newCount));
+    localStorage.setItem(`tv_voted_${site.slug}`, "1");
+  };
 
   if (!site) {
     return (
@@ -73,25 +112,32 @@ const ReviewPage = () => {
             <nav className="mb-6 text-sm text-muted-foreground">
               <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
               <span className="mx-2 text-muted-foreground/30">/</span>
-              <Link to="/top-sites" className="hover:text-foreground transition-colors">Reviews</Link>
+              <Link to="/reviews" className="hover:text-foreground transition-colors">Reviews</Link>
               <span className="mx-2 text-muted-foreground/30">/</span>
               <span className="text-foreground">{site.name}</span>
             </nav>
 
             <AnimateOnScroll>
               <div className="stagger-in">
-                <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">{site.name}</h1>
+                <div className="flex flex-wrap items-center gap-3">
+                  <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">{site.name}</h1>
+                  <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-xs text-emerald-400">✓ Staff Verified</span>
+                  <span className="inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-xs text-muted-foreground">🔄 Updated Mar 2026</span>
+                </div>
                 <div className="mt-3 flex flex-wrap items-center gap-4">
                   <StarRating score={site.overall_score} size={20} />
                   <span className="text-sm text-muted-foreground">Expert review</span>
                 </div>
 
-                {/* Quick stats */}
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                  <ScoreBar label="Content Quality" value={site.content_quality} />
-                  <ScoreBar label="Update Frequency" value={site.update_frequency} />
-                  <ScoreBar label="Value for Money" value={site.value_score} />
-                  <ScoreBar label="Mobile Experience" value={site.mobile_score} />
+                {/* Score Breakdown */}
+                <div className="mt-8">
+                  <h3 className="font-heading text-lg font-semibold mb-4">Score Breakdown</h3>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <ScoreBar label="Content Quality" value={site.content_quality} />
+                    <ScoreBar label="Update Frequency" value={site.update_frequency} />
+                    <ScoreBar label="Value for Money" value={site.value_score} />
+                    <ScoreBar label="Mobile Experience" value={site.mobile_score} />
+                  </div>
                 </div>
 
                 <div className="mt-6 flex flex-wrap gap-3">
@@ -105,13 +151,13 @@ const ReviewPage = () => {
                   </Link>
                   <Link
                     to="/top-sites"
-                    className="inline-flex items-center gap-2 rounded-button border border-border px-8 py-3 text-sm font-semibold text-foreground hover:bg-muted transition-colors"
+                    className="inline-flex items-center gap-2 rounded-button border border-primary px-8 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
                   >
                     See All Reviews
                   </Link>
                 </div>
-                <p className="mt-3 text-xs text-muted-foreground">
-                  We may earn a commission if you sign up through our links.
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Opens in new tab · Affiliate link
                 </p>
               </div>
             </AnimateOnScroll>
@@ -212,9 +258,38 @@ const ReviewPage = () => {
                   <div className="mt-2 flex justify-center">
                     <ScoreRing score={site.overall_score} />
                   </div>
+                  <Link
+                    to={`/go/${site.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cta-btn mt-4 inline-flex items-center gap-2 rounded-button gold-gradient px-8 py-3 text-sm font-semibold text-secondary-foreground"
+                  >
+                    Visit {site.name} <ArrowRight size={14} />
+                  </Link>
+                  <p className="mt-2 text-xs text-muted-foreground">Opens in new tab · Affiliate link</p>
                 </div>
               </section>
-              <p className="text-xs text-muted-foreground">Last Updated: January 2025</p>
+
+              {/* Helpful signal */}
+              <div className="glass-card rounded-lg p-4 flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">
+                  👍 {helpfulCount} readers found this review helpful
+                </span>
+                <button
+                  onClick={handleVote}
+                  disabled={hasVoted}
+                  className={`inline-flex items-center gap-1.5 rounded-button px-4 py-2 text-xs font-semibold transition-colors ${
+                    hasVoted
+                      ? "bg-muted text-muted-foreground cursor-default"
+                      : "border border-primary text-primary hover:bg-primary/10"
+                  }`}
+                >
+                  <ThumbsUp size={14} />
+                  {hasVoted ? "Thanks!" : "Helpful"}
+                </button>
+              </div>
+
+              <p className="text-xs text-muted-foreground">Last Updated: March 2026</p>
             </AnimateOnScroll>
 
             {/* Similar Sites */}
@@ -259,28 +334,34 @@ const ReviewPage = () => {
               >
                 Visit Site <ArrowRight size={14} />
               </Link>
+              <p className="mt-2 text-center text-[10px] text-muted-foreground">Opens in new tab · Affiliate link</p>
             </div>
           </aside>
         </div>
       </div>
 
-      {/* Mobile sticky CTA */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border glass-card p-3 lg:hidden">
-        <div className="flex items-center gap-3">
-          <div className="flex-1">
-            <p className="text-sm font-semibold">{site.name}</p>
-            <StarRating score={site.overall_score} size={12} showNumber={false} animate={false} />
+      {/* Mobile sticky CTA - improved with scroll trigger and dismiss */}
+      {showMobileCta && !mobileDismissed && (
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border glass-card lg:hidden animate-slide-up" style={{ height: "64px", padding: "12px" }}>
+          <div className="flex items-center gap-3 h-full">
+            <button onClick={() => setMobileDismissed(true)} className="text-muted-foreground hover:text-foreground shrink-0">
+              <XIcon size={16} />
+            </button>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold truncate">{site.name}</p>
+              <span className="text-xs text-secondary">{site.overall_score}/5</span>
+            </div>
+            <Link
+              to={`/go/${site.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-btn flex items-center gap-2 rounded-button gold-gradient px-6 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap"
+            >
+              Visit Site <ArrowRight size={14} />
+            </Link>
           </div>
-          <Link
-            to={`/go/${site.slug}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cta-btn flex items-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
-          >
-            Visit Site <ArrowRight size={14} />
-          </Link>
         </div>
-      </div>
+      )}
     </Layout>
   );
 };

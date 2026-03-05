@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Mail, Sparkles } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 
 const InlineEmailCapture = () => {
@@ -16,22 +17,30 @@ const InlineEmailCapture = () => {
     <AnimateOnScroll>
       <section className="py-16">
         <div className="container">
-          <div className="relative overflow-hidden rounded-lg p-8 md:p-12" style={{
-            background: "linear-gradient(135deg, hsl(240 20% 7%) 0%, hsl(263 30% 15%) 50%, hsl(240 20% 7%) 100%)"
+          <div className="relative overflow-hidden rounded-lg border border-primary/30 p-8 md:p-12" style={{
+            background: "linear-gradient(135deg, hsl(263 30% 12%) 0%, hsl(240 40% 10%) 50%, hsl(240 30% 8%) 100%)"
           }}>
+            {/* Decorative sparkle */}
+            <div className="pointer-events-none absolute right-6 top-6">
+              <Sparkles size={32} className="text-primary/30" />
+            </div>
+
             {/* Subtle glow */}
-            <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-primary/10 blur-[100px]" />
+            <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-primary/15 blur-[100px]" />
 
             <div className="relative text-center md:text-left">
-              <h2 className="font-heading text-3xl font-bold md:text-4xl heading-gradient inline-block">
-                Never Miss a Deal
-              </h2>
+              <div className="flex items-center gap-3 justify-center md:justify-start">
+                <Mail size={28} className="text-primary" />
+                <h2 className="font-heading text-3xl font-bold md:text-4xl heading-gradient inline-block">
+                  Never Miss a Deal
+                </h2>
+              </div>
               <p className="mt-3 max-w-xl text-muted-foreground">
                 Monthly roundup of the best twink site discounts. One email. No spam. Unsubscribe anytime.
               </p>
 
               {submitted ? (
-                <div className="mt-6 flex items-center gap-2 text-sm font-medium" style={{ color: "hsl(142, 71%, 45%)" }}>
+                <div className="mt-6 flex items-center gap-2 text-sm font-medium text-emerald-400 justify-center md:justify-start">
                   ✅ You're in! Check your inbox.
                 </div>
               ) : (

@@ -10,11 +10,12 @@ const Footer = () => (
 
         <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
           <Link to="/top-sites" className="nav-link hover:text-foreground">Top Sites</Link>
+          <Link to="/reviews" className="nav-link hover:text-foreground">Reviews</Link>
           <Link to="/best-deals" className="nav-link hover:text-foreground gold-gradient-text">Best Deals 🔥</Link>
+          <Link to="/find-my-site" className="nav-link hover:text-foreground">Quiz</Link>
           <Link to="/about" className="nav-link hover:text-foreground">About</Link>
-          <Link to="/privacy" className="nav-link hover:text-foreground">Privacy Policy</Link>
+          <Link to="/privacy-policy" className="nav-link hover:text-foreground">Privacy Policy</Link>
           <Link to="/affiliate-disclosure" className="nav-link hover:text-foreground">Affiliate Disclosure</Link>
-          <Link to="/contact" className="nav-link hover:text-foreground">Contact</Link>
         </div>
       </div>
 
