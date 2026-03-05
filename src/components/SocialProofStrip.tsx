@@ -1,10 +1,10 @@
-import { Star, ArrowsClockwise, Lock, Trophy } from "@phosphor-icons/react";
+import { Star, RefreshCw, Lock, Trophy } from "lucide-react";
 
 const proofItems = [
-  { icon: <Star size={14} weight="bold" className="text-secondary shrink-0" />, text: "50+ Sites Reviewed" },
-  { icon: <ArrowsClockwise size={14} weight="bold" className="text-secondary shrink-0" />, text: "Updated Monthly" },
-  { icon: <Trophy size={14} weight="bold" className="text-secondary shrink-0" />, text: "Trusted by 10,000+ Readers" },
-  { icon: <Lock size={14} weight="bold" className="text-secondary shrink-0" />, text: "100% Independent" },
+  { icon: <Star size={14} className="text-secondary shrink-0" />, text: "50+ Sites Reviewed" },
+  { icon: <RefreshCw size={14} className="text-secondary shrink-0" />, text: "Updated Monthly" },
+  { icon: <Trophy size={14} className="text-secondary shrink-0" />, text: "Trusted by 10,000+ Readers" },
+  { icon: <Lock size={14} className="text-secondary shrink-0" />, text: "100% Independent" },
 ];
 
 const SocialProofStrip = () => (

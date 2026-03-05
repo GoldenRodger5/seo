@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { Star, ArrowRight, Sparkles } from "lucide-react";
-import { Flame, FilmStrip, CurrencyDollar, Play, Gift, DeviceMobileCamera, MagnifyingGlass, ArrowsClockwise, ShieldCheck } from "@phosphor-icons/react";
+import { Star, ArrowRight, Sparkles, Flame, Film, DollarSign, Play, Gift, Smartphone, Search, ShieldCheck, RefreshCw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import StarRating from "../components/StarRating";
