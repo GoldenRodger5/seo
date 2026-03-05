@@ -295,20 +295,20 @@ const ReviewPage = () => {
               {/* FAQ Section */}
               <section className="mt-8">
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Frequently Asked Questions</h2>
-                <div className="mt-4 space-y-4">
+                <Accordion type="single" collapsible className="mt-4 space-y-2">
                   {[
                     { q: `Is ${site.name} worth it?`, a: `${site.name} scores ${site.overall_score}/5 in our testing. ${site.short_description} At ${site.price_from}, it ${site.value_score >= 85 ? "offers excellent value for money" : site.value_score >= 75 ? "offers decent value" : "is on the pricier side"}. We'd recommend it if you're looking for quality ${site.categories[0]?.replace(/-/g, " ")} content.` },
-                    { q: `How much does ${site.name} cost?`, a: `${site.name} starts at ${site.price_from} for a monthly subscription. Quarterly and annual plans are available at a discount. Check their site for the latest pricing and any active promotions.` },
+                    { q: `How much does ${site.name} cost per month?`, a: `${site.name} starts at ${site.price_from} for a monthly subscription. Quarterly and annual plans are available at a discount. Check their site for the latest pricing and any active promotions.` },
                     { q: `Does ${site.name} have a free trial?`, a: site.categories.includes("free-trials") ? `Yes, ${site.name} offers a free trial period so you can explore the content before committing to a paid subscription.` : `${site.name} does not currently offer a free trial. However, they do offer competitive monthly pricing starting at ${site.price_from}.` },
                     { q: `What is the best alternative to ${site.name}?`, a: `The best alternative depends on what you're looking for. ${similar[0]?.name} (${similar[0]?.overall_score}/5) and ${similar[1]?.name} (${similar[1]?.overall_score}/5) are both strong alternatives. Check our full rankings for more options.` },
                     { q: `Is ${site.name} updated regularly?`, a: `${site.name} has an update frequency score of ${site.update_frequency}/100. ${site.update_frequency >= 85 ? "They update very frequently with fresh content." : site.update_frequency >= 75 ? "They update regularly with new content." : "Updates come less frequently than some competitors."}` },
                   ].map((faq, i) => (
-                    <div key={i} className="glass-card rounded-lg p-4">
-                      <h3 className="font-heading font-semibold">{faq.q}</h3>
-                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
-                    </div>
+                    <AccordionItem key={i} value={`faq-${i}`} className="glass-card rounded-lg border-none px-5">
+                      <AccordionTrigger className="font-heading font-semibold text-left hover:no-underline">{faq.q}</AccordionTrigger>
+                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed">{faq.a}</AccordionContent>
+                    </AccordionItem>
                   ))}
-                </div>
+                </Accordion>
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
                   "@context": "https://schema.org",
                   "@type": "FAQPage",
