@@ -143,14 +143,7 @@ const ReviewPage = () => {
                 </div>
 
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <Link
-                    to={`/go/${site.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cta-btn gold-gradient inline-flex items-center gap-2 rounded-button px-8 py-3 text-sm font-semibold text-secondary-foreground"
-                  >
-                    Visit {site.name} <ArrowRight size={14} />
-                  </Link>
+                  <VisitSiteButton site={site} label={`Visit ${site.name}`} />
                   <Link
                     to="/top-sites"
                     className="inline-flex items-center gap-2 rounded-button border border-primary px-8 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
@@ -158,9 +151,6 @@ const ReviewPage = () => {
                     See All Reviews
                   </Link>
                 </div>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  Opens in new tab · Affiliate link
-                </p>
               </div>
             </AnimateOnScroll>
 
