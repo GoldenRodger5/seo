@@ -23,13 +23,22 @@ const tickerItems = [
   "🆕 Athletic Twinks added",
 ];
 
+const categoryIcons: Record<string, ReactNode> = {
+  "amateur-twinks": <Flame size={18} className="text-secondary" />,
+  "premium-studios": <Film size={18} className="text-secondary" />,
+  "best-value": <DollarSign size={18} className="text-secondary" />,
+  "hd-quality": <Play size={18} className="text-secondary" />,
+  "free-trials": <Gift size={18} className="text-secondary" />,
+  "mobile-friendly": <Smartphone size={18} className="text-secondary" />,
+};
+
 const categoryVibes: Record<string, string> = {
-  "amateur-twinks": "🔥 Raw & Real",
-  "premium-studios": "✨ Cinematic Vibes",
-  "best-value": "💰 Bang For Your Buck",
-  "hd-quality": "🎬 Crystal Clear",
-  "free-trials": "🆓 Try Before You Buy",
-  "mobile-friendly": "📱 Scroll & Watch",
+  "amateur-twinks": "Raw & Real",
+  "premium-studios": "Cinematic Vibes",
+  "best-value": "Bang For Your Buck",
+  "hd-quality": "Crystal Clear",
+  "free-trials": "Try Before You Buy",
+  "mobile-friendly": "Scroll & Watch",
 };
 
 const HeroSection = () => {
