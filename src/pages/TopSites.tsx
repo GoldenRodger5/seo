@@ -102,7 +102,7 @@ const TopSites = () => {
                         {site.rank === 1 && <Crown size={20} className="text-secondary" />}
                         <span className="font-heading text-4xl font-bold text-muted-foreground/40">#{site.rank}</span>
                       </div>
-                      <ScoreRing score={site.overall_score} size={64} className="sm:!w-16 sm:!h-16 !w-[60px] !h-[60px]" />
+                      <ScoreRing score={site.overall_score} size={60} />
                     </div>
 
                     {/* Main content */}

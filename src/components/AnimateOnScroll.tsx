@@ -18,7 +18,7 @@ const AnimateOnScroll = ({ children, className = "", id }: { children: ReactNode
   }, []);
 
   return (
-    <div ref={ref} className={`opacity-0 ${className}`}>
+    <div ref={ref} id={id} className={`opacity-0 ${className}`}>
       {children}
     </div>
   );
