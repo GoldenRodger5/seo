@@ -18,11 +18,7 @@ const ScoreRing = ({ score, size = 80 }: ScoreRingProps) => {
 
   const [count, setCount] = useState(0);
 
-  const color = score >= 4.5
-    ? "hsl(142, 71%, 45%)"
-    : score >= 3.5
-    ? "hsl(38, 92%, 50%)"
-    : "hsl(0, 84%, 60%)";
+  const color = "hsl(142, 71%, 45%)";
 
   useEffect(() => {
     if (isInView) {
