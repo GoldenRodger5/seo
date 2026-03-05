@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Lock, UsersThree } from "@phosphor-icons/react";
+import { Lock, Users } from "lucide-react";
 
 const AnimatedCounter = ({ target, suffix = "" }: { target: number; suffix?: string }) => {
   const [count, setCount] = useState(0);
@@ -89,7 +89,7 @@ const BentoGrid = () => (
           transition={{ delay: 0.2 }}
           whileHover={{ borderColor: "hsl(263, 70%, 58%, 0.5)", boxShadow: "0 8px 40px hsl(263, 70%, 58%, 0.2)" }}
         >
-          <Lock size={24} weight="bold" className="text-primary" />
+          <Lock size={24} className="text-primary" />
           <h3 className="mt-2 font-heading text-lg font-bold">Your privacy matters</h3>
           <p className="mt-1 text-xs text-muted-foreground">We never track what you watch or where you click beyond basic analytics.</p>
         </motion.div>
@@ -103,7 +103,7 @@ const BentoGrid = () => (
           transition={{ delay: 0.25 }}
           whileHover={{ borderColor: "hsl(263, 70%, 58%, 0.5)", boxShadow: "0 8px 40px hsl(263, 70%, 58%, 0.2)" }}
         >
-          <UsersThree size={24} weight="bold" className="text-primary" />
+          <Users size={24} className="text-primary" />
           <h3 className="mt-2 font-heading text-lg font-bold">
             <AnimatedCounter target={10000} suffix="+" /> readers
           </h3>

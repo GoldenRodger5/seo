@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { Star, ArrowRight, Sparkles } from "lucide-react";
-import { Flame, FilmStrip, CurrencyDollar, Play, Gift, DeviceMobileCamera, MagnifyingGlass, ArrowsClockwise, ShieldCheck } from "@phosphor-icons/react";
+import { Star, ArrowRight, Sparkles, Flame, Film, DollarSign, Play, Gift, Smartphone, Search, ShieldCheck, RefreshCw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import StarRating from "../components/StarRating";
@@ -23,12 +22,12 @@ const tickerItems = [
 ];
 
 const categoryIcons: Record<string, ReactNode> = {
-  "amateur-twinks": <Flame size={18} weight="bold" className="text-secondary" />,
-  "premium-studios": <FilmStrip size={18} weight="bold" className="text-secondary" />,
-  "best-value": <CurrencyDollar size={18} weight="bold" className="text-secondary" />,
-  "hd-quality": <Play size={18} weight="bold" className="text-secondary" />,
-  "free-trials": <Gift size={18} weight="bold" className="text-secondary" />,
-  "mobile-friendly": <DeviceMobileCamera size={18} weight="bold" className="text-secondary" />,
+  "amateur-twinks": <Flame size={18} className="text-secondary" />,
+  "premium-studios": <Film size={18} className="text-secondary" />,
+  "best-value": <DollarSign size={18} className="text-secondary" />,
+  "hd-quality": <Play size={18} className="text-secondary" />,
+  "free-trials": <Gift size={18} className="text-secondary" />,
+  "mobile-friendly": <Smartphone size={18} className="text-secondary" />,
 };
 
 const categoryVibes: Record<string, string> = {
@@ -310,9 +309,9 @@ const TrustSection = () => (
       <h2 className="text-center font-heading text-3xl font-bold md:text-4xl heading-gradient inline-block w-full">Why Trust Us</h2>
       <StaggerContainer className="mt-10 grid gap-8 md:grid-cols-3">
         {[
-          { icon: <MagnifyingGlass size={48} weight="bold" className="text-primary" />, title: "We Pay, You Save", desc: "We pay for memberships ourselves and report honestly." },
-          { icon: <ShieldCheck size={48} weight="bold" className="text-primary" />, title: "Zero BS Rankings", desc: "Rankings are based on quality, not who pays us more." },
-          { icon: <ArrowsClockwise size={48} weight="bold" className="text-primary" />, title: "Always Fresh, Never Stale", desc: "We revisit sites regularly to keep reviews current." },
+          { icon: <Search size={48} className="text-primary" />, title: "We Pay, You Save", desc: "We pay for memberships ourselves and report honestly." },
+          { icon: <ShieldCheck size={48} className="text-primary" />, title: "Zero BS Rankings", desc: "Rankings are based on quality, not who pays us more." },
+          { icon: <RefreshCw size={48} className="text-primary" />, title: "Always Fresh, Never Stale", desc: "We revisit sites regularly to keep reviews current." },
         ].map((item) => (
           <StaggerChild key={item.title}>
             <div className="text-center">
