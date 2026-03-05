@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import AnimateOnScroll from "../components/AnimateOnScroll";
+import VisitSiteButton from "../components/VisitSiteButton";
 import { sites, categories } from "../data/sites";
 
 const sortOptions = ["Top Rated", "Newest", "Alphabetical"];
