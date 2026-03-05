@@ -203,7 +203,7 @@ const QuizBanner = () => (
     viewport={{ once: true }}
   >
     <div className="container">
-      <MotionCard className="glass-card flex flex-col items-center gap-4 rounded-lg p-8 text-center sm:flex-row sm:text-left" style={{ borderColor: "hsl(var(--primary) / 0.3)" }}>
+      <MotionCard className="glass-card flex flex-col items-center gap-4 rounded-lg p-8 text-center sm:flex-row sm:text-left">
         <Sparkles size={40} className="text-primary shrink-0" />
         <div className="flex-1">
           <h3 className="font-heading text-xl font-bold">Not sure where to start?</h3>

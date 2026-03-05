@@ -51,6 +51,11 @@ const AnimatedRoutes = () => {
   );
 };
 
+const ScrollProgressWrapper = () => {
+  // ScrollProgressBar uses useLocation which needs Router context
+  return <ScrollProgressBar />;
+};
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
