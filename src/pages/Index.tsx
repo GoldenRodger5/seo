@@ -8,8 +8,9 @@ import InlineEmailCapture from "../components/InlineEmailCapture";
 import BentoGrid from "../components/BentoGrid";
 import BrandStory from "../components/BrandStory";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
+import VisitSiteButton from "../components/VisitSiteButton";
 import Layout from "../components/Layout";
-import { getFeaturedSites, categories, sites } from "../data/sites";
+import { getFeaturedSites, categories, sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { Search, CalendarSync, ShieldCheck } from "lucide-react";
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 
