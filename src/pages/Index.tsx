@@ -14,7 +14,6 @@ import { getFeaturedSites, categories, sites, getVisitUrl, isAffiliated } from "
 import { Search, CalendarSync, ShieldCheck } from "lucide-react";
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { ReactNode } from "react";
-import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 
 const tickerItems = [
   "🔥 New: Helix Studios Review",
