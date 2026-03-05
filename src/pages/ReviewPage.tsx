@@ -1,5 +1,11 @@
 import { useParams, Link } from "react-router-dom";
 import { Check, X as XIcon, ArrowRight, ThumbsUp } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Helmet } from "react-helmet-async";
 import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
