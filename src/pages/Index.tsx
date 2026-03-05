@@ -176,17 +176,7 @@ const TopPicksSection = () => {
                 <StarRating score={site.overall_score} size={14} />
                 <p className="mt-2 flex-1 text-xs text-muted-foreground line-clamp-2">{site.short_description}</p>
                 <span className="mt-1 inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Staff Verified</span>
-                <MotionButton className="mt-3">
-                  <Link
-                    to={`/go/${site.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cta-btn inline-flex w-full items-center justify-center rounded-button gold-gradient px-4 py-2 text-xs font-semibold text-secondary-foreground"
-                  >
-                    Visit Site
-                  </Link>
-                </MotionButton>
-                <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab · Affiliate link</p>
+                <VisitSiteButton site={site} label="Visit Site" className="mt-3" />
               </MotionCard>
             </StaggerChild>
           ))}
