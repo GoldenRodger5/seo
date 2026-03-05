@@ -103,7 +103,7 @@ const BentoGrid = () => (
           transition={{ delay: 0.25 }}
           whileHover={{ borderColor: "hsl(263, 70%, 58%, 0.5)", boxShadow: "0 8px 40px hsl(263, 70%, 58%, 0.2)" }}
         >
-          <Users size={24} className="text-primary" />
+          <UsersThree size={24} weight="bold" className="text-primary" />
           <h3 className="mt-2 font-heading text-lg font-bold">
             <AnimatedCounter target={10000} suffix="+" /> readers
           </h3>
