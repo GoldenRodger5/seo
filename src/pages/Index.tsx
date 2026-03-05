@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import OutboundLink from "../components/OutboundLink";
 import { Star, ArrowRight, Sparkles, Flame, Film, DollarSign, Play, Gift, Smartphone, Search, ShieldCheck, RefreshCw } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -283,9 +284,9 @@ const LatestReviewsSection = () => {
                     </Link>
                   </MotionButton>
                   <MotionButton className="flex-1">
-                    <Link to={getVisitUrl(site)} target="_blank" rel="noopener noreferrer" className={`cta-btn block gold-gradient rounded-button px-4 py-2 text-center text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}>
+                    <OutboundLink site={site} className={`cta-btn block gold-gradient rounded-button px-4 py-2 text-center text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}>
                       Visit Site
-                    </Link>
+                    </OutboundLink>
                   </MotionButton>
                 </div>
                 <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab{isAffiliated(site) ? " · Affiliate link" : ""}</p>

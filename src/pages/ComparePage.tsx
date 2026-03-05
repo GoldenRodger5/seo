@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import OutboundLink from "../components/OutboundLink";
 import { ArrowRight, Check, X as XIcon } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
@@ -48,14 +49,12 @@ const CompareColumn = ({ site }: { site: SiteData }) => (
         </div>
       ))}
     </div>
-    <Link
-      to={getVisitUrl(site)}
-      target="_blank"
-      rel="noopener noreferrer"
+    <OutboundLink
+      site={site}
       className={`cta-btn mt-4 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}
     >
       Visit Site <ArrowRight size={14} />
-    </Link>
+    </OutboundLink>
     <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab{isAffiliated(site) ? " · Affiliate link" : ""}</p>
   </div>
 );
