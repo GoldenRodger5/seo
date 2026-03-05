@@ -237,7 +237,9 @@ const CategoriesSection = () => (
           <StaggerChild key={cat.slug}>
             <MotionCard className="glass-card flex items-center gap-4 rounded-lg p-5">
               <Link to={`/category/${cat.slug}`} className="flex items-center gap-4 w-full">
-                <span className="text-2xl">{categoryVibes[cat.slug]?.split(" ")[0] || cat.icon}</span>
+                <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-muted">
+                  {categoryIcons[cat.slug] || <Star size={18} className="text-secondary" />}
+                </span>
                 <div>
                   <h3 className="font-heading text-lg font-semibold">{categoryVibes[cat.slug] || cat.name}</h3>
                   <p className="text-xs text-muted-foreground">{cat.description}</p>

@@ -99,7 +99,6 @@ const FindMySite = () => {
                         priority === opt.value ? "border-primary" : ""
                       }`}
                     >
-                      <span className="text-2xl">{opt.icon}</span>
                       <span className="font-semibold">{opt.label}</span>
                     </button>
                   ))}
