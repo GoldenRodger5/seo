@@ -7,7 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import AgeVerification from "./components/AgeVerification";
 import EmailCapturePopup from "./components/EmailCapturePopup";
-import CustomCursor from "./components/CustomCursor";
+
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import Index from "./pages/Index";
 import TopSites from "./pages/TopSites";
@@ -62,7 +62,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <CustomCursor />
+        
         <AgeVerification />
         <EmailCapturePopup />
         <BrowserRouter>
