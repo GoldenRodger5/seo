@@ -47,6 +47,7 @@ const Navbar = () => {
             >
               <Search size={18} />
             </button>
+            <ThemeToggle />
           </div>
 
           {/* Mobile toggle */}

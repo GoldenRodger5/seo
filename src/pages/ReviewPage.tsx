@@ -291,6 +291,9 @@ const ReviewPage = () => {
               </div>
 
               <p className="text-xs text-muted-foreground">Last Updated: March 2026</p>
+
+              {/* Community Rating & Emoji Reactions */}
+              <CommunityRating siteSlug={site.slug} />
             </AnimateOnScroll>
 
             {/* Similar Sites */}
