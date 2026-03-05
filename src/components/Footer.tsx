@@ -12,24 +12,23 @@ const Footer = () => (
           <Link to="/top-sites" className="nav-link hover:text-foreground">Top Sites</Link>
           <Link to="/reviews" className="nav-link hover:text-foreground">Reviews</Link>
           <Link to="/best-deals" className="nav-link hover:text-foreground gold-gradient-text">Best Deals 🔥</Link>
+          <Link to="/compare" className="nav-link hover:text-foreground">Compare Sites</Link>
           <Link to="/find-my-site" className="nav-link hover:text-foreground">Quiz</Link>
           <Link to="/about" className="nav-link hover:text-foreground">About</Link>
           <Link to="/privacy-policy" className="nav-link hover:text-foreground">Privacy Policy</Link>
           <Link to="/affiliate-disclosure" className="nav-link hover:text-foreground">Affiliate Disclosure</Link>
+          <Link to="/sitemap" className="nav-link hover:text-foreground">Sitemap</Link>
         </div>
       </div>
 
       <div className="mt-8 flex items-center justify-center gap-2">
-        <span className="rounded-button border border-destructive/30 bg-destructive/10 px-3 py-1 text-xs font-medium text-destructive">
-          18+
-        </span>
+        <span className="rounded-button border border-destructive/30 bg-destructive/10 px-3 py-1 text-xs font-medium text-destructive">18+</span>
         <span className="text-xs text-muted-foreground">Adult Content</span>
       </div>
 
       <p className="mt-6 text-center text-xs leading-relaxed text-muted-foreground/70">
         TwinkVault.com is an adult content review site. All sites reviewed contain content intended for adults 18+. We earn commissions from affiliate links.
       </p>
-
       <p className="mt-2 text-center text-xs text-muted-foreground/50">
         © {new Date().getFullYear()} TwinkVault. All rights reserved.
       </p>
