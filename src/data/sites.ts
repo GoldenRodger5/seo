@@ -10,13 +10,24 @@ export interface SiteData {
   update_frequency: number;
   mobile_score: number;
   price_from: string;
-  affiliate_url: string;
+  affiliate_url: string | null;
+  homepage_url: string;
   categories: string[];
   pros: string[];
   cons: string[];
   rank: number;
   badge: string | null;
   is_featured: boolean;
+}
+
+/** Returns the correct outbound URL for a site */
+export function getVisitUrl(site: SiteData): string {
+  return site.affiliate_url ? `/go/${site.slug}` : site.homepage_url;
+}
+
+/** Whether the link opens via our redirect (affiliate) */
+export function isAffiliated(site: SiteData): boolean {
+  return site.affiliate_url !== null;
 }
 
 export const sites: SiteData[] = [
