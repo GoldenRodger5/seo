@@ -11,8 +11,10 @@ const GoRedirect = () => {
     const site = getSiteBySlug(slug || "");
     if (site) {
       setSiteName(site.name);
+      // Only redirect via /go/ if the site has an affiliate URL
+      const targetUrl = site.affiliate_url || site.homepage_url;
       const timer = setTimeout(() => {
-        window.open(site.affiliate_url, "_blank");
+        window.open(targetUrl, "_blank");
       }, 1500);
       return () => clearTimeout(timer);
     }

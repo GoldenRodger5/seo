@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Layout from "../components/Layout";
 import ScoreRing from "../components/ScoreRing";
 import StarRating from "../components/StarRating";
-import { getSiteBySlug, sites, SiteData } from "../data/sites";
+import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
 import { PageTransition } from "../components/MotionWrappers";
 
 const comparePairs = [
@@ -49,14 +49,14 @@ const CompareColumn = ({ site }: { site: SiteData }) => (
       ))}
     </div>
     <Link
-      to={`/go/${site.slug}`}
+      to={getVisitUrl(site)}
       target="_blank"
       rel="noopener noreferrer"
-      className="cta-btn mt-4 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
+      className={`cta-btn mt-4 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}
     >
       Visit Site <ArrowRight size={14} />
     </Link>
-    <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab · Affiliate link</p>
+    <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab{isAffiliated(site) ? " · Affiliate link" : ""}</p>
   </div>
 );
 

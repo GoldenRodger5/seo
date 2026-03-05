@@ -10,13 +10,24 @@ export interface SiteData {
   update_frequency: number;
   mobile_score: number;
   price_from: string;
-  affiliate_url: string;
+  affiliate_url: string | null;
+  homepage_url: string;
   categories: string[];
   pros: string[];
   cons: string[];
   rank: number;
   badge: string | null;
   is_featured: boolean;
+}
+
+/** Returns the correct outbound URL for a site */
+export function getVisitUrl(site: SiteData): string {
+  return site.affiliate_url ? `/go/${site.slug}` : site.homepage_url;
+}
+
+/** Whether the link opens via our redirect (affiliate) */
+export function isAffiliated(site: SiteData): boolean {
+  return site.affiliate_url !== null;
 }
 
 export const sites: SiteData[] = [
@@ -33,6 +44,7 @@ export const sites: SiteData[] = [
     mobile_score: 90,
     price_from: "$9.99/mo",
     affiliate_url: "#",
+    homepage_url: "https://helixstudios.net",
     categories: ["premium-studios", "hd-quality"],
     pros: ["Cinematic production quality", "Large exclusive model roster", "Regular weekly updates"],
     cons: ["Higher price point than competitors", "Limited amateur content"],
@@ -53,6 +65,7 @@ export const sites: SiteData[] = [
     mobile_score: 85,
     price_from: "$7.99/mo",
     affiliate_url: "#",
+    homepage_url: "https://twinkinshorts.com",
     categories: ["amateur-twinks", "best-value"],
     pros: ["Very affordable pricing", "Authentic amateur feel", "Great mobile experience"],
     cons: ["Lower production quality than studios"],
@@ -73,6 +86,7 @@ export const sites: SiteData[] = [
     mobile_score: 88,
     price_from: "$12.99/mo",
     affiliate_url: "#",
+    homepage_url: "https://athletictwinks.com",
     categories: ["premium-studios", "hd-quality"],
     pros: ["Unique athletic niche", "High energy content", "HD streaming"],
     cons: ["Narrow niche focus", "Smaller library"],
@@ -92,7 +106,8 @@ export const sites: SiteData[] = [
     update_frequency: 75,
     mobile_score: 82,
     price_from: "$11.99/mo",
-    affiliate_url: "#",
+    affiliate_url: null,
+    homepage_url: "https://daddyontwink.com",
     categories: ["premium-studios"],
     pros: ["Unique niche content", "Good model chemistry", "Regular updates"],
     cons: ["Niche may not suit everyone", "Average mobile experience"],
@@ -113,6 +128,7 @@ export const sites: SiteData[] = [
     mobile_score: 80,
     price_from: "$8.99/mo",
     affiliate_url: "#",
+    homepage_url: "https://southernstrokes.com",
     categories: ["amateur-twinks", "best-value"],
     pros: ["Great value for money", "Friendly approachable models", "Good variety"],
     cons: ["Production quality varies"],
@@ -132,7 +148,8 @@ export const sites: SiteData[] = [
     update_frequency: 70,
     mobile_score: 85,
     price_from: "$10.99/mo",
-    affiliate_url: "#",
+    affiliate_url: null,
+    homepage_url: "https://touchthatboy.com",
     categories: ["premium-studios", "hd-quality"],
     pros: ["Tasteful, intimate content", "High production quality", "Good streaming"],
     cons: ["Slower update schedule", "Smaller library"],
@@ -152,7 +169,8 @@ export const sites: SiteData[] = [
     update_frequency: 85,
     mobile_score: 78,
     price_from: "$9.99/mo",
-    affiliate_url: "#",
+    affiliate_url: null,
+    homepage_url: "https://breedmeraw.com",
     categories: ["amateur-twinks", "hd-quality"],
     pros: ["Large content library", "Frequent updates", "Good pricing"],
     cons: ["Variable production quality", "Older site design"],
@@ -173,6 +191,7 @@ export const sites: SiteData[] = [
     mobile_score: 80,
     price_from: "$7.99/mo",
     affiliate_url: "#",
+    homepage_url: "https://twinksbareback.com",
     categories: ["free-trials", "best-value", "amateur-twinks"],
     pros: ["Free trial available", "Very affordable", "Good niche focus"],
     cons: ["Smaller content library", "Basic site design"],

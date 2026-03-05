@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import Layout from "../components/Layout";
-import { sites } from "../data/sites";
+import { sites, getSiteBySlug, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
 
 interface Deal {
@@ -114,16 +114,25 @@ const BestDeals = () => (
                   </div>
 
                   <MotionButton className="mt-4">
-                    <Link
-                      to={`/go/${deal.siteSlug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="cta-btn flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
-                    >
-                      Claim Deal <ArrowRight size={14} />
-                    </Link>
+                    {(() => {
+                      const site = getSiteBySlug(deal.siteSlug);
+                      const url = site ? getVisitUrl(site) : `/go/${deal.siteSlug}`;
+                      const affiliated = site ? isAffiliated(site) : true;
+                      return (
+                        <>
+                          <Link
+                            to={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`cta-btn flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!affiliated ? "opacity-85" : ""}`}
+                          >
+                            Claim Deal <ArrowRight size={14} />
+                          </Link>
+                          <p className="mt-1 text-center text-[10px] text-muted-foreground">Opens in new tab{affiliated ? " · Affiliate link" : ""}</p>
+                        </>
+                      );
+                    })()}
                   </MotionButton>
-                  <p className="mt-1 text-center text-[10px] text-muted-foreground">Opens in new tab · Affiliate link</p>
                 </motion.div>
               </StaggerChild>
             ))}

@@ -7,7 +7,8 @@ import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
-import { sites } from "../data/sites";
+import VisitSiteButton from "../components/VisitSiteButton";
+import { sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
 
 const filters = ["All", "Best Value", "HD Quality", "Amateur", "Premium Studio", "Free Trial"];
@@ -172,17 +173,7 @@ const TopSites = () => {
                         <div className="rounded-button border border-border bg-muted/50 px-3 py-1.5">
                           <span className="text-lg font-semibold">{site.price_from}</span>
                         </div>
-                        <MotionButton className="w-full">
-                          <Link
-                            to={`/go/${site.slug}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold gold-gradient text-secondary-foreground"
-                          >
-                            Visit Site <ArrowRight size={14} />
-                          </Link>
-                        </MotionButton>
-                        <p className="text-[10px] text-muted-foreground text-center">Opens in new tab · Affiliate link</p>
+                        <VisitSiteButton site={site} className="w-full" />
                         <Link
                           to={`/reviews/${site.slug}`}
                           className="rounded-button border border-primary px-4 py-2 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors w-full text-center"

@@ -7,7 +7,8 @@ import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import CommunityRating from "../components/CommunityRating";
-import { getSiteBySlug, sites } from "../data/sites";
+import VisitSiteButton from "../components/VisitSiteButton";
+import { getSiteBySlug, sites, getVisitUrl, isAffiliated } from "../data/sites";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
@@ -142,14 +143,7 @@ const ReviewPage = () => {
                 </div>
 
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <Link
-                    to={`/go/${site.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cta-btn gold-gradient inline-flex items-center gap-2 rounded-button px-8 py-3 text-sm font-semibold text-secondary-foreground"
-                  >
-                    Visit {site.name} <ArrowRight size={14} />
-                  </Link>
+                  <VisitSiteButton site={site} label={`Visit ${site.name}`} />
                   <Link
                     to="/top-sites"
                     className="inline-flex items-center gap-2 rounded-button border border-primary px-8 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
@@ -157,9 +151,6 @@ const ReviewPage = () => {
                     See All Reviews
                   </Link>
                 </div>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  Opens in new tab · Affiliate link
-                </p>
               </div>
             </AnimateOnScroll>
 
@@ -259,15 +250,7 @@ const ReviewPage = () => {
                   <div className="mt-2 flex justify-center">
                     <ScoreRing score={site.overall_score} />
                   </div>
-                  <Link
-                    to={`/go/${site.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cta-btn mt-4 inline-flex items-center gap-2 rounded-button gold-gradient px-8 py-3 text-sm font-semibold text-secondary-foreground"
-                  >
-                    Visit {site.name} <ArrowRight size={14} />
-                  </Link>
-                  <p className="mt-2 text-xs text-muted-foreground">Opens in new tab · Affiliate link</p>
+                  <VisitSiteButton site={site} className="mt-4" />
                 </div>
               </section>
 
@@ -330,15 +313,7 @@ const ReviewPage = () => {
                   {site.price_from}
                 </span>
               </div>
-              <Link
-                to={`/go/${site.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cta-btn mt-4 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
-              >
-                Visit Site <ArrowRight size={14} />
-              </Link>
-              <p className="mt-2 text-center text-[10px] text-muted-foreground">Opens in new tab · Affiliate link</p>
+              <VisitSiteButton site={site} className="mt-4" />
             </div>
           </aside>
         </div>
@@ -356,10 +331,10 @@ const ReviewPage = () => {
               <span className="text-xs text-secondary">{site.overall_score}/5</span>
             </div>
             <Link
-              to={`/go/${site.slug}`}
+              to={getVisitUrl(site)}
               target="_blank"
               rel="noopener noreferrer"
-              className="cta-btn flex items-center gap-2 rounded-button gold-gradient px-6 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap"
+              className={`cta-btn flex items-center gap-2 rounded-button gold-gradient px-6 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap ${!isAffiliated(site) ? "opacity-85" : ""}`}
             >
               Visit Site <ArrowRight size={14} />
             </Link>
