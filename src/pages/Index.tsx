@@ -309,9 +309,9 @@ const TrustSection = () => (
       <h2 className="text-center font-heading text-3xl font-bold md:text-4xl heading-gradient inline-block w-full">Why Trust Us</h2>
       <StaggerContainer className="mt-10 grid gap-8 md:grid-cols-3">
         {[
-          { icon: <MagnifyingGlass size={48} weight="bold" className="text-primary" />, title: "We Pay, You Save", desc: "We pay for memberships ourselves and report honestly." },
-          { icon: <ShieldCheck size={48} weight="bold" className="text-primary" />, title: "Zero BS Rankings", desc: "Rankings are based on quality, not who pays us more." },
-          { icon: <ArrowsClockwise size={48} weight="bold" className="text-primary" />, title: "Always Fresh, Never Stale", desc: "We revisit sites regularly to keep reviews current." },
+          { icon: <Search size={48} className="text-primary" />, title: "We Pay, You Save", desc: "We pay for memberships ourselves and report honestly." },
+          { icon: <ShieldCheck size={48} className="text-primary" />, title: "Zero BS Rankings", desc: "Rankings are based on quality, not who pays us more." },
+          { icon: <RefreshCw size={48} className="text-primary" />, title: "Always Fresh, Never Stale", desc: "We revisit sites regularly to keep reviews current." },
         ].map((item) => (
           <StaggerChild key={item.title}>
             <div className="text-center">
