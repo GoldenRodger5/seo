@@ -100,9 +100,9 @@ const BestDeals = () => (
                       <div className="flex items-center gap-2">
                         <h2 className="font-heading text-xl font-bold">{deal.siteName}</h2>
                         <span className={`rounded-button px-2 py-0.5 text-xs font-semibold ${
-                          deal.expiry === "limited" ? "bg-destructive/20 text-destructive" : "bg-muted text-muted-foreground"
+                          deal.expiry === "limited" ? "bg-destructive/20 text-destructive" : deal.expiry === "flash" ? "bg-secondary/20 text-secondary" : "bg-muted text-muted-foreground"
                         }`}>
-                          {deal.expiry === "limited" ? "Limited Time" : "Ongoing"}
+                          {deal.expiry === "limited" ? "Limited Time" : deal.expiry === "flash" ? "Flash Deal" : "Ongoing"}
                         </span>
                       </div>
                       <p className="mt-1 text-sm text-muted-foreground">{deal.description}</p>
