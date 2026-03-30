@@ -20,8 +20,8 @@ const CheapestTwinkSites = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>Cheapest Gay Twink Sites {currentYear} — Best Value Subscriptions | TwinkVault</title>
-        <meta name="description" content="The most affordable gay twink sites in {currentYear} ranked by value. Get quality content without overpaying — best cheap twink site subscriptions." />
+        <title>{`Cheapest Gay Twink Sites ${currentYear} — Best Value Subscriptions | TwinkVault`}</title>
+        <meta name="description" content={`The most affordable gay twink sites in ${currentYear} ranked by value. Get quality content without overpaying — best cheap twink site subscriptions.`} />
         <link rel="canonical" href="https://twinkvault.com/cheapest-twink-sites" />
       </Helmet>
 

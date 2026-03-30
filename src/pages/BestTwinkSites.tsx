@@ -16,8 +16,8 @@ const BestTwinkSites = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>Best Twink Sites {currentYear} — Top 12 Ranked by Experts | TwinkVault</title>
-        <meta name="description" content="The definitive list of the best gay twink sites in {currentYear}. Staff-tested rankings with real pricing, honest scores, and exclusive deals. Updated monthly." />
+        <title>{`Best Twink Sites ${currentYear} — Top 12 Ranked by Experts | TwinkVault`}</title>
+        <meta name="description" content={`The definitive list of the best gay twink sites in ${currentYear}. Staff-tested rankings with real pricing, honest scores, and exclusive deals. Updated monthly.`} />
         <link rel="canonical" href="https://twinkvault.com/best-twink-sites" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",

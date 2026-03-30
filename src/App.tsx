@@ -48,17 +48,17 @@ const PageLoader = () => (
 // Error boundary that resets on route changes
 class ErrorBoundary extends Component<
   { children: ReactNode; locationKey: string },
-  { hasError: boolean }
+  { hasError: boolean; errorMsg: string }
 > {
-  state = { hasError: false };
+  state = { hasError: false, errorMsg: "" };
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, errorMsg: error?.message || "Unknown error" };
   }
 
   componentDidUpdate(prevProps: { locationKey: string }) {
     if (prevProps.locationKey !== this.props.locationKey && this.state.hasError) {
-      this.setState({ hasError: false });
+      this.setState({ hasError: false, errorMsg: "" });
     }
   }
 

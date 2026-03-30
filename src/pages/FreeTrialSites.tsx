@@ -16,8 +16,8 @@ const FreeTrialSites = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>Twink Sites with Free Trials {currentYear} — Try Before You Buy | TwinkVault</title>
-        <meta name="description" content="The best gay twink sites offering free trials in {currentYear}. Try before you commit — staff-verified trial offers with no hidden fees." />
+        <title>{`Twink Sites with Free Trials ${currentYear} — Try Before You Buy | TwinkVault`}</title>
+        <meta name="description" content={`The best gay twink sites offering free trials in ${currentYear}. Try before you commit — staff-verified trial offers with no hidden fees.`} />
         <link rel="canonical" href="https://twinkvault.com/free-trial-twink-sites" />
       </Helmet>
 

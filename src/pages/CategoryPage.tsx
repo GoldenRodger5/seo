@@ -38,7 +38,7 @@ const CategoryPage = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Best {category.name} Sites {currentYear} — Ranked | TwinkVault</title>
+        <title>{`Best ${category.name} Sites ${currentYear} — Ranked | TwinkVault`}</title>
         <meta name="description" content={`The best ${category.name.toLowerCase()} twink content sites, ranked by quality and value. Staff-tested reviews with real pricing.`} />
         <link rel="canonical" href={`https://twinkvault.com/category/${slug}`} />
         <script type="application/ld+json">{JSON.stringify({

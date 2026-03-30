@@ -143,7 +143,7 @@ const ComparePage = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>{siteA.name} vs {siteB.name} — Which Is Worth It? ({currentYear}) | TwinkVault</title>
+          <title>{`${siteA.name} vs ${siteB.name} — Which Is Worth It? (${currentYear}) | TwinkVault`}</title>
           <meta name="description" content={`Compare ${siteA.name} vs ${siteB.name} side by side. Scores, pricing, pros and cons to help you decide.`} />
           <link rel="canonical" href={`https://twinkvault.com/compare/${slug}`} />
         </Helmet>
