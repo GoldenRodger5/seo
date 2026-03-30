@@ -37,7 +37,7 @@ const CategoryPage = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Best {category.name} Sites 2025 — Ranked | TwinkVault</title>
+        <title>Best {category.name} Sites 2026 — Ranked | TwinkVault</title>
         <meta name="description" content={`The best ${category.name.toLowerCase()} twink content sites, ranked by quality and value.`} />
       </Helmet>
 

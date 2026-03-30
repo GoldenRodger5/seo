@@ -2,14 +2,38 @@ import { useState } from "react";
 import { Mail, Sparkles } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+async function saveEmail(email: string, source: string) {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+  await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": SUPABASE_ANON_KEY,
+      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+      "Prefer": "return=minimal",
+    },
+    body: JSON.stringify({ email, source, subscribed_at: new Date().toISOString() }),
+  });
+}
+
 const InlineEmailCapture = () => {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    console.log("Inline email captured:", email);
+    setLoading(true);
+    try {
+      await saveEmail(email, "homepage");
+    } catch {
+      // Still show success — don't punish user for backend issues
+    }
+    setLoading(false);
     setSubmitted(true);
   };
 
@@ -55,9 +79,10 @@ const InlineEmailCapture = () => {
                   />
                   <button
                     type="submit"
-                    className="cta-btn gold-gradient rounded-button px-8 py-3 text-sm font-semibold text-secondary-foreground whitespace-nowrap"
+                    disabled={loading}
+                    className="cta-btn gold-gradient rounded-button px-8 py-3 text-sm font-semibold text-secondary-foreground whitespace-nowrap disabled:opacity-70"
                   >
-                    Send Me The Deals
+                    {loading ? "Saving..." : "Send Me The Deals"}
                   </button>
                 </form>
               )}

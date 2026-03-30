@@ -106,7 +106,7 @@ const ReviewsIndex = () => {
                   <p className="mt-3 flex-1 text-sm text-muted-foreground line-clamp-2">{site.short_description}</p>
                   <div className="mt-3 flex items-center justify-between">
                     <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Staff Verified</span>
-                    <span className="text-xs text-muted-foreground">{site.price_from}</span>
+                    <span className="text-xs text-muted-foreground">{site.price_monthly}</span>
                   </div>
                   <div className="mt-4 flex gap-2">
                     <Link

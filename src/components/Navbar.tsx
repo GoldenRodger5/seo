@@ -9,6 +9,7 @@ const navLinks = [
   { label: "Top Sites", to: "/top-sites", gold: false },
   { label: "Reviews", to: "/reviews", gold: false },
   { label: "Compare", to: "/compare", gold: false },
+  { label: "✨ Ask AI", to: "/ask-ai", gold: false },
   { label: "Best Deals 🔥", to: "/best-deals", gold: true },
 ];
 

@@ -126,7 +126,7 @@ const ComparePage = () => {
   }
 
   const winner = siteA.overall_score >= siteB.overall_score ? siteA : siteB;
-  const budgetPick = parseFloat(siteA.price_from.replace(/[^0-9.]/g, "")) <= parseFloat(siteB.price_from.replace(/[^0-9.]/g, "")) ? siteA : siteB;
+  const budgetPick = parseFloat(siteA.price_annual.replace(/[^0-9.]/g, "")) <= parseFloat(siteB.price_annual.replace(/[^0-9.]/g, "")) ? siteA : siteB;
 
   return (
     <Layout>

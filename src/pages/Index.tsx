@@ -335,6 +335,18 @@ const Index = () => (
       <title>Best Gay Twink Sites 2026 — Ranked & Reviewed | TwinkVault</title>
       <meta name="description" content="Honest independent rankings of the best gay twink porn sites. Staff-tested reviews, real pricing, and exclusive deals. Updated monthly." />
       <link rel="canonical" href="https://twinkvault.com" />
+      <script type="application/ld+json">{JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "TwinkVault",
+        "url": "https://twinkvault.com",
+        "description": "Independent rankings and reviews of the best gay twink content sites.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": { "@type": "EntryPoint", "urlTemplate": "https://twinkvault.com/reviews?q={search_term_string}" },
+          "query-input": "required name=search_term_string"
+        }
+      })}</script>
     </Helmet>
     <PageTransition>
       <HeroSection />

@@ -42,7 +42,7 @@ const ExitIntentDealPopup = () => {
     return () => document.removeEventListener("keydown", handleEsc);
   }, [show]);
 
-  const deal = getSiteBySlug("helix-studios");
+  const deal = getSiteBySlug("next-door-twink");
   if (!show || !deal) return null;
 
   return (
@@ -66,14 +66,14 @@ const ExitIntentDealPopup = () => {
             <span className="text-4xl">👀</span>
             <h3 className="mt-4 font-heading text-2xl font-bold">Wait — This Week's Best Deal</h3>
             <p className="mt-3 text-muted-foreground">
-              <span className="font-semibold text-foreground">{deal.name}</span> — 67% off annual membership
+              <span className="font-semibold text-foreground">{deal.name}</span> — 3-day trial, then access to 15 sites
             </p>
-            <p className="mt-2 text-2xl font-bold text-emerald-400">$9.99/mo</p>
-            <p className="text-sm text-muted-foreground line-through">$29.99/mo</p>
+            <p className="mt-2 text-2xl font-bold text-emerald-400">$2.95 trial</p>
+            <p className="text-sm text-muted-foreground">Then {deal.price_monthly} — cancel anytime</p>
 
             <MotionButtonWrap>
               <Link
-                to="/go/helix-studios"
+                to="/go/next-door-twink"
                 className="cta-btn mt-6 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
                 onClick={() => setShow(false)}
               >

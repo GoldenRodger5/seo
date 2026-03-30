@@ -18,8 +18,22 @@ const Contact = () => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
     setLoading(true);
-    // Simulate submit — replace with real Supabase insert when ready
-    await new Promise((r) => setTimeout(r, 800));
+    try {
+      const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+      const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+        await fetch(`${SUPABASE_URL}/rest/v1/contact_submissions`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+            "Prefer": "return=minimal",
+          },
+          body: JSON.stringify({ ...form, submitted_at: new Date().toISOString() }),
+        });
+      }
+    } catch { /* silent */ }
     setLoading(false);
     setSubmitted(true);
   };

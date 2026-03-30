@@ -79,7 +79,7 @@ const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
                 >
                   <div>
                     <p className="font-semibold">{site.name}</p>
-                    <p className="text-xs text-muted-foreground">{site.overall_score}/5 · {site.price_from}</p>
+                    <p className="text-xs text-muted-foreground">{site.overall_score}/5 · {site.price_monthly}</p>
                   </div>
                   <span className="flex items-center gap-1 text-xs text-secondary">
                     View Review <ArrowRight size={12} />

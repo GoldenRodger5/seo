@@ -13,6 +13,10 @@ const Footer = () => (
           <Link to="/reviews" className="nav-link hover:text-foreground">Reviews</Link>
           <Link to="/best-deals" className="nav-link hover:text-foreground gold-gradient-text">Best Deals 🔥</Link>
           <Link to="/compare" className="nav-link hover:text-foreground">Compare Sites</Link>
+          <Link to="/best-twink-sites" className="nav-link hover:text-foreground">Best Twink Sites</Link>
+          <Link to="/free-trial-twink-sites" className="nav-link hover:text-foreground">Free Trials</Link>
+          <Link to="/cheapest-twink-sites" className="nav-link hover:text-foreground">Cheapest Sites</Link>
+          <Link to="/ask-ai" className="nav-link hover:text-foreground">AI Recommender</Link>
           <Link to="/find-my-site" className="nav-link hover:text-foreground">Quiz</Link>
           <Link to="/about" className="nav-link hover:text-foreground">About</Link>
           <Link to="/contact" className="nav-link hover:text-foreground">Contact</Link>

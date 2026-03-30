@@ -1,30 +1,43 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+async function saveEmail(email: string, source: string) {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+  await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": SUPABASE_ANON_KEY,
+      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+      "Prefer": "return=minimal",
+    },
+    body: JSON.stringify({ email, source, subscribed_at: new Date().toISOString() }),
+  });
+}
+
 const EmailCapturePopup = () => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (sessionStorage.getItem("tv_popup_shown")) return;
-
-    // Timer: show after 12 seconds
     const timer = setTimeout(() => {
       if (!sessionStorage.getItem("tv_popup_shown")) {
         sessionStorage.setItem("tv_popup_shown", "1");
         setShow(true);
       }
     }, 12000);
-
-    // Exit intent: mouse leaves viewport top
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !sessionStorage.getItem("tv_popup_shown")) {
         sessionStorage.setItem("tv_popup_shown", "1");
         setShow(true);
       }
     };
-
     document.addEventListener("mouseleave", handleMouseLeave);
     return () => {
       clearTimeout(timer);
@@ -32,10 +45,14 @@ const EmailCapturePopup = () => {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    console.log("Email captured:", email);
+    setLoading(true);
+    try {
+      await saveEmail(email, "popup");
+    } catch { /* silent */ }
+    setLoading(false);
     setSubmitted(true);
     setTimeout(() => setShow(false), 2000);
   };
@@ -79,9 +96,10 @@ const EmailCapturePopup = () => {
               />
               <button
                 type="submit"
-                className="cta-btn gold-gradient w-full rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground"
+                disabled={loading}
+                className="cta-btn gold-gradient w-full rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground disabled:opacity-70"
               >
-                Send Me The Deals
+                {loading ? "Saving..." : "Send Me The Deals"}
               </button>
             </form>
             <button

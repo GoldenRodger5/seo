@@ -1,0 +1,131 @@
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
+import { Gift, Check, ArrowRight } from "lucide-react";
+import Layout from "../components/Layout";
+import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../components/MotionWrappers";
+import StarRating from "../components/StarRating";
+import VisitSiteButton from "../components/VisitSiteButton";
+import { sites } from "../data/sites";
+
+const trialSites = sites.filter(s => s.has_free_trial).sort((a, b) => a.rank - b.rank);
+const noTrialSites = sites.filter(s => !s.has_free_trial).sort((a, b) => a.rank - b.rank).slice(0, 4);
+
+const FreeTrialSites = () => (
+  <Layout>
+    <PageTransition>
+      <Helmet>
+        <title>Twink Sites with Free Trials 2026 — Try Before You Buy | TwinkVault</title>
+        <meta name="description" content="The best gay twink sites offering free trials in 2026. Try before you commit — staff-verified trial offers with no hidden fees." />
+        <link rel="canonical" href="https://twinkvault.com/free-trial-twink-sites" />
+      </Helmet>
+
+      <section className="hero-mesh py-16">
+        <div className="container max-w-4xl text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <span className="inline-flex items-center gap-2 rounded-button bg-emerald-500/15 px-3 py-1.5 text-xs font-medium text-emerald-400">
+              <Gift size={12} /> Try Before You Buy
+            </span>
+            <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
+              Twink Sites with Free Trials
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Don't commit blind. These sites offer trial memberships so you can test the content before paying full price.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="py-12">
+        <div className="container max-w-4xl">
+
+          {/* Featured snippet box */}
+          <motion.div
+            className="glass-card rounded-lg p-6 border-l-4 border-l-emerald-500 mb-10"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h2 className="font-heading text-lg font-bold">Best Free Trial Twink Sites in 2026</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              <strong className="text-foreground">Next Door Twink</strong> and <strong className="text-foreground">Next Door World</strong> offer a 3-day trial for $2.95 — the best trial deal available, especially since Next Door World includes access to 15 sites.
+              <strong className="text-foreground"> Breed Me Raw</strong> offers a 2-day free trial.
+              Always check directly with the site for current trial availability.
+            </p>
+          </motion.div>
+
+          <h2 className="font-heading text-2xl font-bold mb-6 heading-gradient inline-block">Sites Offering Trials</h2>
+          <StaggerContainer className="space-y-4 mb-12">
+            {trialSites.map((site) => (
+              <StaggerChild key={site.id}>
+                <MotionCard className="glass-card rounded-lg p-6 border border-emerald-500/20">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="font-heading text-xl font-bold">{site.name}</h3>
+                        <span className="rounded-button bg-emerald-500/15 px-2 py-0.5 text-xs font-semibold text-emerald-400">
+                          ✓ Trial Available
+                        </span>
+                      </div>
+                      <StarRating score={site.overall_score} size={13} />
+                      <p className="mt-2 text-sm text-muted-foreground">{site.short_description}</p>
+                      <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                        <span className="text-emerald-400 font-semibold">{site.deal_text}</span>
+                        <span>Then {site.price_monthly}</span>
+                        <span>Annual: {site.price_annual}/mo</span>
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-3 text-xs text-muted-foreground">
+                        {site.pros.slice(0, 3).map(p => (
+                          <span key={p} className="flex items-center gap-1"><Check size={11} className="text-emerald-400" />{p}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2 shrink-0 sm:w-40">
+                      <VisitSiteButton site={site} showDisclosure={false} />
+                      <Link to={`/reviews/${site.slug}`} className="rounded-button border border-primary px-4 py-2 text-center text-xs font-semibold text-primary hover:bg-primary/10 transition-colors">
+                        Read Review <ArrowRight size={11} className="inline" />
+                      </Link>
+                    </div>
+                  </div>
+                </MotionCard>
+              </StaggerChild>
+            ))}
+          </StaggerContainer>
+
+          <h2 className="font-heading text-2xl font-bold mb-2 heading-gradient inline-block">Top Rated (No Trial)</h2>
+          <p className="mb-6 text-sm text-muted-foreground">These don't offer trials but consistently rank as our top overall picks.</p>
+          <StaggerContainer className="space-y-4 mb-12">
+            {noTrialSites.map((site) => (
+              <StaggerChild key={site.id}>
+                <MotionCard className="glass-card rounded-lg p-5">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <h3 className="font-heading text-lg font-bold">{site.name}</h3>
+                      <StarRating score={site.overall_score} size={12} />
+                      <p className="mt-1 text-xs text-muted-foreground">{site.price_monthly} · {site.price_annual}/mo annual</p>
+                    </div>
+                    <div className="flex gap-2 shrink-0">
+                      <Link to={`/reviews/${site.slug}`} className="rounded-button border border-primary px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors">
+                        Review
+                      </Link>
+                      <VisitSiteButton site={site} showDisclosure={false} className="text-xs px-3 py-2" />
+                    </div>
+                  </div>
+                </MotionCard>
+              </StaggerChild>
+            ))}
+          </StaggerContainer>
+
+          {/* SEO content */}
+          <div className="space-y-5 text-muted-foreground leading-relaxed">
+            <h2 className="font-heading text-2xl font-bold text-foreground">Are Twink Site Free Trials Worth It?</h2>
+            <p>Free trials for twink sites are genuinely useful — preview pages and trailers are often misleading, showing the best scenes while the full library can be thin. A trial lets you browse the actual member area, check update frequency, and test the streaming quality before committing to a full subscription.</p>
+            <p>The best trial deal in the category is the Next Door World network — $2.95 for 3 days gives you access to 15 sites and 3,000+ videos. That's enough time to know whether you want the full subscription. Just remember to cancel before the trial ends if you don't want to be billed.</p>
+            <p>Sites without trials can still be worth trying if they have a strong track record, a responsive refund policy, or a very low annual price that minimises the risk.</p>
+          </div>
+        </div>
+      </section>
+    </PageTransition>
+  </Layout>
+);
+
+export default FreeTrialSites;

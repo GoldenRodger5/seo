@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import AgeVerification from "./components/AgeVerification";
 import EmailCapturePopup from "./components/EmailCapturePopup";
+import CookieConsent from "./components/CookieConsent";
 
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import Index from "./pages/Index";
@@ -16,6 +17,10 @@ import ReviewsIndex from "./pages/ReviewsIndex";
 import CategoryPage from "./pages/CategoryPage";
 import BestDeals from "./pages/BestDeals";
 import FindMySite from "./pages/FindMySite";
+import AskAI from "./pages/AskAI";
+import BestTwinkSites from "./pages/BestTwinkSites";
+import FreeTrialSites from "./pages/FreeTrialSites";
+import CheapestTwinkSites from "./pages/CheapestTwinkSites";
 import GoRedirect from "./pages/GoRedirect";
 import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -41,6 +46,10 @@ const AnimatedRoutes = () => {
         <Route path="/category/:slug" element={<CategoryPage />} />
         <Route path="/best-deals" element={<BestDeals />} />
         <Route path="/find-my-site" element={<FindMySite />} />
+        <Route path="/ask-ai" element={<AskAI />} />
+        <Route path="/best-twink-sites" element={<BestTwinkSites />} />
+        <Route path="/free-trial-twink-sites" element={<FreeTrialSites />} />
+        <Route path="/cheapest-twink-sites" element={<CheapestTwinkSites />} />
         <Route path="/go/:slug" element={<GoRedirect />} />
         <Route path="/about" element={<About />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -71,6 +80,7 @@ const App = () => (
         
         <AgeVerification />
         <EmailCapturePopup />
+        <CookieConsent />
         <BrowserRouter>
           <ScrollProgressBar />
           <AnimatedRoutes />

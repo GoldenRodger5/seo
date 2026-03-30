@@ -16,6 +16,7 @@ import AnimateOnScroll from "../components/AnimateOnScroll";
 import CommunityRating from "../components/CommunityRating";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { getSiteBySlug, sites, getVisitUrl, isAffiliated } from "../data/sites";
+import { useAIReview } from "../hooks/useAIReview";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
@@ -87,7 +88,13 @@ const ReviewPage = () => {
     );
   }
 
-  const similar = sites.filter((s) => s.id !== site.id).slice(0, 3);
+  const { content: aiContent, loading: aiLoading } = useAIReview(site);
+
+  // Show sites in same category first, then fill with others — never show current site
+  const similar = [
+    ...sites.filter(s => s.id !== site.id && s.categories.some(c => site.categories.includes(c))),
+    ...sites.filter(s => s.id !== site.id && !s.categories.some(c => site.categories.includes(c))),
+  ].slice(0, 3);
 
   return (
     <Layout>
@@ -223,7 +230,21 @@ const ReviewPage = () => {
                   <span className="shrink-0">✓</span>
                   <span><strong>Staff Verified</strong> — Our team personally tested a paid membership to verify this review. Last tested: March 2026.</span>
                 </div>
-                <p className="mt-3 text-muted-foreground leading-relaxed">{site.description}</p>
+                {aiLoading ? (
+                  <div className="mt-4 space-y-3">
+                    {[...Array(3)].map((_, i) => (
+                      <div key={i} className="h-4 animate-pulse rounded bg-muted" style={{ width: `${85 - i * 10}%` }} />
+                    ))}
+                  </div>
+                ) : aiContent ? (
+                  <div className="mt-3 space-y-4 text-muted-foreground leading-relaxed">
+                    {aiContent.split("\n\n").filter(Boolean).map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="mt-3 text-muted-foreground leading-relaxed">{site.description}</p>
+                )}
               </section>
               <section>
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Site Design & Usability</h2>
@@ -302,10 +323,10 @@ const ReviewPage = () => {
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Frequently Asked Questions</h2>
                 <Accordion type="single" collapsible className="mt-4 space-y-2">
                   {[
-                    { q: `Is ${site.name} worth it?`, a: `${site.name} scores ${site.overall_score}/5 in our testing. ${site.short_description} At ${site.price_from}, it ${site.value_score >= 85 ? "offers excellent value for money" : site.value_score >= 75 ? "offers decent value" : "is on the pricier side"}. We'd recommend it if you're looking for quality ${site.categories[0]?.replace(/-/g, " ")} content.` },
-                    { q: `How much does ${site.name} cost per month?`, a: `${site.name} starts at ${site.price_from} for a monthly subscription. Quarterly and annual plans are available at a discount. Check their site for the latest pricing and any active promotions.` },
-                    { q: `Does ${site.name} have a free trial?`, a: site.categories.includes("free-trials") ? `Yes, ${site.name} offers a free trial period so you can explore the content before committing to a paid subscription.` : `${site.name} does not currently offer a free trial. However, they do offer competitive monthly pricing starting at ${site.price_from}.` },
-                    { q: `What is the best alternative to ${site.name}?`, a: `The best alternative depends on what you're looking for. ${similar[0]?.name} (${similar[0]?.overall_score}/5) and ${similar[1]?.name} (${similar[1]?.overall_score}/5) are both strong alternatives. Check our full rankings for more options.` },
+                    { q: `Is ${site.name} worth it?`, a: `${site.name} scores ${site.overall_score}/5 in our testing. ${site.short_description} At ${site.price_monthly}, it ${site.value_score >= 85 ? "offers excellent value for money" : site.value_score >= 75 ? "offers decent value" : "is on the pricier side"}. We'd recommend it if you're looking for quality ${site.categories[0]?.replace(/-/g, " ")} content.` },
+                    { q: `How much does ${site.name} cost per month?`, a: `${site.name} costs ${site.price_monthly} on a monthly basis, ${site.price_quarterly} quarterly, or ${site.price_annual}/month when billed annually. The annual plan is the best value.${site.has_free_trial ? " A trial option is also available." : ""}` },
+                    { q: `Does ${site.name} have a free trial?`, a: site.has_free_trial ? `Yes, ${site.name} offers a trial option so you can explore the content before committing to a paid subscription.` : `${site.name} does not currently offer a free trial. However, they do offer competitive pricing starting at ${site.price_annual}/mo on the annual plan.` },
+                    { q: `What is the best alternative to ${site.name}?`, a: `The best alternative depends on what you're looking for. ${similar[0]?.name} (${similar[0]?.overall_score}/5) and ${similar[1]?.name} (${similar[1]?.overall_score}/5) are both strong alternatives worth checking out.` },
                     { q: `Is ${site.name} updated regularly?`, a: `${site.name} has an update frequency score of ${site.update_frequency}/100. ${site.update_frequency >= 85 ? "They update very frequently with fresh content." : site.update_frequency >= 75 ? "They update regularly with new content." : "Updates come less frequently than some competitors."}` },
                   ].map((faq, i) => (
                     <AccordionItem key={i} value={`faq-${i}`} className="glass-card rounded-lg border-none px-5">
@@ -319,8 +340,8 @@ const ReviewPage = () => {
                   "@type": "FAQPage",
                   mainEntity: [
                     { "@type": "Question", name: `Is ${site.name} worth it?`, acceptedAnswer: { "@type": "Answer", text: `${site.name} scores ${site.overall_score}/5 in our testing.` } },
-                    { "@type": "Question", name: `How much does ${site.name} cost?`, acceptedAnswer: { "@type": "Answer", text: `${site.name} starts at ${site.price_from}.` } },
-                    { "@type": "Question", name: `Does ${site.name} have a free trial?`, acceptedAnswer: { "@type": "Answer", text: site.categories.includes("free-trials") ? "Yes, a free trial is available." : "No free trial is currently offered." } },
+                    { "@type": "Question", name: `How much does ${site.name} cost?`, acceptedAnswer: { "@type": "Answer", text: `${site.name} costs ${site.price_monthly} monthly or ${site.price_annual}/mo on the annual plan.` } },
+                    { "@type": "Question", name: `Does ${site.name} have a free trial?`, acceptedAnswer: { "@type": "Answer", text: site.has_free_trial ? "Yes, a trial option is available." : "No free trial is currently offered." } },
                     { "@type": "Question", name: `What is the best alternative to ${site.name}?`, acceptedAnswer: { "@type": "Answer", text: `Top alternatives include ${similar[0]?.name} and ${similar[1]?.name}.` } },
                     { "@type": "Question", name: `Is ${site.name} updated regularly?`, acceptedAnswer: { "@type": "Answer", text: `Update frequency score: ${site.update_frequency}/100.` } },
                   ]
@@ -348,6 +369,28 @@ const ReviewPage = () => {
                 ))}
               </div>
             </AnimateOnScroll>
+
+            {/* Compare internal links */}
+            <AnimateOnScroll className="mt-10">
+              <h2 className="font-heading text-lg font-bold">Compare {site.name} Against Others</h2>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {similar.map((s) => (
+                  <Link
+                    key={s.id}
+                    to={`/compare/${site.slug}-vs-${s.slug}`}
+                    className="rounded-button border border-border bg-muted/30 px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+                  >
+                    {site.name} vs {s.name}
+                  </Link>
+                ))}
+                <Link
+                  to="/compare"
+                  className="rounded-button border border-primary/30 px-3 py-1.5 text-xs text-primary hover:bg-primary/10 transition-colors"
+                >
+                  See all comparisons →
+                </Link>
+              </div>
+            </AnimateOnScroll>
           </div>
 
           {/* Sticky Sidebar - desktop only */}
@@ -362,7 +405,7 @@ const ReviewPage = () => {
               </div>
               <div className="mt-3 flex justify-center">
                 <span className="rounded-button border border-border bg-muted/50 px-3 py-1.5 text-lg font-semibold">
-                  {site.price_from}
+                  {site.price_monthly}
                 </span>
               </div>
               <VisitSiteButton site={site} className="mt-4" />
