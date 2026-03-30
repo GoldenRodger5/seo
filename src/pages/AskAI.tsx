@@ -7,7 +7,7 @@ import Layout from "../components/Layout";
 import { PageTransition } from "../components/MotionWrappers";
 import StarRating from "../components/StarRating";
 import VisitSiteButton from "../components/VisitSiteButton";
-import { sites } from "../data/sites";
+import { sites, SiteData } from "../data/sites";
 
 interface Recommendation {
   slug: string;
@@ -15,65 +15,174 @@ interface Recommendation {
   match: string;
 }
 
+// Keyword → site scoring rules
+const KEYWORD_MAP: Record<string, { slugs?: string[]; categories?: string[]; field?: keyof SiteData; reason: string }> = {
+  cheap: { categories: ["best-value"], reason: "Great value pricing on the annual plan" },
+  budget: { categories: ["best-value"], reason: "One of the most affordable options available" },
+  affordable: { categories: ["best-value"], reason: "Strong value for the price" },
+  value: { categories: ["best-value"], reason: "Best bang for your buck" },
+  inexpensive: { categories: ["best-value"], reason: "Low-cost option with solid content" },
+  free: { field: "has_free_trial", reason: "Offers a trial so you can test before committing" },
+  trial: { field: "has_free_trial", reason: "Has a trial option available" },
+  premium: { categories: ["premium-studios"], reason: "Premium production quality and exclusive content" },
+  quality: { categories: ["premium-studios", "hd-quality"], reason: "High production standards" },
+  cinematic: { slugs: ["helix-studios"], reason: "Cinema-quality production values" },
+  hd: { categories: ["hd-quality"], reason: "HD and 4K streaming available" },
+  "4k": { categories: ["hd-quality"], reason: "Supports up to 4K video quality" },
+  mobile: { categories: ["mobile-friendly"], reason: "Excellent mobile streaming experience" },
+  phone: { categories: ["mobile-friendly"], reason: "Optimized for phone viewing" },
+  amateur: { categories: ["amateur-twinks"], reason: "Authentic amateur-style content" },
+  natural: { categories: ["amateur-twinks"], reason: "Natural unscripted performer chemistry" },
+  authentic: { categories: ["amateur-twinks"], reason: "Genuine authentic content" },
+  real: { categories: ["amateur-twinks"], reason: "Real performers with natural chemistry" },
+  raw: { slugs: ["breed-me-raw", "bareback-that-hole"], reason: "Dedicated raw/bareback content" },
+  bareback: { slugs: ["breed-me-raw", "bareback-that-hole"], reason: "Focuses on bareback scenes" },
+  british: { slugs: ["hard-brit-lads"], reason: "Exclusively British performers" },
+  uk: { slugs: ["hard-brit-lads"], reason: "UK-based performers and content" },
+  european: { slugs: ["hard-brit-lads", "helix-studios"], reason: "Strong European content library" },
+  latin: { slugs: ["prideflame", "helix-studios"], reason: "Features Latino performers" },
+  latino: { slugs: ["prideflame"], reason: "Celebrates Latino and diverse performers" },
+  diverse: { slugs: ["prideflame"], reason: "Diverse and inclusive performer roster" },
+  athletic: { slugs: ["athletic-twinks"], reason: "Toned athletic performers" },
+  fit: { slugs: ["athletic-twinks"], reason: "Fit gym-body performers" },
+  gym: { slugs: ["athletic-twinks"], reason: "Athletic physique focus" },
+  jock: { slugs: ["athletic-twinks"], reason: "Sporty jock-type performers" },
+  southern: { slugs: ["southern-strokes"], reason: "All-American Southern charm" },
+  american: { slugs: ["southern-strokes", "next-door-twink"], reason: "All-American performers" },
+  daddy: { slugs: ["daddy-on-twink"], reason: "Intergenerational content with strong chemistry" },
+  older: { slugs: ["daddy-on-twink"], reason: "Features older/younger pairings" },
+  intergenerational: { slugs: ["daddy-on-twink"], reason: "Specializes in age-gap dynamics" },
+  intimate: { slugs: ["touch-that-boy"], reason: "Sensual intimate content focused on connection" },
+  sensual: { slugs: ["touch-that-boy"], reason: "Slower-paced sensual scenes" },
+  romantic: { slugs: ["touch-that-boy"], reason: "Emphasizes genuine attraction and connection" },
+  gentle: { slugs: ["touch-that-boy"], reason: "Intimate and gentle approach" },
+  network: { slugs: ["next-door-twink", "next-door-world"], reason: "Massive multi-channel network access" },
+  variety: { slugs: ["next-door-world", "next-door-twink"], reason: "Huge variety across 45+ channels" },
+  big: { slugs: ["next-door-world", "helix-studios"], reason: "One of the largest content libraries" },
+  lots: { slugs: ["next-door-world", "next-door-twink"], reason: "12,500+ videos in the network" },
+  massive: { slugs: ["next-door-world"], reason: "Massive 45+ channel network" },
+};
+
+function matchSites(query: string): Recommendation[] {
+  const words = query.toLowerCase().split(/\s+/);
+  const scores = new Map<string, { score: number; reasons: string[] }>();
+
+  // Initialize all sites
+  for (const site of sites) {
+    scores.set(site.slug, { score: 0, reasons: [] });
+  }
+
+  // Score by keyword matches
+  for (const word of words) {
+    for (const [keyword, rule] of Object.entries(KEYWORD_MAP)) {
+      if (!word.includes(keyword) && !keyword.includes(word)) continue;
+
+      if (rule.slugs) {
+        for (const slug of rule.slugs) {
+          const s = scores.get(slug);
+          if (s) { s.score += 3; s.reasons.push(rule.reason); }
+        }
+      }
+      if (rule.categories) {
+        for (const site of sites) {
+          if (site.categories.some(c => rule.categories!.includes(c))) {
+            const s = scores.get(site.slug);
+            if (s) { s.score += 2; s.reasons.push(rule.reason); }
+          }
+        }
+      }
+      if (rule.field === "has_free_trial") {
+        for (const site of sites) {
+          if (site.has_free_trial) {
+            const s = scores.get(site.slug);
+            if (s) { s.score += 3; s.reasons.push(rule.reason); }
+          }
+        }
+        // Also boost ASGmax $2.95 trial
+        const ndt = scores.get("next-door-twink");
+        const ndw = scores.get("next-door-world");
+        if (ndt) { ndt.score += 2; ndt.reasons.push("$2.95 three-day trial available"); }
+        if (ndw) { ndw.score += 2; ndw.reasons.push("$2.95 three-day trial available"); }
+      }
+    }
+
+    // Also check if the word appears in site descriptions/pros
+    for (const site of sites) {
+      const text = `${site.short_description} ${site.description} ${site.pros.join(" ")} ${site.best_for}`.toLowerCase();
+      if (text.includes(word) && word.length > 3) {
+        const s = scores.get(site.slug);
+        if (s) s.score += 1;
+      }
+    }
+  }
+
+  // Price sensitivity detection
+  const wantsCheap = words.some(w => ["cheap", "budget", "affordable", "inexpensive", "low", "save", "deal", "discount"].includes(w));
+  const wantsPremium = words.some(w => ["premium", "best", "top", "cinematic", "quality", "expensive"].includes(w));
+
+  if (wantsCheap) {
+    for (const site of sites) {
+      const annual = parseFloat(site.price_annual.replace(/[^0-9.]/g, ""));
+      if (annual <= 10) {
+        const s = scores.get(site.slug);
+        if (s) { s.score += 2; s.reasons.push(`Just ${site.price_annual}/mo on the annual plan`); }
+      }
+    }
+  }
+  if (wantsPremium) {
+    for (const site of sites) {
+      if (site.overall_score >= 4.5) {
+        const s = scores.get(site.slug);
+        if (s) { s.score += 2; s.reasons.push(`Top-rated at ${site.overall_score}/5`); }
+      }
+    }
+  }
+
+  // Sort by score, take top 3
+  const ranked = [...scores.entries()]
+    .filter(([, v]) => v.score > 0)
+    .sort((a, b) => b[1].score - a[1].score)
+    .slice(0, 3);
+
+  // If no keyword matches, fall back to top-rated sites
+  if (ranked.length === 0) {
+    const top = [...sites].sort((a, b) => b.overall_score - a.overall_score).slice(0, 3);
+    return top.map((site, i) => ({
+      slug: site.slug,
+      match: `${95 - i * 5}% match`,
+      reason: `Top-rated at ${site.overall_score}/5 — ${site.best_for.toLowerCase()}.`,
+    }));
+  }
+
+  const maxScore = ranked[0][1].score;
+  return ranked.map(([slug, data]) => {
+    const pct = Math.round((data.score / maxScore) * 97);
+    const uniqueReasons = [...new Set(data.reasons)];
+    return {
+      slug,
+      match: `${Math.min(pct, 97)}% match`,
+      reason: uniqueReasons.slice(0, 2).join(". ") + ".",
+    };
+  });
+}
+
 const AskAI = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [recs, setRecs] = useState<Recommendation[]>([]);
-  const [error, setError] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
 
-  const siteContext = sites.map(s =>
-    `${s.name} (slug: ${s.slug}): Score ${s.overall_score}/5. ${s.short_description} Categories: ${s.categories.join(", ")}. Price: ${s.price_monthly} monthly or ${s.price_annual}/mo annual. Has free trial: ${s.has_free_trial}. Pros: ${s.pros.slice(0,3).join(", ")}. Cons: ${s.cons.slice(0,2).join(", ")}.`
-  ).join("\n");
-
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!query.trim() || loading) return;
     setLoading(true);
-    setError("");
     setRecs([]);
     setHasSearched(true);
 
-    try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system: `You are TwinkVault's recommendation engine. A user will describe what they want from a gay twink content site. Based on their preferences, recommend the top 2-3 best matches from our site database.
-
-Available sites:
-${siteContext}
-
-Respond ONLY with valid JSON in this exact format, nothing else:
-{
-  "recommendations": [
-    {
-      "slug": "site-slug-here",
-      "match": "95% match",
-      "reason": "One sentence explaining why this is perfect for what they described."
-    }
-  ]
-}
-
-Rules:
-- Return 2-3 recommendations maximum
-- Use exact slugs from the database
-- Keep reasons concise, specific, and reference the user's actual words
-- Order by best match first`,
-          messages: [{ role: "user", content: query }]
-        })
-      });
-
-      const data = await response.json();
-      const text = data.content?.[0]?.text || "";
-      const clean = text.replace(/```json|```/g, "").trim();
-      const parsed = JSON.parse(clean);
-      setRecs(parsed.recommendations || []);
-    } catch {
-      setError("Something went wrong. Try rephrasing your question.");
-    }
-    setLoading(false);
+    // Small delay for perceived "thinking"
+    setTimeout(() => {
+      setRecs(matchSites(query));
+      setLoading(false);
+    }, 600);
   };
 
   const examplePrompts = [
@@ -163,16 +272,6 @@ Rules:
             </motion.div>
 
             <AnimatePresence mode="wait">
-              {error && (
-                <motion.p
-                  key="error"
-                  className="mt-6 text-center text-sm text-destructive"
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                >
-                  {error}
-                </motion.p>
-              )}
-
               {recs.length > 0 && (
                 <motion.div
                   key="results"
