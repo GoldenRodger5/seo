@@ -133,7 +133,7 @@ const TopSites = () => {
                         <p className="mt-3 text-sm text-muted-foreground">{site.short_description}</p>
 
                         <div className="mt-3 flex flex-wrap gap-2">
-                          {site.categories.includes("free-trials") && (
+                          {site.has_free_trial && (
                             <span className="rounded-button bg-emerald-500/15 px-2.5 py-1 text-xs font-semibold text-emerald-400">FREE TRIAL</span>
                           )}
                           {site.categories.map((cat) => (
@@ -171,7 +171,7 @@ const TopSites = () => {
                       {/* CTA column */}
                       <div className="flex flex-col items-center gap-3 lg:w-44">
                         <div className="rounded-button border border-border bg-muted/50 px-3 py-1.5">
-                          <span className="text-lg font-semibold">{site.price_from}</span>
+                          <span className="text-lg font-semibold">{site.price_monthly}</span>
                         </div>
                         <VisitSiteButton site={site} className="w-full" />
                         <Link
@@ -216,12 +216,12 @@ const TopSites = () => {
                           <Link to={`/reviews/${site.slug}`} className="hover:text-secondary transition-colors">{site.name}</Link>
                         </td>
                         <td className="px-4 py-3 font-semibold text-secondary">{site.overall_score}</td>
-                        <td className="px-4 py-3 text-muted-foreground">{site.price_from}</td>
+                        <td className="px-4 py-3 text-muted-foreground">{site.price_monthly}</td>
                         <td className="px-4 py-3">
-                          {site.categories.includes("free-trials") ? <Check size={14} className="text-emerald-400" /> : <XIcon size={14} className="text-muted-foreground/30" />}
+                          {site.has_free_trial ? <Check size={14} className="text-emerald-400" /> : <XIcon size={14} className="text-muted-foreground/30" />}
                         </td>
                         <td className="px-4 py-3">
-                          {site.categories.includes("hd-quality") ? <Check size={14} className="text-emerald-400" /> : <XIcon size={14} className="text-muted-foreground/30" />}
+                          {site.has_hd ? <Check size={14} className="text-emerald-400" /> : <XIcon size={14} className="text-muted-foreground/30" />}
                         </td>
                       </tr>
                     ))}

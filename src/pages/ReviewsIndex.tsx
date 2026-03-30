@@ -25,9 +25,21 @@ const ReviewsIndex = () => {
   return (
     <Layout>
       <Helmet>
-        <title>All Twink Site Reviews — 2026 | TwinkVault</title>
-        <meta name="description" content="Browse all our honest, independent twink site reviews. Sorted by rating, filtered by category." />
+        <title>All Gay Twink Site Reviews 2026 — Staff Tested | TwinkVault</title>
+        <meta name="description" content="Browse all 12 honest, independent gay twink site reviews. Sorted by rating, filtered by category. Updated monthly." />
         <link rel="canonical" href="https://twinkvault.com/reviews" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Gay Twink Site Reviews 2026",
+          "numberOfItems": sites.length,
+          "itemListElement": [...sites].sort((a,b) => a.rank - b.rank).map((site, i) => ({
+            "@type": "ListItem",
+            "position": i + 1,
+            "name": site.name,
+            "url": `https://twinkvault.com/reviews/${site.slug}`
+          }))
+        })}</script>
       </Helmet>
 
       <section className="py-16">

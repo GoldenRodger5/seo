@@ -208,13 +208,20 @@ const QuizBanner = () => (
         <Sparkles size={40} className="text-primary shrink-0" />
         <div className="flex-1">
           <h3 className="font-heading text-xl font-bold">Not sure where to start?</h3>
-          <p className="mt-1 text-sm text-muted-foreground">Take our 30-second quiz and we'll recommend the perfect site for you.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Take our 30-second quiz — or try our AI recommender for instant personalised results.</p>
         </div>
-        <MotionButton>
-          <Link to="/find-my-site" className="cta-btn rounded-button border border-primary px-6 py-2.5 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors whitespace-nowrap">
-            Take the Quiz →
-          </Link>
-        </MotionButton>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <MotionButton>
+            <Link to="/ask-ai" className="cta-btn inline-flex items-center gap-2 rounded-button gold-gradient px-6 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap">
+              ✨ Ask AI
+            </Link>
+          </MotionButton>
+          <MotionButton>
+            <Link to="/find-my-site" className="cta-btn rounded-button border border-primary px-6 py-2.5 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors whitespace-nowrap">
+              Take the Quiz →
+            </Link>
+          </MotionButton>
+        </div>
       </MotionCard>
     </div>
   </motion.section>

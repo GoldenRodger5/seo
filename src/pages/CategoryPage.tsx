@@ -38,7 +38,20 @@ const CategoryPage = () => {
     <Layout>
       <Helmet>
         <title>Best {category.name} Sites 2026 — Ranked | TwinkVault</title>
-        <meta name="description" content={`The best ${category.name.toLowerCase()} twink content sites, ranked by quality and value.`} />
+        <meta name="description" content={`The best ${category.name.toLowerCase()} twink content sites, ranked by quality and value. Staff-tested reviews with real pricing.`} />
+        <link rel="canonical" href={`https://twinkvault.com/category/${slug}`} />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": `Best ${category.name} Sites 2026`,
+          "numberOfItems": sorted.length,
+          "itemListElement": sorted.map((site, i) => ({
+            "@type": "ListItem",
+            "position": i + 1,
+            "name": site.name,
+            "url": `https://twinkvault.com/reviews/${site.slug}`
+          }))
+        })}</script>
       </Helmet>
 
       <section className="py-16">
@@ -89,7 +102,7 @@ const CategoryPage = () => {
                       </div>
                       <StarRating score={site.overall_score} size={14} />
                     </div>
-                    <span className="text-sm font-semibold">{site.price_from}</span>
+                    <span className="text-sm font-semibold">{site.price_monthly}</span>
                   </div>
                   <p className="mt-3 text-sm text-muted-foreground">{site.short_description}</p>
                   <div className="mt-3 flex flex-wrap gap-2">

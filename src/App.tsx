@@ -8,6 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import AgeVerification from "./components/AgeVerification";
 import EmailCapturePopup from "./components/EmailCapturePopup";
 import CookieConsent from "./components/CookieConsent";
+import ExitIntentDealPopup from "./components/ExitIntentDealPopup";
 
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import Index from "./pages/Index";
@@ -83,6 +84,7 @@ const App = () => (
         <CookieConsent />
         <BrowserRouter>
           <ScrollProgressBar />
+          <ExitIntentDealPopup />
           <AnimatedRoutes />
         </BrowserRouter>
       </TooltipProvider>

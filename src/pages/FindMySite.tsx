@@ -39,7 +39,7 @@ function getRecommendations(priority: string, contentTypes: string[], budget: st
     if (priority === "value") score += site.value_score;
     else if (priority === "quality") score += site.content_quality;
     else if (priority === "mobile") score += site.mobile_score;
-    else if (priority === "trial" && site.categories.includes("free-trials")) score += 50;
+    else if (priority === "trial" && site.has_free_trial) score += 50;
     else if (priority === "niche") score += 20;
 
     contentTypes.forEach((ct) => {
@@ -185,7 +185,7 @@ const FindMySite = () => {
                         <div className="flex-1">
                           <h3 className="font-heading text-xl font-bold">{site.name}</h3>
                           <p className="mt-1 text-sm text-muted-foreground">{site.short_description}</p>
-                          <p className="mt-2 text-sm font-semibold">{site.price_from}</p>
+                          <p className="mt-2 text-sm font-semibold">{site.price_monthly} · {site.price_annual}/mo annual</p>
                         </div>
                       </div>
                       <div className="mt-4 flex gap-3">

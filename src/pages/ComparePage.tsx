@@ -208,25 +208,25 @@ const ComparePage = () => {
                   ))}
                   <tr className="border-b border-border/30">
                     <td className="px-4 py-3 text-muted-foreground">Price</td>
-                    <td className="px-4 py-3 text-center font-semibold">{siteA.price_from}</td>
-                    <td className="px-4 py-3 text-center font-semibold">{siteB.price_from}</td>
+                    <td className="px-4 py-3 text-center font-semibold">{siteA.price_monthly}</td>
+                    <td className="px-4 py-3 text-center font-semibold">{siteB.price_monthly}</td>
                   </tr>
                   <tr className="border-b border-border/30">
                     <td className="px-4 py-3 text-muted-foreground">Free Trial</td>
                     <td className="px-4 py-3 text-center">
-                      {siteA.categories.includes("free-trials") ? <Check size={14} className="inline text-emerald-400" /> : <XIcon size={14} className="inline text-muted-foreground/30" />}
+                      {siteA.has_free_trial ? <Check size={14} className="inline text-emerald-400" /> : <XIcon size={14} className="inline text-muted-foreground/30" />}
                     </td>
                     <td className="px-4 py-3 text-center">
-                      {siteB.categories.includes("free-trials") ? <Check size={14} className="inline text-emerald-400" /> : <XIcon size={14} className="inline text-muted-foreground/30" />}
+                      {siteB.has_free_trial ? <Check size={14} className="inline text-emerald-400" /> : <XIcon size={14} className="inline text-muted-foreground/30" />}
                     </td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3 text-muted-foreground">HD Quality</td>
                     <td className="px-4 py-3 text-center">
-                      {siteA.categories.includes("hd-quality") ? <Check size={14} className="inline text-emerald-400" /> : <XIcon size={14} className="inline text-muted-foreground/30" />}
+                      {siteA.has_hd ? <Check size={14} className="inline text-emerald-400" /> : <XIcon size={14} className="inline text-muted-foreground/30" />}
                     </td>
                     <td className="px-4 py-3 text-center">
-                      {siteB.categories.includes("hd-quality") ? <Check size={14} className="inline text-emerald-400" /> : <XIcon size={14} className="inline text-muted-foreground/30" />}
+                      {siteB.has_hd ? <Check size={14} className="inline text-emerald-400" /> : <XIcon size={14} className="inline text-muted-foreground/30" />}
                     </td>
                   </tr>
                 </tbody>

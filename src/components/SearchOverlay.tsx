@@ -107,7 +107,20 @@ const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
           )}
 
           {!query && (
-            <p className="py-8 text-center text-sm text-muted-foreground">Start typing to search...</p>
+            <div className="py-4">
+              <p className="mb-3 text-xs text-muted-foreground px-2">Popular searches</p>
+              <div className="flex flex-wrap gap-2 px-2">
+                {["helix studios review", "next door twink trial", "cheapest twink sites", "free trial", "bareback", "british twinks", "athletic twinks"].map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => setQuery(s)}
+                    className="rounded-button bg-muted/50 px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </div>
