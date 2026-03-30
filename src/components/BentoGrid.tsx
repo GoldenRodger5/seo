@@ -105,9 +105,9 @@ const BentoGrid = () => (
         >
           <Users size={24} className="text-primary" />
           <h3 className="mt-2 font-heading text-lg font-bold">
-            <AnimatedCounter target={10000} suffix="+" /> readers
+            Growing Community
           </h3>
-          <p className="mt-1 text-xs text-muted-foreground">trust us monthly</p>
+          <p className="mt-1 text-xs text-muted-foreground">of readers trust our reviews</p>
           <div className="mt-3 flex -space-x-2">
             {[...Array(5)].map((_, i) => (
               <div key={i} className="h-7 w-7 rounded-full border-2 border-card bg-muted flex items-center justify-center text-[9px] font-bold text-muted-foreground">

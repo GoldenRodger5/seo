@@ -17,9 +17,9 @@ import { ReactNode } from "react";
 
 const tickerItems = [
   "🔥 New: Helix Studios Review",
-  "💰 Deal: 67% off this week",
-  "⭐ Just Reviewed: Twink In Shorts",
-  "🆕 Athletic Twinks added",
+  "💰 Deal: 66% off annual plan",
+  "⭐ Just Reviewed: Next Door Twink",
+  "🆕 Hard Brit Lads added",
 ];
 
 const categoryIcons: Record<string, ReactNode> = {
@@ -143,7 +143,7 @@ const HeroSection = () => {
               <Star key={i} size={16} className="fill-secondary text-secondary" />
             ))}
           </div>
-          <span className="text-sm text-muted-foreground">Trusted by 10,000+ readers since 2024</span>
+          <span className="text-sm text-muted-foreground">Staff-tested reviews, updated monthly</span>
         </motion.div>
       </div>
     </section>
@@ -327,8 +327,15 @@ const TrustSection = () => (
   </motion.section>
 );
 
+import { Helmet } from "react-helmet-async";
+
 const Index = () => (
   <Layout>
+    <Helmet>
+      <title>Best Gay Twink Sites 2026 — Ranked & Reviewed | TwinkVault</title>
+      <meta name="description" content="Honest independent rankings of the best gay twink porn sites. Staff-tested reviews, real pricing, and exclusive deals. Updated monthly." />
+      <link rel="canonical" href="https://twinkvault.com" />
+    </Helmet>
     <PageTransition>
       <HeroSection />
       <SocialProofStrip />

@@ -18,12 +18,14 @@ interface Deal {
 }
 
 const deals: Deal[] = ([
-  { siteSlug: "helix-studios", siteName: "Helix Studios", description: "67% off annual membership", originalPrice: "$29.99/mo", dealPrice: "$9.99/mo", discountPercent: 67, expiry: "limited" as const },
-  { siteSlug: "twink-in-shorts", siteName: "Twink In Shorts", description: "50% off first 3 months", originalPrice: "$15.99/mo", dealPrice: "$7.99/mo", discountPercent: 50, expiry: "flash" as const },
-  { siteSlug: "athletic-twinks", siteName: "Athletic Twinks", description: "40% off quarterly plan", originalPrice: "$21.99/mo", dealPrice: "$12.99/mo", discountPercent: 40, expiry: "ongoing" as const },
-  { siteSlug: "southern-strokes", siteName: "Southern Strokes", description: "55% off annual plan", originalPrice: "$19.99/mo", dealPrice: "$8.99/mo", discountPercent: 55, expiry: "ongoing" as const },
-  { siteSlug: "twinks-bareback", siteName: "Twinks Bareback", description: "Free 2-day trial + 45% off", originalPrice: "$14.99/mo", dealPrice: "$7.99/mo", discountPercent: 45, expiry: "ongoing" as const },
-  { siteSlug: "touch-that-boy", siteName: "Touch That Boy", description: "35% off all plans", originalPrice: "$16.99/mo", dealPrice: "$10.99/mo", discountPercent: 35, expiry: "ongoing" as const },
+  { siteSlug: "helix-studios", siteName: "Helix Studios", description: "66% off annual membership — pay just $11.99/mo", originalPrice: "$34.95/mo", dealPrice: "$11.99/mo", discountPercent: 66, expiry: "limited" as const },
+  { siteSlug: "next-door-twink", siteName: "Next Door Twink", description: "3-day trial for $2.95 — full network access", originalPrice: "$29.99/mo", dealPrice: "$2.95 trial", discountPercent: 90, expiry: "limited" as const },
+  { siteSlug: "next-door-world", siteName: "Next Door World", description: "3-day trial for $2.95 — 15 sites in one membership", originalPrice: "$29.99/mo", dealPrice: "$2.95 trial", discountPercent: 90, expiry: "flash" as const },
+  { siteSlug: "twinks-in-shorts", siteName: "Twinks in Shorts", description: "50% off first 3 months", originalPrice: "$29.95/mo", dealPrice: "$14.97/mo", discountPercent: 50, expiry: "ongoing" as const },
+  { siteSlug: "southern-strokes", siteName: "Southern Strokes", description: "55% off annual plan", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 55, expiry: "ongoing" as const },
+  { siteSlug: "breed-me-raw", siteName: "Breed Me Raw", description: "Free 2-day trial + 40% off annual", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 40, expiry: "ongoing" as const },
+  { siteSlug: "athletic-twinks", siteName: "Athletic Twinks", description: "40% off quarterly plan", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 40, expiry: "ongoing" as const },
+  { siteSlug: "daddy-on-twink", siteName: "Daddy on Twink", description: "45% off annual plan", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 45, expiry: "ongoing" as const },
 ] as Deal[]).sort((a, b) => b.discountPercent - a.discountPercent);
 
 const StatusIndicator = ({ expiry }: { expiry: "limited" | "flash" | "ongoing" }) => (
@@ -57,8 +59,8 @@ const BestDeals = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>Don't Pay Full Price. Ever. | TwinkVault</title>
-        <meta name="description" content="The best current twink site deals and discounts. Updated weekly so you never miss a bargain." />
+        <title>Best Gay Twink Site Deals & Discounts 2026 | TwinkVault</title>
+        <meta name="description" content="The best current gay twink site deals and discounts. Staff-verified offers updated weekly so you never overpay." />
         <link rel="canonical" href="https://twinkvault.com/best-deals" />
       </Helmet>
 
@@ -81,7 +83,7 @@ const BestDeals = () => (
             We track the best current offers so you don't have to. Updated weekly.
           </motion.p>
           <span className="mt-4 inline-flex items-center gap-2 rounded-button bg-muted px-3 py-1.5 text-xs text-muted-foreground">
-            🔄 Last checked: March 3, 2026
+            🔄 Last checked: March 23, 2026
           </span>
         </div>
       </section>

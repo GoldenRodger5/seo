@@ -21,6 +21,7 @@ import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AffiliateDisclosure from "./pages/AffiliateDisclosure";
 import ComparePage from "./pages/ComparePage";
+import Contact from "./pages/Contact";
 import SitemapPage from "./pages/SitemapPage";
 import NotFound from "./pages/NotFound";
 
@@ -44,6 +45,7 @@ const AnimatedRoutes = () => {
         <Route path="/affiliate-disclosure" element={<AffiliateDisclosure />} />
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/compare/:slug" element={<ComparePage />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/sitemap" element={<SitemapPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

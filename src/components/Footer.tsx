@@ -15,6 +15,7 @@ const Footer = () => (
           <Link to="/compare" className="nav-link hover:text-foreground">Compare Sites</Link>
           <Link to="/find-my-site" className="nav-link hover:text-foreground">Quiz</Link>
           <Link to="/about" className="nav-link hover:text-foreground">About</Link>
+          <Link to="/contact" className="nav-link hover:text-foreground">Contact</Link>
           <Link to="/privacy-policy" className="nav-link hover:text-foreground">Privacy Policy</Link>
           <Link to="/affiliate-disclosure" className="nav-link hover:text-foreground">Affiliate Disclosure</Link>
           <Link to="/sitemap" className="nav-link hover:text-foreground">Sitemap</Link>

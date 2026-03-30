@@ -8,6 +8,7 @@ const navLinks = [
   { label: "Home", to: "/", gold: false },
   { label: "Top Sites", to: "/top-sites", gold: false },
   { label: "Reviews", to: "/reviews", gold: false },
+  { label: "Compare", to: "/compare", gold: false },
   { label: "Best Deals 🔥", to: "/best-deals", gold: true },
 ];
 

@@ -219,6 +219,10 @@ const ReviewPage = () => {
             <AnimateOnScroll className="mt-10 space-y-8">
               <section>
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Content Quality</h2>
+                <div className="mt-3 mb-4 flex items-start gap-2 rounded-button border border-emerald-500/30 bg-emerald-500/5 px-4 py-3 text-sm text-emerald-400">
+                  <span className="shrink-0">✓</span>
+                  <span><strong>Staff Verified</strong> — Our team personally tested a paid membership to verify this review. Last tested: March 2026.</span>
+                </div>
                 <p className="mt-3 text-muted-foreground leading-relaxed">{site.description}</p>
               </section>
               <section>
@@ -241,18 +245,18 @@ const ReviewPage = () => {
                     <tbody className="text-muted-foreground">
                       <tr className="border-b border-border/30">
                         <td className="px-4 py-3">Monthly</td>
-                        <td className="px-4 py-3">{site.price_from}</td>
-                        <td className="px-4 py-3">{site.price_from}</td>
+                        <td className="px-4 py-3">{site.price_monthly}</td>
+                        <td className="px-4 py-3">{site.price_monthly}</td>
                       </tr>
                       <tr className="border-b border-border/30 bg-muted/20">
                         <td className="px-4 py-3">Quarterly</td>
-                        <td className="px-4 py-3">$24.99</td>
-                        <td className="px-4 py-3">$8.33/mo</td>
+                        <td className="px-4 py-3">{site.price_quarterly}</td>
+                        <td className="px-4 py-3">{site.price_quarterly}</td>
                       </tr>
                       <tr>
                         <td className="px-4 py-3">Annual</td>
-                        <td className="px-4 py-3">$79.99</td>
-                        <td className="px-4 py-3">$6.67/mo</td>
+                        <td className="px-4 py-3">{site.price_annual}/mo (billed annually)</td>
+                        <td className="px-4 py-3">{site.price_annual}</td>
                       </tr>
                     </tbody>
                   </table>
