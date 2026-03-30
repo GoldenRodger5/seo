@@ -33,6 +33,7 @@ const ComparePage = lazy(() => import("./pages/ComparePage"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Compliance2257 = lazy(() => import("./pages/Compliance2257"));
+const DiscountPage = lazy(() => import("./pages/DiscountPage"));
 const SitemapPage = lazy(() => import("./pages/SitemapPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -94,6 +95,7 @@ const AnimatedRoutes = () => {
         <Route path="/best-twink-sites" element={<BestTwinkSites />} />
         <Route path="/free-trial-twink-sites" element={<FreeTrialSites />} />
         <Route path="/cheapest-twink-sites" element={<CheapestTwinkSites />} />
+        <Route path="/discount/:slug" element={<DiscountPage />} />
         <Route path="/go/:slug" element={<GoRedirect />} />
         <Route path="/about" element={<About />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

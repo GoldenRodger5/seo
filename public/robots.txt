@@ -3,3 +3,6 @@ Allow: /
 Disallow: /go/
 
 Sitemap: https://twinkvault.com/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

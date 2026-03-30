@@ -61,6 +61,19 @@ const SitemapPage = () => (
             </div>
 
             <div>
+              <h2 className="font-heading text-xl font-bold mb-4">Discounts & Deals</h2>
+              <ul className="space-y-2">
+                {sites.map((site) => (
+                  <li key={`discount-${site.id}`}>
+                    <Link to={`/discount/${site.slug}`} className="text-sm text-muted-foreground hover:text-secondary transition-colors">
+                      {site.name} Discount
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
               <h2 className="font-heading text-xl font-bold mb-4">About & Info</h2>
               <ul className="space-y-2">
                 <li><Link to="/about" className="text-sm text-muted-foreground hover:text-secondary transition-colors">About</Link></li>

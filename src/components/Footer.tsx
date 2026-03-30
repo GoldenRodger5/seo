@@ -1,43 +1,84 @@
 import { Link } from "react-router-dom";
+import { sites } from "../data/sites";
+
+const footerLink = "text-sm text-muted-foreground hover:text-foreground transition-colors";
 
 const Footer = () => (
   <footer className="border-t border-border bg-card/50">
     <div className="container py-12">
-      <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between">
-        <Link to="/" className="font-heading text-xl font-bold">
-          Twink<span className="gold-shimmer">Vault</span>
-        </Link>
+      {/* Logo */}
+      <Link to="/" className="font-heading text-xl font-bold inline-block mb-8">
+        Twink<span className="gold-shimmer">Vault</span>
+      </Link>
 
-        <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-          <Link to="/top-sites" className="nav-link hover:text-foreground">Top Sites</Link>
-          <Link to="/reviews" className="nav-link hover:text-foreground">Reviews</Link>
-          <Link to="/best-deals" className="nav-link hover:text-foreground gold-gradient-text">Best Deals 🔥</Link>
-          <Link to="/compare" className="nav-link hover:text-foreground">Compare Sites</Link>
-          <Link to="/best-twink-sites" className="nav-link hover:text-foreground">Best Twink Sites</Link>
-          <Link to="/free-trial-twink-sites" className="nav-link hover:text-foreground">Free Trials</Link>
-          <Link to="/cheapest-twink-sites" className="nav-link hover:text-foreground">Cheapest Sites</Link>
-          <Link to="/ask-ai" className="nav-link hover:text-foreground">AI Recommender</Link>
-          <Link to="/find-my-site" className="nav-link hover:text-foreground">Quiz</Link>
-          <Link to="/about" className="nav-link hover:text-foreground">About</Link>
-          <Link to="/contact" className="nav-link hover:text-foreground">Contact</Link>
-          <Link to="/privacy-policy" className="nav-link hover:text-foreground">Privacy Policy</Link>
-          <Link to="/terms" className="nav-link hover:text-foreground">Terms of Service</Link>
-          <Link to="/affiliate-disclosure" className="nav-link hover:text-foreground">Affiliate Disclosure</Link>
-          <Link to="/2257" className="nav-link hover:text-foreground">2257</Link>
-          <Link to="/sitemap" className="nav-link hover:text-foreground">Sitemap</Link>
+      {/* Column grid */}
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Browse */}
+        <div>
+          <h3 className="font-heading text-sm font-semibold mb-3">Browse</h3>
+          <ul className="space-y-2">
+            <li><Link to="/top-sites" className={footerLink}>Top Sites</Link></li>
+            <li><Link to="/reviews" className={footerLink}>All Reviews</Link></li>
+            <li><Link to="/best-deals" className={`${footerLink} gold-gradient-text`}>Best Deals</Link></li>
+            <li><Link to="/compare" className={footerLink}>Compare Sites</Link></li>
+            <li><Link to="/best-twink-sites" className={footerLink}>Best Twink Sites</Link></li>
+            <li><Link to="/free-trial-twink-sites" className={footerLink}>Free Trial Sites</Link></li>
+            <li><Link to="/cheapest-twink-sites" className={footerLink}>Cheapest Sites</Link></li>
+          </ul>
+        </div>
+
+        {/* Discounts */}
+        <div>
+          <h3 className="font-heading text-sm font-semibold mb-3">Discounts</h3>
+          <ul className="space-y-2">
+            {sites.slice(0, 8).map((site) => (
+              <li key={site.id}>
+                <Link to={`/discount/${site.slug}`} className={footerLink}>
+                  {site.name} Discount
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Tools */}
+        <div>
+          <h3 className="font-heading text-sm font-semibold mb-3">Tools</h3>
+          <ul className="space-y-2">
+            <li><Link to="/ask-ai" className={footerLink}>AI Recommender</Link></li>
+            <li><Link to="/find-my-site" className={footerLink}>Site Finder Quiz</Link></li>
+          </ul>
+
+          <h3 className="font-heading text-sm font-semibold mb-3 mt-6">Company</h3>
+          <ul className="space-y-2">
+            <li><Link to="/about" className={footerLink}>About</Link></li>
+            <li><Link to="/contact" className={footerLink}>Contact</Link></li>
+          </ul>
+        </div>
+
+        {/* Legal */}
+        <div>
+          <h3 className="font-heading text-sm font-semibold mb-3">Legal</h3>
+          <ul className="space-y-2">
+            <li><Link to="/privacy-policy" className={footerLink}>Privacy Policy</Link></li>
+            <li><Link to="/terms" className={footerLink}>Terms of Service</Link></li>
+            <li><Link to="/affiliate-disclosure" className={footerLink}>Affiliate Disclosure</Link></li>
+            <li><Link to="/2257" className={footerLink}>2257 Statement</Link></li>
+            <li><Link to="/sitemap" className={footerLink}>Sitemap</Link></li>
+          </ul>
         </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-center gap-2">
+      <div className="mt-10 flex items-center justify-center gap-2">
         <span className="rounded-button border border-destructive/30 bg-destructive/10 px-3 py-1 text-xs font-medium text-destructive">18+</span>
         <span className="text-xs text-muted-foreground">Adult Content</span>
       </div>
 
-      <p className="mt-6 text-center text-xs leading-relaxed text-muted-foreground/70">
+      <p className="mt-4 text-center text-xs leading-relaxed text-muted-foreground/70">
         TwinkVault.com is an adult content review site. All sites reviewed contain content intended for adults 18+. We earn commissions from affiliate links.
       </p>
       <p className="mt-2 text-center text-xs text-muted-foreground/50">
-        © {new Date().getFullYear()} TwinkVault. All rights reserved.
+        &copy; {new Date().getFullYear()} TwinkVault. All rights reserved.
       </p>
     </div>
   </footer>

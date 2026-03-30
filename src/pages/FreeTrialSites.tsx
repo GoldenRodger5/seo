@@ -48,9 +48,9 @@ const FreeTrialSites = () => (
           >
             <h2 className="font-heading text-lg font-bold">Best Free Trial Twink Sites in {currentYear}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              <strong className="text-foreground">Next Door Twink</strong> and <strong className="text-foreground">Next Door World</strong> offer a 3-day trial for $2.95 — the best trial deal available, especially since Next Door World includes access to 15 sites.
-              <strong className="text-foreground"> Breed Me Raw</strong> offers a 2-day free trial.
-              Always check directly with the site for current trial availability.
+              <strong className="text-foreground">Breed Me Raw</strong> offers a free 2-day trial — one of the only sites in the niche with a no-cost trial option.
+              For low-risk entry, <strong className="text-foreground">Next Door Twink</strong> and <strong className="text-foreground">Next Door World</strong> offer the best annual deal at $7.95/mo for 85 channels and 13,000+ videos.
+              Always check directly with the site for current trial availability, as promotions change frequently.
             </p>
           </motion.div>
 
@@ -120,7 +120,7 @@ const FreeTrialSites = () => (
           <div className="space-y-5 text-muted-foreground leading-relaxed">
             <h2 className="font-heading text-2xl font-bold text-foreground">Are Twink Site Free Trials Worth It?</h2>
             <p>Free trials for twink sites are genuinely useful — preview pages and trailers are often misleading, showing the best scenes while the full library can be thin. A trial lets you browse the actual member area, check update frequency, and test the streaming quality before committing to a full subscription.</p>
-            <p>The best trial deal in the category is the Next Door World network — $2.95 for 3 days gives you access to 15 sites and 3,000+ videos. That's enough time to know whether you want the full subscription. Just remember to cancel before the trial ends if you don't want to be billed.</p>
+            <p>Breed Me Raw currently offers a 2-day free trial — no payment required upfront. For the best overall value without a trial, the Next Door World network gives you 85 channels and 13,000+ videos for $7.95/mo on the annual plan. That low annual price effectively eliminates the risk a trial is meant to address.</p>
             <p>Sites without trials can still be worth trying if they have a strong track record, a responsive refund policy, or a very low annual price that minimises the risk.</p>
           </div>
         </div>

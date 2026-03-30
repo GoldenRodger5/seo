@@ -75,6 +75,7 @@ const ComparePage = () => {
           <Helmet>
             <title>Compare Twink Sites — Side by Side | TwinkVault</title>
             <meta name="description" content="Compare the best twink content sites side by side. See scores, prices, and features at a glance." />
+            <link rel="canonical" href="https://twinkvault.com/compare" />
           </Helmet>
           <section className="py-16">
             <div className="container">
@@ -142,6 +143,7 @@ const ComparePage = () => {
         <Helmet>
           <title>{siteA.name} vs {siteB.name} — Which Is Worth It? ({currentYear}) | TwinkVault</title>
           <meta name="description" content={`Compare ${siteA.name} vs ${siteB.name} side by side. Scores, pricing, pros and cons to help you decide.`} />
+          <link rel="canonical" href={`https://twinkvault.com/compare/${slug}`} />
         </Helmet>
         <section className="py-16">
           <div className="container max-w-4xl">

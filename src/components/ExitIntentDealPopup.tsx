@@ -77,21 +77,21 @@ const ExitIntentDealPopup = () => {
             <span className="text-4xl">👀</span>
             <h3 id="exit-deal-title" className="mt-4 font-heading text-2xl font-bold">Wait — This Week's Best Deal</h3>
             <p className="mt-3 text-muted-foreground">
-              <span className="font-semibold text-foreground">{deal.name}</span> — 3-day trial, then access to 15 sites
+              <span className="font-semibold text-foreground">{deal.name}</span> — 85 channels, 13,000+ videos
             </p>
-            <p className="mt-2 text-2xl font-bold text-emerald-400">$2.95 trial</p>
-            <p className="text-sm text-muted-foreground">Then {deal.price_monthly} — cancel anytime</p>
+            <p className="mt-2 text-2xl font-bold text-emerald-400">$7.95/mo</p>
+            <p className="text-sm text-muted-foreground">73% off annual plan · Cancel anytime</p>
 
             <MotionButtonWrap>
               <Link
-                to="/go/next-door-twink"
+                to="/discount/next-door-twink"
                 className="cta-btn mt-6 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
                 onClick={close}
               >
-                Claim This Deal <ArrowRight size={14} />
+                View This Deal <ArrowRight size={14} />
               </Link>
             </MotionButtonWrap>
-            <p className="mt-2 text-[10px] text-muted-foreground">Opens in new tab · Affiliate link</p>
+            <p className="mt-2 text-[10px] text-muted-foreground">Links to discount page</p>
 
             <button
               onClick={close}

@@ -63,8 +63,8 @@ const BestTwinkSites = () => (
             <h2 className="font-heading text-lg font-bold">Quick Answer: Best Twink Sites in {currentYear}</h2>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               The best twink site in {currentYear} is <strong className="text-foreground">Helix Studios</strong> (4.8/5) for premium production quality.
-              For best value, <strong className="text-foreground">Next Door Twink</strong> offers a $2.95 trial and access to 15 sites.
-              For European content, <strong className="text-foreground">Staxus</strong> leads the field. Full rankings below.
+              For best value, <strong className="text-foreground">Next Door Twink</strong> gives access to the 85-channel ASGmax network for just $7.95/mo annually.
+              For British content, <strong className="text-foreground">Hard Brit Lads</strong> leads the field. Full rankings below.
             </p>
           </motion.div>
 

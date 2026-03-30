@@ -19,9 +19,9 @@ interface Deal {
 }
 
 const deals: Deal[] = ([
-  { siteSlug: "helix-studios", siteName: "Helix Studios", description: "66% off annual membership — pay just $11.99/mo", originalPrice: "$34.95/mo", dealPrice: "$11.99/mo", discountPercent: 66, expiry: "limited" as const },
-  { siteSlug: "next-door-twink", siteName: "Next Door Twink", description: "3-day trial for $2.95 — full network access", originalPrice: "$29.99/mo", dealPrice: "$2.95 trial", discountPercent: 90, expiry: "limited" as const },
-  { siteSlug: "next-door-world", siteName: "Next Door World", description: "3-day trial for $2.95 — 15 sites in one membership", originalPrice: "$29.99/mo", dealPrice: "$2.95 trial", discountPercent: 90, expiry: "flash" as const },
+  { siteSlug: "helix-studios", siteName: "Helix Studios", description: "66% off annual membership — pay just $11.99/mo for 4,000+ scenes", originalPrice: "$34.95/mo", dealPrice: "$11.99/mo", discountPercent: 66, expiry: "limited" as const },
+  { siteSlug: "next-door-twink", siteName: "Next Door Twink", description: "73% off annual — 85 channels & 13,000+ videos for $7.95/mo", originalPrice: "$29.95/mo", dealPrice: "$7.95/mo", discountPercent: 73, expiry: "ongoing" as const },
+  { siteSlug: "next-door-world", siteName: "Next Door World", description: "73% off annual — full ASGmax network access for $7.95/mo", originalPrice: "$29.95/mo", dealPrice: "$7.95/mo", discountPercent: 73, expiry: "ongoing" as const },
   { siteSlug: "twinks-in-shorts", siteName: "Twinks in Shorts", description: "50% off first 3 months", originalPrice: "$29.95/mo", dealPrice: "$14.97/mo", discountPercent: 50, expiry: "ongoing" as const },
   { siteSlug: "southern-strokes", siteName: "Southern Strokes", description: "55% off annual plan", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 55, expiry: "ongoing" as const },
   { siteSlug: "breed-me-raw", siteName: "Breed Me Raw", description: "Free 2-day trial + 40% off annual", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 40, expiry: "ongoing" as const },
@@ -147,7 +147,12 @@ const BestDeals = () => (
                               Claim Deal <ArrowRight size={14} />
                             </Link>
                           )}
-                          <p className="mt-1 text-center text-[10px] text-muted-foreground">Opens in new tab{affiliated ? " · Affiliate link" : ""}</p>
+                          <div className="mt-2 flex items-center justify-center gap-3">
+                            <p className="text-[10px] text-muted-foreground">Opens in new tab{affiliated ? " · Affiliate link" : ""}</p>
+                            <Link to={`/discount/${deal.siteSlug}`} className="text-[10px] font-medium text-secondary hover:underline">
+                              Full discount details →
+                            </Link>
+                          </div>
                         </>
                       );
                     })()}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import { getSiteBySlug } from "../data/sites";
 
@@ -59,6 +60,9 @@ const GoRedirect = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-secondary border-t-transparent" />
         <p className="mt-6 font-heading text-xl font-semibold">Taking you to {siteName}...</p>

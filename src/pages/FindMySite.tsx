@@ -79,6 +79,7 @@ const FindMySite = () => {
       <Helmet>
         <title>Find Your Perfect Twink Site — Quiz | TwinkVault</title>
         <meta name="description" content="Take our 30-second quiz and we'll recommend the best twink content site for you." />
+        <link rel="canonical" href="https://twinkvault.com/find-my-site" />
       </Helmet>
 
       <section className="hero-mesh py-16 min-h-[70vh] flex items-center">

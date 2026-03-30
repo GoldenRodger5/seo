@@ -170,6 +170,12 @@ const ReviewPage = () => {
                 <div className="mt-6 flex flex-wrap gap-3">
                   <VisitSiteButton site={site} label={`Visit ${site.name}`} />
                   <Link
+                    to={`/discount/${site.slug}`}
+                    className="inline-flex items-center gap-2 rounded-button border border-emerald-400/50 bg-emerald-400/10 px-8 py-3 text-sm font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors"
+                  >
+                    {site.deal_discount}% Off Deal <ArrowRight size={14} />
+                  </Link>
+                  <Link
                     to="/top-sites"
                     className="inline-flex items-center gap-2 rounded-button border border-primary px-8 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
                   >
@@ -409,6 +415,12 @@ const ReviewPage = () => {
                 </span>
               </div>
               <VisitSiteButton site={site} className="mt-4" />
+              <Link
+                to={`/discount/${site.slug}`}
+                className="mt-3 block text-center rounded-button border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-xs font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors"
+              >
+                Save {site.deal_discount}% →
+              </Link>
             </div>
           </aside>
         </div>
