@@ -78,11 +78,10 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        
-        <AgeVerification />
-        <EmailCapturePopup />
-        <CookieConsent />
         <BrowserRouter>
+          <AgeVerification />
+          <EmailCapturePopup />
+          <CookieConsent />
           <ScrollProgressBar />
           <ExitIntentDealPopup />
           <AnimatedRoutes />
