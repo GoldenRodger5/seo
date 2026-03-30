@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Layout from "../components/Layout";
 import { PageTransition } from "../components/MotionWrappers";
 import { Mail, Send, CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -19,20 +20,10 @@ const Contact = () => {
     if (!form.name || !form.email || !form.message) return;
     setLoading(true);
     try {
-      const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-      const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-      if (SUPABASE_URL && SUPABASE_ANON_KEY) {
-        await fetch(`${SUPABASE_URL}/rest/v1/contact_submissions`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_ANON_KEY,
-            "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-            "Prefer": "return=minimal",
-          },
-          body: JSON.stringify({ ...form, submitted_at: new Date().toISOString() }),
-        });
-      }
+      await supabase.from("contact_submissions").insert({
+        ...form,
+        submitted_at: new Date().toISOString(),
+      });
     } catch { /* silent */ }
     setLoading(false);
     setSubmitted(true);

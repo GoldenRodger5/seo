@@ -1,21 +1,13 @@
 import { useState } from "react";
 import { Mail, Sparkles } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+import { supabase } from "@/integrations/supabase/client";
 
 async function saveEmail(email: string, source: string) {
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
-  await fetch(`${SUPABASE_URL}/rest/v1/subscribers`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "apikey": SUPABASE_ANON_KEY,
-      "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-      "Prefer": "return=minimal",
-    },
-    body: JSON.stringify({ email, source, subscribed_at: new Date().toISOString() }),
+  await supabase.from("subscribers").insert({
+    email,
+    source,
+    subscribed_at: new Date().toISOString(),
   });
 }
 

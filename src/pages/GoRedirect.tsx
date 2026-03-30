@@ -3,26 +3,14 @@ import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import { getSiteBySlug } from "../data/sites";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+import { supabase } from "@/integrations/supabase/client";
 
 async function logClick(siteSlug: string, referrer: string) {
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
   try {
-    await fetch(`${SUPABASE_URL}/rest/v1/clicks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-        "Prefer": "return=minimal",
-      },
-      body: JSON.stringify({
-        site_slug: siteSlug,
-        referrer_page: referrer,
-        clicked_at: new Date().toISOString(),
-      }),
+    await supabase.from("clicks").insert({
+      site_slug: siteSlug,
+      referrer_page: referrer,
+      clicked_at: new Date().toISOString(),
     });
   } catch {
     // Silently fail — never block the redirect for a tracking error
