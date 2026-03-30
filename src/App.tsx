@@ -45,15 +45,21 @@ const PageLoader = () => (
   </div>
 );
 
-// Error boundary to catch rendering crashes
+// Error boundary that resets on route changes
 class ErrorBoundary extends Component<
-  { children: ReactNode },
+  { children: ReactNode; locationKey: string },
   { hasError: boolean }
 > {
   state = { hasError: false };
 
   static getDerivedStateFromError() {
     return { hasError: true };
+  }
+
+  componentDidUpdate(prevProps: { locationKey: string }) {
+    if (prevProps.locationKey !== this.props.locationKey && this.state.hasError) {
+      this.setState({ hasError: false });
+    }
   }
 
   componentDidCatch(error: Error) {
@@ -112,6 +118,23 @@ const AnimatedRoutes = () => {
   );
 };
 
+const AppShell = () => {
+  const location = useLocation();
+  return (
+    <ErrorBoundary locationKey={location.pathname}>
+      <AgeVerification />
+      <EmailCapturePopup />
+      <CookieConsent />
+      <ScrollProgressBar />
+      <InstallPrompt />
+      <ExitIntentDealPopup />
+      <Suspense fallback={<PageLoader />}>
+        <AnimatedRoutes />
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -119,17 +142,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ErrorBoundary>
-            <AgeVerification />
-            <EmailCapturePopup />
-            <CookieConsent />
-            <ScrollProgressBar />
-            <InstallPrompt />
-            <ExitIntentDealPopup />
-            <Suspense fallback={<PageLoader />}>
-              <AnimatedRoutes />
-            </Suspense>
-          </ErrorBoundary>
+          <AppShell />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

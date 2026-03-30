@@ -255,7 +255,11 @@ const ReviewPage = () => {
               <section>
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Site Design & Usability</h2>
                 <p className="mt-3 text-muted-foreground leading-relaxed">
-                  The site features a modern, easy-to-navigate interface that works well across all devices. Content is well-organized with intuitive search and filtering options. The streaming player supports multiple quality settings and provides a smooth viewing experience.
+                  {site.mobile_score >= 85
+                    ? `The interface is fast and the search actually works — which sounds basic, but plenty of sites in this niche get it wrong. Mobile streaming is smooth with no buffering issues, and switching quality settings is instant. Overall, ${site.name} feels like a site built by people who use it.`
+                    : site.mobile_score >= 70
+                    ? `The desktop experience is solid — navigation is clean and content is well-organized. Mobile is decent but not perfect; some pages load slower than they should. The streaming player works fine across devices, though the search could be better.`
+                    : `The design is functional but dated. You'll find what you need, but the interface hasn't been updated in a while. Mobile works but feels like an afterthought. The streaming player gets the job done without any standout features.`}
                 </p>
               </section>
               <section>
@@ -292,7 +296,11 @@ const ReviewPage = () => {
               <section>
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Our Verdict</h2>
                 <p className="mt-3 text-muted-foreground leading-relaxed">
-                  {site.name} earns a strong {site.overall_score}/5 rating. {site.short_description} If you're looking for quality {site.categories[0]?.replace(/-/g, " ")} content, this is a solid choice worth considering.
+                  {site.overall_score >= 4.5
+                    ? `${site.name} is one of the best in the space — ${site.overall_score}/5 isn't given lightly. ${site.short_description} If you can afford the price, this is the one to get.`
+                    : site.overall_score >= 4.0
+                    ? `${site.name} scores a solid ${site.overall_score}/5. ${site.short_description} It's not the absolute top pick, but it punches above its weight — especially at ${site.price_annual}/mo on the annual plan.`
+                    : `${site.name} comes in at ${site.overall_score}/5. ${site.short_description} It's a niche pick — not for everyone, but if the content matches what you're after, the ${site.price_annual}/mo annual plan makes it a reasonable bet.`}
                 </p>
                 <div className="mt-4 glass-card rounded-lg p-6 text-center">
                   <span className="text-sm text-muted-foreground">Final Score</span>
@@ -329,11 +337,11 @@ const ReviewPage = () => {
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Frequently Asked Questions</h2>
                 <Accordion type="single" collapsible className="mt-4 space-y-2">
                   {[
-                    { q: `Is ${site.name} worth it?`, a: `${site.name} scores ${site.overall_score}/5 in our testing. ${site.short_description} At ${site.price_monthly}, it ${site.value_score >= 85 ? "offers excellent value for money" : site.value_score >= 75 ? "offers decent value" : "is on the pricier side"}. We'd recommend it if you're looking for quality ${site.categories[0]?.replace(/-/g, " ")} content.` },
-                    { q: `How much does ${site.name} cost per month?`, a: `${site.name} costs ${site.price_monthly} on a monthly basis, ${site.price_quarterly} quarterly, or ${site.price_annual}/month when billed annually. The annual plan is the best value.${site.has_free_trial ? " A trial option is also available." : ""}` },
-                    { q: `Does ${site.name} have a free trial?`, a: site.has_free_trial ? `Yes, ${site.name} offers a trial option so you can explore the content before committing to a paid subscription.` : `${site.name} does not currently offer a free trial. However, they do offer competitive pricing starting at ${site.price_annual}/mo on the annual plan.` },
-                    { q: `What is the best alternative to ${site.name}?`, a: `The best alternative depends on what you're looking for. ${similar[0]?.name} (${similar[0]?.overall_score}/5) and ${similar[1]?.name} (${similar[1]?.overall_score}/5) are both strong alternatives worth checking out.` },
-                    { q: `Is ${site.name} updated regularly?`, a: `${site.name} has an update frequency score of ${site.update_frequency}/100. ${site.update_frequency >= 85 ? "They update very frequently with fresh content." : site.update_frequency >= 75 ? "They update regularly with new content." : "Updates come less frequently than some competitors."}` },
+                    { q: `Is ${site.name} worth it?`, a: `At ${site.overall_score}/5, ${site.value_score >= 85 ? "absolutely — it's one of the best values in the space" : site.value_score >= 75 ? "yes, if the content matches what you're into" : "it depends on your budget"}. ${site.price_annual}/mo on the annual plan is the way to go. Monthly at ${site.price_monthly} is steep for what you get.` },
+                    { q: `How much does ${site.name} cost?`, a: `Monthly: ${site.price_monthly}. Quarterly: ${site.price_quarterly}. Annual: ${site.price_annual}/mo (billed yearly). The annual plan saves you the most — don't pay monthly if you can avoid it.${site.has_free_trial ? " They also offer a trial if you want to test it first." : ""}` },
+                    { q: `Does ${site.name} have a free trial?`, a: site.has_free_trial ? `Yes. Use the trial to browse the actual member area — check the library depth, streaming quality, and mobile experience before committing.` : `No free trial right now. But at ${site.price_annual}/mo annually, the low price reduces the risk. If it's not for you, most sites process cancellations without hassle.` },
+                    { q: `What should I try instead of ${site.name}?`, a: `Closest alternatives: ${similar[0]?.name} (${similar[0]?.overall_score}/5) if you want ${similar[0]?.overall_score > site.overall_score ? "higher quality" : "something different"}, or ${similar[1]?.name} (${similar[1]?.overall_score}/5) for a different vibe. Compare them side-by-side in our comparison tool.` },
+                    { q: `How often does ${site.name} add new content?`, a: `Update frequency score: ${site.update_frequency}/100. ${site.update_frequency >= 85 ? "New content drops regularly — you won't run out anytime soon." : site.update_frequency >= 75 ? "Updates are fairly consistent, though not the fastest in the space." : "Updates are slower than competitors. You might burn through the library faster than they add to it."}` },
                   ].map((faq, i) => (
                     <AccordionItem key={i} value={`faq-${i}`} className="glass-card rounded-lg border-none px-5">
                       <AccordionTrigger className="font-heading font-semibold text-left hover:no-underline">{faq.q}</AccordionTrigger>

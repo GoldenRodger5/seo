@@ -95,10 +95,10 @@ const EmailCapturePopup = () => {
           <>
             <span className="text-4xl">🔥</span>
             <h3 id="email-popup-title" className="mt-4 font-heading text-2xl font-bold">
-              Get This Month's Best Deals
+              One Email a Month. Just Deals.
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              We'll send you the top twink site discounts and new reviews once a month. No spam.
+              The best discounts and new reviews, once a month. No fluff, no spam, unsubscribe anytime.
             </p>
             <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
               <input

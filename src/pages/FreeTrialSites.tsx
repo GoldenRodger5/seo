@@ -118,10 +118,10 @@ const FreeTrialSites = () => (
 
           {/* SEO content */}
           <div className="space-y-5 text-muted-foreground leading-relaxed">
-            <h2 className="font-heading text-2xl font-bold text-foreground">Are Twink Site Free Trials Worth It?</h2>
-            <p>Free trials for twink sites are genuinely useful — preview pages and trailers are often misleading, showing the best scenes while the full library can be thin. A trial lets you browse the actual member area, check update frequency, and test the streaming quality before committing to a full subscription.</p>
-            <p>The ASGmax network (Next Door Twink / Next Door World) offers a $2.95 three-day trial — the cheapest way to test 45+ channels and 12,500+ videos before committing. On the annual plan, it drops to just $10.95/mo. That low annual price effectively eliminates the risk a trial is meant to address.</p>
-            <p>Sites without trials can still be worth trying if they have a strong track record, a responsive refund policy, or a very low annual price that minimises the risk.</p>
+            <h2 className="font-heading text-2xl font-bold text-foreground">Are These Trials Actually Worth It?</h2>
+            <p>Yes — and here's why. Tour pages are marketing. They show the best 5 scenes, the hottest performers, and hide the fact that half the library might be 480p from 2015. A trial lets you log in and see what you're actually buying: the real library depth, the streaming quality on your device, whether the search works, and how often they actually upload new content.</p>
+            <p>The ASGmax $2.95 trial is the best deal in the space. Three days, 45+ channels, 12,500+ videos. That's enough time to know if it's for you. If it is, switch to the $10.95/mo annual plan — at that price, the trial almost isn't necessary, but it's nice to have the option.</p>
+            <p>For sites without trials, look at the annual price. If it's under $10/mo and the site scores above 4.0, the risk is low enough that you probably don't need a trial anyway.</p>
           </div>
         </div>
       </section>

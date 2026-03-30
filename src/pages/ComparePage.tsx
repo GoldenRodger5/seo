@@ -112,15 +112,17 @@ const ComparePage = () => {
     );
   }
 
-  // Find the split point by testing all possible positions for "-vs-"
+  // Try every "-vs-" position until both slugs resolve to real sites
   let siteA: ReturnType<typeof getSiteBySlug> = undefined;
   let siteB: ReturnType<typeof getSiteBySlug> = undefined;
-  const vsIdx = slug.indexOf("-vs-");
-  if (vsIdx > 0) {
-    const slugA = slug.substring(0, vsIdx);
-    const slugB = slug.substring(vsIdx + 4);
-    siteA = getSiteBySlug(slugA);
-    siteB = getSiteBySlug(slugB);
+  let searchFrom = 0;
+  while (searchFrom < slug.length) {
+    const vsIdx = slug.indexOf("-vs-", searchFrom);
+    if (vsIdx < 1) break;
+    const a = getSiteBySlug(slug.substring(0, vsIdx));
+    const b = getSiteBySlug(slug.substring(vsIdx + 4));
+    if (a && b) { siteA = a; siteB = b; break; }
+    searchFrom = vsIdx + 1;
   }
 
   if (!siteA || !siteB) {
@@ -166,15 +168,12 @@ const ComparePage = () => {
             {/* Intro section */}
             <div className="mt-6 text-sm text-muted-foreground leading-relaxed space-y-4">
               <p>
-                Choosing between {siteA.name} vs {siteB.name} comes down to what you value most in a twink content site.
-                Both are popular choices in the space, but they serve different audiences and priorities. We've tested both
-                with active paid subscriptions to give you an honest, side-by-side comparison.
+                We had active memberships on both. Here's how they stack up across content, value, updates, and mobile experience.
               </p>
               <p>
-                {siteA.name} scores {siteA.overall_score}/5 overall with a content quality rating of {siteA.content_quality}/100,
-                while {siteB.name} comes in at {siteB.overall_score}/5 with {siteB.content_quality}/100 for content quality.
-                At {siteA.price_monthly} vs {siteB.price_monthly} per month, pricing is also a factor worth considering. Below, we break
-                down every category so you can decide which site is right for you.
+                {siteA.name}: {siteA.overall_score}/5 overall, {siteA.content_quality}/100 content quality, {siteA.price_monthly}/mo.
+                {" "}{siteB.name}: {siteB.overall_score}/5 overall, {siteB.content_quality}/100 content quality, {siteB.price_monthly}/mo.
+                {" "}Numbers don't tell the whole story — read the breakdown below.
               </p>
             </div>
 

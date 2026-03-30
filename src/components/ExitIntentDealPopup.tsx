@@ -75,12 +75,12 @@ const ExitIntentDealPopup = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <span className="text-4xl">👀</span>
-            <h3 id="exit-deal-title" className="mt-4 font-heading text-2xl font-bold">Wait — This Week's Best Deal</h3>
+            <h3 id="exit-deal-title" className="mt-4 font-heading text-2xl font-bold">Before You Go</h3>
             <p className="mt-3 text-muted-foreground">
-              <span className="font-semibold text-foreground">{deal.name}</span> — 45+ channels, 12,500+ videos
+              <span className="font-semibold text-foreground">{deal.name}</span> — 45+ channels, 12,500+ videos, $2.95 trial
             </p>
-            <p className="mt-2 text-2xl font-bold text-emerald-400">$10.95/mo</p>
-            <p className="text-sm text-muted-foreground">56% off annual plan · Cancel anytime</p>
+            <p className="mt-2 text-2xl font-bold text-emerald-400">$10.95/mo annual</p>
+            <p className="text-sm text-muted-foreground">That's $0.24 per channel · Cancel anytime</p>
 
             <MotionButtonWrap>
               <Link

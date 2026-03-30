@@ -11,11 +11,11 @@ import {
 import { PageTransition } from "../components/MotionWrappers";
 
 const faqs = [
-  { q: "How do you rank sites?", a: "We evaluate each site across four categories: Content Quality, Value for Money, Update Frequency, and Mobile Experience. Each category is scored out of 100, and the overall score is a weighted average. Our team personally tests each site before publishing a review." },
-  { q: "Do you get paid by the sites you review?", a: "No. We earn commissions when you sign up through our affiliate links, but this never influences our editorial rankings. We pay for memberships out of pocket and review sites independently." },
-  { q: "How often do you update reviews?", a: "We revisit every reviewed site at least once a month to ensure our scores and information are accurate. Major updates are noted with a freshness badge on each review." },
-  { q: "Are the prices accurate?", a: "We update pricing information weekly. However, sites may change their prices without notice. The prices shown are the best available at the time of our last check." },
-  { q: "How do I suggest a site for review?", a: "We're always looking for new sites to review! Send us the site URL via our contact page, and our team will evaluate it for inclusion in our rankings." },
+  { q: "How do you rank sites?", a: "We log in, browse the member area, stream on mobile, test search, and check if the \"weekly updates\" claim is actually true. Then we score four things: content quality, value for money, update frequency, and mobile experience — each out of 100. The overall score is a weighted average. No algorithm, no automation — just people testing sites and writing scores." },
+  { q: "Do sites pay you to rank them?", a: "No. We earn affiliate commissions when someone signs up through one of our links — that's how we fund the memberships and keep the lights on. But the scores are 100% ours. A site paying us a higher commission doesn't move its ranking. If a 3.7 site offers us 70% commission, it stays at 3.7." },
+  { q: "How often do reviews get updated?", a: "At least once a month. We re-check pricing, trial availability, and whether the site has added new content. If something changes — prices go up, a trial disappears, updates slow down — we adjust the score that same cycle." },
+  { q: "Can I trust the prices listed?", a: "We check pricing weekly, but sites can change rates without warning. If you see a price that looks off, let us know via the contact page and we'll verify it within 24 hours." },
+  { q: "How do I suggest a site for review?", a: "Send us the URL through our contact page. We'll check it out — if it fits the niche and has enough content to properly evaluate, we'll add it to the next review cycle." },
 ];
 
 const About = () => (
@@ -32,9 +32,9 @@ const About = () => (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">About TwinkVault</h1>
             <div className="mt-8 glass-card rounded-lg p-8 space-y-6 text-muted-foreground leading-relaxed">
-              <p>TwinkVault is an independent review site. We research and review gay twink content sites so you can make informed decisions before subscribing.</p>
-              <p>We earn commissions when you sign up through our links, which funds our reviews. This never influences our editorial rankings — no site has ever paid us to rank them higher.</p>
-              <p>Every review is based on real testing: we evaluate content quality, site usability, mobile experience, update frequency, and value for money. Our goal is to save you time and money by helping you find the best sites without the guesswork.</p>
+              <p>TwinkVault exists because we got tired of subscribing to sites based on misleading tour pages and fake "top 10" lists that ranked whoever paid the most. So we started paying for memberships ourselves and writing honest scores.</p>
+              <p>We earn affiliate commissions on some links — that's how we pay for the 12+ memberships and keep the site running. But commissions don't affect scores. If a site is mediocre, it gets a mediocre score regardless of what they offer us.</p>
+              <p>Every review comes from actual member-area testing: we stream content, try the search, check mobile, count how often they actually upload, and compare pricing across plans. The goal is simple — help you avoid wasting money on sites that aren't worth it.</p>
             </div>
           </motion.div>
 

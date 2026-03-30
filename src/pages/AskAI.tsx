@@ -72,14 +72,14 @@ const AskAI = () => {
             >
               <div className="flex justify-center">
                 <span className="inline-flex items-center gap-2 rounded-button bg-primary/15 px-4 py-2 text-sm font-medium text-primary">
-                  <Sparkles size={14} /> Powered by Claude AI
+                  <Sparkles size={14} /> Smart Recommendations
                 </span>
               </div>
               <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
-                Find Your Perfect Site
+                Tell Us What You Want
               </h1>
               <p className="mt-4 text-muted-foreground">
-                Describe exactly what you want in plain English. Our AI reads all 12 site profiles and picks the best matches for you.
+                Describe your budget, preferences, or what you're into — we'll match you to the best sites from our tested library of 12.
               </p>
             </motion.div>
 

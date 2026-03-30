@@ -44,7 +44,7 @@ const BestTwinkSites = () => (
               Best Twink Sites {currentYear}
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              We paid for memberships on 12 sites, tested everything, and scored them honestly. No sponsorships. No paid placements. Just the real ranking.
+              Paid memberships on all 12 sites. Tested content, streaming, mobile, and search. Scored them honestly. No site paid to be here.
             </p>
           </motion.div>
         </div>
@@ -119,13 +119,13 @@ const BestTwinkSites = () => (
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-heading text-2xl font-bold text-foreground">How We Rank the Best Twink Sites</h2>
-            <p>Finding the best twink site requires testing beyond the preview pages. We judge every site on four criteria: content quality (production values, performer quality, scene variety), value for money (what you get relative to the price), update frequency (how often new content is added), and mobile experience (how well the site works on phones and tablets).</p>
-            <p>Each score is out of 100, and the overall rating is a weighted average. Sites with consistently high content quality score well even if they're more expensive — and budget sites can still rank highly if they deliver solid value at their price point.</p>
-            <p>We pay for every membership ourselves. No site has ever paid us to rank higher. If a site changes significantly — prices go up, quality drops, updates slow down — we update the ranking immediately.</p>
-            <h2 className="font-heading text-2xl font-bold text-foreground">What Makes a Great Twink Site?</h2>
-            <p>The best twink sites in {currentYear} share a few qualities: exclusive content you can't find elsewhere, consistent update schedules, and performers who look genuinely comfortable on camera. Production quality matters — badly lit, poorly filmed scenes drag down otherwise promising sites.</p>
-            <p>Value is relative. Helix Studios at $34.95/month is expensive but delivers cinema-quality production. Next Door Twink at $24.95/month with access to the 45+ channel ASGmax network is exceptional value. Southern Strokes at $9.95/month annual is the budget pick. The right choice depends entirely on what you value.</p>
+            <h2 className="font-heading text-2xl font-bold text-foreground">How We Actually Score These Sites</h2>
+            <p>We don't trust trailers. Every site on this list was tested with a paid membership — we browsed the member area, tested search, streamed on mobile, and checked if the "weekly updates" claim was real. Most review sites just look at the tour page. We log in.</p>
+            <p>Scores are based on four things: content quality (are scenes well-lit, well-shot, with performers who seem into it?), value (what do you get per dollar?), update frequency (does the site actually release new content regularly?), and mobile (does it work on your phone without being painful?). Each is scored out of 100. The overall rating is a weighted average.</p>
+            <p>No site has paid us to rank higher. We earn affiliate commissions on some links, but the scores are entirely ours. When sites raise prices or stop updating, we drop their scores the same month.</p>
+            <h2 className="font-heading text-2xl font-bold text-foreground">What Actually Separates the Good Sites From the Bad</h2>
+            <p>The difference between a 4.8 and a 3.7 usually comes down to two things: production quality and library depth. Helix Studios at $34.95/month is expensive, but the scenes look like they were shot by people who know what they're doing. Compare that to sites where half the library is 480p footage from 2014 — you feel the gap immediately.</p>
+            <p>For most people, the sweet spot is Next Door Twink at $10.95/month on the annual plan. You get the full ASGmax network — 45+ channels, 12,500+ videos, content ranging from amateur to studio quality. It's not all twink content, but there's enough that you won't run out anytime soon. Southern Strokes at $9.95/month annual is the sleeper pick if you want something cheaper with a more specific focus.</p>
           </motion.div>
         </div>
       </section>

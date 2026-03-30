@@ -57,10 +57,10 @@ const TopSites = () => {
               animate={{ opacity: 1, y: 0 }}
             >
               <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">
-                The Only Ranking That Actually Matters
+                12 Sites. All Tested. Ranked Honestly.
               </h1>
               <p className="mt-4 text-muted-foreground">
-                We tested and ranked the top twink content sites so you don't have to. Updated monthly.
+                We paid for every membership, scored them on content, value, updates, and mobile UX — then ranked them. No site paid us to be here.
               </p>
               <div className="mt-3 flex items-center justify-center gap-3">
                 <span className="inline-flex items-center gap-1 rounded-button bg-muted px-3 py-1 text-xs text-muted-foreground">

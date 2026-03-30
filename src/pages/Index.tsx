@@ -108,7 +108,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          Honest rankings of the best twink sites — no sponsored garbage, no fake reviews.
+          We paid for every membership, tested them all, and ranked the ones actually worth your money.
         </motion.p>
         <motion.div
           className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row"
@@ -144,7 +144,7 @@ const HeroSection = () => {
               <Star key={i} size={16} className="fill-secondary text-secondary" />
             ))}
           </div>
-          <span className="text-sm text-muted-foreground">Staff-tested reviews, updated monthly</span>
+          <span className="text-sm text-muted-foreground">12 sites tested · Scores updated monthly</span>
         </motion.div>
       </div>
     </section>
@@ -208,8 +208,8 @@ const QuizBanner = () => (
       <MotionCard className="glass-card flex flex-col items-center gap-4 rounded-lg p-8 text-center sm:flex-row sm:text-left">
         <Sparkles size={40} className="text-primary shrink-0" />
         <div className="flex-1">
-          <h3 className="font-heading text-xl font-bold">Not sure where to start?</h3>
-          <p className="mt-1 text-sm text-muted-foreground">Take our 30-second quiz — or try our AI recommender for instant personalised results.</p>
+          <h3 className="font-heading text-xl font-bold">No idea what you want?</h3>
+          <p className="mt-1 text-sm text-muted-foreground">Tell us your budget and what you're into. We'll match you to the right site in 30 seconds.</p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
           <MotionButton>
@@ -315,12 +315,12 @@ const TrustSection = () => (
     viewport={{ once: true }}
   >
     <div className="container">
-      <h2 className="text-center font-heading text-3xl font-bold md:text-4xl heading-gradient inline-block w-full">Why Trust Us</h2>
+      <h2 className="text-center font-heading text-3xl font-bold md:text-4xl heading-gradient inline-block w-full">Why We Do This</h2>
       <StaggerContainer className="mt-10 grid gap-8 md:grid-cols-3">
         {[
-          { icon: <Search size={48} className="text-primary" />, title: "Honest Reviews", desc: "We research pricing, features, and user feedback so you don't have to." },
-          { icon: <ShieldCheck size={48} className="text-primary" />, title: "Zero BS Rankings", desc: "Rankings are based on quality, not who pays us more." },
-          { icon: <RefreshCw size={48} className="text-primary" />, title: "Always Current", desc: "Reviews are updated monthly with the latest pricing and features." },
+          { icon: <Search size={48} className="text-primary" />, title: "We Actually Subscribe", desc: "Every review comes from a paid membership. We browse the member area, not just the trailer page." },
+          { icon: <ShieldCheck size={48} className="text-primary" />, title: "No Pay-to-Play", desc: "We earn commissions on some links, but no site has ever paid us to rank higher. Our scores are ours." },
+          { icon: <RefreshCw size={48} className="text-primary" />, title: "Prices Change. We Check.", desc: "Sites raise prices, kill trials, or stop updating. We catch it and adjust scores the same month." },
         ].map((item) => (
           <StaggerChild key={item.title}>
             <div className="text-center">

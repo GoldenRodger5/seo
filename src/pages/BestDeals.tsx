@@ -73,7 +73,7 @@ const BestDeals = () => (
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            Don't Pay Full Price. Ever.
+            Every Deal We Could Find
           </motion.h1>
           <motion.p
             className="mx-auto mt-4 max-w-2xl text-muted-foreground"
@@ -81,7 +81,7 @@ const BestDeals = () => (
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            We track the best current offers so you don't have to. Updated weekly.
+            Annual plans, flash sales, and trial offers — all verified and working. Dead links get removed within 24 hours.
           </motion.p>
           <span className="mt-4 inline-flex items-center gap-2 rounded-button bg-muted px-3 py-1.5 text-xs text-muted-foreground">
 {`🔄 Last checked: ${lastCheckedDate}`}
@@ -168,9 +168,9 @@ const BestDeals = () => (
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">How We Find These Deals</h2>
+            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Where These Deals Come From</h2>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              We negotiate directly with sites and monitor their public promotions weekly. Every deal listed here is verified by our team — we never list expired or fake offers.
+              Most are annual plan discounts built into the site's own pricing page — you'd find them yourself if you dug around. We just put them in one place so you can compare. Some are affiliate-exclusive rates we negotiated. Either way, every link is tested before it goes live.
             </p>
             <Link to="/top-sites" className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-secondary hover:underline">
               View Full Site Rankings <ArrowRight size={14} />
