@@ -20,11 +20,11 @@ interface Deal {
 
 const deals: Deal[] = ([
   { siteSlug: "helix-studios", siteName: "Helix Studios", description: "66% off annual membership — pay just $11.99/mo for 4,000+ scenes", originalPrice: "$34.95/mo", dealPrice: "$11.99/mo", discountPercent: 66, expiry: "limited" as const },
-  { siteSlug: "next-door-twink", siteName: "Next Door Twink", description: "73% off annual — 85 channels & 13,000+ videos for $7.95/mo", originalPrice: "$29.95/mo", dealPrice: "$7.95/mo", discountPercent: 73, expiry: "ongoing" as const },
-  { siteSlug: "next-door-world", siteName: "Next Door World", description: "73% off annual — full ASGmax network access for $7.95/mo", originalPrice: "$29.95/mo", dealPrice: "$7.95/mo", discountPercent: 73, expiry: "ongoing" as const },
+  { siteSlug: "next-door-twink", siteName: "Next Door Twink", description: "56% off annual — 45+ channels & 12,500+ videos for $10.95/mo", originalPrice: "$24.95/mo", dealPrice: "$10.95/mo", discountPercent: 56, expiry: "ongoing" as const },
+  { siteSlug: "next-door-world", siteName: "Next Door World", description: "56% off annual — full ASGmax network access for $10.95/mo", originalPrice: "$24.95/mo", dealPrice: "$10.95/mo", discountPercent: 56, expiry: "ongoing" as const },
   { siteSlug: "twinks-in-shorts", siteName: "Twinks in Shorts", description: "50% off first 3 months", originalPrice: "$29.95/mo", dealPrice: "$14.97/mo", discountPercent: 50, expiry: "ongoing" as const },
   { siteSlug: "southern-strokes", siteName: "Southern Strokes", description: "55% off annual plan", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 55, expiry: "ongoing" as const },
-  { siteSlug: "breed-me-raw", siteName: "Breed Me Raw", description: "Free 2-day trial + 40% off annual", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 40, expiry: "ongoing" as const },
+  { siteSlug: "breed-me-raw", siteName: "Breed Me Raw", description: "Up to 40% off annual plan", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 40, expiry: "ongoing" as const },
   { siteSlug: "athletic-twinks", siteName: "Athletic Twinks", description: "40% off quarterly plan", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 40, expiry: "ongoing" as const },
   { siteSlug: "daddy-on-twink", siteName: "Daddy on Twink", description: "45% off annual plan", originalPrice: "$29.95/mo", dealPrice: "$9.95/mo", discountPercent: 45, expiry: "ongoing" as const },
 ] as Deal[]).sort((a, b) => b.discountPercent - a.discountPercent);

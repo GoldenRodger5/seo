@@ -17,8 +17,8 @@ const StickyDealBar = () => {
   return (
     <div className="relative z-50 gold-gradient py-2">
       <div className="container flex items-center justify-center gap-2 text-xs font-semibold text-secondary-foreground sm:text-sm">
-        <span className="hidden sm:inline">🔥 Best Deal: Next Door Twink — 85 Channels for $7.95/mo (73% Off)</span>
-        <span className="sm:hidden">🔥 Next Door — $7.95/mo (73% Off)</span>
+        <span className="hidden sm:inline">🔥 Best Deal: Next Door Twink — 45+ Channels for $10.95/mo (56% Off)</span>
+        <span className="sm:hidden">🔥 Next Door — $10.95/mo (56% Off)</span>
         <Link
           to="/discount/next-door-twink"
           className="inline-flex items-center gap-1 underline underline-offset-2 hover:opacity-80"

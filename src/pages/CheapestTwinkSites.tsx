@@ -53,7 +53,7 @@ const CheapestTwinkSites = () => (
             <h2 className="font-heading text-lg font-bold">Cheapest Twink Sites in {currentYear}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               The cheapest twink sites on an annual plan are <strong className="text-foreground">Southern Strokes</strong>, <strong className="text-foreground">Athletic Twinks</strong>, and <strong className="text-foreground">Twinks in Shorts</strong> — all at $9.95/mo when billed annually.
-              For pure value, <strong className="text-foreground">Next Door World</strong> at $12/mo annual unlocks 15 sites — easily the cheapest per-site cost available.
+              For pure value, <strong className="text-foreground">Next Door World</strong> at $10.95/mo annual unlocks 45+ channels — easily the cheapest per-channel cost available.
             </p>
           </motion.div>
 
@@ -131,8 +131,8 @@ const CheapestTwinkSites = () => (
           <div className="space-y-5 text-muted-foreground leading-relaxed">
             <h2 className="font-heading text-2xl font-bold text-foreground">How to Get Cheap Twink Site Access</h2>
             <p>The single most effective way to reduce cost is to pay annually rather than monthly. Most sites offer 60-70% discounts on annual plans — Helix Studios drops from $34.95/month to $11.99/month, a saving of over $275 per year. If you're confident you'll use a site, the annual plan is almost always the right choice.</p>
-            <p>The second strategy is network memberships. Next Door World gives you 15 sites for $12/month annually. Even if you only regularly use 3-4 of those sites, that's less than $4 per site — far cheaper than individual subscriptions.</p>
-            <p>We do not recommend the very cheapest option if the content quality is poor. A site scoring below 3.5/5 at any price is not good value. The sweet spot is sites scoring 4.0+ at under $12/month annually — Southern Strokes, Athletic Twinks, and Twinks in Shorts all fit this profile.</p>
+            <p>The second strategy is network memberships. Next Door World gives you 45+ channels for $10.95/month annually. Even if you only regularly watch 3-4 of those channels, that's under $3 per channel — far cheaper than individual subscriptions.</p>
+            <p>We do not recommend the very cheapest option if the content quality is poor. A site scoring below 3.5/5 at any price is not good value. The sweet spot is sites scoring 4.0+ at under $11/month annually — Southern Strokes, Athletic Twinks, and Twinks in Shorts all fit this profile.</p>
             <div className="flex flex-wrap gap-3 pt-4">
               <Link to="/best-deals" className="inline-flex items-center gap-2 text-sm font-medium text-secondary hover:underline">
                 See All Current Deals <ArrowRight size={14} />

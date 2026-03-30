@@ -63,7 +63,7 @@ const BestTwinkSites = () => (
             <h2 className="font-heading text-lg font-bold">Quick Answer: Best Twink Sites in {currentYear}</h2>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               The best twink site in {currentYear} is <strong className="text-foreground">Helix Studios</strong> (4.8/5) for premium production quality.
-              For best value, <strong className="text-foreground">Next Door Twink</strong> gives access to the 85-channel ASGmax network for just $7.95/mo annually.
+              For best value, <strong className="text-foreground">Next Door Twink</strong> gives access to the 45+ channel ASGmax network for just $10.95/mo annually.
               For British content, <strong className="text-foreground">Hard Brit Lads</strong> leads the field. Full rankings below.
             </p>
           </motion.div>
@@ -125,7 +125,7 @@ const BestTwinkSites = () => (
             <p>We pay for every membership ourselves. No site has ever paid us to rank higher. If a site changes significantly — prices go up, quality drops, updates slow down — we update the ranking immediately.</p>
             <h2 className="font-heading text-2xl font-bold text-foreground">What Makes a Great Twink Site?</h2>
             <p>The best twink sites in {currentYear} share a few qualities: exclusive content you can't find elsewhere, consistent update schedules, and performers who look genuinely comfortable on camera. Production quality matters — badly lit, poorly filmed scenes drag down otherwise promising sites.</p>
-            <p>Value is relative. Helix Studios at $34.95/month is expensive but delivers cinema-quality production. Next Door Twink at $29.99/month with access to 15 sites is exceptional value. Southern Strokes at $9.95/month annual is the budget pick. The right choice depends entirely on what you value.</p>
+            <p>Value is relative. Helix Studios at $34.95/month is expensive but delivers cinema-quality production. Next Door Twink at $24.95/month with access to the 45+ channel ASGmax network is exceptional value. Southern Strokes at $9.95/month annual is the budget pick. The right choice depends entirely on what you value.</p>
           </motion.div>
         </div>
       </section>

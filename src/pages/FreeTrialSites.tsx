@@ -48,8 +48,8 @@ const FreeTrialSites = () => (
           >
             <h2 className="font-heading text-lg font-bold">Best Free Trial Twink Sites in {currentYear}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              <strong className="text-foreground">Breed Me Raw</strong> offers a free 2-day trial — one of the only sites in the niche with a no-cost trial option.
-              For low-risk entry, <strong className="text-foreground">Next Door Twink</strong> and <strong className="text-foreground">Next Door World</strong> offer the best annual deal at $7.95/mo for 85 channels and 13,000+ videos.
+              The ASGmax network (Next Door Twink / Next Door World) offers a <strong className="text-foreground">$2.95 three-day trial</strong> — the cheapest way to test 45+ channels and 12,500+ videos.
+              On the annual plan, it drops to just $10.95/mo — one of the best values in the space.
               Always check directly with the site for current trial availability, as promotions change frequently.
             </p>
           </motion.div>
@@ -120,7 +120,7 @@ const FreeTrialSites = () => (
           <div className="space-y-5 text-muted-foreground leading-relaxed">
             <h2 className="font-heading text-2xl font-bold text-foreground">Are Twink Site Free Trials Worth It?</h2>
             <p>Free trials for twink sites are genuinely useful — preview pages and trailers are often misleading, showing the best scenes while the full library can be thin. A trial lets you browse the actual member area, check update frequency, and test the streaming quality before committing to a full subscription.</p>
-            <p>Breed Me Raw currently offers a 2-day free trial — no payment required upfront. For the best overall value without a trial, the Next Door World network gives you 85 channels and 13,000+ videos for $7.95/mo on the annual plan. That low annual price effectively eliminates the risk a trial is meant to address.</p>
+            <p>The ASGmax network (Next Door Twink / Next Door World) offers a $2.95 three-day trial — the cheapest way to test 45+ channels and 12,500+ videos before committing. On the annual plan, it drops to just $10.95/mo. That low annual price effectively eliminates the risk a trial is meant to address.</p>
             <p>Sites without trials can still be worth trying if they have a strong track record, a responsive refund policy, or a very low annual price that minimises the risk.</p>
           </div>
         </div>
