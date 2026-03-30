@@ -9,14 +9,10 @@ import StarRating from "../components/StarRating";
 import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
 import { PageTransition } from "../components/MotionWrappers";
 
-const comparePairs = [
-  { a: "helix-studios", b: "twink-in-shorts" },
-  { a: "helix-studios", b: "athletic-twinks" },
-  { a: "twink-in-shorts", b: "southern-strokes" },
-  { a: "athletic-twinks", b: "daddy-on-twink" },
-  { a: "southern-strokes", b: "twinks-bareback" },
-  { a: "touch-that-boy", b: "breed-me-raw" },
-];
+// Auto-generate all possible pairs from real sites
+const comparePairs = sites.flatMap((siteA, i) =>
+  sites.slice(i + 1).map((siteB) => ({ a: siteA.slug, b: siteB.slug }))
+);
 
 const scoreColor = (val: number, max: number) => {
   const ratio = val / max;
@@ -34,7 +30,7 @@ const CompareColumn = ({ site }: { site: SiteData }) => (
     <div className="mt-2 flex justify-center">
       <StarRating score={site.overall_score} size={14} />
     </div>
-    <p className="mt-3 text-center text-lg font-semibold">{site.price_from}</p>
+    <p className="mt-3 text-center text-lg font-semibold">{site.price_monthly}</p>
     <div className="mt-4 space-y-1.5">
       {site.pros.map((p) => (
         <div key={p} className="flex items-start gap-2 text-sm">
@@ -152,8 +148,8 @@ const ComparePage = () => {
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                 {winner.name} takes the overall win with a {winner.overall_score}/5 score, excelling in {winner.content_quality >= winner.value_score ? "content quality" : "value for money"}.
                 {budgetPick.id !== winner.id
-                  ? ` However, ${budgetPick.name} at ${budgetPick.price_from} is the smarter pick if you're watching your budget.`
-                  : ` It also happens to be the more affordable option at ${winner.price_from}.`}
+                  ? ` However, ${budgetPick.name} at ${budgetPick.price_annual}/mo (annual) is the smarter pick if you're watching your budget.`
+                  : ` It also happens to be the more affordable option at ${winner.price_annual}/mo on the annual plan.`}
               </p>
             </div>
 
@@ -167,7 +163,7 @@ const ComparePage = () => {
               <p>
                 {siteA.name} scores {siteA.overall_score}/5 overall with a content quality rating of {siteA.content_quality}/100,
                 while {siteB.name} comes in at {siteB.overall_score}/5 with {siteB.content_quality}/100 for content quality.
-                At {siteA.price_from} vs {siteB.price_from}, pricing is also a factor worth considering. Below, we break
+                At {siteA.price_monthly} vs {siteB.price_monthly} per month, pricing is also a factor worth considering. Below, we break
                 down every category so you can decide which site is right for you.
               </p>
             </div>

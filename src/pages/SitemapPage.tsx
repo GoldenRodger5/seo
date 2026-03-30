@@ -4,14 +4,10 @@ import Layout from "../components/Layout";
 import { sites, categories } from "../data/sites";
 import { PageTransition } from "../components/MotionWrappers";
 
-const comparePairs = [
-  { a: "helix-studios", b: "twink-in-shorts" },
-  { a: "helix-studios", b: "athletic-twinks" },
-  { a: "twink-in-shorts", b: "southern-strokes" },
-  { a: "athletic-twinks", b: "daddy-on-twink" },
-  { a: "southern-strokes", b: "twinks-bareback" },
-  { a: "touch-that-boy", b: "breed-me-raw" },
-];
+// Auto-generate all pairs from real sites
+const comparePairs = sites.flatMap((siteA, i) =>
+  sites.slice(i + 1).map((siteB) => ({ a: siteA.slug, b: siteB.slug, nameA: siteA.name, nameB: siteB.name }))
+);
 
 const SitemapPage = () => (
   <Layout>
@@ -54,10 +50,10 @@ const SitemapPage = () => (
             <div>
               <h2 className="font-heading text-xl font-bold mb-4">Comparisons</h2>
               <ul className="space-y-2">
-                {comparePairs.map(({ a, b }) => (
+                {comparePairs.map(({ a, b, nameA, nameB }) => (
                   <li key={`${a}-${b}`}>
                     <Link to={`/compare/${a}-vs-${b}`} className="text-sm text-muted-foreground hover:text-secondary transition-colors">
-                      {a.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())} vs {b.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+                      {nameA} vs {nameB}
                     </Link>
                   </li>
                 ))}

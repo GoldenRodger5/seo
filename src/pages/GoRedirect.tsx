@@ -3,6 +3,31 @@ import { useParams, Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import { getSiteBySlug } from "../data/sites";
 
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+async function logClick(siteSlug: string, referrer: string) {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/clicks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Prefer": "return=minimal",
+      },
+      body: JSON.stringify({
+        site_slug: siteSlug,
+        referrer_page: referrer,
+        clicked_at: new Date().toISOString(),
+      }),
+    });
+  } catch {
+    // Silently fail — never block the redirect for a tracking error
+  }
+}
+
 const GoRedirect = () => {
   const { slug } = useParams<{ slug: string }>();
   const [siteName, setSiteName] = useState("the site");
@@ -11,11 +36,12 @@ const GoRedirect = () => {
     const site = getSiteBySlug(slug || "");
     if (site) {
       setSiteName(site.name);
-      // Only redirect via /go/ if the site has an affiliate URL
+      const referrer = document.referrer || "direct";
+      logClick(site.slug, referrer);
       const targetUrl = site.affiliate_url || site.homepage_url;
       const timer = setTimeout(() => {
         window.open(targetUrl, "_blank");
-      }, 1500);
+      }, 1200);
       return () => clearTimeout(timer);
     }
   }, [slug]);

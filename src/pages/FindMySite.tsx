@@ -28,9 +28,9 @@ const step2Options = [
 ];
 
 const step3Options = [
-  { value: "low", label: "Under $8/month" },
-  { value: "mid", label: "$8–$15/month" },
-  { value: "high", label: "$15+ (best quality)" },
+  { value: "low", label: "Under $10/month (annual plan)" },
+  { value: "mid", label: "$10–$20/month (annual plan)" },
+  { value: "high", label: "Monthly billing, no commitment" },
 ];
 
 function getRecommendations(priority: string, contentTypes: string[], budget: string): SiteData[] {
@@ -49,10 +49,10 @@ function getRecommendations(priority: string, contentTypes: string[], budget: st
       if (ct === "athletic" && site.slug.includes("athletic")) score += 30;
     });
 
-    const price = parseFloat(site.price_from.replace(/[^0-9.]/g, ""));
-    if (budget === "low" && price < 8) score += 25;
-    else if (budget === "mid" && price >= 8 && price <= 15) score += 25;
-    else if (budget === "high" && price > 15) score += 25;
+    const price = parseFloat(site.price_annual.replace(/[^0-9.]/g, ""));
+    if (budget === "low" && price <= 10) score += 25;
+    else if (budget === "mid" && price > 10 && price <= 20) score += 25;
+    else if (budget === "high" && price > 20) score += 25;
 
     return { site, score };
   });

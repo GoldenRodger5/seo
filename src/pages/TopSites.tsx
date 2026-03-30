@@ -43,8 +43,8 @@ const TopSites = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>The Only Ranking That Actually Matters | TwinkVault</title>
-          <meta name="description" content="We tested and ranked the top twink content sites. Updated monthly with honest, independent reviews." />
+          <title>Best Gay Twink Sites 2026 — Top 12 Ranked & Reviewed | TwinkVault</title>
+          <meta name="description" content="Staff-tested rankings of the best gay twink content sites in 2026. Real pricing, honest scores, and exclusive deals. Updated monthly." />
           <link rel="canonical" href="https://twinkvault.com/top-sites" />
         </Helmet>
 

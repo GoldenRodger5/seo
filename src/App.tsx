@@ -22,6 +22,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AffiliateDisclosure from "./pages/AffiliateDisclosure";
 import ComparePage from "./pages/ComparePage";
 import Contact from "./pages/Contact";
+import Terms from "./pages/Terms";
+import Compliance2257 from "./pages/Compliance2257";
 import SitemapPage from "./pages/SitemapPage";
 import NotFound from "./pages/NotFound";
 
@@ -46,6 +48,8 @@ const AnimatedRoutes = () => {
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/compare/:slug" element={<ComparePage />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/2257" element={<Compliance2257 />} />
         <Route path="/sitemap" element={<SitemapPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
