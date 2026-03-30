@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import { requestOverlay, releaseOverlay, useOverlaySlot } from "../hooks/useOverlayQueue";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -19,7 +20,8 @@ async function saveEmail(email: string, source: string) {
 }
 
 const EmailCapturePopup = () => {
-  const [show, setShow] = useState(false);
+  const [needed, setNeeded] = useState(false);
+  const canShow = useOverlaySlot("email");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,13 +31,15 @@ const EmailCapturePopup = () => {
     const timer = setTimeout(() => {
       if (!sessionStorage.getItem("tv_popup_shown")) {
         sessionStorage.setItem("tv_popup_shown", "1");
-        setShow(true);
+        setNeeded(true);
+        requestOverlay("email");
       }
     }, 12000);
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !sessionStorage.getItem("tv_popup_shown")) {
         sessionStorage.setItem("tv_popup_shown", "1");
-        setShow(true);
+        setNeeded(true);
+        requestOverlay("email");
       }
     };
     document.addEventListener("mouseleave", handleMouseLeave);
@@ -44,6 +48,20 @@ const EmailCapturePopup = () => {
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
+
+  useEffect(() => {
+    if (!needed || !canShow) return;
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [needed, canShow]);
+
+  const close = () => {
+    setNeeded(false);
+    releaseOverlay("email");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,16 +72,21 @@ const EmailCapturePopup = () => {
     } catch { /* silent */ }
     setLoading(false);
     setSubmitted(true);
-    setTimeout(() => setShow(false), 2000);
+    setTimeout(close, 2000);
   };
 
-  if (!show) return null;
+  if (!needed || !canShow) return null;
 
   return (
-    <div className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+    <div
+      className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="email-popup-title"
+    >
       <div className="glass-card relative w-full max-w-md rounded-lg p-8 text-center">
         <button
-          onClick={() => setShow(false)}
+          onClick={close}
           className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
           aria-label="Close"
         >
@@ -79,7 +102,7 @@ const EmailCapturePopup = () => {
         ) : (
           <>
             <span className="text-4xl">🔥</span>
-            <h3 className="mt-4 font-heading text-2xl font-bold">
+            <h3 id="email-popup-title" className="mt-4 font-heading text-2xl font-bold">
               Get This Month's Best Deals
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -92,6 +115,7 @@ const EmailCapturePopup = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
+                autoFocus
                 className="w-full rounded-button border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
               />
               <button
@@ -103,7 +127,7 @@ const EmailCapturePopup = () => {
               </button>
             </form>
             <button
-              onClick={() => setShow(false)}
+              onClick={close}
               className="mt-4 text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
               No thanks

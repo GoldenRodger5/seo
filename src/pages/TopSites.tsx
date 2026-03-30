@@ -10,6 +10,7 @@ import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
+import { currentYear, currentMonthLong } from "../lib/dates";
 
 const filters = ["All", "Best Value", "HD Quality", "Amateur", "Premium Studio", "Free Trial"];
 
@@ -43,8 +44,8 @@ const TopSites = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>Best Gay Twink Sites 2026 — Top 12 Ranked & Reviewed | TwinkVault</title>
-          <meta name="description" content="Staff-tested rankings of the best gay twink content sites in 2026. Real pricing, honest scores, and exclusive deals. Updated monthly." />
+          <title>{`Best Gay Twink Sites ${currentYear} — Top 12 Ranked & Reviewed | TwinkVault`}</title>
+          <meta name="description" content={`Staff rankings of the best gay twink content sites in ${currentYear}. Real pricing, honest scores, and exclusive deals. Updated monthly.`} />
           <link rel="canonical" href="https://twinkvault.com/top-sites" />
         </Helmet>
 
@@ -63,7 +64,7 @@ const TopSites = () => {
               </p>
               <div className="mt-3 flex items-center justify-center gap-3">
                 <span className="inline-flex items-center gap-1 rounded-button bg-muted px-3 py-1 text-xs text-muted-foreground">
-                  🔄 Updated March 2026
+                  {`🔄 Updated ${currentMonthLong} ${currentYear}`}
                 </span>
                 <a href="#comparison-table" className="text-xs font-medium text-secondary hover:underline">
                   Jump to Comparison Table ↓
@@ -124,8 +125,8 @@ const TopSites = () => {
                               {site.rank === 1 ? "👑 " : ""}{site.badge}
                             </span>
                           )}
-                          <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Staff Verified</span>
-                          <span className="inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">🔄 Updated Mar 2026</span>
+                          <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Reviewed</span>
+                          <span className="inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">🔄 {`Updated ${currentMonthLong} ${currentYear}`}</span>
                         </div>
                         <div className="mt-1">
                           <StarRating score={site.overall_score} />
@@ -164,7 +165,7 @@ const TopSites = () => {
 
                         <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
                           <ThumbsUp size={12} />
-                          <span>{Math.floor(47 + parseInt(site.id) * 33)} readers found this review helpful</span>
+                          <span>{parseInt(localStorage.getItem(`tv_helpful_${site.slug}`) || "0")} readers found this review helpful</span>
                         </div>
                       </div>
 

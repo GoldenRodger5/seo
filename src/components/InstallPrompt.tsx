@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { X, Download } from "lucide-react";
+import { requestOverlay, releaseOverlay, useOverlaySlot } from "../hooks/useOverlayQueue";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -11,7 +12,8 @@ const DISMISSED_KEY = "tv_pwa_dismissed";
 const PAGE_COUNT_KEY = "tv_pwa_page_count";
 
 const InstallPrompt = () => {
-  const [show, setShow] = useState(false);
+  const [needed, setNeeded] = useState(false);
+  const canShow = useOverlaySlot("install");
   const deferredPrompt = useRef<BeforeInstallPromptEvent | null>(null);
   const location = useLocation();
 
@@ -24,14 +26,16 @@ const InstallPrompt = () => {
 
       const count = parseInt(sessionStorage.getItem(PAGE_COUNT_KEY) || "0", 10);
       if (count >= 2) {
-        setShow(true);
+        setNeeded(true);
+        requestOverlay("install");
       }
     };
 
     window.addEventListener("beforeinstallprompt", handler);
 
     const installed = () => {
-      setShow(false);
+      setNeeded(false);
+      releaseOverlay("install");
       deferredPrompt.current = null;
     };
     window.addEventListener("appinstalled", installed);
@@ -49,7 +53,8 @@ const InstallPrompt = () => {
     sessionStorage.setItem(PAGE_COUNT_KEY, String(count));
 
     if (count >= 2 && deferredPrompt.current) {
-      setShow(true);
+      setNeeded(true);
+      requestOverlay("install");
     }
   }, [location.pathname]);
 
@@ -61,15 +66,17 @@ const InstallPrompt = () => {
       localStorage.setItem(DISMISSED_KEY, "1");
     }
     deferredPrompt.current = null;
-    setShow(false);
+    setNeeded(false);
+    releaseOverlay("install");
   };
 
   const handleDismiss = () => {
     localStorage.setItem(DISMISSED_KEY, "1");
-    setShow(false);
+    setNeeded(false);
+    releaseOverlay("install");
   };
 
-  if (!show) return null;
+  if (!needed || !canShow) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[9998] bg-[#0a0a0f]/95 backdrop-blur-md border-t border-white/10 px-4 py-3">

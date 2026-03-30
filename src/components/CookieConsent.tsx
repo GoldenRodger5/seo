@@ -2,27 +2,45 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Cookie } from "lucide-react";
+import { requestOverlay, releaseOverlay, useOverlaySlot } from "../hooks/useOverlayQueue";
 
 const CookieConsent = () => {
-  const [show, setShow] = useState(false);
+  const [needed, setNeeded] = useState(false);
+  const canShow = useOverlaySlot("cookie");
 
   useEffect(() => {
     const consent = localStorage.getItem("tv_cookie_consent");
     if (!consent) {
-      const timer = setTimeout(() => setShow(true), 2000);
+      const timer = setTimeout(() => {
+        setNeeded(true);
+        requestOverlay("cookie");
+      }, 2000);
       return () => clearTimeout(timer);
     }
   }, []);
 
+  useEffect(() => {
+    if (!needed || !canShow) return;
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") decline();
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [needed, canShow]);
+
   const accept = () => {
     localStorage.setItem("tv_cookie_consent", "accepted");
-    setShow(false);
+    setNeeded(false);
+    releaseOverlay("cookie");
   };
 
   const decline = () => {
     localStorage.setItem("tv_cookie_consent", "declined");
-    setShow(false);
+    setNeeded(false);
+    releaseOverlay("cookie");
   };
+
+  const show = needed && canShow;
 
   return (
     <AnimatePresence>
@@ -32,6 +50,8 @@ const CookieConsent = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
+          role="dialog"
+          aria-label="Cookie consent"
         >
           <div className="glass-card rounded-lg p-5 shadow-2xl border border-primary/20">
             <div className="flex items-start gap-3">

@@ -7,6 +7,7 @@ import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../c
 import StarRating from "../components/StarRating";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { sites } from "../data/sites";
+import { currentYear } from "../lib/dates";
 
 const trialSites = sites.filter(s => s.has_free_trial).sort((a, b) => a.rank - b.rank);
 const noTrialSites = sites.filter(s => !s.has_free_trial).sort((a, b) => a.rank - b.rank).slice(0, 4);
@@ -15,8 +16,8 @@ const FreeTrialSites = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>Twink Sites with Free Trials 2026 — Try Before You Buy | TwinkVault</title>
-        <meta name="description" content="The best gay twink sites offering free trials in 2026. Try before you commit — staff-verified trial offers with no hidden fees." />
+        <title>Twink Sites with Free Trials {currentYear} — Try Before You Buy | TwinkVault</title>
+        <meta name="description" content="The best gay twink sites offering free trials in {currentYear}. Try before you commit — staff-verified trial offers with no hidden fees." />
         <link rel="canonical" href="https://twinkvault.com/free-trial-twink-sites" />
       </Helmet>
 
@@ -45,7 +46,7 @@ const FreeTrialSites = () => (
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h2 className="font-heading text-lg font-bold">Best Free Trial Twink Sites in 2026</h2>
+            <h2 className="font-heading text-lg font-bold">Best Free Trial Twink Sites in {currentYear}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               <strong className="text-foreground">Next Door Twink</strong> and <strong className="text-foreground">Next Door World</strong> offer a 3-day trial for $2.95 — the best trial deal available, especially since Next Door World includes access to 15 sites.
               <strong className="text-foreground"> Breed Me Raw</strong> offers a 2-day free trial.

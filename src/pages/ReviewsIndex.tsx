@@ -7,6 +7,7 @@ import StarRating from "../components/StarRating";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { sites, categories } from "../data/sites";
+import { currentYear, currentMonthLong } from "../lib/dates";
 
 const sortOptions = ["Top Rated", "Newest", "Alphabetical"];
 
@@ -25,13 +26,13 @@ const ReviewsIndex = () => {
   return (
     <Layout>
       <Helmet>
-        <title>All Gay Twink Site Reviews 2026 — Staff Tested | TwinkVault</title>
+        <title>{`All Gay Twink Site Reviews ${currentYear} — Tested & Ranked | TwinkVault`}</title>
         <meta name="description" content="Browse all 12 honest, independent gay twink site reviews. Sorted by rating, filtered by category. Updated monthly." />
         <link rel="canonical" href="https://twinkvault.com/reviews" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "name": "Gay Twink Site Reviews 2026",
+          "name": `Gay Twink Site Reviews ${currentYear}`,
           "numberOfItems": sites.length,
           "itemListElement": [...sites].sort((a,b) => a.rank - b.rank).map((site, i) => ({
             "@type": "ListItem",
@@ -53,7 +54,7 @@ const ReviewsIndex = () => {
                 Browse all our honest, independent reviews. Updated monthly.
               </p>
               <span className="mt-3 inline-flex items-center gap-1 rounded-button bg-muted px-3 py-1 text-xs text-muted-foreground">
-                🔄 Updated March 2026
+                🔄 {`Updated ${currentMonthLong} ${currentYear}`}
               </span>
             </div>
           </AnimateOnScroll>
@@ -117,7 +118,7 @@ const ReviewsIndex = () => {
                   </div>
                   <p className="mt-3 flex-1 text-sm text-muted-foreground line-clamp-2">{site.short_description}</p>
                   <div className="mt-3 flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Staff Verified</span>
+                    <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Reviewed</span>
                     <span className="text-xs text-muted-foreground">{site.price_monthly}</span>
                   </div>
                   <div className="mt-4 flex gap-2">

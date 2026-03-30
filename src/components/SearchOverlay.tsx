@@ -61,6 +61,7 @@ const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search sites, categories, reviews..."
+              aria-label="Search sites and categories"
               className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-lg"
             />
             <button onClick={onClose} className="text-muted-foreground hover:text-foreground">

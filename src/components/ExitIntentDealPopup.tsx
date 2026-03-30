@@ -3,26 +3,28 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getSiteBySlug } from "../data/sites";
+import { requestOverlay, releaseOverlay, useOverlaySlot } from "../hooks/useOverlayQueue";
 
 const ExitIntentDealPopup = () => {
-  const [show, setShow] = useState(false);
+  const [needed, setNeeded] = useState(false);
+  const canShow = useOverlaySlot("exitIntent");
 
   useEffect(() => {
     if (sessionStorage.getItem("tv_exit_popup_shown")) return;
 
-    // Desktop: mouse leaves top
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !sessionStorage.getItem("tv_exit_popup_shown")) {
         sessionStorage.setItem("tv_exit_popup_shown", "1");
-        setShow(true);
+        setNeeded(true);
+        requestOverlay("exitIntent");
       }
     };
 
-    // Mobile: 45 second timer
     const timer = setTimeout(() => {
       if (!sessionStorage.getItem("tv_exit_popup_shown")) {
         sessionStorage.setItem("tv_exit_popup_shown", "1");
-        setShow(true);
+        setNeeded(true);
+        requestOverlay("exitIntent");
       }
     }, 45000);
 
@@ -34,15 +36,21 @@ const ExitIntentDealPopup = () => {
   }, []);
 
   useEffect(() => {
-    if (!show) return;
+    if (!needed || !canShow) return;
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setShow(false);
+      if (e.key === "Escape") close();
     };
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
-  }, [show]);
+  }, [needed, canShow]);
+
+  const close = () => {
+    setNeeded(false);
+    releaseOverlay("exitIntent");
+  };
 
   const deal = getSiteBySlug("next-door-twink");
+  const show = needed && canShow;
   if (!show || !deal) return null;
 
   return (
@@ -53,7 +61,10 @@ const ExitIntentDealPopup = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={() => setShow(false)}
+          onClick={close}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="exit-deal-title"
         >
           <motion.div
             className="glass-card relative w-full max-w-md rounded-lg p-8 text-center"
@@ -64,7 +75,7 @@ const ExitIntentDealPopup = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <span className="text-4xl">👀</span>
-            <h3 className="mt-4 font-heading text-2xl font-bold">Wait — This Week's Best Deal</h3>
+            <h3 id="exit-deal-title" className="mt-4 font-heading text-2xl font-bold">Wait — This Week's Best Deal</h3>
             <p className="mt-3 text-muted-foreground">
               <span className="font-semibold text-foreground">{deal.name}</span> — 3-day trial, then access to 15 sites
             </p>
@@ -75,7 +86,7 @@ const ExitIntentDealPopup = () => {
               <Link
                 to="/go/next-door-twink"
                 className="cta-btn mt-6 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
-                onClick={() => setShow(false)}
+                onClick={close}
               >
                 Claim This Deal <ArrowRight size={14} />
               </Link>
@@ -83,7 +94,7 @@ const ExitIntentDealPopup = () => {
             <p className="mt-2 text-[10px] text-muted-foreground">Opens in new tab · Affiliate link</p>
 
             <button
-              onClick={() => setShow(false)}
+              onClick={close}
               className="mt-4 text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
               No thanks, I'll pay full price

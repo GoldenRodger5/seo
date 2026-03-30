@@ -30,30 +30,28 @@ async function logClick(siteSlug: string, referrer: string) {
 
 const GoRedirect = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [siteName, setSiteName] = useState("the site");
+  const site = getSiteBySlug(slug || "");
+  const [siteName] = useState(site?.name || "the site");
 
   useEffect(() => {
-    const site = getSiteBySlug(slug || "");
-    if (site) {
-      setSiteName(site.name);
-      const referrer = document.referrer || "direct";
-      logClick(site.slug, referrer);
-      const targetUrl = site.affiliate_url || site.homepage_url;
-      const timer = setTimeout(() => {
-        window.open(targetUrl, "_blank");
-      }, 1200);
-      return () => clearTimeout(timer);
-    }
-  }, [slug]);
+    if (!site) return;
 
-  const site = getSiteBySlug(slug || "");
+    const referrer = document.referrer || "direct";
+    logClick(site.slug, referrer);
+    const targetUrl = site.affiliate_url || site.homepage_url;
+    const timer = setTimeout(() => {
+      window.open(targetUrl, "_blank");
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, [site]);
 
   if (!site) {
     return (
       <Layout>
         <div className="container py-32 text-center">
           <h1 className="font-heading text-2xl font-bold">Site not found</h1>
-          <Link to="/top-sites" className="mt-4 inline-block text-secondary">Browse Sites →</Link>
+          <p className="mt-2 text-muted-foreground">We couldn't find a site matching "{slug}".</p>
+          <Link to="/top-sites" className="mt-4 inline-block text-secondary hover:underline">Browse All Sites →</Link>
         </div>
       </Layout>
     );

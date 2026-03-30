@@ -8,6 +8,7 @@ import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { sites } from "../data/sites";
+import { currentYear, currentMonthLong } from "../lib/dates";
 
 const sorted = [...sites].sort((a, b) => a.rank - b.rank);
 
@@ -15,13 +16,13 @@ const BestTwinkSites = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>Best Twink Sites 2026 — Top 12 Ranked by Experts | TwinkVault</title>
-        <meta name="description" content="The definitive list of the best gay twink sites in 2026. Staff-tested rankings with real pricing, honest scores, and exclusive deals. Updated monthly." />
+        <title>Best Twink Sites {currentYear} — Top 12 Ranked by Experts | TwinkVault</title>
+        <meta name="description" content="The definitive list of the best gay twink sites in {currentYear}. Staff-tested rankings with real pricing, honest scores, and exclusive deals. Updated monthly." />
         <link rel="canonical" href="https://twinkvault.com/best-twink-sites" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "name": "Best Twink Sites 2026",
+          "name": "Best Twink Sites {currentYear}",
           "description": "Staff-tested rankings of the best gay twink content sites",
           "numberOfItems": sites.length,
           "itemListElement": sorted.map((site, i) => ({
@@ -37,10 +38,10 @@ const BestTwinkSites = () => (
         <div className="container max-w-4xl text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="inline-flex items-center gap-2 rounded-button bg-primary/15 px-3 py-1.5 text-xs font-medium text-primary">
-              <Crown size={12} /> Updated March 2026
+              <Crown size={12} /> {`Updated ${currentMonthLong} ${currentYear}`}
             </span>
             <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
-              Best Twink Sites 2026
+              Best Twink Sites {currentYear}
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
               We paid for memberships on 12 sites, tested everything, and scored them honestly. No sponsorships. No paid placements. Just the real ranking.
@@ -59,9 +60,9 @@ const BestTwinkSites = () => (
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <h2 className="font-heading text-lg font-bold">Quick Answer: Best Twink Sites in 2026</h2>
+            <h2 className="font-heading text-lg font-bold">Quick Answer: Best Twink Sites in {currentYear}</h2>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              The best twink site in 2026 is <strong className="text-foreground">Helix Studios</strong> (4.8/5) for premium production quality.
+              The best twink site in {currentYear} is <strong className="text-foreground">Helix Studios</strong> (4.8/5) for premium production quality.
               For best value, <strong className="text-foreground">Next Door Twink</strong> offers a $2.95 trial and access to 15 sites.
               For European content, <strong className="text-foreground">Staxus</strong> leads the field. Full rankings below.
             </p>
@@ -123,7 +124,7 @@ const BestTwinkSites = () => (
             <p>Each score is out of 100, and the overall rating is a weighted average. Sites with consistently high content quality score well even if they're more expensive — and budget sites can still rank highly if they deliver solid value at their price point.</p>
             <p>We pay for every membership ourselves. No site has ever paid us to rank higher. If a site changes significantly — prices go up, quality drops, updates slow down — we update the ranking immediately.</p>
             <h2 className="font-heading text-2xl font-bold text-foreground">What Makes a Great Twink Site?</h2>
-            <p>The best twink sites in 2026 share a few qualities: exclusive content you can't find elsewhere, consistent update schedules, and performers who look genuinely comfortable on camera. Production quality matters — badly lit, poorly filmed scenes drag down otherwise promising sites.</p>
+            <p>The best twink sites in {currentYear} share a few qualities: exclusive content you can't find elsewhere, consistent update schedules, and performers who look genuinely comfortable on camera. Production quality matters — badly lit, poorly filmed scenes drag down otherwise promising sites.</p>
             <p>Value is relative. Helix Studios at $34.95/month is expensive but delivers cinema-quality production. Next Door Twink at $29.99/month with access to 15 sites is exceptional value. Southern Strokes at $9.95/month annual is the budget pick. The right choice depends entirely on what you value.</p>
           </motion.div>
         </div>

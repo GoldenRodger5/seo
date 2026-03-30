@@ -16,7 +16,7 @@ const Terms = () => (
         <div className="container max-w-3xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">Terms of Service</h1>
-            <p className="mt-2 text-sm text-muted-foreground">Last updated: March 2026</p>
+            <p className="mt-2 text-sm text-muted-foreground">Last updated: March 2025</p>
 
             <div className="mt-8 glass-card rounded-lg p-8 space-y-8 text-muted-foreground leading-relaxed">
 

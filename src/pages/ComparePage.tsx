@@ -8,6 +8,7 @@ import ScoreRing from "../components/ScoreRing";
 import StarRating from "../components/StarRating";
 import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
 import { PageTransition } from "../components/MotionWrappers";
+import { currentYear } from "../lib/dates";
 
 // Auto-generate all possible pairs from real sites
 const comparePairs = sites.flatMap((siteA, i) =>
@@ -110,9 +111,16 @@ const ComparePage = () => {
     );
   }
 
-  const [slugA, slugB] = slug.split("-vs-");
-  const siteA = getSiteBySlug(slugA);
-  const siteB = getSiteBySlug(slugB);
+  // Find the split point by testing all possible positions for "-vs-"
+  let siteA: ReturnType<typeof getSiteBySlug> = undefined;
+  let siteB: ReturnType<typeof getSiteBySlug> = undefined;
+  const vsIdx = slug.indexOf("-vs-");
+  if (vsIdx > 0) {
+    const slugA = slug.substring(0, vsIdx);
+    const slugB = slug.substring(vsIdx + 4);
+    siteA = getSiteBySlug(slugA);
+    siteB = getSiteBySlug(slugB);
+  }
 
   if (!siteA || !siteB) {
     return (
@@ -132,7 +140,7 @@ const ComparePage = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>{siteA.name} vs {siteB.name} — Which Is Worth It? (2026) | TwinkVault</title>
+          <title>{siteA.name} vs {siteB.name} — Which Is Worth It? ({currentYear}) | TwinkVault</title>
           <meta name="description" content={`Compare ${siteA.name} vs ${siteB.name} side by side. Scores, pricing, pros and cons to help you decide.`} />
         </Helmet>
         <section className="py-16">
@@ -140,7 +148,7 @@ const ComparePage = () => {
             <h1 className="text-center font-heading text-2xl font-bold md:text-4xl heading-gradient inline-block w-full">
               {siteA.name} vs {siteB.name}
             </h1>
-            <p className="mt-2 text-center text-muted-foreground">Which Is Worth It? (2026)</p>
+            <p className="mt-2 text-center text-muted-foreground">Which Is Worth It? ({currentYear})</p>
 
             {/* BLUF Summary */}
             <div className="mt-8 glass-card rounded-lg p-6 border-l-4 border-l-secondary">

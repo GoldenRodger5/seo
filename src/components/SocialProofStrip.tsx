@@ -1,10 +1,11 @@
 import { Star, RefreshCw, Lock, Trophy } from "lucide-react";
+import { sites } from "../data/sites";
 
 const proofItems = [
-  { icon: <Star size={14} className="text-secondary shrink-0" />, text: "12 Sites Reviewed & Tested" },
+  { icon: <Star size={14} className="text-secondary shrink-0" />, text: `${sites.length} Sites Reviewed` },
   { icon: <RefreshCw size={14} className="text-secondary shrink-0" />, text: "Updated Monthly" },
-  { icon: <Trophy size={14} className="text-secondary shrink-0" />, text: "100+ Hours of Testing" },
-  { icon: <Lock size={14} className="text-secondary shrink-0" />, text: "100% Independent" },
+  { icon: <Trophy size={14} className="text-secondary shrink-0" />, text: "Real Scores, No Paid Placements" },
+  { icon: <Lock size={14} className="text-secondary shrink-0" />, text: "Editorially Independent" },
 ];
 
 const SocialProofStrip = () => (
@@ -15,7 +16,7 @@ const SocialProofStrip = () => (
         <span key={i} className="flex items-center gap-2">
           {item.icon}
           <span className="text-sm text-muted-foreground">{item.text}</span>
-          {i < proofItems.length - 1 && <span className="text-muted-foreground/30">·</span>}
+          {i < proofItems.length - 1 && <span className="text-muted-foreground/50">·</span>}
         </span>
       ))}
     </div>

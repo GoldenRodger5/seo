@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Layout from "../components/Layout";
 import { sites, getSiteBySlug, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
+import { currentYear, lastCheckedDate } from "../lib/dates";
 
 interface Deal {
   siteSlug: string;
@@ -59,7 +60,7 @@ const BestDeals = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>Best Gay Twink Site Deals & Discounts 2026 | TwinkVault</title>
+        <title>{`Best Gay Twink Site Deals & Discounts ${currentYear} | TwinkVault`}</title>
         <meta name="description" content="The best current gay twink site deals and discounts. Staff-verified offers updated weekly so you never overpay." />
         <link rel="canonical" href="https://twinkvault.com/best-deals" />
       </Helmet>
@@ -83,7 +84,7 @@ const BestDeals = () => (
             We track the best current offers so you don't have to. Updated weekly.
           </motion.p>
           <span className="mt-4 inline-flex items-center gap-2 rounded-button bg-muted px-3 py-1.5 text-xs text-muted-foreground">
-            🔄 Last checked: March 23, 2026
+{`🔄 Last checked: ${lastCheckedDate}`}
           </span>
         </div>
       </section>

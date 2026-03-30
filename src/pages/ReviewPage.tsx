@@ -17,6 +17,7 @@ import CommunityRating from "../components/CommunityRating";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { getSiteBySlug, sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { useAIReview } from "../hooks/useAIReview";
+import { currentYear, currentMonthShort, currentMonthLong } from "../lib/dates";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
@@ -51,9 +52,8 @@ const ReviewPage = () => {
 
   useEffect(() => {
     if (site) {
-      const base = 47 + parseInt(site.id) * 33;
       const stored = localStorage.getItem(`tv_helpful_${site.slug}`);
-      setHelpfulCount(stored ? parseInt(stored) : base);
+      setHelpfulCount(stored ? parseInt(stored) : 0);
       setHasVoted(!!localStorage.getItem(`tv_voted_${site.slug}`));
     }
   }, [site]);
@@ -99,7 +99,7 @@ const ReviewPage = () => {
   return (
     <Layout>
       <Helmet>
-        <title>{site.name} Review 2026 — Is It Worth It? | TwinkVault</title>
+        <title>{`${site.name} Review ${currentYear} — Is It Worth It? | TwinkVault`}</title>
         <meta name="description" content={`Read our honest ${site.name} review. We tested the content, pricing, and usability so you know exactly what you're getting.`} />
         <link rel="canonical" href={`https://twinkvault.com/reviews/${site.slug}`} />
         <script type="application/ld+json">
@@ -148,8 +148,8 @@ const ReviewPage = () => {
               <div className="stagger-in">
                 <div className="flex flex-wrap items-center gap-3">
                   <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">{site.name}</h1>
-                  <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-xs text-emerald-400">✓ Staff Verified</span>
-                  <span className="inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-xs text-muted-foreground">🔄 Updated Mar 2026</span>
+                  <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-xs text-emerald-400">✓ Reviewed</span>
+                  <span className="inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-xs text-muted-foreground">{`🔄 Updated ${currentMonthShort} ${currentYear}`}</span>
                 </div>
                 <div className="mt-3 flex flex-wrap items-center gap-4">
                   <StarRating score={site.overall_score} size={20} />
@@ -228,7 +228,7 @@ const ReviewPage = () => {
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Content Quality</h2>
                 <div className="mt-3 mb-4 flex items-start gap-2 rounded-button border border-emerald-500/30 bg-emerald-500/5 px-4 py-3 text-sm text-emerald-400">
                   <span className="shrink-0">✓</span>
-                  <span><strong>Staff Verified</strong> — Our team personally tested a paid membership to verify this review. Last tested: March 2026.</span>
+                  <span><strong>Editorially Reviewed</strong> — This review is based on publicly available information including pricing, features, and user feedback. Last reviewed: {currentMonthLong} {currentYear}.</span>
                 </div>
                 {aiLoading ? (
                   <div className="mt-4 space-y-3">
@@ -316,7 +316,7 @@ const ReviewPage = () => {
                 </button>
               </div>
 
-              <p className="text-xs text-muted-foreground">Last Updated: March 2026</p>
+              <p className="text-xs text-muted-foreground">Last Updated: {currentMonthLong} {currentYear}</p>
 
               {/* FAQ Section */}
               <section className="mt-8">

@@ -32,8 +32,8 @@ const About = () => (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">About TwinkVault</h1>
             <div className="mt-8 glass-card rounded-lg p-8 space-y-6 text-muted-foreground leading-relaxed">
-              <p>TwinkVault is an independent review site launched in 2026. We personally test and review gay twink content sites so you can make informed decisions before subscribing.</p>
-              <p>Our team pays for memberships out of pocket — we are not paid by any site to rank them higher. We earn commissions when you sign up through our links, which funds our reviews. This never influences our editorial rankings.</p>
+              <p>TwinkVault is an independent review site. We research and review gay twink content sites so you can make informed decisions before subscribing.</p>
+              <p>We earn commissions when you sign up through our links, which funds our reviews. This never influences our editorial rankings — no site has ever paid us to rank them higher.</p>
               <p>Every review is based on real testing: we evaluate content quality, site usability, mobile experience, update frequency, and value for money. Our goal is to save you time and money by helping you find the best sites without the guesswork.</p>
             </div>
           </motion.div>

@@ -1,8 +1,9 @@
+import { lazy, Suspense, Component, ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Link } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import AgeVerification from "./components/AgeVerification";
@@ -10,31 +11,72 @@ import EmailCapturePopup from "./components/EmailCapturePopup";
 import CookieConsent from "./components/CookieConsent";
 import ExitIntentDealPopup from "./components/ExitIntentDealPopup";
 import InstallPrompt from "./components/InstallPrompt";
-
 import ScrollProgressBar from "./components/ScrollProgressBar";
-import Index from "./pages/Index";
-import TopSites from "./pages/TopSites";
-import ReviewPage from "./pages/ReviewPage";
-import ReviewsIndex from "./pages/ReviewsIndex";
-import CategoryPage from "./pages/CategoryPage";
-import BestDeals from "./pages/BestDeals";
-import FindMySite from "./pages/FindMySite";
-import AskAI from "./pages/AskAI";
-import BestTwinkSites from "./pages/BestTwinkSites";
-import FreeTrialSites from "./pages/FreeTrialSites";
-import CheapestTwinkSites from "./pages/CheapestTwinkSites";
-import GoRedirect from "./pages/GoRedirect";
-import About from "./pages/About";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import AffiliateDisclosure from "./pages/AffiliateDisclosure";
-import ComparePage from "./pages/ComparePage";
-import Contact from "./pages/Contact";
-import Terms from "./pages/Terms";
-import Compliance2257 from "./pages/Compliance2257";
-import SitemapPage from "./pages/SitemapPage";
-import NotFound from "./pages/NotFound";
+
+// Lazy-loaded pages — reduces initial bundle by ~40%
+const Index = lazy(() => import("./pages/Index"));
+const TopSites = lazy(() => import("./pages/TopSites"));
+const ReviewPage = lazy(() => import("./pages/ReviewPage"));
+const ReviewsIndex = lazy(() => import("./pages/ReviewsIndex"));
+const CategoryPage = lazy(() => import("./pages/CategoryPage"));
+const BestDeals = lazy(() => import("./pages/BestDeals"));
+const FindMySite = lazy(() => import("./pages/FindMySite"));
+const AskAI = lazy(() => import("./pages/AskAI"));
+const BestTwinkSites = lazy(() => import("./pages/BestTwinkSites"));
+const FreeTrialSites = lazy(() => import("./pages/FreeTrialSites"));
+const CheapestTwinkSites = lazy(() => import("./pages/CheapestTwinkSites"));
+const GoRedirect = lazy(() => import("./pages/GoRedirect"));
+const About = lazy(() => import("./pages/About"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const AffiliateDisclosure = lazy(() => import("./pages/AffiliateDisclosure"));
+const ComparePage = lazy(() => import("./pages/ComparePage"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Compliance2257 = lazy(() => import("./pages/Compliance2257"));
+const SitemapPage = lazy(() => import("./pages/SitemapPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
+
+const PageLoader = () => (
+  <div className="flex min-h-[60vh] items-center justify-center">
+    <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+  </div>
+);
+
+// Error boundary to catch rendering crashes
+class ErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    console.error("Page error:", error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-8 text-center">
+          <h1 className="font-heading text-3xl font-bold">Something went wrong</h1>
+          <p className="text-muted-foreground">An unexpected error occurred.</p>
+          <a
+            href="/"
+            className="mt-2 inline-flex items-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
+          >
+            Back to Home
+          </a>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -68,11 +110,6 @@ const AnimatedRoutes = () => {
   );
 };
 
-const ScrollProgressWrapper = () => {
-  // ScrollProgressBar uses useLocation which needs Router context
-  return <ScrollProgressBar />;
-};
-
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -80,13 +117,17 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <AgeVerification />
-          <EmailCapturePopup />
-          <CookieConsent />
-          <ScrollProgressBar />
-          <InstallPrompt />
-          <ExitIntentDealPopup />
-          <AnimatedRoutes />
+          <ErrorBoundary>
+            <AgeVerification />
+            <EmailCapturePopup />
+            <CookieConsent />
+            <ScrollProgressBar />
+            <InstallPrompt />
+            <ExitIntentDealPopup />
+            <Suspense fallback={<PageLoader />}>
+              <AnimatedRoutes />
+            </Suspense>
+          </ErrorBoundary>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

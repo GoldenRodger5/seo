@@ -7,6 +7,7 @@ import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../c
 import StarRating from "../components/StarRating";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { sites } from "../data/sites";
+import { currentYear } from "../lib/dates";
 
 // Sort by annual price ascending
 const byPrice = [...sites].sort((a, b) => {
@@ -19,8 +20,8 @@ const CheapestTwinkSites = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>Cheapest Gay Twink Sites 2026 — Best Value Subscriptions | TwinkVault</title>
-        <meta name="description" content="The most affordable gay twink sites in 2026 ranked by value. Get quality content without overpaying — best cheap twink site subscriptions." />
+        <title>Cheapest Gay Twink Sites {currentYear} — Best Value Subscriptions | TwinkVault</title>
+        <meta name="description" content="The most affordable gay twink sites in {currentYear} ranked by value. Get quality content without overpaying — best cheap twink site subscriptions." />
         <link rel="canonical" href="https://twinkvault.com/cheapest-twink-sites" />
       </Helmet>
 
@@ -28,7 +29,7 @@ const CheapestTwinkSites = () => (
         <div className="container max-w-4xl text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="inline-flex items-center gap-2 rounded-button bg-secondary/15 px-3 py-1.5 text-xs font-medium text-secondary">
-              <DollarSign size={12} /> Best Value 2026
+              <DollarSign size={12} /> Best Value {currentYear}
             </span>
             <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
               Cheapest Twink Sites
@@ -49,7 +50,7 @@ const CheapestTwinkSites = () => (
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h2 className="font-heading text-lg font-bold">Cheapest Twink Sites in 2026</h2>
+            <h2 className="font-heading text-lg font-bold">Cheapest Twink Sites in {currentYear}</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               The cheapest twink sites on an annual plan are <strong className="text-foreground">Southern Strokes</strong>, <strong className="text-foreground">Athletic Twinks</strong>, and <strong className="text-foreground">Twinks in Shorts</strong> — all at $9.95/mo when billed annually.
               For pure value, <strong className="text-foreground">Next Door World</strong> at $12/mo annual unlocks 15 sites — easily the cheapest per-site cost available.

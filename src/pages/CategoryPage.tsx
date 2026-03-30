@@ -7,6 +7,7 @@ import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import { categories, getSitesByCategory } from "../data/sites";
+import { currentYear } from "../lib/dates";
 
 const sortOptions = ["Top Rated", "Best Value", "Most Popular"];
 
@@ -37,13 +38,13 @@ const CategoryPage = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Best {category.name} Sites 2026 — Ranked | TwinkVault</title>
+        <title>Best {category.name} Sites {currentYear} — Ranked | TwinkVault</title>
         <meta name="description" content={`The best ${category.name.toLowerCase()} twink content sites, ranked by quality and value. Staff-tested reviews with real pricing.`} />
         <link rel="canonical" href={`https://twinkvault.com/category/${slug}`} />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "name": `Best ${category.name} Sites 2026`,
+          "name": `Best ${category.name} Sites {currentYear}`,
           "numberOfItems": sorted.length,
           "itemListElement": sorted.map((site, i) => ({
             "@type": "ListItem",
@@ -98,7 +99,7 @@ const CategoryPage = () => {
                     <div>
                       <div className="flex items-center gap-2">
                         <h2 className="font-heading text-xl font-bold">{site.name}</h2>
-                        <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Verified</span>
+                        <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Reviewed</span>
                       </div>
                       <StarRating score={site.overall_score} size={14} />
                     </div>

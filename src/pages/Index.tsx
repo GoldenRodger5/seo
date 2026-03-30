@@ -14,6 +14,7 @@ import Layout from "../components/Layout";
 import { getFeaturedSites, categories, sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { ReactNode } from "react";
+import { currentYear, currentMonthShort } from "../lib/dates";
 
 const tickerItems = [
   "🔥 New: Helix Studios Review",
@@ -185,7 +186,7 @@ const TopPicksSection = () => {
                 <h3 className="font-heading text-lg font-semibold">{site.name}</h3>
                 <StarRating score={site.overall_score} size={14} />
                 <p className="mt-2 flex-1 text-xs text-muted-foreground line-clamp-2">{site.short_description}</p>
-                <span className="mt-1 inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Staff Verified</span>
+                <span className="mt-1 inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Reviewed</span>
                 <VisitSiteButton site={site} label="Visit Site" className="mt-3" />
               </MotionCard>
             </StaggerChild>
@@ -283,7 +284,7 @@ const LatestReviewsSection = () => {
                 </div>
                 <StarRating score={site.overall_score} size={14} />
                 <p className="mt-3 text-sm text-muted-foreground line-clamp-2">{site.short_description}</p>
-                <span className="mt-2 inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">🔄 Updated Mar 2026</span>
+                <span className="mt-2 inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">🔄 {`Updated ${currentMonthShort} ${currentYear}`}</span>
                 <div className="mt-4 flex gap-3">
                   <MotionButton className="flex-1">
                     <Link to={`/reviews/${site.slug}`} className="block rounded-button border border-primary px-4 py-2 text-center text-sm font-semibold text-primary hover:bg-primary/10 transition-colors">
@@ -317,9 +318,9 @@ const TrustSection = () => (
       <h2 className="text-center font-heading text-3xl font-bold md:text-4xl heading-gradient inline-block w-full">Why Trust Us</h2>
       <StaggerContainer className="mt-10 grid gap-8 md:grid-cols-3">
         {[
-          { icon: <Search size={48} className="text-primary" />, title: "We Pay, You Save", desc: "We pay for memberships ourselves and report honestly." },
+          { icon: <Search size={48} className="text-primary" />, title: "Honest Reviews", desc: "We research pricing, features, and user feedback so you don't have to." },
           { icon: <ShieldCheck size={48} className="text-primary" />, title: "Zero BS Rankings", desc: "Rankings are based on quality, not who pays us more." },
-          { icon: <RefreshCw size={48} className="text-primary" />, title: "Always Fresh, Never Stale", desc: "We revisit sites regularly to keep reviews current." },
+          { icon: <RefreshCw size={48} className="text-primary" />, title: "Always Current", desc: "Reviews are updated monthly with the latest pricing and features." },
         ].map((item) => (
           <StaggerChild key={item.title}>
             <div className="text-center">
@@ -339,7 +340,7 @@ import { Helmet } from "react-helmet-async";
 const Index = () => (
   <Layout>
     <Helmet>
-      <title>Best Gay Twink Sites 2026 — Ranked & Reviewed | TwinkVault</title>
+      <title>{`Best Gay Twink Sites ${currentYear} — Ranked & Reviewed | TwinkVault`}</title>
       <meta name="description" content="Honest independent rankings of the best gay twink porn sites. Staff-tested reviews, real pricing, and exclusive deals. Updated monthly." />
       <link rel="canonical" href="https://twinkvault.com" />
       <script type="application/ld+json">{JSON.stringify({
