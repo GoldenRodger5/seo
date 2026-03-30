@@ -9,6 +9,7 @@ import AgeVerification from "./components/AgeVerification";
 import EmailCapturePopup from "./components/EmailCapturePopup";
 import CookieConsent from "./components/CookieConsent";
 import ExitIntentDealPopup from "./components/ExitIntentDealPopup";
+import InstallPrompt from "./components/InstallPrompt";
 
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import Index from "./pages/Index";
@@ -83,6 +84,7 @@ const App = () => (
           <EmailCapturePopup />
           <CookieConsent />
           <ScrollProgressBar />
+          <InstallPrompt />
           <ExitIntentDealPopup />
           <AnimatedRoutes />
         </BrowserRouter>
