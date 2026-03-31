@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Mail, Sparkles } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import { supabase } from "@/integrations/supabase/client";
+import { isValidEmail } from "@/lib/utils";
 
 async function saveEmail(email: string, source: string) {
   await supabase.from("subscribers").insert({
@@ -18,10 +19,10 @@ const InlineEmailCapture = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !isValidEmail(email)) return;
     setLoading(true);
     try {
-      await saveEmail(email, "homepage");
+      await saveEmail(email.trim(), "homepage");
     } catch {
       // Still show success — don't punish user for backend issues
     }

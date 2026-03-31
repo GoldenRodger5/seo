@@ -2,6 +2,22 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
+// Simple in-memory rate limiter (resets on cold start, which is fine for serverless)
+const rateMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 10; // requests per window
+const RATE_WINDOW = 60_000; // 1 minute
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT;
+}
+
 // Site data embedded here so the serverless function is self-contained
 const SITE_CONTEXT = `Helix Studios (slug: helix-studios): Score 4.8/5. Premium cinematic twink content since 2002. 4,000+ scenes, exclusive performers, Las Vegas. Categories: premium-studios, hd-quality, mobile-friendly. Price: $34.95/mo or $11.99/mo annual. Pros: 4,000+ exclusive scenes, cinematic production, exclusive performers. Cons: Higher price, older content in 480p.
 Next Door Twink (slug: next-door-twink): Score 4.6/5. ASGmax network, 12,500+ videos across 45+ channels. Categories: amateur-twinks, best-value, mobile-friendly. Price: $24.95/mo or $10.95/mo annual. $2.95 three-day trial. Pros: 45+ channels, 720p-4K, weekly updates. Cons: Not all content is twink-focused.
@@ -24,6 +40,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+
+  // Rate limit by IP
+  const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() || "unknown";
+  if (isRateLimited(ip)) {
+    return res.status(429).json({ error: "Too many requests. Try again in a minute." });
+  }
 
   const { query } = req.body || {};
   if (!query || typeof query !== "string" || query.length > 500) {

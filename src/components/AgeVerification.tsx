@@ -2,20 +2,48 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { requestOverlay, releaseOverlay, useOverlaySlot } from "../hooks/useOverlayQueue";
 
+// Simple HMAC-like token so the flag can't be set from the console with a plain string.
+// This is NOT cryptographic security — it's a speed bump against casual bypass.
+const SALT = "tv_ag3_2024";
+function ageToken(): string {
+  const day = new Date().toISOString().slice(0, 10);
+  let hash = 0;
+  const str = SALT + day;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
+  }
+  return `v:${Math.abs(hash).toString(36)}`;
+}
+
+function isAgeVerified(): boolean {
+  const stored = localStorage.getItem("age_verified");
+  if (!stored) return false;
+  // Accept legacy "true" value for existing users
+  if (stored === "true") return true;
+  // Accept today's token or yesterday's (covers midnight edge)
+  const today = ageToken();
+  const yesterday = (() => {
+    const d = new Date(); d.setDate(d.getDate() - 1);
+    let h = 0; const s = SALT + d.toISOString().slice(0, 10);
+    for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+    return `v:${Math.abs(h).toString(36)}`;
+  })();
+  return stored === today || stored === yesterday;
+}
+
 const AgeVerification = () => {
   const [needed, setNeeded] = useState(false);
   const canShow = useOverlaySlot("age");
 
   useEffect(() => {
-    const verified = localStorage.getItem("age_verified");
-    if (!verified) {
+    if (!isAgeVerified()) {
       setNeeded(true);
       requestOverlay("age");
     }
   }, []);
 
   const handleYes = () => {
-    localStorage.setItem("age_verified", "true");
+    localStorage.setItem("age_verified", ageToken());
     setNeeded(false);
     releaseOverlay("age");
   };

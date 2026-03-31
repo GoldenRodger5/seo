@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import { PageTransition } from "../components/MotionWrappers";
 import { Mail, Send, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { isValidEmail } from "@/lib/utils";
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -17,11 +18,14 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) return;
+    if (!form.name || !form.email || !form.message || !isValidEmail(form.email)) return;
     setLoading(true);
     try {
       await supabase.from("contact_submissions").insert({
-        ...form,
+        name: form.name.trim(),
+        email: form.email.trim(),
+        subject: form.subject,
+        message: form.message.trim(),
         submitted_at: new Date().toISOString(),
       });
     } catch { /* silent */ }

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { requestOverlay, releaseOverlay, useOverlaySlot } from "../hooks/useOverlayQueue";
 import { supabase } from "@/integrations/supabase/client";
+import { isValidEmail } from "@/lib/utils";
 
 async function saveEmail(email: string, source: string) {
   await supabase.from("subscribers").insert({
@@ -57,10 +58,10 @@ const EmailCapturePopup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !isValidEmail(email)) return;
     setLoading(true);
     try {
-      await saveEmail(email, "popup");
+      await saveEmail(email.trim(), "popup");
     } catch { /* silent */ }
     setLoading(false);
     setSubmitted(true);
