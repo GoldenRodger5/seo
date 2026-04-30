@@ -69,6 +69,29 @@ const CATEGORY_SLUGS = [
   "mobile-friendly",
 ] as const;
 
+const NICHE_SLUGS = [
+  "twink",
+  "bareback",
+  "asian",
+  "latin",
+  "bear",
+  "daddy",
+  "college",
+  "military",
+  "amateur",
+  "big-dick",
+  "jock",
+  "uncut",
+  "hairy",
+  "smooth",
+  "group",
+  "fetish",
+  "interracial",
+  "muscle",
+  "str8-curious",
+  "japanese",
+] as const;
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -178,6 +201,17 @@ for (const slug of CATEGORY_SLUGS) {
   );
 }
 
+// Niche pages  /niche/:slug — long-tail SEO
+for (const slug of NICHE_SLUGS) {
+  urls.push(
+    urlEntry({
+      loc: `/niche/${slug}`,
+      changefreq: "weekly",
+      priority: "0.8",
+    })
+  );
+}
+
 // Compare pages  /compare/:slugA-vs-:slugB  (66 pairs)
 const pairs = generatePairs(SITE_SLUGS);
 for (const [a, b] of pairs) {
@@ -214,5 +248,5 @@ console.log(`Sitemap generated: ${outPath}`);
 console.log(`  Total URLs: ${totalUrls}`);
 console.log(`  Last modified: ${TODAY}`);
 console.log(
-  `  Breakdown: 1 homepage + ${corePages.length} core + ${toolPages.length} tools + ${infoPages.length} info + ${legalPages.length} legal + ${SITE_SLUGS.length} reviews + ${SITE_SLUGS.length} discounts + ${CATEGORY_SLUGS.length} categories + ${pairs.length} compare`
+  `  Breakdown: 1 homepage + ${corePages.length} core + ${toolPages.length} tools + ${infoPages.length} info + ${legalPages.length} legal + ${SITE_SLUGS.length} reviews + ${SITE_SLUGS.length} discounts + ${CATEGORY_SLUGS.length} categories + ${NICHE_SLUGS.length} niches + ${pairs.length} compare`
 );

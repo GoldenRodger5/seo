@@ -19,6 +19,8 @@ import { getSiteBySlug, sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { useAIReview } from "../hooks/useAIReview";
 import { currentYear, currentMonthShort, currentMonthLong } from "../lib/dates";
 import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
+import { siteNicheMap } from "@/data/site-niches";
+import { getNiche } from "@/data/niches";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
@@ -196,11 +198,28 @@ const ReviewPage = () => {
               <div className="glass-card rounded-lg p-6">
                 <div className="flex items-center gap-6">
                   <ScoreRing score={site.overall_score} size={80} />
-                  <div>
+                  <div className="flex-1">
                     <p className="font-medium">{site.short_description}</p>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Best for: Fans of {site.categories[0]?.replace(/-/g, " ")} content
                     </p>
+                    {(siteNicheMap[site.slug]?.length ?? 0) > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {(siteNicheMap[site.slug] ?? []).map((nslug) => {
+                          const n = getNiche(nslug);
+                          if (!n) return null;
+                          return (
+                            <Link
+                              key={nslug}
+                              to={`/niche/${nslug}`}
+                              className="rounded-button bg-muted/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground hover:bg-primary/20 hover:text-primary transition-colors"
+                            >
+                              {n.emoji} {n.displayName}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

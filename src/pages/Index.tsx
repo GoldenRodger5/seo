@@ -18,6 +18,7 @@ import { ReactNode } from "react";
 import { currentYear, currentMonthShort } from "../lib/dates";
 import { sitesCountLabel, REVIEWED_SITES } from "../lib/siteStats";
 import QuickPicks from "../components/QuickPicks";
+import NicheBrowser from "../components/NicheBrowser";
 
 const tickerItems = [
   "🔥 New: Helix Studios Review",
@@ -443,6 +444,7 @@ const Index = () => (
       <HeroSection />
       <SocialProofStrip />
       <QuickPicks />
+      <NicheBrowser />
       <TopPicksSection />
       <QuizBanner />
       <CategoriesSection />

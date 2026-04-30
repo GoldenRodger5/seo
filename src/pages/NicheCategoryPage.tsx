@@ -1,0 +1,277 @@
+import { useParams, Link, Navigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
+import { ArrowRight, Star } from "lucide-react";
+import Layout from "../components/Layout";
+import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../components/MotionWrappers";
+import StarRating from "../components/StarRating";
+import VisitSiteButton from "../components/VisitSiteButton";
+import SitePlaceholderImage from "../components/SitePlaceholderImage";
+import { sites } from "../data/sites";
+import { getNiche, niches } from "../data/niches";
+import { siteNicheMap } from "../data/site-niches";
+import { currentYear } from "../lib/dates";
+
+const NicheCategoryPage = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const niche = slug ? getNiche(slug) : undefined;
+
+  if (!slug || !niche) {
+    return <Navigate to="/reviews" replace />;
+  }
+
+  const matching = sites
+    .filter((s) => (siteNicheMap[s.slug] ?? []).includes(niche.slug))
+    .sort((a, b) => b.overall_score - a.overall_score);
+
+  const related = niche.related
+    .map(getNiche)
+    .filter((n): n is NonNullable<typeof n> => Boolean(n));
+
+  const url = `https://twinkvault.com/niche/${niche.slug}`;
+  const title = `${niche.seoTitle} ${currentYear} | TwinkVault`;
+
+  return (
+    <Layout>
+      <PageTransition>
+        <Helmet>
+          <title>{title}</title>
+          <meta name="description" content={niche.seoDescription} />
+          <link rel="canonical" href={url} />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={niche.seoDescription} />
+          <meta property="og:url" content={url} />
+          <meta name="twitter:title" content={title} />
+          <meta name="twitter:description" content={niche.seoDescription} />
+          <script type="application/ld+json">{JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
+              { "@type": "ListItem", position: 2, name: "Niches", item: "https://twinkvault.com/reviews" },
+              { "@type": "ListItem", position: 3, name: niche.displayName, item: url },
+            ],
+          })}</script>
+          <script type="application/ld+json">{JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: niche.seoTitle,
+            description: niche.seoDescription,
+            numberOfItems: matching.length,
+            itemListElement: matching.map((site, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              name: site.name,
+              url: `https://twinkvault.com/reviews/${site.slug}`,
+            })),
+          })}</script>
+          <script type="application/ld+json">{JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: `What are the best ${niche.displayName.toLowerCase()} gay sites in ${currentYear}?`,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: `Our top picks are ${matching.slice(0, 3).map((s) => s.name).join(", ")}. Each was scored on content quality, value, update frequency, and mobile UX after a paid membership.`,
+                },
+              },
+              {
+                "@type": "Question",
+                name: `How do you rank ${niche.displayName.toLowerCase()} gay sites?`,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "We pay for every membership, log in, browse the actual library, test the player on mobile and desktop, and re-check pricing monthly. Scores are 1–5 across four pillars: content quality, value, update frequency, and mobile experience.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: `Are these ${niche.displayName.toLowerCase()} sites safe to subscribe to?`,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Every site we list uses standard billing processors and discreet credit card descriptors. We flag any site with credible billing complaints in the cons section of its review.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: `Do any of these ${niche.displayName.toLowerCase()} sites offer free trials?`,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Trials come and go. Check the individual review for each site — we update trial availability monthly, and the /best-deals page lists every active trial.",
+                },
+              },
+            ],
+          })}</script>
+        </Helmet>
+
+        {/* Hero */}
+        <section className="hero-mesh py-16">
+          <div className="container max-w-4xl text-center">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+              <span className="inline-flex items-center gap-2 rounded-button bg-primary/15 px-3 py-1.5 text-xs font-medium text-primary">
+                {niche.emoji} {matching.length} sites tested · Updated {currentYear}
+              </span>
+              <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
+                Best {niche.displayName} Sites in {currentYear}
+              </h1>
+              <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+                {niche.heroTagline}
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Intro */}
+        <section className="py-8 border-y border-border">
+          <div className="container max-w-3xl prose prose-invert">
+            <p className="text-muted-foreground">
+              {niche.description} We've tested every site on this page through a paid membership — content libraries, streaming quality, mobile UX, pricing, and update cadence are all scored consistently. Sites are ranked by overall score, with the highest-scored {niche.displayName.toLowerCase()} site at the top.
+            </p>
+            <p className="text-muted-foreground mt-3">
+              People into {niche.displayName.toLowerCase()} content also tend to browse{" "}
+              {related.map((r, i) => (
+                <span key={r.slug}>
+                  <Link to={`/niche/${r.slug}`} className="text-primary hover:underline">
+                    {r.displayName.toLowerCase()}
+                  </Link>
+                  {i < related.length - 1 ? ", " : "."}
+                </span>
+              ))}{" "}
+              All three are linked at the bottom of this page.
+            </p>
+          </div>
+        </section>
+
+        {/* Site grid */}
+        <section className="py-12">
+          <div className="container">
+            {matching.length === 0 ? (
+              <p className="text-center text-muted-foreground">
+                No {niche.displayName.toLowerCase()} sites have been added to TwinkVault yet. Check back soon — we're adding sites monthly.
+              </p>
+            ) : (
+              <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {matching.map((site, i) => (
+                  <StaggerChild key={site.slug}>
+                    <MotionCard className="glass-card relative flex flex-col rounded-lg p-6 h-full">
+                      {i === 0 && (
+                        <span className="absolute -top-2 -right-2 rounded-button gold-gradient px-2.5 py-1 text-[10px] font-bold text-secondary-foreground">
+                          #1 {niche.displayName}
+                        </span>
+                      )}
+                      <SitePlaceholderImage site={site} className="mb-3" />
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-heading text-lg font-semibold">{site.name}</h3>
+                        <StarRating score={site.overall_score} size={14} />
+                      </div>
+                      <p className="mt-2 flex-1 text-xs text-muted-foreground line-clamp-3">
+                        {site.short_description}
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-1">
+                        {(siteNicheMap[site.slug] ?? []).slice(0, 3).map((nslug) => {
+                          const n = getNiche(nslug);
+                          if (!n) return null;
+                          return (
+                            <Link
+                              key={nslug}
+                              to={`/niche/${nslug}`}
+                              className={`rounded-button px-2 py-0.5 text-[10px] font-medium transition-colors ${
+                                nslug === niche.slug
+                                  ? "bg-primary/20 text-primary"
+                                  : "bg-muted/60 text-muted-foreground hover:bg-muted"
+                              }`}
+                            >
+                              {n.displayName}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                      <div className="mt-3 flex gap-2">
+                        <Link
+                          to={`/reviews/${site.slug}`}
+                          className="flex-1 rounded-button border border-primary px-3 py-2 text-center text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
+                        >
+                          Read Review
+                        </Link>
+                        <VisitSiteButton site={site} label="Visit" className="flex-1" />
+                      </div>
+                    </MotionCard>
+                  </StaggerChild>
+                ))}
+              </StaggerContainer>
+            )}
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="py-12 border-t border-border">
+          <div className="container max-w-3xl">
+            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
+              {niche.displayName} Sites FAQ
+            </h2>
+            <div className="mt-6 space-y-4">
+              {[
+                {
+                  q: `What are the best ${niche.displayName.toLowerCase()} gay sites in ${currentYear}?`,
+                  a: matching.length
+                    ? `Our top picks are ${matching.slice(0, 3).map((s) => s.name).join(", ")}. Each was scored on content quality, value, update frequency, and mobile UX after a paid membership.`
+                    : "We're still expanding coverage in this niche — check back soon.",
+                },
+                {
+                  q: `How do you rank ${niche.displayName.toLowerCase()} gay sites?`,
+                  a: "We pay for every membership, log in, browse the actual library, test the player on mobile and desktop, and re-check pricing monthly. Scores are 1–5 across four pillars: content quality, value, update frequency, and mobile experience.",
+                },
+                {
+                  q: `Are these ${niche.displayName.toLowerCase()} sites safe to subscribe to?`,
+                  a: "Every site we list uses standard billing processors and discreet credit card descriptors. We flag any site with credible billing complaints in the cons section of its review.",
+                },
+                {
+                  q: `Do any of these ${niche.displayName.toLowerCase()} sites offer free trials?`,
+                  a: "Trials come and go. Check the individual review for each site — we update trial availability monthly, and the /best-deals page lists every active trial across the catalog.",
+                },
+              ].map((item) => (
+                <details key={item.q} className="glass-card group rounded-lg p-5">
+                  <summary className="cursor-pointer list-none font-semibold flex items-center justify-between">
+                    {item.q}
+                    <span className="text-primary group-open:rotate-180 transition-transform">▾</span>
+                  </summary>
+                  <p className="mt-3 text-sm text-muted-foreground">{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Related niches */}
+        <section className="py-12 border-t border-border">
+          <div className="container max-w-3xl text-center">
+            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
+              People Into {niche.displayName} Also Browse
+            </h2>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              {related.map((r) => (
+                <Link
+                  key={r.slug}
+                  to={`/niche/${r.slug}`}
+                  className="glass-card rounded-button px-4 py-2 text-sm font-medium hover:border-primary/50 transition-colors inline-flex items-center gap-2"
+                >
+                  <span>{r.emoji}</span> {r.displayName}
+                  <ArrowRight size={14} />
+                </Link>
+              ))}
+            </div>
+            <Link
+              to="/reviews"
+              className="mt-8 inline-flex items-center gap-2 text-sm text-primary hover:underline"
+            >
+              Browse all reviews <ArrowRight size={14} />
+            </Link>
+          </div>
+        </section>
+      </PageTransition>
+    </Layout>
+  );
+};
+
+export default NicheCategoryPage;

@@ -37,6 +37,7 @@ const Compliance2257 = lazy(() => import("./pages/Compliance2257"));
 const DiscountPage = lazy(() => import("./pages/DiscountPage"));
 const SitemapPage = lazy(() => import("./pages/SitemapPage"));
 const GayDatingSites = lazy(() => import("./pages/GayDatingSites"));
+const NicheCategoryPage = lazy(() => import("./pages/NicheCategoryPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -116,6 +117,7 @@ const AnimatedRoutes = () => {
         <Route path="/2257" element={<Compliance2257 />} />
         <Route path="/sitemap" element={<SitemapPage />} />
         <Route path="/gay-dating-sites" element={<GayDatingSites />} />
+        <Route path="/niche/:slug" element={<NicheCategoryPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

@@ -151,6 +151,29 @@ const CATEGORY_NAMES: Record<string, string> = {
   "mobile-friendly": "Mobile Friendly",
 };
 
+const NICHE_META: Record<string, { displayName: string; seoTitle: string; seoDescription: string }> = {
+  "twink": { displayName: "Twink", seoTitle: "Best Twink Sites — Ranked & Reviewed", seoDescription: "Every twink site we've tested, ranked by content quality, pricing, and updates. Slim, smooth performers from studio-polished to genuinely amateur." },
+  "bareback": { displayName: "Bareback", seoTitle: "Best Bareback Gay Sites — Raw Content Ranked", seoDescription: "Bareback gay sites ranked by catalog size, update frequency, and quality. Twink, daddy, bear, and crossover bareback content all scored honestly." },
+  "asian": { displayName: "Asian", seoTitle: "Best Asian Gay Sites — Ranked & Reviewed", seoDescription: "The best Asian gay content sites ranked by quality and authenticity. Japanese, Thai, Chinese, and pan-Asian networks scored." },
+  "latin": { displayName: "Latin", seoTitle: "Best Latin Gay Sites — Ranked & Reviewed", seoDescription: "Latin gay sites ranked by content quality and authentic Latino performers. Brazilian, Colombian, Mexican, and pan-Latin networks scored honestly." },
+  "bear": { displayName: "Bear", seoTitle: "Best Bear Gay Sites — Ranked & Reviewed", seoDescription: "The best gay bear content sites ranked. Hairy, mature, and cub performers from dedicated bear studios — scored on catalog depth and value." },
+  "daddy": { displayName: "Daddy", seoTitle: "Best Daddy Gay Sites — Ranked & Reviewed", seoDescription: "Daddy/son gay sites ranked by content quality and authentic chemistry. Mature-on-younger niche covered across studios and networks." },
+  "college": { displayName: "College", seoTitle: "Best College Gay Sites — Ranked & Reviewed", seoDescription: "College gay sites ranked by authenticity and content quality. Frat, dorm, and amateur college-age performers scored across networks." },
+  "military": { displayName: "Military", seoTitle: "Best Military Gay Sites — Ranked & Reviewed", seoDescription: "Military-themed gay sites ranked. Uniformed performers, recruit roleplay, and ex-military content scored on quality and authenticity." },
+  "amateur": { displayName: "Amateur", seoTitle: "Best Amateur Gay Sites — Ranked & Reviewed", seoDescription: "The best amateur gay sites ranked. Real performers, authentic chemistry, no studio gloss — scored on quality and value across networks." },
+  "big-dick": { displayName: "Big Dick", seoTitle: "Best Big Dick Gay Sites — Ranked & Reviewed", seoDescription: "Big dick gay sites ranked by performer quality and content depth. Hung-focused content scored across studios and amateur networks." },
+  "jock": { displayName: "Jock", seoTitle: "Best Jock Gay Sites — Ranked & Reviewed", seoDescription: "Jock and athletic gay sites ranked by content quality. Locker room, gym, and athletic-aesthetic performers scored honestly." },
+  "uncut": { displayName: "Uncut", seoTitle: "Best Uncut Gay Sites — Ranked & Reviewed", seoDescription: "Uncut gay sites ranked. European and international networks with uncircumcised performers scored on content quality." },
+  "hairy": { displayName: "Hairy", seoTitle: "Best Hairy Gay Sites — Ranked & Reviewed", seoDescription: "Hairy gay sites ranked. Body-hair-focused performers across bear, daddy, and amateur networks scored on quality and depth." },
+  "smooth": { displayName: "Smooth", seoTitle: "Best Smooth Gay Sites — Ranked & Reviewed", seoDescription: "Smooth gay sites ranked by quality. Twink and swimmer-aesthetic performers scored on catalog depth and pricing." },
+  "group": { displayName: "Group", seoTitle: "Best Group Gay Sites — Ranked & Reviewed", seoDescription: "Gay sites with strong group, threesome, and orgy content ranked. Catalog depth and quality scored across networks." },
+  "fetish": { displayName: "Fetish", seoTitle: "Best Fetish Gay Sites — Ranked & Reviewed", seoDescription: "Fetish gay sites ranked by depth across kink, leather, gear, and adjacent niches. Quality and authenticity scored." },
+  "interracial": { displayName: "Interracial", seoTitle: "Best Interracial Gay Sites — Ranked & Reviewed", seoDescription: "Interracial gay sites ranked by performer diversity and content quality. Cross-ethnic networks scored honestly." },
+  "muscle": { displayName: "Muscle", seoTitle: "Best Muscle Gay Sites — Ranked & Reviewed", seoDescription: "Muscle gay sites ranked. Bodybuilder-aesthetic performers and gym-focused content scored on catalog depth and quality." },
+  "str8-curious": { displayName: "Straight-Curious", seoTitle: "Best Straight-Curious Gay Sites — Ranked & Reviewed", seoDescription: "Straight-curious and str8-bait gay sites ranked. First-time, reluctant, and roleplay content scored across networks." },
+  "japanese": { displayName: "Japanese", seoTitle: "Best Japanese Gay Sites — Ranked & Reviewed", seoDescription: "Japanese gay sites and JAV-style networks ranked. Authentic Japanese performers and content scored on quality and depth." },
+};
+
 const YEAR = new Date().getFullYear();
 
 // Static pages
@@ -202,6 +225,16 @@ for (const slug of CATEGORY_SLUGS) {
     path: `/category/${slug}`,
     title: `${name} Twink Sites ${YEAR} | TwinkVault`,
     description: `The best ${name.toLowerCase()} twink sites ranked and reviewed for ${YEAR}.`,
+  });
+}
+
+// Niche pages
+for (const slug of Object.keys(NICHE_META)) {
+  const meta = NICHE_META[slug];
+  routes.push({
+    path: `/niche/${slug}`,
+    title: `${meta.seoTitle} ${YEAR} | TwinkVault`,
+    description: meta.seoDescription,
   });
 }
 
