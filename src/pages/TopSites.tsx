@@ -11,6 +11,7 @@ import VisitSiteButton from "../components/VisitSiteButton";
 import { sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { currentYear, currentMonthLong } from "../lib/dates";
+import { sitesCountLabel, TOTAL_SITES } from "../lib/siteStats";
 
 const filters = ["All", "Best Value", "HD Quality", "Amateur", "Premium Studio", "Free Trial"];
 
@@ -44,7 +45,7 @@ const TopSites = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>{`Best Gay Twink Sites ${currentYear} — Top 12 Ranked & Reviewed | TwinkVault`}</title>
+          <title>{`Best Gay Twink Sites ${currentYear} — Top ${sitesCountLabel} Ranked & Reviewed | TwinkVault`}</title>
           <meta name="description" content={`Staff rankings of the best gay twink content sites in ${currentYear}. Real pricing, honest scores, and exclusive deals. Updated monthly.`} />
           <link rel="canonical" href="https://twinkvault.com/top-sites" />
         </Helmet>
@@ -57,7 +58,7 @@ const TopSites = () => {
               animate={{ opacity: 1, y: 0 }}
             >
               <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">
-                12 Sites. All Tested. Ranked Honestly.
+                {TOTAL_SITES} Sites. All Tested. Ranked Honestly.
               </h1>
               <p className="mt-4 text-muted-foreground">
                 We paid for every membership, scored them on content, value, updates, and mobile UX — then ranked them. No site paid us to be here.

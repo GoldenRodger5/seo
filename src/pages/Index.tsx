@@ -16,6 +16,8 @@ import { getFeaturedSites, categories, sites, getVisitUrl, isAffiliated } from "
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { ReactNode } from "react";
 import { currentYear, currentMonthShort } from "../lib/dates";
+import { sitesCountLabel, REVIEWED_SITES } from "../lib/siteStats";
+import QuickPicks from "../components/QuickPicks";
 
 const tickerItems = [
   "🔥 New: Helix Studios Review",
@@ -145,7 +147,7 @@ const HeroSection = () => {
               <Star key={i} size={16} className="fill-secondary text-secondary" />
             ))}
           </div>
-          <span className="text-sm text-muted-foreground">18 sites tested · Scores updated monthly</span>
+          <span className="text-sm text-muted-foreground">{sitesCountLabel} sites tested · Scores updated monthly</span>
         </motion.div>
       </div>
     </section>
@@ -440,6 +442,7 @@ const Index = () => (
     <PageTransition>
       <HeroSection />
       <SocialProofStrip />
+      <QuickPicks />
       <TopPicksSection />
       <QuizBanner />
       <CategoriesSection />

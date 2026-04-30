@@ -9,6 +9,7 @@ import ScoreRing from "../components/ScoreRing";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { sites } from "../data/sites";
 import { currentYear, currentMonthLong } from "../lib/dates";
+import { sitesCountLabel, TOTAL_SITES } from "../lib/siteStats";
 
 const sorted = [...sites].sort((a, b) => a.rank - b.rank);
 
@@ -16,7 +17,7 @@ const BestTwinkSites = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>{`Best Twink Sites ${currentYear} — Top 12 Ranked by Experts | TwinkVault`}</title>
+        <title>{`Best Twink Sites ${currentYear} — Top ${sitesCountLabel} Ranked by Experts | TwinkVault`}</title>
         <meta name="description" content={`The definitive list of the best gay twink sites in ${currentYear}. Staff-tested rankings with real pricing, honest scores, and exclusive deals. Updated monthly.`} />
         <link rel="canonical" href="https://twinkvault.com/best-twink-sites" />
         <script type="application/ld+json">{JSON.stringify({
@@ -44,7 +45,7 @@ const BestTwinkSites = () => (
               Best Twink Sites {currentYear}
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Paid memberships on all 18 sites. Tested content, streaming, mobile, and search. Scored them honestly. No site paid to be here.
+              Paid memberships on all {TOTAL_SITES} sites. Tested content, streaming, mobile, and search. Scored them honestly. No site paid to be here.
             </p>
           </motion.div>
         </div>

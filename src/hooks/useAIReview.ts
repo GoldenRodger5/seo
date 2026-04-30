@@ -5,7 +5,7 @@ const CACHE_KEY = (slug: string) => `tv_ai_review_${slug}`;
 
 // Pre-written reviews to avoid exposing API keys client-side.
 // To update: regenerate offline and paste here.
-const reviews: Record<string, string> = {
+export const reviewBodies: Record<string, string> = {
   "helix-studios":
     `Helix Studios has been in the game since 2002 — founded by Keith Miller, originally in Fort Lauderdale, then San Francisco, and now based in Las Vegas. That history shows in the library: over 4,000 scenes, 2,600+ videos, and 2,354 photo galleries. It's one of the largest exclusive collections in the twink niche, period. The production values are genuinely cinematic — professional lighting, multi-camera setups, and performers with real on-screen chemistry. Newer content streams in 720p, while older material from the early years is in 480p.\n\nThe studio has expanded beyond its core site with Helix Studios Latin America (launched 2021) and Helix Studios Europe (2022), plus a narrative series called "Helix Studios Presents" available on Amazon Prime Video. Mobile streaming works well — the player is responsive and doesn't fight you with forced downloads. Navigation is clean with functional search filters, which is more than you can say for a lot of competing sites.\n\nAt $34.95/month, Helix is the most expensive site in our rankings. The annual plan drops that to $11.99/month, which is where the real value is — you get two decades of exclusive content for roughly the price of a streaming service. There's no free trial, so you're committing upfront. For fans who prioritize production quality and exclusive performers over raw volume, Helix remains the benchmark. Budget-conscious subscribers should look at the Next Door network instead.`,
 
@@ -113,7 +113,7 @@ export function useAIReview(site: SiteData) {
     }
 
     // Use pre-written review
-    const review = reviews[site.slug];
+    const review = reviewBodies[site.slug];
     if (review) {
       setLoading(true);
       // Small delay to avoid layout flash
