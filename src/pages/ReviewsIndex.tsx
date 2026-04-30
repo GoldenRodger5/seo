@@ -27,7 +27,7 @@ const ReviewsIndex = () => {
     <Layout>
       <Helmet>
         <title>{`All Gay Twink Site Reviews ${currentYear} — Tested & Ranked | TwinkVault`}</title>
-        <meta name="description" content="Browse all 12 honest, independent gay twink site reviews. Sorted by rating, filtered by category. Updated monthly." />
+        <meta name="description" content="Browse all 18 honest, independent gay site reviews. Sorted by rating, filtered by category. Updated monthly." />
         <link rel="canonical" href="https://twinkvault.com/reviews" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",

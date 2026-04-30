@@ -21,6 +21,43 @@ const SITE_SLUGS = [
   "bareback-that-hole",
   "hard-brit-lads",
   "prideflame",
+  "rawhole",
+  "peterfever",
+  "gayasiannetwork",
+  "alternadudes",
+  "dirtyboyvideo",
+  "dudesraw",
+  "nakedsword",
+  "trailertrashboys",
+  "japanboyz",
+  "sexjapantv",
+  "hiroyaxxx",
+  "yoshikawasakixxx",
+  "wuboyz",
+  "barebackrtxxx",
+  "cumpigmen",
+  "realmenfuck",
+  "swinginballs",
+  "squirtstudios",
+  "aussiesdoit",
+  "twinktrade",
+  "dadcreep",
+  "brothercrush",
+  "familydick",
+  "sayuncle",
+  "boysatcamp",
+  "missionaryboys",
+  "militarydick",
+  "latinleche",
+  "yesfather",
+  "bullyhim",
+  "youngperps",
+  "barebackcumpigs",
+  "bearchubs",
+  "bearfilms",
+  "hairyandraw",
+  "boyfun",
+  "jawked",
 ] as const;
 
 const CATEGORY_SLUGS = [
@@ -83,6 +120,7 @@ const corePages = [
   "/best-twink-sites",
   "/free-trial-twink-sites",
   "/cheapest-twink-sites",
+  "/gay-dating-sites",
 ];
 for (const page of corePages) {
   urls.push(urlEntry({ loc: page, changefreq: "weekly", priority: "0.9" }));
@@ -95,7 +133,7 @@ for (const page of toolPages) {
 }
 
 // Info pages
-const infoPages = ["/about", "/contact", "/sitemap"];
+const infoPages = ["/about", "/methodology", "/contact", "/sitemap"];
 for (const page of infoPages) {
   urls.push(urlEntry({ loc: page, changefreq: "monthly", priority: "0.5" }));
 }

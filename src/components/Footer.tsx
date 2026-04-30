@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { sites } from "../data/sites";
+import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
 
 const footerLink = "text-sm text-muted-foreground hover:text-foreground transition-colors";
 
@@ -12,7 +13,7 @@ const Footer = () => (
       </Link>
 
       {/* Column grid */}
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
         {/* Browse */}
         <div>
           <h3 className="font-heading text-sm font-semibold mb-3">Browse</h3>
@@ -24,6 +25,19 @@ const Footer = () => (
             <li><Link to="/best-twink-sites" className={footerLink}>Best Twink Sites</Link></li>
             <li><Link to="/free-trial-twink-sites" className={footerLink}>Free Trial Sites</Link></li>
             <li><Link to="/cheapest-twink-sites" className={footerLink}>Cheapest Sites</Link></li>
+          </ul>
+        </div>
+
+        {/* Niches (hubs) */}
+        <div>
+          <h3 className="font-heading text-sm font-semibold mb-3">Niches</h3>
+          <ul className="space-y-2">
+            <li><Link to="/category/amateur-twinks" className={footerLink}>Amateur Twinks</Link></li>
+            <li><Link to="/category/premium-studios" className={footerLink}>Premium Studios</Link></li>
+            <li><Link to="/category/best-value" className={footerLink}>Best Value</Link></li>
+            <li><Link to="/category/hd-quality" className={footerLink}>HD Quality</Link></li>
+            <li><Link to="/category/free-trials" className={footerLink}>Free Trials</Link></li>
+            <li><Link to="/category/mobile-friendly" className={footerLink}>Mobile Friendly</Link></li>
           </ul>
         </div>
 
@@ -41,7 +55,7 @@ const Footer = () => (
           </ul>
         </div>
 
-        {/* Tools */}
+        {/* Tools / Company */}
         <div>
           <h3 className="font-heading text-sm font-semibold mb-3">Tools</h3>
           <ul className="space-y-2">
@@ -52,7 +66,37 @@ const Footer = () => (
           <h3 className="font-heading text-sm font-semibold mb-3 mt-6">Company</h3>
           <ul className="space-y-2">
             <li><Link to="/about" className={footerLink}>About</Link></li>
+            <li><Link to="/methodology" className={footerLink}>Methodology</Link></li>
             <li><Link to="/contact" className={footerLink}>Contact</Link></li>
+          </ul>
+
+          <h3 className="font-heading text-sm font-semibold mb-3 mt-6">Gay Dating</h3>
+          <ul className="space-y-2">
+            <li>
+              <a
+                href={MANFINDER_URL}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                onClick={() => trackManfinderClick(typeof window !== "undefined" ? window.location.pathname : "/")}
+                className={footerLink}
+              >
+                Manfinder (Free)
+              </a>
+            </li>
+            <li>
+              <a
+                href={CRAK_URL}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                onClick={() => trackCrakClick(typeof window !== "undefined" ? window.location.pathname : "/")}
+                className={footerLink}
+              >
+                Gay Hookup Sites
+              </a>
+            </li>
+            <li>
+              <Link to="/gay-dating-sites" className={footerLink}>Dating Sites Guide</Link>
+            </li>
           </ul>
         </div>
 

@@ -18,6 +18,7 @@ import VisitSiteButton from "../components/VisitSiteButton";
 import { getSiteBySlug, sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { useAIReview } from "../hooks/useAIReview";
 import { currentYear, currentMonthShort, currentMonthLong } from "../lib/dates";
+import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
@@ -158,8 +159,13 @@ const ReviewPage = () => {
 
                 {/* Score Breakdown */}
                 <div className="mt-8">
-                  <h3 className="font-heading text-lg font-semibold mb-4">Score Breakdown</h3>
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="flex items-baseline justify-between flex-wrap gap-2">
+                    <h3 className="font-heading text-lg font-semibold">Score Breakdown</h3>
+                    <Link to="/methodology" className="text-xs text-secondary hover:underline">
+                      How are these scored? →
+                    </Link>
+                  </div>
+                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <ScoreBar label="Content Quality" value={site.content_quality} />
                     <ScoreBar label="Update Frequency" value={site.update_frequency} />
                     <ScoreBar label="Value for Money" value={site.value_score} />
@@ -331,6 +337,40 @@ const ReviewPage = () => {
               </div>
 
               <p className="text-xs text-muted-foreground">Last Updated: {currentMonthLong} {currentYear}</p>
+
+              {/* Gay Dating interstitial — two cards */}
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="glass-card rounded-lg border border-emerald-500/20 p-4 flex flex-col gap-1.5">
+                  <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Free to Join</span>
+                  <p className="text-sm font-semibold">Meet gay men near you</p>
+                  <p className="text-xs text-muted-foreground">Manfinder is free — create a profile and browse local guys without paying anything.</p>
+                  <a
+                    href={MANFINDER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer sponsored"
+                    onClick={() => trackManfinderClick(window.location.pathname)}
+                    className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 hover:underline"
+                  >
+                    Join Manfinder Free <ArrowRight size={11} />
+                  </a>
+                  <p className="text-[9px] text-muted-foreground/60">Affiliate link</p>
+                </div>
+                <div className="glass-card rounded-lg border border-border/50 p-4 flex flex-col gap-1.5">
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Not ready to subscribe?</span>
+                  <p className="text-sm font-semibold">Browse gay dating sites</p>
+                  <p className="text-xs text-muted-foreground">Compare gay hookup and dating platforms — no membership required.</p>
+                  <a
+                    href={CRAK_URL}
+                    target="_blank"
+                    rel="noopener noreferrer sponsored"
+                    onClick={() => trackCrakClick(window.location.pathname)}
+                    className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                  >
+                    Find Local Guys <ArrowRight size={11} />
+                  </a>
+                  <p className="text-[9px] text-muted-foreground/60">Sponsored · Affiliate link</p>
+                </div>
+              </div>
 
               {/* FAQ Section */}
               <section className="mt-8">

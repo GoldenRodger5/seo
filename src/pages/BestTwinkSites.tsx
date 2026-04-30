@@ -44,7 +44,7 @@ const BestTwinkSites = () => (
               Best Twink Sites {currentYear}
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Paid memberships on all 12 sites. Tested content, streaming, mobile, and search. Scored them honestly. No site paid to be here.
+              Paid memberships on all 18 sites. Tested content, streaming, mobile, and search. Scored them honestly. No site paid to be here.
             </p>
           </motion.div>
         </div>

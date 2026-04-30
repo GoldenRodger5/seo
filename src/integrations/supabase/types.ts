@@ -7,14 +7,140 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "14.4"
   }
   public: {
     Tables: {
-      [_ in never]: never
+      clicks: {
+        Row: {
+          id: string
+          site_slug: string
+          referrer_page: string | null
+          clicked_at: string
+        }
+        Insert: {
+          id?: string
+          site_slug: string
+          referrer_page?: string | null
+          clicked_at?: string
+        }
+        Update: {
+          id?: string
+          site_slug?: string
+          referrer_page?: string | null
+          clicked_at?: string
+        }
+        Relationships: []
+      }
+      subscribers: {
+        Row: {
+          id: string
+          email: string
+          source: string | null
+          subscribed_at: string
+        }
+        Insert: {
+          id?: string
+          email: string
+          source?: string | null
+          subscribed_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          source?: string | null
+          subscribed_at?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          id: string
+          name: string
+          email: string
+          subject: string | null
+          message: string
+          submitted_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          email: string
+          subject?: string | null
+          message: string
+          submitted_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          email?: string
+          subject?: string | null
+          message?: string
+          submitted_at?: string
+        }
+        Relationships: []
+      }
+      content_log: {
+        Row: {
+          id: string
+          slug: string
+          content_type: string
+          page_title: string | null
+          published_at: string
+          word_count: number | null
+          affiliate_network: string | null
+          affiliate_url_present: boolean
+          target_keyword: string | null
+          meta_description_length: number | null
+          faq_count: number | null
+          internal_links_added: number | null
+          build_passed: boolean
+          git_commit_hash: string | null
+          google_ping_success: boolean | null
+          bing_ping_success: boolean | null
+          error_message: string | null
+        }
+        Insert: {
+          id?: string
+          slug: string
+          content_type: string
+          page_title?: string | null
+          published_at?: string
+          word_count?: number | null
+          affiliate_network?: string | null
+          affiliate_url_present?: boolean
+          target_keyword?: string | null
+          meta_description_length?: number | null
+          faq_count?: number | null
+          internal_links_added?: number | null
+          build_passed?: boolean
+          git_commit_hash?: string | null
+          google_ping_success?: boolean | null
+          bing_ping_success?: boolean | null
+          error_message?: string | null
+        }
+        Update: {
+          id?: string
+          slug?: string
+          content_type?: string
+          page_title?: string | null
+          published_at?: string
+          word_count?: number | null
+          affiliate_network?: string | null
+          affiliate_url_present?: boolean
+          target_keyword?: string | null
+          meta_description_length?: number | null
+          faq_count?: number | null
+          internal_links_added?: number | null
+          build_passed?: boolean
+          git_commit_hash?: string | null
+          google_ping_success?: boolean | null
+          bing_ping_success?: boolean | null
+          error_message?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

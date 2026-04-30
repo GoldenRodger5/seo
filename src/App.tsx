@@ -27,6 +27,7 @@ const FreeTrialSites = lazy(() => import("./pages/FreeTrialSites"));
 const CheapestTwinkSites = lazy(() => import("./pages/CheapestTwinkSites"));
 const GoRedirect = lazy(() => import("./pages/GoRedirect"));
 const About = lazy(() => import("./pages/About"));
+const Methodology = lazy(() => import("./pages/Methodology"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const AffiliateDisclosure = lazy(() => import("./pages/AffiliateDisclosure"));
 const ComparePage = lazy(() => import("./pages/ComparePage"));
@@ -35,6 +36,7 @@ const Terms = lazy(() => import("./pages/Terms"));
 const Compliance2257 = lazy(() => import("./pages/Compliance2257"));
 const DiscountPage = lazy(() => import("./pages/DiscountPage"));
 const SitemapPage = lazy(() => import("./pages/SitemapPage"));
+const GayDatingSites = lazy(() => import("./pages/GayDatingSites"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -104,6 +106,7 @@ const AnimatedRoutes = () => {
         <Route path="/discount/:slug" element={<DiscountPage />} />
         <Route path="/go/:slug" element={<GoRedirect />} />
         <Route path="/about" element={<About />} />
+        <Route path="/methodology" element={<Methodology />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/affiliate-disclosure" element={<AffiliateDisclosure />} />
         <Route path="/compare" element={<ComparePage />} />
@@ -112,6 +115,7 @@ const AnimatedRoutes = () => {
         <Route path="/terms" element={<Terms />} />
         <Route path="/2257" element={<Compliance2257 />} />
         <Route path="/sitemap" element={<SitemapPage />} />
+        <Route path="/gay-dating-sites" element={<GayDatingSites />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

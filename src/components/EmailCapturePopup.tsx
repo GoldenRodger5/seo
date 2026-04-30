@@ -21,24 +21,35 @@ const EmailCapturePopup = () => {
 
   useEffect(() => {
     if (sessionStorage.getItem("tv_popup_shown")) return;
-    const timer = setTimeout(() => {
-      if (!sessionStorage.getItem("tv_popup_shown")) {
-        sessionStorage.setItem("tv_popup_shown", "1");
-        setNeeded(true);
-        requestOverlay("email");
-      }
-    }, 12000);
-    const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 && !sessionStorage.getItem("tv_popup_shown")) {
-        sessionStorage.setItem("tv_popup_shown", "1");
-        setNeeded(true);
-        requestOverlay("email");
-      }
+
+    const fire = () => {
+      if (sessionStorage.getItem("tv_popup_shown")) return;
+      sessionStorage.setItem("tv_popup_shown", "1");
+      setNeeded(true);
+      requestOverlay("email");
     };
+
+    const timer = setTimeout(fire, 12000);
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0) fire();
+    };
+
+    // Scroll trigger: fire once user has scrolled past 50% of the page.
+    // Especially relevant on long review/listicle pages where 12s timer
+    // may fire before the user is engaged enough to convert.
+    const handleScroll = () => {
+      const scrolled = window.scrollY + window.innerHeight;
+      const total = document.documentElement.scrollHeight;
+      if (total > 0 && scrolled / total >= 0.5) fire();
+    };
+
     document.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       clearTimeout(timer);
       document.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 

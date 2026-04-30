@@ -2,7 +2,15 @@ User-agent: *
 Allow: /
 Disallow: /go/
 
+User-agent: Googlebot
+Allow: /
+Disallow: /go/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /go/
+
 Sitemap: https://twinkvault.com/sitemap.xml
 
-# Crawl-delay for polite crawling
+# Crawl-delay for polite crawling (ignored by Google, respected by Bing/others)
 Crawl-delay: 1

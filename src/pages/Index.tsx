@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import OutboundLink from "@/components/OutboundLink";
 import { Star, ArrowRight, Sparkles, Flame, Film, DollarSign, Play, Gift, Smartphone, Search, ShieldCheck, RefreshCw } from "lucide-react";
+import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import StarRating from "../components/StarRating";
@@ -144,7 +145,7 @@ const HeroSection = () => {
               <Star key={i} size={16} className="fill-secondary text-secondary" />
             ))}
           </div>
-          <span className="text-sm text-muted-foreground">12 sites tested · Scores updated monthly</span>
+          <span className="text-sm text-muted-foreground">18 sites tested · Scores updated monthly</span>
         </motion.div>
       </div>
     </section>
@@ -335,6 +336,75 @@ const TrustSection = () => (
   </motion.section>
 );
 
+const GayDatingSection = () => (
+  <motion.section
+    className="py-12"
+    initial={{ opacity: 0, y: 24 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+  >
+    <div className="container">
+      <motion.div
+        className="mb-8 text-center"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <h2 className="font-heading text-3xl font-bold md:text-4xl heading-gradient inline-block">
+          Looking for Something More Personal?
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Memberships cover content. These sites cover connections.
+        </p>
+      </motion.div>
+      <StaggerContainer className="grid gap-4 sm:grid-cols-2">
+        {/* Manfinder — free join angle */}
+        <StaggerChild>
+          <MotionCard className="glass-card rounded-lg p-6 flex flex-col h-full border border-emerald-500/20">
+            <span className="text-3xl">💚</span>
+            <span className="mt-3 text-xs font-semibold text-emerald-400 uppercase tracking-wide">Free to Join</span>
+            <h3 className="mt-1 font-heading text-xl font-bold">Manfinder</h3>
+            <p className="mt-2 flex-1 text-sm text-muted-foreground">
+              Meet gay men near you for free. Create a profile, browse guys in your area, and connect — no subscription, no credit card required to get started.
+            </p>
+            <a
+              href={MANFINDER_URL}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              onClick={() => trackManfinderClick("/")}
+              className="cta-btn gold-gradient mt-4 inline-flex items-center justify-center gap-2 rounded-button px-6 py-2.5 text-sm font-semibold text-secondary-foreground"
+            >
+              Join Manfinder Free <ArrowRight size={14} />
+            </a>
+            <p className="mt-2 text-center text-[10px] text-muted-foreground/60">Free to join · Affiliate link</p>
+          </MotionCard>
+        </StaggerChild>
+        {/* CrakRevenue Gay Smartlink */}
+        <StaggerChild>
+          <MotionCard className="glass-card rounded-lg p-6 flex flex-col h-full">
+            <span className="text-3xl">🔍</span>
+            <span className="mt-3 text-xs font-semibold text-primary uppercase tracking-wide">Browse Options</span>
+            <h3 className="mt-1 font-heading text-xl font-bold">Gay Dating & Hookup Sites</h3>
+            <p className="mt-2 flex-1 text-sm text-muted-foreground">
+              Compare the top gay dating and hookup platforms. Filter by location, what you're into, and how quickly you want to connect.
+            </p>
+            <a
+              href={CRAK_URL}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              onClick={() => trackCrakClick("/")}
+              className="mt-4 inline-flex items-center justify-center gap-2 rounded-button border border-primary px-6 py-2.5 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
+            >
+              Find Local Guys <ArrowRight size={14} />
+            </a>
+            <p className="mt-2 text-center text-[10px] text-muted-foreground/60">Sponsored · Affiliate link</p>
+          </MotionCard>
+        </StaggerChild>
+      </StaggerContainer>
+    </div>
+  </motion.section>
+);
+
 import { Helmet } from "react-helmet-async";
 
 const Index = () => (
@@ -355,6 +425,17 @@ const Index = () => (
           "query-input": "required name=search_term_string"
         }
       })}</script>
+      <script type="application/ld+json">{JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "TwinkVault",
+        "url": "https://twinkvault.com",
+        "logo": "https://twinkvault.com/pwa-512.png",
+        "email": "isaac.m.builds@gmail.com",
+        "foundingDate": "2024",
+        "description": "Independent gay site review project — paid memberships, transparent scoring, no commission-rigged rankings.",
+        "sameAs": []
+      })}</script>
     </Helmet>
     <PageTransition>
       <HeroSection />
@@ -364,6 +445,7 @@ const Index = () => (
       <CategoriesSection />
       <BentoGrid />
       <LatestReviewsSection />
+      <GayDatingSection />
       <InlineEmailCapture />
       <TrustSection />
       <section className="py-16">
