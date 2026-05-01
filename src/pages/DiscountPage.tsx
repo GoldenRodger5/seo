@@ -14,29 +14,28 @@ import VisitSiteButton from "../components/VisitSiteButton";
 import StarRating from "../components/StarRating";
 import { currentYear, currentMonthLong, lastCheckedDate } from "../lib/dates";
 import { sites, getSiteBySlug, isAffiliated } from "../data/sites";
+import { siteNicheMap } from "../data/site-niches";
+import { getNiche } from "../data/niches";
 
 const StatusIndicator = ({ expiry }: { expiry: "limited" | "flash" | "ongoing" }) => (
   <div className="flex items-center gap-2 text-xs">
-    {expiry === "limited" ? (
+    {expiry === "flash" ? (
       <>
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive opacity-75" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive" />
         </span>
-        <span className="text-destructive font-medium">Expires Soon</span>
+        <span className="text-destructive font-medium">Flash deal</span>
       </>
-    ) : expiry === "flash" ? (
+    ) : expiry === "limited" ? (
       <>
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-75" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-secondary" />
-        </span>
-        <span className="text-secondary font-medium">Flash Deal — 48 hours</span>
+        <span className="inline-flex h-2 w-2 rounded-full bg-secondary" />
+        <span className="text-secondary font-medium">Limited time</span>
       </>
     ) : (
       <>
         <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-        <span className="text-emerald-400 font-medium">Active Deal</span>
+        <span className="text-emerald-400 font-medium">Always available</span>
       </>
     )}
   </div>
@@ -72,8 +71,30 @@ const DiscountPage = () => {
   const annualPriceNum = parseFloat(site.price_annual.replace(/[^0-9.]/g, ""));
   const savingsPerMonth = (monthlyPriceNum - annualPriceNum).toFixed(2);
 
-  // Related discount pages — exclude current site, pick 3
-  const otherSites = sites.filter((s) => s.id !== site.id).slice(0, 3);
+  // Related discount pages — prefer same primary niche, fall back to any active deal
+  const primaryNiche = (siteNicheMap[site.slug] ?? [])[0];
+  const sameNicheSites = primaryNiche
+    ? sites.filter(
+        (s) =>
+          s.id !== site.id &&
+          s.deal_discount > 0 &&
+          (siteNicheMap[s.slug] ?? []).includes(primaryNiche)
+      )
+    : [];
+  const otherSites = (sameNicheSites.length >= 3
+    ? sameNicheSites
+    : [
+        ...sameNicheSites,
+        ...sites.filter(
+          (s) =>
+            s.id !== site.id &&
+            s.deal_discount > 0 &&
+            !sameNicheSites.includes(s)
+        ),
+      ]
+  )
+    .sort((a, b) => b.deal_discount - a.deal_discount)
+    .slice(0, 3);
 
   // FAQ data
   const faqs = [
@@ -99,11 +120,14 @@ const DiscountPage = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>{`${site.name} Discount Code ${currentYear} — Save Up to ${site.deal_discount}% | TwinkVault`}</title>
+          <title>{`${site.name} Discount ${currentYear} — ${site.deal_discount}% Off (Lowest Price) | TwinkVault`}</title>
           <meta
             name="description"
-            content={`Get the latest ${site.name} discount code for ${currentMonthLong} ${currentYear}. Save up to ${site.deal_discount}% with our verified deal: ${site.deal_text}. Tested and working today.`}
+            content={`Get ${site.name} for ${site.price_annual} with our active discount. ${site.deal_text}. No promo code needed — discount auto-applies. Updated ${currentMonthLong} ${currentYear}.`}
           />
+          <meta property="og:title" content={`${site.name} Discount ${currentYear} — ${site.deal_discount}% Off`} />
+          <meta property="og:description" content={`Get ${site.name} for ${site.price_annual} with our active discount. No promo code needed.`} />
+          <meta property="og:url" content={`https://twinkvault.com/discount/${site.slug}`} />
           <link rel="canonical" href={`https://twinkvault.com/discount/${site.slug}`} />
           <script type="application/ld+json">
             {JSON.stringify({
@@ -152,7 +176,7 @@ const DiscountPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              {site.name} Discount Code
+              {site.name} Discount: {site.deal_discount}% Off in {currentYear}
             </motion.h1>
             <motion.p
               className="mx-auto mt-4 max-w-2xl text-muted-foreground"
@@ -356,12 +380,31 @@ const DiscountPage = () => {
           </div>
         </section>
 
-        {/* More Deals */}
+        {/* More Deals — niche-aware when possible */}
         <section className="py-12">
           <div className="container max-w-2xl">
-            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
-              More Deals You Might Like
-            </h2>
+            {(() => {
+              const primaryNiche = (siteNicheMap[site.slug] ?? [])[0];
+              const niche = primaryNiche ? getNiche(primaryNiche) : null;
+              if (!niche) return (
+                <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
+                  More Deals You Might Like
+                </h2>
+              );
+              return (
+                <>
+                  <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
+                    Other {niche.displayName} Deals
+                  </h2>
+                  <Link
+                    to={`/niche/${niche.slug}`}
+                    className="ml-3 text-sm text-primary hover:underline align-middle"
+                  >
+                    See all {niche.displayName.toLowerCase()} sites →
+                  </Link>
+                </>
+              );
+            })()}
             <StaggerContainer className="mt-6 grid gap-4 sm:grid-cols-3">
               {otherSites.map((s) => (
                 <StaggerChild key={s.id}>
@@ -439,11 +482,11 @@ const DiscountPage = () => {
                 Don't Miss This {site.name} Deal
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                {site.deal_type === "limited"
-                  ? "This is a limited-time offer that could expire soon."
-                  : site.deal_type === "flash"
-                    ? "This flash deal expires within 48 hours."
-                    : "This deal is currently active but pricing can change at any time."}
+                {site.deal_type === "flash"
+                  ? "This flash deal is short-lived. Pricing can change without notice."
+                  : site.deal_type === "limited"
+                    ? "This is a limited-time offer. Pricing can change without notice."
+                    : `This is a standing ${site.name} discount, but pricing is set by the studio and can change without notice.`}
               </p>
               <div className="mt-4 flex items-center justify-center gap-3">
                 <div className="flex items-center gap-1.5 text-xs text-emerald-400">
