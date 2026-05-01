@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Cookie } from "lucide-react";
 import { requestOverlay, releaseOverlay, useOverlaySlot } from "../hooks/useOverlayQueue";
+import { onConsentGranted } from "../lib/analytics";
 
 const CookieConsent = () => {
   const [needed, setNeeded] = useState(false);
@@ -30,6 +31,7 @@ const CookieConsent = () => {
 
   const accept = () => {
     localStorage.setItem("tv_cookie_consent", "accepted");
+    onConsentGranted();
     setNeeded(false);
     releaseOverlay("cookie");
   };

@@ -1,4 +1,5 @@
-import { lazy, Suspense, Component, ReactNode } from "react";
+import React, { lazy, Suspense, Component, ReactNode } from "react";
+import { trackPageView } from "./lib/analytics";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -126,6 +127,13 @@ const AnimatedRoutes = () => {
 
 const AppShell = () => {
   const location = useLocation();
+
+  // GA4 page-view tracking — fires on route change. Only sends data if the
+  // user accepted cookies AND VITE_GA4_ID is configured (otherwise no-op).
+  React.useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location.pathname]);
+
   return (
     <ErrorBoundary locationKey={location.pathname}>
       <AgeVerification />
