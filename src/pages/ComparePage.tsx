@@ -12,6 +12,7 @@ import { PageTransition } from "../components/MotionWrappers";
 import { currentYear } from "../lib/dates";
 import { siteNicheMap } from "@/data/site-niches";
 import { getNiche } from "@/data/niches";
+import { stripMonthlyUnit } from "@/lib/dealMath";
 
 const scoreColor = (val: number, max: number) => {
   const ratio = val / max;
@@ -469,8 +470,8 @@ const ComparePage = () => {
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                 {winner.name} takes the overall win with a {winner.overall_score}/5 score, excelling in {winner.content_quality >= winner.value_score ? "content quality" : "value for money"}.
                 {budgetPick.id !== winner.id
-                  ? ` However, ${budgetPick.name} at ${budgetPick.price_annual}/mo (annual) is the smarter pick if you're watching your budget.`
-                  : ` It also happens to be the more affordable option at ${winner.price_annual}/mo on the annual plan.`}
+                  ? ` However, ${budgetPick.name} at ${stripMonthlyUnit(budgetPick.price_annual)}/mo (annual) is the smarter pick if you're watching your budget.`
+                  : ` It also happens to be the more affordable option at ${stripMonthlyUnit(winner.price_annual)}/mo on the annual plan.`}
               </p>
             </div>
 
@@ -480,8 +481,8 @@ const ComparePage = () => {
                 We had active memberships on both. Here's how they stack up across content, value, updates, and mobile experience.
               </p>
               <p>
-                {siteA.name}: {siteA.overall_score}/5 overall, {siteA.content_quality}/100 content quality, {siteA.price_monthly}/mo.
-                {" "}{siteB.name}: {siteB.overall_score}/5 overall, {siteB.content_quality}/100 content quality, {siteB.price_monthly}/mo.
+                {siteA.name}: {siteA.overall_score}/5 overall, {siteA.content_quality}/100 content quality, {siteA.price_monthly}.
+                {" "}{siteB.name}: {siteB.overall_score}/5 overall, {siteB.content_quality}/100 content quality, {siteB.price_monthly}.
                 {" "}Numbers don't tell the whole story — read the breakdown below.
               </p>
             </div>

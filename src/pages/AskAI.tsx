@@ -179,7 +179,7 @@ const AskAI = () => {
                             <h3 className="mt-2 font-heading text-lg font-bold">{site.name}</h3>
                             <StarRating score={site.overall_score} size={13} />
                             <p className="mt-2 text-sm text-muted-foreground">{rec.reason}</p>
-                            <p className="mt-1 text-xs text-muted-foreground">{site.price_monthly} · {site.price_annual}/mo annual</p>
+                            <p className="mt-1 text-xs text-muted-foreground">{site.price_monthly} · {site.price_annual} annual</p>
                           </div>
                         </div>
                         <div className="mt-4 flex gap-3">

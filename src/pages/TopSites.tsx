@@ -164,10 +164,16 @@ const TopSites = () => {
                           </div>
                         </div>
 
-                        <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                          <ThumbsUp size={12} />
-                          <span>{parseInt(localStorage.getItem(`tv_helpful_${site.slug}`) || "0")} readers found this review helpful</span>
-                        </div>
+                        {(() => {
+                          const helpful = parseInt(localStorage.getItem(`tv_helpful_${site.slug}`) || "0");
+                          if (helpful < 5) return null;
+                          return (
+                            <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+                              <ThumbsUp size={12} />
+                              <span>{helpful} readers found this review helpful</span>
+                            </div>
+                          );
+                        })()}
                       </div>
 
                       {/* CTA column */}

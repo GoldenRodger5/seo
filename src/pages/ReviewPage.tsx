@@ -24,6 +24,9 @@ import { getNiche } from "@/data/niches";
 import { getSimilarSites } from "@/lib/similarSites";
 import SiteCard from "../components/SiteCard";
 import Breadcrumbs from "../components/Breadcrumbs";
+import { stripMonthlyUnit } from "@/lib/dealMath";
+import { getSiteImagery } from "@/data/site-imagery";
+import { generateSiteFaqs } from "@/lib/faqGenerator";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
@@ -146,6 +149,23 @@ const ReviewPage = () => {
                 { label: site.name },
               ]}
             />
+
+            {(() => {
+              const imagery = getSiteImagery(site.slug);
+              const banner = imagery.hero_image_url;
+              if (!banner) return null;
+              return (
+                <div className="mb-6 overflow-hidden rounded-lg border border-border/40">
+                  <img
+                    src={banner}
+                    alt={imagery.banner_alt}
+                    loading="eager"
+                    decoding="async"
+                    className="aspect-[21/9] w-full object-cover"
+                  />
+                </div>
+              );
+            })()}
 
             <AnimateOnScroll>
               <div className="stagger-in">
@@ -311,7 +331,7 @@ const ReviewPage = () => {
                       </tr>
                       <tr>
                         <td className="px-4 py-3">Annual</td>
-                        <td className="px-4 py-3">{site.price_annual}/mo (billed annually)</td>
+                        <td className="px-4 py-3">{stripMonthlyUnit(site.price_annual)}/mo (billed annually)</td>
                         <td className="px-4 py-3">{site.price_annual}</td>
                       </tr>
                     </tbody>
@@ -324,8 +344,8 @@ const ReviewPage = () => {
                   {site.overall_score >= 4.5
                     ? `${site.name} is one of the best in the space — ${site.overall_score}/5 isn't given lightly. ${site.short_description} If you can afford the price, this is the one to get.`
                     : site.overall_score >= 4.0
-                    ? `${site.name} scores a solid ${site.overall_score}/5. ${site.short_description} It's not the absolute top pick, but it punches above its weight — especially at ${site.price_annual}/mo on the annual plan.`
-                    : `${site.name} comes in at ${site.overall_score}/5. ${site.short_description} It's a niche pick — not for everyone, but if the content matches what you're after, the ${site.price_annual}/mo annual plan makes it a reasonable bet.`}
+                    ? `${site.name} scores a solid ${site.overall_score}/5. ${site.short_description} It's not the absolute top pick, but it punches above its weight — especially at ${stripMonthlyUnit(site.price_annual)}/mo on the annual plan.`
+                    : `${site.name} comes in at ${site.overall_score}/5. ${site.short_description} It's a niche pick — not for everyone, but if the content matches what you're after, the ${stripMonthlyUnit(site.price_annual)}/mo annual plan makes it a reasonable bet.`}
                 </p>
                 <div className="mt-4 glass-card rounded-lg p-6 text-center">
                   <span className="text-sm text-muted-foreground">Final Score</span>
@@ -336,10 +356,12 @@ const ReviewPage = () => {
                 </div>
               </section>
 
-              {/* Helpful signal */}
+              {/* Helpful signal — only surface counts >= 5 to avoid the social-proof anti-pattern of "0 readers found this helpful" */}
               <div className="glass-card rounded-lg p-4 flex items-center justify-between">
                 <span className="text-sm text-muted-foreground">
-                  👍 {helpfulCount} readers found this review helpful
+                  {helpfulCount >= 5
+                    ? `👍 ${helpfulCount} readers found this review helpful`
+                    : "Was this review helpful?"}
                 </span>
                 <button
                   onClick={handleVote}
@@ -391,34 +413,33 @@ const ReviewPage = () => {
                 </div>
               </div>
 
-              {/* FAQ Section */}
+              {/* FAQ Section — site-specific, purchase-intent questions */}
               <section className="mt-8">
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Frequently Asked Questions</h2>
-                <Accordion type="single" collapsible className="mt-4 space-y-2">
-                  {[
-                    { q: `Is ${site.name} worth it?`, a: `At ${site.overall_score}/5, ${site.value_score >= 85 ? "absolutely — it's one of the best values in the space" : site.value_score >= 75 ? "yes, if the content matches what you're into" : "it depends on your budget"}. ${site.price_annual}/mo on the annual plan is the way to go. Monthly at ${site.price_monthly} is steep for what you get.` },
-                    { q: `How much does ${site.name} cost?`, a: `Monthly: ${site.price_monthly}. Quarterly: ${site.price_quarterly}. Annual: ${site.price_annual}/mo (billed yearly). The annual plan saves you the most — don't pay monthly if you can avoid it.${site.has_free_trial ? " They also offer a trial if you want to test it first." : ""}` },
-                    { q: `Does ${site.name} have a free trial?`, a: site.has_free_trial ? `Yes. Use the trial to browse the actual member area — check the library depth, streaming quality, and mobile experience before committing.` : `No free trial right now. But at ${site.price_annual}/mo annually, the low price reduces the risk. If it's not for you, most sites process cancellations without hassle.` },
-                    { q: `What should I try instead of ${site.name}?`, a: `Closest alternatives: ${similar[0]?.name} (${similar[0]?.overall_score}/5) if you want ${similar[0]?.overall_score > site.overall_score ? "higher quality" : "something different"}, or ${similar[1]?.name} (${similar[1]?.overall_score}/5) for a different vibe. Compare them side-by-side in our comparison tool.` },
-                    { q: `How often does ${site.name} add new content?`, a: `Update frequency score: ${site.update_frequency}/100. ${site.update_frequency >= 85 ? "New content drops regularly — you won't run out anytime soon." : site.update_frequency >= 75 ? "Updates are fairly consistent, though not the fastest in the space." : "Updates are slower than competitors. You might burn through the library faster than they add to it."}` },
-                  ].map((faq, i) => (
-                    <AccordionItem key={i} value={`faq-${i}`} className="glass-card rounded-lg border-none px-5">
-                      <AccordionTrigger className="font-heading font-semibold text-left hover:no-underline">{faq.q}</AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed">{faq.a}</AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "FAQPage",
-                  mainEntity: [
-                    { "@type": "Question", name: `Is ${site.name} worth it?`, acceptedAnswer: { "@type": "Answer", text: `${site.name} scores ${site.overall_score}/5 in our testing.` } },
-                    { "@type": "Question", name: `How much does ${site.name} cost?`, acceptedAnswer: { "@type": "Answer", text: `${site.name} costs ${site.price_monthly} monthly or ${site.price_annual}/mo on the annual plan.` } },
-                    { "@type": "Question", name: `Does ${site.name} have a free trial?`, acceptedAnswer: { "@type": "Answer", text: site.has_free_trial ? "Yes, a trial option is available." : "No free trial is currently offered." } },
-                    { "@type": "Question", name: `What is the best alternative to ${site.name}?`, acceptedAnswer: { "@type": "Answer", text: `Top alternatives include ${similar[0]?.name} and ${similar[1]?.name}.` } },
-                    { "@type": "Question", name: `Is ${site.name} updated regularly?`, acceptedAnswer: { "@type": "Answer", text: `Update frequency score: ${site.update_frequency}/100.` } },
-                  ]
-                }) }} />
+                {(() => {
+                  const faqs = generateSiteFaqs(site);
+                  return (
+                    <>
+                      <Accordion type="single" collapsible className="mt-4 space-y-2">
+                        {faqs.map((faq, i) => (
+                          <AccordionItem key={i} value={`faq-${i}`} className="glass-card rounded-lg border-none px-5">
+                            <AccordionTrigger className="font-heading font-semibold text-left hover:no-underline">{faq.q}</AccordionTrigger>
+                            <AccordionContent className="text-sm text-muted-foreground leading-relaxed">{faq.a}</AccordionContent>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        mainEntity: faqs.map((f) => ({
+                          "@type": "Question",
+                          name: f.q,
+                          acceptedAnswer: { "@type": "Answer", text: f.a },
+                        })),
+                      }) }} />
+                    </>
+                  );
+                })()}
               </section>
 
               {/* Community Rating & Emoji Reactions */}

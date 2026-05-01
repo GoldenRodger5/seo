@@ -12,7 +12,7 @@ import BrandStory from "../components/BrandStory";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import VisitSiteButton from "../components/VisitSiteButton";
 import Layout from "../components/Layout";
-import { getFeaturedSites, categories, sites, getVisitUrl, isAffiliated } from "../data/sites";
+import { getFeaturedSites, sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { ReactNode } from "react";
 import { currentYear, currentMonthShort } from "../lib/dates";
@@ -26,24 +26,6 @@ const tickerItems = [
   "⭐ Just Reviewed: Next Door Twink",
   "🆕 Hard Brit Lads added",
 ];
-
-const categoryIcons: Record<string, ReactNode> = {
-  "amateur-twinks": <Flame size={18} className="text-secondary" />,
-  "premium-studios": <Film size={18} className="text-secondary" />,
-  "best-value": <DollarSign size={18} className="text-secondary" />,
-  "hd-quality": <Play size={18} className="text-secondary" />,
-  "free-trials": <Gift size={18} className="text-secondary" />,
-  "mobile-friendly": <Smartphone size={18} className="text-secondary" />,
-};
-
-const categoryVibes: Record<string, string> = {
-  "amateur-twinks": "Raw & Real",
-  "premium-studios": "Cinematic Vibes",
-  "best-value": "Bang For Your Buck",
-  "hd-quality": "Crystal Clear",
-  "free-trials": "Try Before You Buy",
-  "mobile-friendly": "Scroll & Watch",
-};
 
 const HeroSection = () => {
   const words = "We Watched So You Don't Have To".split(" ");
@@ -232,38 +214,6 @@ const QuizBanner = () => (
   </motion.section>
 );
 
-const CategoriesSection = () => (
-  <section className="py-16">
-    <div className="container">
-      <motion.h2
-        className="font-heading text-3xl font-bold md:text-4xl heading-gradient inline-block"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        Browse By Vibe
-      </motion.h2>
-      <StaggerContainer className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {categories.map((cat) => (
-          <StaggerChild key={cat.slug}>
-            <MotionCard className="glass-card flex items-center gap-4 rounded-lg p-5">
-              <Link to={`/category/${cat.slug}`} className="flex items-center gap-4 w-full">
-                <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-muted">
-                  {categoryIcons[cat.slug] || <Star size={18} className="text-secondary" />}
-                </span>
-                <div>
-                  <h3 className="font-heading text-lg font-semibold">{categoryVibes[cat.slug] || cat.name}</h3>
-                  <p className="text-xs text-muted-foreground">{cat.description}</p>
-                </div>
-              </Link>
-            </MotionCard>
-          </StaggerChild>
-        ))}
-      </StaggerContainer>
-    </div>
-  </section>
-);
-
 const LatestReviewsSection = () => {
   const latest = sites.slice(0, 3);
   return (
@@ -447,7 +397,6 @@ const Index = () => (
       <NicheBrowser />
       <TopPicksSection />
       <QuizBanner />
-      <CategoriesSection />
       <BentoGrid />
       <LatestReviewsSection />
       <GayDatingSection />

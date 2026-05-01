@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Lock, Users } from "lucide-react";
+import { TOTAL_SITES } from "@/lib/siteStats";
+
+// Single source of truth: ~2 hours of paid-membership testing per site.
+// Scales with TOTAL_SITES so the homepage and any other surface stay in sync.
+const HOURS_TESTED = TOTAL_SITES * 2;
 
 const AnimatedCounter = ({ target, suffix = "" }: { target: number; suffix?: string }) => {
   const [count, setCount] = useState(0);
@@ -57,7 +62,7 @@ const BentoGrid = () => (
           <h3 className="font-heading text-lg font-bold">Hours Tested</h3>
           <div className="mt-2">
             <span className="font-heading text-5xl font-bold gold-gradient-text">
-              <AnimatedCounter target={100} suffix="+" />
+              <AnimatedCounter target={HOURS_TESTED} suffix="+" />
             </span>
           </div>
           <p className="mt-2 text-xs text-muted-foreground">hours of hands-on testing</p>

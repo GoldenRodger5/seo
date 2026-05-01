@@ -16,6 +16,13 @@ export const formatTotalAnnual = (annualMonthly: string): string | null => {
   return `$${total.toFixed(2).replace(/\.00$/, "")}`;
 };
 
+/**
+ * Strip the trailing /mo (and similar unit markers) so we can append our own
+ * suffix without getting "$9.95/mo/mo".
+ */
+export const stripMonthlyUnit = (priceStr: string): string =>
+  priceStr.replace(/\s*\/\s*(mo|month)\s*$/i, "");
+
 export const computeSavings = (originalMonthly: string, dealMonthly: string): number | null => {
   const o = parseMonthlyPrice(originalMonthly);
   const d = parseMonthlyPrice(dealMonthly);

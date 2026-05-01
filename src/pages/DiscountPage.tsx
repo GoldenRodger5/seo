@@ -448,7 +448,7 @@ const DiscountPage = () => {
               </p>
               <p>
                 {site.name} offers three membership tiers: monthly at {site.price_monthly}, quarterly at{" "}
-                {site.price_quarterly}, and annual at {site.price_annual}/mo. While the monthly plan gives you
+                {site.price_quarterly}, and annual at {site.price_annual}. While the monthly plan gives you
                 maximum flexibility, the annual plan delivers the best value by far — you'll save ${savingsPerMonth}{" "}
                 every single month compared to paying month-to-month. For most users, the annual plan is the
                 clear winner unless you're genuinely unsure about committing.

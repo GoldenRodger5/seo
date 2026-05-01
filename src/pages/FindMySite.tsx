@@ -186,7 +186,7 @@ const FindMySite = () => {
                         <div className="flex-1">
                           <h3 className="font-heading text-xl font-bold">{site.name}</h3>
                           <p className="mt-1 text-sm text-muted-foreground">{site.short_description}</p>
-                          <p className="mt-2 text-sm font-semibold">{site.price_monthly} · {site.price_annual}/mo annual</p>
+                          <p className="mt-2 text-sm font-semibold">{site.price_monthly} · {site.price_annual} annual</p>
                         </div>
                       </div>
                       <div className="mt-4 flex gap-3">
