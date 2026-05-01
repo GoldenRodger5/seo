@@ -1,14 +1,12 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Layout from "../components/Layout";
-import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../components/MotionWrappers";
-import StarRating from "../components/StarRating";
-import VisitSiteButton from "../components/VisitSiteButton";
-import SitePlaceholderImage from "../components/SitePlaceholderImage";
+import { PageTransition, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
+import SiteCard from "../components/SiteCard";
 import { sites } from "../data/sites";
-import { getNiche, niches } from "../data/niches";
+import { getNiche } from "../data/niches";
 import { siteNicheMap } from "../data/site-niches";
 import { currentYear } from "../lib/dates";
 
@@ -154,49 +152,7 @@ const NicheCategoryPage = () => {
               <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {matching.map((site, i) => (
                   <StaggerChild key={site.slug}>
-                    <MotionCard className="glass-card relative flex flex-col rounded-lg p-6 h-full">
-                      {i === 0 && (
-                        <span className="absolute -top-2 -right-2 rounded-button gold-gradient px-2.5 py-1 text-[10px] font-bold text-secondary-foreground">
-                          #1 {niche.displayName}
-                        </span>
-                      )}
-                      <SitePlaceholderImage site={site} className="mb-3" />
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-heading text-lg font-semibold">{site.name}</h3>
-                        <StarRating score={site.overall_score} size={14} />
-                      </div>
-                      <p className="mt-2 flex-1 text-xs text-muted-foreground line-clamp-3">
-                        {site.short_description}
-                      </p>
-                      <div className="mt-3 flex flex-wrap gap-1">
-                        {(siteNicheMap[site.slug] ?? []).slice(0, 3).map((nslug) => {
-                          const n = getNiche(nslug);
-                          if (!n) return null;
-                          return (
-                            <Link
-                              key={nslug}
-                              to={`/niche/${nslug}`}
-                              className={`rounded-button px-2 py-0.5 text-[10px] font-medium transition-colors ${
-                                nslug === niche.slug
-                                  ? "bg-primary/20 text-primary"
-                                  : "bg-muted/60 text-muted-foreground hover:bg-muted"
-                              }`}
-                            >
-                              {n.displayName}
-                            </Link>
-                          );
-                        })}
-                      </div>
-                      <div className="mt-3 flex gap-2">
-                        <Link
-                          to={`/reviews/${site.slug}`}
-                          className="flex-1 rounded-button border border-primary px-3 py-2 text-center text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
-                        >
-                          Read Review
-                        </Link>
-                        <VisitSiteButton site={site} label="Visit" className="flex-1" />
-                      </div>
-                    </MotionCard>
+                    <SiteCard site={site} rankBadge={i + 1} />
                   </StaggerChild>
                 ))}
               </StaggerContainer>

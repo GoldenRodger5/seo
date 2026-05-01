@@ -470,6 +470,11 @@ const ReviewPage = () => {
           <aside className="hidden lg:block lg:w-72">
             <div className="sticky top-24 glass-card rounded-lg p-6">
               <h3 className="font-heading text-xl font-bold">{site.name}</h3>
+              {site.deal_discount > 0 && (
+                <div className="mt-2 inline-flex items-center justify-center w-full rounded-button bg-emerald-500/15 px-3 py-1.5 text-sm font-bold text-emerald-400">
+                  −{site.deal_discount}% OFF
+                </div>
+              )}
               <div className="mt-3 flex justify-center">
                 <ScoreRing score={site.overall_score} />
               </div>
@@ -481,13 +486,31 @@ const ReviewPage = () => {
                   {site.price_monthly}
                 </span>
               </div>
+              <p className="mt-2 text-center text-[11px] text-muted-foreground">
+                or {site.price_annual} billed annually
+              </p>
               <VisitSiteButton site={site} className="mt-4" />
-              <Link
-                to={`/discount/${site.slug}`}
-                className="mt-3 block text-center rounded-button border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-xs font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors"
-              >
-                Save {site.deal_discount}% →
-              </Link>
+              {site.deal_discount > 0 && (
+                <Link
+                  to={`/discount/${site.slug}`}
+                  className="mt-3 block text-center rounded-button border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-xs font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors"
+                >
+                  Get the Discount →
+                </Link>
+              )}
+              {(siteNicheMap[site.slug]?.length ?? 0) > 0 && (() => {
+                const primaryNiche = siteNicheMap[site.slug]?.[0];
+                const n = primaryNiche ? getNiche(primaryNiche) : null;
+                if (!n) return null;
+                return (
+                  <Link
+                    to={`/niche/${n.slug}`}
+                    className="mt-2 block text-center text-[11px] text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    More {n.displayName.toLowerCase()} sites →
+                  </Link>
+                );
+              })()}
             </div>
           </aside>
         </div>
@@ -495,18 +518,32 @@ const ReviewPage = () => {
 
       {/* Mobile sticky CTA - improved with scroll trigger and dismiss */}
       {showMobileCta && !mobileDismissed && (
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border glass-card lg:hidden animate-slide-up" style={{ height: "64px", padding: "12px" }}>
-          <div className="flex items-center gap-3 h-full">
-            <button onClick={() => setMobileDismissed(true)} className="text-muted-foreground hover:text-foreground shrink-0">
+        <div
+          className="fixed inset-x-0 bottom-0 z-40 border-t border-border glass-card lg:hidden animate-slide-up"
+          style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom))", paddingTop: "12px", paddingLeft: "12px", paddingRight: "12px" }}
+        >
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setMobileDismissed(true)}
+              className="text-muted-foreground hover:text-foreground shrink-0 p-2 -m-2"
+              aria-label="Dismiss"
+            >
               <XIcon size={16} />
             </button>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold truncate">{site.name}</p>
-              <span className="text-xs text-secondary">{site.overall_score}/5</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-secondary">{site.overall_score}/5</span>
+                {site.deal_discount > 0 && (
+                  <span className="rounded-button bg-emerald-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-400">
+                    −{site.deal_discount}%
+                  </span>
+                )}
+              </div>
             </div>
             <OutboundLink
               site={site}
-              className={`cta-btn flex items-center gap-2 rounded-button gold-gradient px-6 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap ${!isAffiliated(site) ? "opacity-85" : ""}`}
+              className={`cta-btn flex items-center gap-2 rounded-button gold-gradient px-5 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap min-h-[44px] ${!isAffiliated(site) ? "opacity-85" : ""}`}
             >
               Visit Site <ArrowRight size={14} />
             </OutboundLink>
