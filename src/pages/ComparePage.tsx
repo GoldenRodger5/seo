@@ -1,19 +1,17 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams, useNavigate } from "react-router-dom";
 import OutboundLink from "../components/OutboundLink";
 import { ArrowRight, Check, X as XIcon } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
 import Layout from "../components/Layout";
 import ScoreRing from "../components/ScoreRing";
 import StarRating from "../components/StarRating";
 import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
 import { PageTransition } from "../components/MotionWrappers";
 import { currentYear } from "../lib/dates";
-
-// Auto-generate all possible pairs from real sites
-const comparePairs = sites.flatMap((siteA, i) =>
-  sites.slice(i + 1).map((siteB) => ({ a: siteA.slug, b: siteB.slug }))
-);
+import { siteNicheMap } from "@/data/site-niches";
+import { getNiche } from "@/data/niches";
 
 const scoreColor = (val: number, max: number) => {
   const ratio = val / max;
@@ -64,52 +62,330 @@ const criteria = [
   { label: "Overall Score", key: "overall_score" as const, max: 5 },
 ];
 
+// ───────────────────────────────────────────────────────────────────────────
+// Multi-site comparison builder (route: /compare)
+// ───────────────────────────────────────────────────────────────────────────
+const CompareIndex = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const initialSlugs = (searchParams.get("sites") ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => Boolean(getSiteBySlug(s)))
+    .slice(0, 4);
+
+  const [selected, setSelected] = useState<string[]>(initialSlugs);
+  const [filter, setFilter] = useState("");
+
+  const selectedSites = useMemo(
+    () => selected.map((s) => getSiteBySlug(s)).filter((s): s is SiteData => Boolean(s)),
+    [selected]
+  );
+
+  const visibleSites = useMemo(() => {
+    if (!filter) return sites.slice(0, 18);
+    const f = filter.toLowerCase();
+    return sites.filter((s) => s.name.toLowerCase().includes(f) || s.slug.includes(f)).slice(0, 18);
+  }, [filter]);
+
+  const toggleSite = (slug: string) => {
+    setSelected((cur) => {
+      if (cur.includes(slug)) {
+        const next = cur.filter((s) => s !== slug);
+        setSearchParams(next.length ? { sites: next.join(",") } : {});
+        return next;
+      }
+      if (cur.length >= 4) return cur;
+      const next = [...cur, slug];
+      setSearchParams({ sites: next.join(",") });
+      return next;
+    });
+  };
+
+  const clearAll = () => {
+    setSelected([]);
+    setSearchParams({});
+  };
+
+  const goToTwoWay = () => {
+    if (selected.length === 2) {
+      navigate(`/compare/${selected[0]}-vs-${selected[1]}`);
+    }
+  };
+
+  const featuredPairs = useMemo(
+    () =>
+      sites
+        .slice(0, 8)
+        .flatMap((a, i) =>
+          sites.slice(i + 1, 8).map((b) => ({ a, b }))
+        )
+        .slice(0, 12),
+    []
+  );
+
+  return (
+    <Layout>
+      <PageTransition>
+        <Helmet>
+          <title>Compare Twink Sites — Side by Side | TwinkVault</title>
+          <meta name="description" content="Compare 2-4 gay twink sites side by side. See scores, prices, niches, and features at a glance. Build your own comparison." />
+          <link rel="canonical" href="https://twinkvault.com/compare" />
+        </Helmet>
+
+        <section className="hero-mesh py-12">
+          <div className="container max-w-5xl text-center">
+            <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">
+              Compare Twink Sites
+            </h1>
+            <p className="mt-3 text-muted-foreground">
+              Pick 2 to 4 sites. We'll show them side by side — scores, pricing, niches, pros and cons.
+            </p>
+          </div>
+        </section>
+
+        {/* Builder */}
+        <section className="py-10 border-t border-border">
+          <div className="container max-w-5xl">
+            <div className="flex items-center justify-between gap-3 flex-wrap">
+              <div>
+                <h2 className="font-heading text-xl font-bold">
+                  Selected: {selected.length}/4
+                </h2>
+                {selected.length > 0 && (
+                  <p className="text-xs text-muted-foreground">
+                    Pick {selected.length < 2 ? `${2 - selected.length} more` : "more"} or compare now.
+                  </p>
+                )}
+              </div>
+              <div className="flex gap-2">
+                {selected.length > 0 && (
+                  <button
+                    onClick={clearAll}
+                    className="text-xs px-3 py-1.5 rounded-button border border-border text-muted-foreground hover:bg-muted/40 transition-colors"
+                  >
+                    Clear
+                  </button>
+                )}
+                {selected.length === 2 && (
+                  <button
+                    onClick={goToTwoWay}
+                    className="text-xs px-3 py-1.5 rounded-button gold-gradient text-secondary-foreground font-semibold"
+                  >
+                    Open Detailed Page →
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Selected chips */}
+            {selectedSites.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {selectedSites.map((s) => (
+                  <span
+                    key={s.slug}
+                    className="inline-flex items-center gap-2 rounded-button bg-primary/15 px-3 py-1.5 text-xs font-medium text-primary"
+                  >
+                    {s.name}
+                    <button
+                      onClick={() => toggleSite(s.slug)}
+                      className="hover:text-foreground"
+                      aria-label={`Remove ${s.name}`}
+                    >
+                      <XIcon size={12} />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Picker */}
+            <div className="mt-6 glass-card rounded-lg p-5">
+              <input
+                type="search"
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                placeholder="Search sites by name…"
+                className="w-full rounded-button bg-muted/30 border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-primary/50"
+              />
+              <div className="mt-4 grid gap-2 sm:grid-cols-2 md:grid-cols-3">
+                {visibleSites.map((s) => {
+                  const isSelected = selected.includes(s.slug);
+                  const atLimit = !isSelected && selected.length >= 4;
+                  return (
+                    <button
+                      key={s.slug}
+                      onClick={() => toggleSite(s.slug)}
+                      disabled={atLimit}
+                      className={`flex items-center justify-between gap-2 rounded-button px-3 py-2 text-sm text-left transition-colors ${
+                        isSelected
+                          ? "bg-primary/20 text-primary border border-primary/40"
+                          : atLimit
+                          ? "bg-muted/20 text-muted-foreground/40 cursor-not-allowed border border-border/30"
+                          : "bg-muted/30 hover:bg-muted/60 border border-border/40"
+                      }`}
+                    >
+                      <span className="truncate">{s.name}</span>
+                      <span className="text-xs text-muted-foreground shrink-0">{s.overall_score}/5</span>
+                    </button>
+                  );
+                })}
+              </div>
+              {!filter && sites.length > 18 && (
+                <p className="mt-3 text-center text-xs text-muted-foreground">
+                  Showing top 18. Use search to find more of our {sites.length} reviewed sites.
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Comparison table */}
+        {selectedSites.length >= 2 && (
+          <section className="py-10 border-t border-border">
+            <div className="container max-w-6xl">
+              <div className="glass-card rounded-lg overflow-x-auto">
+                <table className="w-full text-sm min-w-[600px]">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="px-4 py-3 text-left text-muted-foreground sticky left-0 bg-card">Criteria</th>
+                      {selectedSites.map((s) => (
+                        <th key={s.slug} className="px-4 py-3 text-center font-bold">
+                          {s.name}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-border/30">
+                      <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground">Score</td>
+                      {selectedSites.map((s) => (
+                        <td key={s.slug} className="px-4 py-3 text-center">
+                          <div className="inline-flex"><ScoreRing score={s.overall_score} size={48} /></div>
+                        </td>
+                      ))}
+                    </tr>
+                    <tr className="border-b border-border/30">
+                      <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground">Monthly</td>
+                      {selectedSites.map((s) => (
+                        <td key={s.slug} className="px-4 py-3 text-center font-semibold">{s.price_monthly}</td>
+                      ))}
+                    </tr>
+                    <tr className="border-b border-border/30">
+                      <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground">Annual (per mo)</td>
+                      {selectedSites.map((s) => (
+                        <td key={s.slug} className="px-4 py-3 text-center font-semibold">{s.price_annual}</td>
+                      ))}
+                    </tr>
+                    <tr className="border-b border-border/30">
+                      <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground">Discount</td>
+                      {selectedSites.map((s) => (
+                        <td key={s.slug} className="px-4 py-3 text-center">
+                          {s.deal_discount > 0 ? <span className="text-emerald-400 font-semibold">{s.deal_discount}% off</span> : <span className="text-muted-foreground/50">—</span>}
+                        </td>
+                      ))}
+                    </tr>
+                    <tr className="border-b border-border/30">
+                      <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground">Free trial</td>
+                      {selectedSites.map((s) => (
+                        <td key={s.slug} className="px-4 py-3 text-center">
+                          {s.has_free_trial ? <Check size={16} className="inline text-emerald-400" /> : <XIcon size={16} className="inline text-muted-foreground/30" />}
+                        </td>
+                      ))}
+                    </tr>
+                    <tr className="border-b border-border/30">
+                      <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground">Niches</td>
+                      {selectedSites.map((s) => (
+                        <td key={s.slug} className="px-4 py-3 text-center text-xs text-muted-foreground">
+                          {(siteNicheMap[s.slug] ?? []).slice(0, 3).map((n) => getNiche(n)?.displayName).filter(Boolean).join(", ") || "—"}
+                        </td>
+                      ))}
+                    </tr>
+                    <tr className="border-b border-border/30">
+                      <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground align-top">Top pros</td>
+                      {selectedSites.map((s) => (
+                        <td key={s.slug} className="px-4 py-3 align-top">
+                          <ul className="space-y-1">
+                            {s.pros.slice(0, 3).map((p) => (
+                              <li key={p} className="flex items-start gap-1 text-xs text-muted-foreground">
+                                <Check size={11} className="mt-0.5 shrink-0 text-emerald-400" /> {p}
+                              </li>
+                            ))}
+                          </ul>
+                        </td>
+                      ))}
+                    </tr>
+                    <tr className="border-b border-border/30">
+                      <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground align-top">Cons</td>
+                      {selectedSites.map((s) => (
+                        <td key={s.slug} className="px-4 py-3 align-top">
+                          <ul className="space-y-1">
+                            {s.cons.slice(0, 2).map((c) => (
+                              <li key={c} className="flex items-start gap-1 text-xs text-muted-foreground">
+                                <XIcon size={11} className="mt-0.5 shrink-0 text-muted-foreground/60" /> {c}
+                              </li>
+                            ))}
+                          </ul>
+                        </td>
+                      ))}
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground">Verdict</td>
+                      {selectedSites.map((s) => (
+                        <td key={s.slug} className="px-4 py-3 text-center">
+                          <OutboundLink
+                            site={s}
+                            className="cta-btn inline-flex items-center justify-center gap-2 rounded-button gold-gradient px-4 py-2 text-xs font-semibold text-secondary-foreground"
+                          >
+                            Visit Site <ArrowRight size={12} />
+                          </OutboundLink>
+                        </td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Featured pairs */}
+        <section className="py-12 border-t border-border">
+          <div className="container max-w-5xl">
+            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
+              Popular Comparisons
+            </h2>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {featuredPairs.map(({ a, b }) => (
+                <Link
+                  key={`${a.slug}-${b.slug}`}
+                  to={`/compare/${a.slug}-vs-${b.slug}`}
+                  className="glass-card rounded-lg p-4 hover:border-primary/40 transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold truncate">{a.name}</span>
+                    <span className="text-xs font-bold text-primary mx-2">VS</span>
+                    <span className="font-semibold truncate">{b.name}</span>
+                  </div>
+                  <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
+                    <span>{a.overall_score}/5</span>
+                    <span>{b.overall_score}/5</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      </PageTransition>
+    </Layout>
+  );
+};
+
 const ComparePage = () => {
   const { slug } = useParams<{ slug: string }>();
 
   if (!slug || !slug.includes("-vs-")) {
-    // Index page
-    return (
-      <Layout>
-        <PageTransition>
-          <Helmet>
-            <title>Compare Twink Sites — Side by Side | TwinkVault</title>
-            <meta name="description" content="Compare the best twink content sites side by side. See scores, prices, and features at a glance." />
-            <link rel="canonical" href="https://twinkvault.com/compare" />
-          </Helmet>
-          <section className="py-16">
-            <div className="container">
-              <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">Compare Sites</h1>
-              <p className="mt-4 text-muted-foreground">Side-by-side comparisons to help you choose.</p>
-              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {comparePairs.map(({ a, b }) => {
-                  const siteA = getSiteBySlug(a);
-                  const siteB = getSiteBySlug(b);
-                  if (!siteA || !siteB) return null;
-                  return (
-                    <Link
-                      key={`${a}-${b}`}
-                      to={`/compare/${a}-vs-${b}`}
-                      className="card-glow glass-card rounded-lg p-5"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-heading font-semibold">{siteA.name}</span>
-                        <span className="text-xs font-bold text-primary">VS</span>
-                        <span className="font-heading font-semibold">{siteB.name}</span>
-                      </div>
-                      <div className="mt-2 flex items-center justify-between text-sm text-muted-foreground">
-                        <span>{siteA.overall_score}/5</span>
-                        <span>{siteB.overall_score}/5</span>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-        </PageTransition>
-      </Layout>
-    );
+    return <CompareIndex />;
   }
 
   // Try every "-vs-" position until both slugs resolve to real sites
@@ -146,6 +422,39 @@ const ComparePage = () => {
           <title>{`${siteA.name} vs ${siteB.name} — Which Is Worth It? (${currentYear}) | TwinkVault`}</title>
           <meta name="description" content={`Compare ${siteA.name} vs ${siteB.name} side by side. Scores, pricing, pros and cons to help you decide.`} />
           <link rel="canonical" href={`https://twinkvault.com/compare/${slug}`} />
+          <meta property="og:title" content={`${siteA.name} vs ${siteB.name} — TwinkVault`} />
+          <meta property="og:description" content={`Compare ${siteA.name} vs ${siteB.name} side by side. Scores, pricing, pros and cons to help you decide.`} />
+          <meta property="og:url" content={`https://twinkvault.com/compare/${slug}`} />
+          <script type="application/ld+json">{JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
+              { "@type": "ListItem", position: 2, name: "Compare", item: "https://twinkvault.com/compare" },
+              { "@type": "ListItem", position: 3, name: `${siteA.name} vs ${siteB.name}`, item: `https://twinkvault.com/compare/${slug}` },
+            ],
+          })}</script>
+          <script type="application/ld+json">{JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: `${siteA.name} vs ${siteB.name} — Which Is Worth It in ${currentYear}?`,
+            description: `Side-by-side comparison of ${siteA.name} and ${siteB.name} based on paid memberships and consistent scoring.`,
+            author: { "@type": "Organization", name: "TwinkVault" },
+            publisher: { "@type": "Organization", name: "TwinkVault", logo: { "@type": "ImageObject", url: "https://twinkvault.com/pwa-512.png" } },
+            datePublished: `${currentYear}-01-01`,
+            dateModified: new Date().toISOString().split("T")[0],
+            mainEntityOfPage: `https://twinkvault.com/compare/${slug}`,
+          })}</script>
+          <script type="application/ld+json">{JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              { "@type": "Question", name: `Which is better in ${currentYear}, ${siteA.name} or ${siteB.name}?`, acceptedAnswer: { "@type": "Answer", text: `${winner.name} scored higher overall (${winner.overall_score}/5).` } },
+              { "@type": "Question", name: `Which one has the better deal?`, acceptedAnswer: { "@type": "Answer", text: `${budgetPick.name} comes out cheaper on the annual plan at ${budgetPick.price_annual}.` } },
+              { "@type": "Question", name: `Do they offer free trials?`, acceptedAnswer: { "@type": "Answer", text: `Check the linked discount pages for current trial details.` } },
+              { "@type": "Question", name: `Can I subscribe to both?`, acceptedAnswer: { "@type": "Answer", text: `Yes — both bill discreetly and let you cancel anytime.` } },
+            ],
+          })}</script>
         </Helmet>
         <section className="py-16">
           <div className="container max-w-4xl">
@@ -242,22 +551,127 @@ const ComparePage = () => {
               </table>
             </div>
 
-            {/* Verdict */}
-            <div className="mt-10 glass-card rounded-lg p-8 text-center">
-              <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Our Verdict</h2>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-lg border border-secondary/30 p-4">
-                  <p className="text-sm text-muted-foreground">Overall Winner</p>
-                  <p className="mt-1 font-heading text-xl font-bold">{winner.name}</p>
-                  <p className="text-xs text-muted-foreground">Best for quality & experience</p>
+            {/* Verdict with CTAs */}
+            <div className="mt-10 glass-card rounded-lg p-8">
+              <h2 className="text-center font-heading text-2xl font-bold heading-gradient inline-block w-full">Our Verdict</h2>
+              <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                <div className="rounded-lg border-2 border-secondary/40 bg-secondary/5 p-5 flex flex-col">
+                  <span className="rounded-button gold-gradient px-2.5 py-1 text-[10px] font-bold text-secondary-foreground self-start">
+                    🏆 OVERALL WINNER
+                  </span>
+                  <p className="mt-3 font-heading text-2xl font-bold">{winner.name}</p>
+                  <p className="mt-1 text-sm text-muted-foreground flex-1">
+                    Best for {winner.content_quality >= winner.value_score ? "premium production value" : "overall quality"}.
+                  </p>
+                  <OutboundLink
+                    site={winner}
+                    className={`cta-btn mt-4 inline-flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!isAffiliated(winner) ? "opacity-85" : ""}`}
+                  >
+                    Visit {winner.name} <ArrowRight size={14} />
+                  </OutboundLink>
                 </div>
-                <div className="rounded-lg border border-primary/30 p-4">
-                  <p className="text-sm text-muted-foreground">Budget Pick</p>
-                  <p className="mt-1 font-heading text-xl font-bold">{budgetPick.name}</p>
-                  <p className="text-xs text-muted-foreground">Best for value</p>
+                <div className="rounded-lg border-2 border-primary/30 p-5 flex flex-col">
+                  <span className="rounded-button bg-primary/15 px-2.5 py-1 text-[10px] font-bold text-primary self-start">
+                    💸 {budgetPick.id !== winner.id ? "BUDGET PICK" : "RUNNER-UP"}
+                  </span>
+                  <p className="mt-3 font-heading text-2xl font-bold">
+                    {budgetPick.id !== winner.id ? budgetPick.name : (siteA.id === winner.id ? siteB.name : siteA.name)}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground flex-1">
+                    {budgetPick.id !== winner.id ? "Best if budget matters." : "Solid alternative if winner doesn't fit."}
+                  </p>
+                  <OutboundLink
+                    site={budgetPick.id !== winner.id ? budgetPick : (siteA.id === winner.id ? siteB : siteA)}
+                    className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-button border border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
+                  >
+                    Try {(budgetPick.id !== winner.id ? budgetPick : (siteA.id === winner.id ? siteB : siteA)).name} Instead <ArrowRight size={14} />
+                  </OutboundLink>
                 </div>
               </div>
             </div>
+
+            {/* FAQ */}
+            <div className="mt-10">
+              <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
+                {siteA.name} vs {siteB.name} — FAQ
+              </h2>
+              <div className="mt-6 space-y-3">
+                {[
+                  {
+                    q: `Which is better in ${currentYear}, ${siteA.name} or ${siteB.name}?`,
+                    a: `${winner.name} scored higher overall (${winner.overall_score}/5 vs ${(winner.id === siteA.id ? siteB : siteA).overall_score}/5). It edges ahead on ${winner.content_quality >= winner.value_score ? "content quality" : "value"}, though both are tested and reviewed honestly.`,
+                  },
+                  {
+                    q: `Which one has the better deal — ${siteA.name} or ${siteB.name}?`,
+                    a: `${budgetPick.name} comes out cheaper on the annual plan at ${budgetPick.price_annual}. Both also offer monthly billing if you don't want to commit long-term.`,
+                  },
+                  {
+                    q: `Do ${siteA.name} or ${siteB.name} offer free trials?`,
+                    a: `${siteA.has_free_trial ? siteA.name : ""}${siteA.has_free_trial && siteB.has_free_trial ? " and " : ""}${siteB.has_free_trial ? siteB.name : ""}${!siteA.has_free_trial && !siteB.has_free_trial ? "Neither currently offers a true free trial — but both have heavily discounted intro periods. Check the linked discount pages for current pricing." : " offer trial pricing. Check the discount page for current details."}`,
+                  },
+                  {
+                    q: `Can I subscribe to both ${siteA.name} and ${siteB.name}?`,
+                    a: `Yes — and many subscribers do. Both bill discreetly and let you cancel anytime. If you're undecided, start with the higher-scored option (${winner.name}) on the annual plan and add the other later if you want broader coverage.`,
+                  },
+                ].map((item) => (
+                  <details key={item.q} className="glass-card group rounded-lg p-4">
+                    <summary className="cursor-pointer list-none font-semibold flex items-center justify-between text-sm">
+                      {item.q}
+                      <span className="text-primary group-open:rotate-180 transition-transform">▾</span>
+                    </summary>
+                    <p className="mt-2 text-sm text-muted-foreground">{item.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+
+            {/* Other comparisons in primary niche */}
+            {(() => {
+              const sharedNiche = (siteNicheMap[siteA.slug] ?? []).find((n) =>
+                (siteNicheMap[siteB.slug] ?? []).includes(n)
+              );
+              if (!sharedNiche) return null;
+              const niche = getNiche(sharedNiche);
+              if (!niche) return null;
+              const otherSites = sites
+                .filter(
+                  (s) =>
+                    s.slug !== siteA.slug &&
+                    s.slug !== siteB.slug &&
+                    (siteNicheMap[s.slug] ?? []).includes(sharedNiche)
+                )
+                .sort((a, b) => b.overall_score - a.overall_score)
+                .slice(0, 3);
+              if (otherSites.length === 0) return null;
+              return (
+                <div className="mt-10">
+                  <h3 className="font-heading text-lg font-bold">
+                    Other {niche.displayName.toLowerCase()} comparisons
+                  </h3>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                    {otherSites.map((s) => (
+                      <Link
+                        key={s.slug}
+                        to={`/compare/${siteA.slug}-vs-${s.slug}`}
+                        className="glass-card rounded-lg p-4 hover:border-primary/50 transition-colors"
+                      >
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="font-semibold truncate">{siteA.name}</span>
+                          <span className="text-xs text-primary font-bold">VS</span>
+                          <span className="font-semibold truncate">{s.name}</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                  <Link
+                    to={`/niche/${sharedNiche}`}
+                    className="mt-4 inline-block text-sm text-primary hover:underline"
+                  >
+                    More {niche.displayName.toLowerCase()} sites →
+                  </Link>
+                </div>
+              );
+            })()}
 
             <div className="mt-8 text-center">
               <Link to="/compare" className="text-sm text-secondary hover:underline">
