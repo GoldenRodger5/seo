@@ -21,6 +21,9 @@ import { currentYear, currentMonthShort, currentMonthLong } from "../lib/dates";
 import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
 import { siteNicheMap } from "@/data/site-niches";
 import { getNiche } from "@/data/niches";
+import { getSimilarSites } from "@/lib/similarSites";
+import SiteCard from "../components/SiteCard";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
@@ -93,11 +96,8 @@ const ReviewPage = () => {
 
   const { content: aiContent, loading: aiLoading } = useAIReview(site);
 
-  // Show sites in same category first, then fill with others — never show current site
-  const similar = [
-    ...sites.filter(s => s.id !== site.id && s.categories.some(c => site.categories.includes(c))),
-    ...sites.filter(s => s.id !== site.id && !s.categories.some(c => site.categories.includes(c))),
-  ].slice(0, 3);
+  // Niche-overlap-weighted similar sites (60% niche / 20% score / 10% affil / 10% network diversity)
+  const similar = getSimilarSites(site.slug, 3);
 
   return (
     <Layout>
@@ -138,14 +138,14 @@ const ReviewPage = () => {
         <div className="flex flex-col gap-10 lg:flex-row">
           {/* Main content */}
           <div className="flex-1">
-            {/* Breadcrumb */}
-            <nav className="mb-6 text-sm text-muted-foreground">
-              <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
-              <span className="mx-2 text-muted-foreground/30">/</span>
-              <Link to="/reviews" className="hover:text-foreground transition-colors">Reviews</Link>
-              <span className="mx-2 text-muted-foreground/30">/</span>
-              <span className="text-foreground">{site.name}</span>
-            </nav>
+            <Breadcrumbs
+              className="mb-6"
+              items={[
+                { label: "Home", to: "/" },
+                { label: "Reviews", to: "/reviews" },
+                { label: site.name },
+              ]}
+            />
 
             <AnimateOnScroll>
               <div className="stagger-in">
@@ -425,20 +425,14 @@ const ReviewPage = () => {
               <CommunityRating siteSlug={site.slug} />
             </AnimateOnScroll>
 
-            {/* Similar Sites */}
+            {/* Similar Sites — niche-weighted */}
             <AnimateOnScroll className="mt-12">
-              <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">You Might Also Like</h2>
+              <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
+                If You Like {site.name}, Try These
+              </h2>
               <div className="mt-6 grid gap-4 sm:grid-cols-3">
                 {similar.map((s) => (
-                  <Link
-                    key={s.id}
-                    to={`/reviews/${s.slug}`}
-                    className="card-glow glass-card rounded-lg p-4"
-                  >
-                    <h3 className="font-heading font-semibold">{s.name}</h3>
-                    <StarRating score={s.overall_score} size={12} />
-                    <p className="mt-2 text-xs text-muted-foreground line-clamp-2">{s.short_description}</p>
-                  </Link>
+                  <SiteCard key={s.id} site={s} variant="compact" />
                 ))}
               </div>
             </AnimateOnScroll>

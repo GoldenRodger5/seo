@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import { sites } from "../data/sites";
 import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
+import { getNiche } from "@/data/niches";
 
 const footerLink = "text-sm text-muted-foreground hover:text-foreground transition-colors";
+
+// Top 8 niches for footer hub-linking
+const FOOTER_NICHES = ["twink", "bareback", "daddy", "bear", "asian", "latin", "amateur", "muscle"] as const;
 
 const Footer = () => (
   <footer className="border-t border-border bg-card/50">
@@ -30,14 +34,19 @@ const Footer = () => (
 
         {/* Niches (hubs) */}
         <div>
-          <h3 className="font-heading text-sm font-semibold mb-3">Niches</h3>
+          <h3 className="font-heading text-sm font-semibold mb-3">Browse Niches</h3>
           <ul className="space-y-2">
-            <li><Link to="/category/amateur-twinks" className={footerLink}>Amateur Twinks</Link></li>
-            <li><Link to="/category/premium-studios" className={footerLink}>Premium Studios</Link></li>
-            <li><Link to="/category/best-value" className={footerLink}>Best Value</Link></li>
-            <li><Link to="/category/hd-quality" className={footerLink}>HD Quality</Link></li>
-            <li><Link to="/category/free-trials" className={footerLink}>Free Trials</Link></li>
-            <li><Link to="/category/mobile-friendly" className={footerLink}>Mobile Friendly</Link></li>
+            {FOOTER_NICHES.map((slug) => {
+              const niche = getNiche(slug);
+              if (!niche) return null;
+              return (
+                <li key={slug}>
+                  <Link to={`/niche/${slug}`} className={footerLink}>
+                    {niche.displayName} Sites
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
 
