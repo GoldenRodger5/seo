@@ -119,7 +119,7 @@ const NicheCategoryPage = () => {
           <div className="container max-w-4xl text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <span className="inline-flex items-center gap-2 rounded-button bg-primary/15 px-3 py-1.5 text-xs font-medium text-primary">
-                {niche.emoji} {matching.length} sites tested · Updated {currentYear}
+                {matching.length} sites tested · Updated {currentYear}
               </span>
               <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
                 Best {niche.displayName} Sites in {currentYear}
@@ -223,7 +223,7 @@ const NicheCategoryPage = () => {
                   to={`/niche/${r.slug}`}
                   className="glass-card rounded-button px-4 py-2 text-sm font-medium hover:border-primary/50 transition-colors inline-flex items-center gap-2"
                 >
-                  <span>{r.emoji}</span> {r.displayName}
+                  {r.displayName}
                   <ArrowRight size={14} />
                 </Link>
               ))}
