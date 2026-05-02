@@ -14,6 +14,7 @@ import LocalisedPrice from "../components/LocalisedPrice";
 import { PageTransition, MotionCard, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
 import VisitSiteButton from "../components/VisitSiteButton";
 import StarRating from "../components/StarRating";
+import VerifiedBadge from "../components/VerifiedBadge";
 import { currentYear, currentMonthLong, lastCheckedDate } from "../lib/dates";
 import { sites, getSiteBySlug, isAffiliated } from "../data/sites";
 import { siteNicheMap } from "../data/site-niches";
@@ -225,6 +226,14 @@ const DiscountPage = () => {
               <StarRating score={site.overall_score} size={16} />
               <span className="text-xs text-muted-foreground">·</span>
               <span className="text-xs text-muted-foreground">{site.short_description.split(".")[0]}</span>
+            </motion.div>
+            <motion.div
+              className="mt-4 flex justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              <VerifiedBadge />
             </motion.div>
           </div>
         </section>

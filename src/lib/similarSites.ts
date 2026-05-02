@@ -1,4 +1,4 @@
-import { sites, type SiteData } from "@/data/sites";
+import { sites, isAffiliated, type SiteData } from "@/data/sites";
 import { siteNicheMap } from "@/data/site-niches";
 
 /**
@@ -27,8 +27,10 @@ export const getSimilarSites = (slug: string, count: number = 3): SiteData[] => 
   const targetNiches = new Set(siteNicheMap[slug] ?? []);
   const targetNetwork = networkOf(slug);
 
-  const candidates = sites
-    .filter((s) => s.slug !== slug)
+  // Only ever recommend sites we can actually drive traffic to.
+  const eligible = sites.filter((s) => s.slug !== slug && isAffiliated(s));
+
+  const ranked = eligible
     .map((s) => {
       const ns = siteNicheMap[s.slug] ?? [];
       const overlap = ns.filter((n) => targetNiches.has(n)).length;
@@ -40,21 +42,27 @@ export const getSimilarSites = (slug: string, count: number = 3): SiteData[] => 
       const sameNetwork = networkOf(s.slug) === targetNetwork;
       const networkPenalty = sameNetwork ? 0.5 : 0;
 
-      // We don't have explicit affiliate_network in SiteData; treat
-      // affiliate_url presence as a soft signal of monetization parity.
-      const monetizationMatch =
-        Boolean(target.affiliate_url) === Boolean(s.affiliate_url) ? 1 : 0;
-
       const composite =
-        overlapScore * 0.6 +
+        overlapScore * 0.7 +
         scoreSimilarity * 0.2 +
-        monetizationMatch * 0.1 +
         (1 - networkPenalty) * 0.1;
 
-      return { site: s, composite };
+      return { site: s, composite, overlap };
     })
-    .sort((a, b) => b.composite - a.composite)
-    .slice(0, count);
+    .sort((a, b) => b.composite - a.composite);
 
-  return candidates.map((c) => c.site);
+  // Primary picks: any niche overlap.
+  const primary = ranked.filter((c) => c.overlap > 0).slice(0, count);
+  if (primary.length >= count) {
+    return primary.map((c) => c.site);
+  }
+
+  // Fallback: top up with the highest-rated affiliated sites we haven't
+  // already included so the block always renders `count` cards.
+  const usedIds = new Set(primary.map((c) => c.site.id));
+  const fillers = [...eligible]
+    .filter((s) => !usedIds.has(s.id))
+    .sort((a, b) => b.overall_score - a.overall_score);
+
+  return [...primary.map((c) => c.site), ...fillers].slice(0, count);
 };

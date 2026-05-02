@@ -22,6 +22,7 @@ import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/
 import { siteNicheMap } from "@/data/site-niches";
 import { getNiche } from "@/data/niches";
 import { getSimilarSites } from "@/lib/similarSites";
+import { getVerdict } from "@/data/site-verdicts";
 import SiteCard from "../components/SiteCard";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { stripMonthlyUnit } from "@/lib/dealMath";
@@ -188,6 +189,17 @@ const ReviewPage = () => {
                     <ScoreBar label="Mobile Experience" value={site.mobile_score} />
                   </div>
                 </div>
+
+                {getVerdict(site.slug) && (
+                  <div className="mt-6 rounded-lg border-l-4 border-l-secondary bg-card/60 p-5">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-secondary">
+                      Our Verdict
+                    </span>
+                    <p className="mt-2 text-sm leading-relaxed text-foreground/90">
+                      {getVerdict(site.slug)}
+                    </p>
+                  </div>
+                )}
 
                 <div className="mt-6 flex flex-wrap gap-3">
                   <VisitSiteButton site={site} label={`Visit ${site.name}`} />

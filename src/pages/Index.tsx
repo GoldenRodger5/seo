@@ -143,6 +143,19 @@ const HeroSection = () => {
           </MotionButton>
         </motion.div>
         <motion.div
+          className="mt-4 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.75 }}
+        >
+          <Link
+            to="/find-my-site"
+            className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors"
+          >
+            Not sure where to start? Take the 30-second quiz →
+          </Link>
+        </motion.div>
+        <motion.div
           className="mt-10 flex items-center justify-center gap-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -431,13 +444,13 @@ const Index = () => (
       <HeroSection />
       <SocialProofStrip />
       <QuickPicks />
+      <InlineEmailCapture />
       <NicheBrowser />
       <TopPicksSection />
       <QuizBanner />
       <BentoGrid />
       <LatestReviewsSection />
       <GayDatingSection />
-      <InlineEmailCapture />
       <TrustSection />
       <section className="py-16">
         <div className="container">

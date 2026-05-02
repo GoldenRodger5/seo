@@ -35,6 +35,8 @@ export interface SiteData {
   monthly_only?: boolean;
   /** Whether the site is annual-only (no monthly plan). Drives "Annual subscription required" copy. */
   annual_only?: boolean;
+  /** Editorial 1–2 sentence verdict shown above the main CTA on the review page. Optional — populated via site-verdicts.ts. */
+  verdict?: string;
 }
 
 /** Returns the correct outbound URL for a site */

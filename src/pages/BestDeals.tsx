@@ -13,6 +13,7 @@ import { currentYear, lastCheckedDate } from "../lib/dates";
 import { parseMonthlyPrice, formatTotalAnnual, computeSavings } from "../lib/dealMath";
 import { supabase } from "../integrations/supabase/client";
 import CountdownTimer from "../components/CountdownTimer";
+import VerifiedBadge from "../components/VerifiedBadge";
 import { trackEvent } from "../lib/analytics";
 import LocalisedPrice from "../components/LocalisedPrice";
 
@@ -306,6 +307,9 @@ const BestDeals = () => {
             >
               Annual plans, flash sales, and trial offers — verified pricing, total annual cost shown, dead links removed within 24 hours.
             </motion.p>
+            <div className="mt-3 flex justify-center">
+              <VerifiedBadge />
+            </div>
             <div className="mt-4 flex items-center justify-center gap-2 flex-wrap">
               <span className="inline-flex items-center gap-2 rounded-button bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-400">
                 Last updated: {lastCheckedDate}
