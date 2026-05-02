@@ -11,26 +11,20 @@ interface OutboundLinkProps {
 }
 
 const OutboundLink = ({ site, className, children, onClick }: OutboundLinkProps) => {
-  const url = getVisitUrl(site);
   const affiliated = isAffiliated(site);
+  if (!affiliated) return null;
+
+  const url = getVisitUrl(site);
 
   const handleClick = () => {
-    trackOutbound(site.slug, affiliated, window.location.pathname);
+    trackOutbound(site.slug, true, window.location.pathname);
     onClick?.();
   };
 
-  if (affiliated) {
-    return (
-      <Link to={url} className={className} onClick={handleClick}>
-        {children}
-      </Link>
-    );
-  }
-
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className={className} onClick={handleClick}>
+    <Link to={url} className={className} onClick={handleClick}>
       {children}
-    </a>
+    </Link>
   );
 };
 

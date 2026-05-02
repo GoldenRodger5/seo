@@ -101,13 +101,11 @@ const EmailCapturePopup = () => {
 
         {submitted ? (
           <div className="py-6">
-            <span className="text-4xl">✅</span>
-            <p className="mt-4 font-heading text-xl font-bold">You're in!</p>
+            <p className="mt-4 font-heading text-xl font-bold">You're in</p>
             <p className="mt-2 text-sm text-muted-foreground">Check your inbox.</p>
           </div>
         ) : (
           <>
-            <span className="text-4xl">🔥</span>
             <h3 id="email-popup-title" className="mt-4 font-heading text-2xl font-bold">
               One Email a Month. Just Deals.
             </h3>

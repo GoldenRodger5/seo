@@ -24,10 +24,10 @@ import { getNiche } from "../data/niches";
 import { detectLocale } from "../lib/locale";
 
 const tickerItems = [
-  "🔥 New: Helix Studios Review",
-  "💰 Deal: 66% off annual plan",
-  "⭐ Just Reviewed: Next Door Twink",
-  "🆕 Hard Brit Lads added",
+  "New: Helix Studios Review",
+  "Deal: 66% off annual plan",
+  "Just Reviewed: Next Door Twink",
+  "Hard Brit Lads added",
 ];
 
 const HeroSection = () => {
@@ -172,7 +172,7 @@ const TopPicksSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          🏆 The Ones Worth Your Money
+          The Ones Worth Your Money
         </motion.h2>
         <StaggerContainer className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {featured.map((site) => (
@@ -228,7 +228,7 @@ const QuizBanner = () => (
         <div className="flex flex-col gap-2 sm:flex-row">
           <MotionButton>
             <Link to="/ask-ai" className="cta-btn inline-flex items-center gap-2 rounded-button gold-gradient px-6 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap">
-              ✨ Ask AI
+              Ask AI
             </Link>
           </MotionButton>
           <MotionButton>
@@ -266,7 +266,7 @@ const LatestReviewsSection = () => {
                 </div>
                 <StarRating score={site.overall_score} size={14} />
                 <p className="mt-3 text-sm text-muted-foreground line-clamp-2">{site.short_description}</p>
-                <span className="mt-2 inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">🔄 {`Updated ${currentMonthShort} ${currentYear}`}</span>
+                <span className="mt-2 inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">{`Updated ${currentMonthShort} ${currentYear}`}</span>
                 <div className="mt-4 flex gap-3">
                   <MotionButton className="flex-1">
                     <Link to={`/reviews/${site.slug}`} className="block rounded-button border border-primary px-4 py-2 text-center text-sm font-semibold text-primary hover:bg-primary/10 transition-colors">

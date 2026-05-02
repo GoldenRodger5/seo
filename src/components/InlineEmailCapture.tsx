@@ -60,7 +60,7 @@ const InlineEmailCapture = () => {
 
               {submitted ? (
                 <div className="mt-6 flex items-center gap-2 text-sm font-medium text-emerald-400 justify-center md:justify-start">
-                  ✅ You're in! Check your inbox.
+                  You're in. Check your inbox.
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-3">

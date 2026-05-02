@@ -132,8 +132,7 @@ const ExitIntentDealPopup = () => {
             exit={{ scale: 0.9, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <span className="text-4xl">👀</span>
-            <h3 id="exit-deal-title" className="mt-4 font-heading text-2xl font-bold">Before You Go</h3>
+            <h3 id="exit-deal-title" className="font-heading text-2xl font-bold">Before You Go</h3>
             <p className="mt-3 text-muted-foreground">
               <span className="font-semibold text-foreground">{deal.name}</span>
               {deal.deal_discount > 0 ? ` is currently ${deal.deal_discount}% off.` : " is one of our top-rated picks."}

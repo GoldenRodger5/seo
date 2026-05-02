@@ -55,7 +55,7 @@ const ReviewsIndex = () => {
                 Browse all our honest, independent reviews. Updated monthly.
               </p>
               <span className="mt-3 inline-flex items-center gap-1 rounded-button bg-muted px-3 py-1 text-xs text-muted-foreground">
-                🔄 {`Updated ${currentMonthLong} ${currentYear}`}
+                {`Updated ${currentMonthLong} ${currentYear}`}
               </span>
             </div>
           </AnimateOnScroll>

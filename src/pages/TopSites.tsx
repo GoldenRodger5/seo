@@ -66,7 +66,7 @@ const TopSites = () => {
               </p>
               <div className="mt-3 flex items-center justify-center gap-3">
                 <span className="inline-flex items-center gap-1 rounded-button bg-muted px-3 py-1 text-xs text-muted-foreground">
-                  {`🔄 Updated ${currentMonthLong} ${currentYear}`}
+                  {`Updated ${currentMonthLong} ${currentYear}`}
                 </span>
                 <a href="#comparison-table" className="text-xs font-medium text-secondary hover:underline">
                   Jump to Comparison Table ↓
@@ -124,11 +124,11 @@ const TopSites = () => {
                           <h2 className="font-heading text-2xl font-bold">{site.name}</h2>
                           {site.badge && (
                             <span className={`rounded-button px-2.5 py-1 text-xs font-semibold ${badgeStyle(site.badge)}`}>
-                              {site.rank === 1 ? "👑 " : ""}{site.badge}
+                              {site.badge}
                             </span>
                           )}
                           <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Reviewed</span>
-                          <span className="inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">🔄 {`Updated ${currentMonthLong} ${currentYear}`}</span>
+                          <span className="inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">{`Updated ${currentMonthLong} ${currentYear}`}</span>
                         </div>
                         <div className="mt-1">
                           <StarRating score={site.overall_score} />

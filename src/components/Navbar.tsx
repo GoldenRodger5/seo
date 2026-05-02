@@ -10,8 +10,8 @@ const navLinks = [
   { label: "Reviews", to: "/reviews", gold: false },
   { label: "Methodology", to: "/methodology", gold: false },
   { label: "Compare", to: "/compare", gold: false },
-  { label: "✨ Ask AI", to: "/ask-ai", gold: false },
-  { label: "Best Deals 🔥", to: "/best-deals", gold: true },
+  { label: "Ask AI", to: "/ask-ai", gold: false },
+  { label: "Best Deals", to: "/best-deals", gold: true },
 ];
 
 const Navbar = () => {

@@ -165,7 +165,7 @@ const ReviewPage = () => {
                 <div className="flex flex-wrap items-center gap-3">
                   <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">{site.name}</h1>
                   <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-xs text-emerald-400">✓ Reviewed</span>
-                  <span className="inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-xs text-muted-foreground">{`🔄 Updated ${currentMonthShort} ${currentYear}`}</span>
+                  <span className="inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-xs text-muted-foreground">{`Updated ${currentMonthShort} ${currentYear}`}</span>
                 </div>
                 <div className="mt-3 flex flex-wrap items-center gap-4">
                   <StarRating score={site.overall_score} size={20} />

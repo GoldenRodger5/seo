@@ -22,6 +22,7 @@ const StickyMobileCTA = ({ site, revealAfter = 400 }: StickyMobileCTAProps) => {
   }, [revealAfter]);
 
   if (!show || dismissed) return null;
+  if (!isAffiliated(site)) return null;
 
   return (
     <div
@@ -54,9 +55,7 @@ const StickyMobileCTA = ({ site, revealAfter = 400 }: StickyMobileCTAProps) => {
         </div>
         <OutboundLink
           site={site}
-          className={`cta-btn flex items-center gap-2 rounded-button gold-gradient px-5 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap min-h-[44px] ${
-            !isAffiliated(site) ? "opacity-85" : ""
-          }`}
+          className="cta-btn flex items-center gap-2 rounded-button gold-gradient px-5 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap min-h-[44px]"
         >
           Visit Site <ArrowRight size={14} />
         </OutboundLink>

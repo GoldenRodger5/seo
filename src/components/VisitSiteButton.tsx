@@ -11,23 +11,21 @@ interface VisitSiteButtonProps {
 }
 
 const VisitSiteButton = ({ site, label = "Visit Site", className = "", showDisclosure = true }: VisitSiteButtonProps) => {
-  const affiliated = isAffiliated(site);
+  if (!isAffiliated(site)) return null;
 
   return (
     <div className={className}>
       <MotionButton className="w-full">
         <OutboundLink
           site={site}
-          className={`cta-btn inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground gold-gradient ${
-            !affiliated ? "opacity-85" : ""
-          }`}
+          className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground gold-gradient"
         >
           {label} <ArrowRight size={14} />
         </OutboundLink>
       </MotionButton>
       {showDisclosure && (
         <p className="mt-1 text-center text-[10px] text-muted-foreground">
-          Opens in new tab{affiliated ? " · Affiliate link" : ""}
+          Opens in new tab · Affiliate link
         </p>
       )}
     </div>

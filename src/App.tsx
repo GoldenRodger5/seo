@@ -134,6 +134,18 @@ const AppShell = () => {
     trackPageView(location.pathname);
   }, [location.pathname]);
 
+  // Scroll restoration on navigation. Hash links scroll to anchor; otherwise top.
+  React.useEffect(() => {
+    if (location.hash) {
+      const el = document.getElementById(location.hash.slice(1));
+      if (el) {
+        el.scrollIntoView({ behavior: "auto", block: "start" });
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname, location.hash]);
+
   return (
     <ErrorBoundary locationKey={location.pathname}>
       <AgeVerification />

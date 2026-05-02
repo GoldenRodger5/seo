@@ -620,7 +620,7 @@ const ComparePage = () => {
               <div className="mt-6 grid gap-5 sm:grid-cols-2">
                 <div className="rounded-lg border-2 border-secondary/40 bg-secondary/5 p-5 flex flex-col">
                   <span className="rounded-button gold-gradient px-2.5 py-1 text-[10px] font-bold text-secondary-foreground self-start">
-                    🏆 OVERALL WINNER
+                    OVERALL WINNER
                   </span>
                   <p className="mt-3 font-heading text-2xl font-bold">{winner.name}</p>
                   <p className="mt-1 text-sm text-muted-foreground flex-1">

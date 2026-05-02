@@ -137,7 +137,7 @@ const QuickPicks = () => {
                   {/* Intent + site name */}
                   <div>
                     <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      {pick.emoji} {pick.intent}
+                      {pick.intent}
                     </span>
                     <h3 className="mt-1 font-heading text-2xl font-bold leading-tight">
                       {pick.site.name}
