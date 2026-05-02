@@ -73,12 +73,12 @@ const NicheBrowser = () => {
                           backgroundImage: `url(${banner})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
-                          filter: "blur(3px)",
-                          transform: "scale(1.08)",
+                          filter: "blur(2px)",
+                          transform: "scale(1.05)",
                         }}
                         aria-hidden
                       />
-                      <div className="pointer-events-none absolute inset-0 bg-black/85 transition-colors group-hover:bg-black/75" />
+                      <div className="pointer-events-none absolute inset-0 bg-black/50 transition-colors group-hover:bg-black/40" />
                     </>
                   ) : (
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-card to-muted/40" />
