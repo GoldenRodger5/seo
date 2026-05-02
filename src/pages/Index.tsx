@@ -12,7 +12,7 @@ import BrandStory from "../components/BrandStory";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import VisitSiteButton from "../components/VisitSiteButton";
 import Layout from "../components/Layout";
-import { getFeaturedSites, sites, getVisitUrl, isAffiliated } from "../data/sites";
+import { sites, getVisitUrl, isAffiliated, getTopRatedPromotable, getRecentlyUpdatedPromotable } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { ReactNode } from "react";
 import { currentYear, currentMonthShort } from "../lib/dates";
@@ -23,12 +23,20 @@ import { siteNicheMap } from "../data/site-niches";
 import { getNiche } from "../data/niches";
 import { detectLocale } from "../lib/locale";
 
-const tickerItems = [
-  "New: Helix Studios Review",
-  "Deal: 66% off annual plan",
-  "Just Reviewed: Next Door Twink",
-  "Hard Brit Lads added",
-];
+const tickerItems = (() => {
+  const promotable = getTopRatedPromotable(4);
+  const top = promotable[0];
+  const second = promotable[1];
+  const dealLeader = [...sites]
+    .filter((s) => isAffiliated(s) && s.deal_discount > 0)
+    .sort((a, b) => b.deal_discount - a.deal_discount)[0];
+  return [
+    top ? `Top pick: ${top.name}` : null,
+    dealLeader ? `Deal: ${dealLeader.deal_discount}% off ${dealLeader.name}` : null,
+    second ? `Just reviewed: ${second.name}` : null,
+    "Updated monthly",
+  ].filter((x): x is string => Boolean(x));
+})();
 
 const HeroSection = () => {
   const words = "We Watched So You Don't Have To".split(" ");
@@ -162,7 +170,7 @@ const badgeColor = (badge: string | null) => {
 };
 
 const TopPicksSection = () => {
-  const featured = getFeaturedSites();
+  const featured = getTopRatedPromotable(5);
   return (
     <section className="py-16">
       <div className="container">
@@ -243,7 +251,8 @@ const QuizBanner = () => (
 );
 
 const LatestReviewsSection = () => {
-  const latest = sites.slice(0, 3);
+  const featured = getTopRatedPromotable(5);
+  const latest = getRecentlyUpdatedPromotable(3, featured);
   return (
     <section className="py-16">
       <div className="container">

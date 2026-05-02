@@ -1,3 +1,5 @@
+import { getSiteImagery } from "./site-imagery";
+
 export interface SiteData {
   id: string;
   name: string;
@@ -1537,4 +1539,25 @@ export function getSitesByCategory(categorySlug: string): SiteData[] {
 
 export function getFeaturedSites(): SiteData[] {
   return sites.filter(s => s.is_featured).sort((a, b) => a.rank - b.rank);
+}
+
+const hasHeroBanner = (s: SiteData): boolean =>
+  Boolean(getSiteImagery(s.slug).hero_image_url);
+
+export function getPromotableSites(): SiteData[] {
+  return sites.filter(s => isAffiliated(s) && hasHeroBanner(s));
+}
+
+export function getTopRatedPromotable(limit: number): SiteData[] {
+  return [...getPromotableSites()]
+    .sort((a, b) => b.overall_score - a.overall_score || b.update_frequency - a.update_frequency)
+    .slice(0, limit);
+}
+
+export function getRecentlyUpdatedPromotable(limit: number, exclude: SiteData[] = []): SiteData[] {
+  const excludeIds = new Set(exclude.map(s => s.id));
+  return getPromotableSites()
+    .filter(s => !excludeIds.has(s.id))
+    .sort((a, b) => b.update_frequency - a.update_frequency || b.overall_score - a.overall_score)
+    .slice(0, limit);
 }

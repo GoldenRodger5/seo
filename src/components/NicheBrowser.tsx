@@ -62,18 +62,22 @@ const NicheBrowser = () => {
                   to={`/niche/${niche.slug}`}
                   onClick={() => trackEvent("niche_click", { niche: niche.slug })}
                   className="relative block overflow-hidden rounded-lg border border-border/60 bg-card p-5 min-h-[120px] transition-colors hover:border-primary/40 group"
-                  style={
-                    banner
-                      ? {
+                >
+                  {banner ? (
+                    <>
+                      <div
+                        className="pointer-events-none absolute inset-0"
+                        style={{
                           backgroundImage: `url(${banner})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
-                        }
-                      : undefined
-                  }
-                >
-                  {banner ? (
-                    <div className="pointer-events-none absolute inset-0 bg-black/60 transition-colors group-hover:bg-black/50" />
+                          filter: "blur(2px)",
+                          transform: "scale(1.06)",
+                        }}
+                        aria-hidden
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-black/80 transition-colors group-hover:bg-black/70" />
+                    </>
                   ) : (
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-card to-muted/40" />
                   )}

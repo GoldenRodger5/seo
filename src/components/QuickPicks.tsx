@@ -2,7 +2,7 @@ import { Flame, DollarSign, Gift, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import OutboundLink from "./OutboundLink";
-import { sites } from "@/data/sites";
+import { getPromotableSites } from "@/data/sites";
 import type { SiteData } from "@/data/sites";
 import ScoreRing from "./ScoreRing";
 import { trackEvent } from "@/lib/analytics";
@@ -20,56 +20,52 @@ interface Pick {
   site: SiteData;
 }
 
-const findSite = (slug: string): SiteData | undefined => sites.find((s) => s.slug === slug);
+// All picks come from sites that are affiliated AND have a hero banner.
+// Picks are de-duped: each slot picks the best remaining site by its metric.
+const selectPicks = (): { premium: SiteData; value: SiteData; deal: SiteData } | null => {
+  const pool = getPromotableSites();
+  if (pool.length === 0) return null;
 
-const pickHottestPremium = (): SiteData =>
-  findSite("helix-studios") ??
-  [...sites].sort((a, b) => b.overall_score - a.overall_score)[0];
+  const used = new Set<string>();
+  const next = (sorter: (a: SiteData, b: SiteData) => number): SiteData => {
+    const candidate = [...pool].filter((s) => !used.has(s.id)).sort(sorter)[0]
+      ?? [...pool].sort(sorter)[0];
+    used.add(candidate.id);
+    return candidate;
+  };
 
-const pickBestValue = (): SiteData => {
-  // Highest deal_discount among sites that have an affiliate URL wired,
-  // falling back to the highest-discount site overall.
-  const withAffiliate = sites.filter((s) => s.affiliate_url && s.deal_discount > 0);
-  if (withAffiliate.length) {
-    return [...withAffiliate].sort((a, b) => b.deal_discount - a.deal_discount)[0];
-  }
-  return findSite("next-door-twink") ?? sites[0];
-};
-
-const pickFreeTrialOrFlashDeal = (): SiteData => {
-  // True free-trial sites first, then highest deal_discount with affiliate.
-  const trial = sites.find((s) => s.has_free_trial);
-  if (trial) return trial;
-  const flash = sites
-    .filter((s) => s.affiliate_url && s.deal_type === "flash" && s.deal_discount > 0)
-    .sort((a, b) => b.deal_discount - a.deal_discount)[0];
-  if (flash) return flash;
-  return findSite("athletic-twinks") ?? findSite("twinks-in-shorts") ?? sites[2];
+  const premium = next((a, b) => b.overall_score - a.overall_score || b.update_frequency - a.update_frequency);
+  const value = next((a, b) => b.value_score - a.value_score || b.overall_score - a.overall_score);
+  const deal = next((a, b) => b.deal_discount - a.deal_discount || b.overall_score - a.overall_score);
+  return { premium, value, deal };
 };
 
 const QuickPicks = () => {
+  const selection = selectPicks();
+  if (!selection) return null;
+
   const picks: Pick[] = [
     {
       intent: "Hottest Premium",
       emoji: "🔥",
       icon: Flame,
-      tagline: "Polished American twinks, cinematic productions, two decades of exclusives.",
+      tagline: "Highest overall score among sites we've reviewed and can recommend.",
       gradient: "from-orange-500/30 via-red-500/10 to-transparent",
       watermarkColor: "text-orange-400/[0.08]",
       iconBg: "bg-orange-500/20 text-orange-400",
       ring: "hover:border-orange-400/40",
-      site: pickHottestPremium(),
+      site: selection.premium,
     },
     {
       intent: "Best Value",
       emoji: "💸",
       icon: DollarSign,
-      tagline: "Massive volume, full network access, best price-per-scene of any site we tested.",
+      tagline: "Best value-for-money pick — most content per dollar of any site we tested.",
       gradient: "from-emerald-500/30 via-teal-500/10 to-transparent",
       watermarkColor: "text-emerald-400/[0.08]",
       iconBg: "bg-emerald-500/20 text-emerald-400",
       ring: "hover:border-emerald-400/40",
-      site: pickBestValue(),
+      site: selection.value,
     },
     {
       intent: "Hottest Deal",
@@ -80,7 +76,7 @@ const QuickPicks = () => {
       watermarkColor: "text-blue-400/[0.08]",
       iconBg: "bg-blue-500/20 text-blue-400",
       ring: "hover:border-blue-400/40",
-      site: pickFreeTrialOrFlashDeal(),
+      site: selection.deal,
     },
   ];
 
@@ -123,9 +119,12 @@ const QuickPicks = () => {
                       alt={imagery.banner_alt}
                       loading="lazy"
                       decoding="async"
-                      className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30 transition-opacity duration-300 group-hover:opacity-40"
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25 transition-opacity duration-300 group-hover:opacity-35"
+                      style={{ filter: "blur(3px)", transform: "scale(1.06)" }}
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/80 to-card/40" />
+                    <div className="pointer-events-none absolute inset-0 bg-card/80" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/70 to-transparent" />
                   </>
                 ) : (
                   <>
