@@ -6,6 +6,7 @@ import { sites } from "@/data/sites";
 import type { SiteData } from "@/data/sites";
 import ScoreRing from "./ScoreRing";
 import { trackEvent } from "@/lib/analytics";
+import { getSiteImagery } from "@/data/site-imagery";
 
 interface Pick {
   intent: string;
@@ -103,6 +104,8 @@ const QuickPicks = () => {
           {picks.map((pick, i) => {
             const Icon = pick.icon;
             const watermarkLetter = pick.site.name.charAt(0).toUpperCase();
+            const imagery = getSiteImagery(pick.site.slug);
+            const heroImg = imagery.hero_image_url ?? imagery.thumbnail_url;
             return (
               <motion.div
                 key={pick.intent}
@@ -113,17 +116,30 @@ const QuickPicks = () => {
                 whileHover={{ y: -4 }}
                 className={`relative overflow-hidden rounded-lg border border-border/60 bg-card p-6 transition-colors ${pick.ring} group`}
               >
-                {/* Gradient wash */}
-                <div
-                  className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${pick.gradient} opacity-80`}
-                />
-                {/* Watermark letter */}
-                <span
-                  className={`pointer-events-none absolute -right-4 -bottom-12 select-none font-heading text-[180px] font-black leading-none ${pick.watermarkColor}`}
-                  aria-hidden
-                >
-                  {watermarkLetter}
-                </span>
+                {heroImg ? (
+                  <>
+                    <img
+                      src={heroImg}
+                      alt={imagery.banner_alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30 transition-opacity duration-300 group-hover:opacity-40"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/80 to-card/40" />
+                  </>
+                ) : (
+                  <>
+                    <div
+                      className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${pick.gradient} opacity-80`}
+                    />
+                    <span
+                      className={`pointer-events-none absolute -right-4 -bottom-12 select-none font-heading text-[180px] font-black leading-none ${pick.watermarkColor}`}
+                      aria-hidden
+                    >
+                      {watermarkLetter}
+                    </span>
+                  </>
+                )}
 
                 <div className="relative flex flex-col gap-3 min-h-[260px]">
                   {/* Top row: icon + score */}
