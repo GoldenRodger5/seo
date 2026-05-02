@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import OutboundLink from "./OutboundLink";
 import ScoreRing from "./ScoreRing";
 import type { SiteData } from "@/data/sites";
@@ -17,6 +18,26 @@ interface SiteCardProps {
   className?: string;
 }
 
+const updateLabel = (score: number): string => {
+  if (score >= 85) return "Weekly updates";
+  if (score >= 75) return "Bi-weekly updates";
+  if (score >= 60) return "Monthly updates";
+  return "Slow update pace";
+};
+
+const qualityLabel = (site: SiteData): string => {
+  if (site.content_quality >= 90 && site.has_hd) return "HD/4K · Premium";
+  if (site.has_hd) return "HD streaming";
+  return "SD streaming";
+};
+
+const valueLabel = (site: SiteData): string => {
+  if (site.deal_discount >= 50) return `${site.deal_discount}% off annual`;
+  if (site.has_free_trial) return "Free trial available";
+  if (site.value_score >= 85) return "Strong value pick";
+  return `From ${site.price_annual}`;
+};
+
 const SiteCard = ({
   site,
   variant = "default",
@@ -30,12 +51,47 @@ const SiteCard = ({
   const imagery = getSiteImagery(site.slug);
   const heroImg = imagery.hero_image_url ?? imagery.thumbnail_url;
 
+  // Hover tooltip (desktop) + long-press tooltip (mobile, 1.5s timeout)
+  const [showTip, setShowTip] = useState(false);
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleTouchStart = () => {
+    longPressTimer.current = setTimeout(() => {
+      setShowTip(true);
+      setTimeout(() => setShowTip(false), 1500);
+    }, 400);
+  };
+  const handleTouchEnd = () => {
+    if (longPressTimer.current) clearTimeout(longPressTimer.current);
+  };
+  useEffect(() => () => {
+    if (longPressTimer.current) clearTimeout(longPressTimer.current);
+  }, []);
+
+  const tip = (
+    <div
+      className={`pointer-events-none absolute left-1/2 top-3 z-20 -translate-x-1/2 rounded-button glass-card px-3 py-2 text-[11px] text-foreground shadow-lg transition-opacity duration-200 ${
+        showTip ? "opacity-100" : "opacity-0"
+      }`}
+      role="tooltip"
+    >
+      <div className="whitespace-nowrap">
+        {updateLabel(site.update_frequency)} · {qualityLabel(site)} · {valueLabel(site)}
+      </div>
+    </div>
+  );
+
   if (variant === "compact") {
     return (
       <motion.div
         whileHover={{ y: -3 }}
+        onMouseEnter={() => setShowTip(true)}
+        onMouseLeave={() => setShowTip(false)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         className={`relative overflow-hidden rounded-lg border border-border/60 bg-card p-4 transition-colors ${palette.accent} group ${className}`}
       >
+        {tip}
         <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${palette.gradient}`} />
         <span className={`pointer-events-none absolute -right-3 -bottom-8 select-none font-heading text-[120px] font-black leading-none ${palette.watermark}`} aria-hidden>
           {watermarkLetter}
@@ -56,9 +112,14 @@ const SiteCard = ({
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -4, boxShadow: "0 8px 30px hsl(263, 70%, 58%, 0.15)" }}
+      onMouseEnter={() => setShowTip(true)}
+      onMouseLeave={() => setShowTip(false)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       className={`relative overflow-hidden rounded-lg border border-border/60 bg-card transition-colors ${palette.accent} group flex flex-col h-full ${className}`}
     >
+      {tip}
       {/* Hero image (when sourced from affiliate creative) — falls back to brand-color bar + watermark */}
       {heroImg ? (
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted/40">

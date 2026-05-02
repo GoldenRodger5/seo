@@ -5,12 +5,15 @@ import { ArrowRight, Filter } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import Layout from "../components/Layout";
+import Breadcrumbs from "../components/Breadcrumbs";
 import { sites, isAffiliated } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { currentYear, lastCheckedDate } from "../lib/dates";
 import { parseMonthlyPrice, formatTotalAnnual, computeSavings } from "../lib/dealMath";
 import { supabase } from "../integrations/supabase/client";
+import CountdownTimer from "../components/CountdownTimer";
+import { trackEvent } from "../lib/analytics";
 
 type FilterKey = "all" | "trials" | "under10" | "fifty";
 type SortKey = "discount" | "price" | "score";
@@ -28,12 +31,43 @@ const sortLabels: Record<SortKey, string> = {
   score: "Highest Score",
 };
 
-const dealStatusLabel = (
-  type: SiteData["deal_type"]
-): { label: string; tone: "destructive" | "secondary" | "ongoing" } => {
-  if (type === "limited") return { label: "Limited time", tone: "secondary" };
-  if (type === "flash") return { label: "Flash deal", tone: "destructive" };
+type StatusTone = "destructive" | "secondary" | "ongoing";
+
+interface StatusInfo {
+  label: string;
+  tone: StatusTone;
+  countdownTo?: string | null;
+}
+
+const HOUR = 60 * 60 * 1000;
+
+const computeDealStatus = (site: SiteData): StatusInfo => {
+  const now = Date.now();
+  const expires = site.expires_at ? new Date(site.expires_at).getTime() : null;
+
+  if (expires && Number.isFinite(expires) && expires > now) {
+    const remaining = expires - now;
+    if (remaining < 72 * HOUR) {
+      return { label: "Ends in", tone: "destructive", countdownTo: site.expires_at ?? null };
+    }
+    if (remaining < 7 * 24 * HOUR) {
+      const day = new Date(expires).toLocaleDateString(undefined, { weekday: "long" });
+      return { label: `Ends ${day}`, tone: "destructive" };
+    }
+    return { label: "Limited time", tone: "secondary" };
+  }
+
+  // No real expires_at — be honest, no fake urgency.
+  if (site.deal_type === "flash") return { label: "Flash deal", tone: "destructive" };
+  if (site.deal_type === "limited") return { label: "Limited time", tone: "secondary" };
   return { label: "Always available", tone: "ongoing" };
+};
+
+const commitmentCopy = (site: SiteData): string => {
+  if (site.monthly_only) return "Cancel anytime — no annual commitment.";
+  if (site.annual_only) return "Annual subscription required.";
+  if (site.has_free_trial) return "Includes trial period";
+  return "Cancel anytime — see site for billing terms";
 };
 
 const StatusPill = ({ tone, label }: { tone: "destructive" | "secondary" | "ongoing"; label: string }) => {
@@ -47,7 +81,7 @@ const StatusPill = ({ tone, label }: { tone: "destructive" | "secondary" | "ongo
 };
 
 const DealCard = ({ site }: { site: SiteData }) => {
-  const status = dealStatusLabel(site.deal_type);
+  const status = computeDealStatus(site);
   const annualTotal = formatTotalAnnual(site.price_annual);
   const savings = computeSavings(site.price_monthly, site.price_annual);
 
@@ -59,8 +93,14 @@ const DealCard = ({ site }: { site: SiteData }) => {
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <h2 className="font-heading text-xl font-bold truncate">{site.name}</h2>
-          <div className="mt-1 flex items-center gap-2">
-            <StatusPill tone={status.tone} label={status.label} />
+          <div className="mt-1 flex items-center gap-2 flex-wrap">
+            {status.countdownTo ? (
+              <span className="inline-flex items-center gap-1.5 rounded-button bg-destructive/15 px-2 py-0.5 text-[11px] font-semibold text-destructive">
+                <CountdownTimer expiresAt={status.countdownTo} className="!font-semibold" />
+              </span>
+            ) : (
+              <StatusPill tone={status.tone} label={status.label} />
+            )}
             {site.has_free_trial && (
               <span className="rounded-button bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
                 Free Trial
@@ -88,11 +128,7 @@ const DealCard = ({ site }: { site: SiteData }) => {
             )}
           </p>
         )}
-        <p className="mt-1 text-[10px] text-muted-foreground/70">
-          {site.has_free_trial
-            ? "Includes trial period"
-            : "Cancel anytime — see site for billing terms"}
-        </p>
+        <p className="mt-1 text-[10px] text-muted-foreground/70">{commitmentCopy(site)}</p>
       </div>
 
       <div className="flex-1" />
@@ -146,6 +182,7 @@ const DealsEmailCapture = () => {
       }
       setStatus("ok");
       setEmail("");
+      trackEvent("email_signup", { source: "deals_page" });
     } catch {
       setStatus("err");
       setErrMsg("Subscription failed.");
@@ -245,6 +282,12 @@ const BestDeals = () => {
         </Helmet>
 
         <section className="hero-mesh py-14">
+          <div className="container">
+            <Breadcrumbs
+              className="mb-6"
+              items={[{ label: "Home", to: "/" }, { label: "Best Deals" }]}
+            />
+          </div>
           <div className="container text-center">
             <motion.h1
               className="font-heading font-bold heading-gradient inline-block"
@@ -262,9 +305,13 @@ const BestDeals = () => {
             >
               Annual plans, flash sales, and trial offers — verified pricing, total annual cost shown, dead links removed within 24 hours.
             </motion.p>
-            <span className="mt-4 inline-flex items-center gap-2 rounded-button bg-muted px-3 py-1.5 text-xs text-muted-foreground">
-              {`🔄 Last checked: ${lastCheckedDate}`}
-            </span>
+            <div className="mt-4 flex items-center justify-center gap-2 flex-wrap">
+              <span className="inline-flex items-center gap-2 rounded-button bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-400">
+                Last updated: {lastCheckedDate}
+              </span>
+              <span className="text-xs text-muted-foreground">·</span>
+              <span className="text-xs text-muted-foreground">Verified weekly</span>
+            </div>
           </div>
         </section>
 

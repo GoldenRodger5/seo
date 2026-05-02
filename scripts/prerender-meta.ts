@@ -172,6 +172,7 @@ const NICHE_META: Record<string, { displayName: string; seoTitle: string; seoDes
   "muscle": { displayName: "Muscle", seoTitle: "Best Muscle Gay Sites — Ranked & Reviewed", seoDescription: "Muscle gay sites ranked. Bodybuilder-aesthetic performers and gym-focused content scored on catalog depth and quality." },
   "str8-curious": { displayName: "Straight-Curious", seoTitle: "Best Straight-Curious Gay Sites — Ranked & Reviewed", seoDescription: "Straight-curious and str8-bait gay sites ranked. First-time, reluctant, and roleplay content scored across networks." },
   "japanese": { displayName: "Japanese", seoTitle: "Best Japanese Gay Sites — Ranked & Reviewed", seoDescription: "Japanese gay sites and JAV-style networks ranked. Authentic Japanese performers and content scored on quality and depth." },
+  "solo": { displayName: "Solo", seoTitle: "Best Solo Male Gay Sites — Ranked & Reviewed", seoDescription: "Solo male gay sites ranked. Single-performer JO, cam, and self-shot content scored on quality and catalog depth." },
 };
 
 const YEAR = new Date().getFullYear();

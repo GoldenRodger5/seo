@@ -201,6 +201,16 @@ export const niches: Niche[] = [
     related: ["college", "amateur", "military"],
   },
   {
+    slug: "solo",
+    displayName: "Solo",
+    description: "Solo male performances — single-performer gay content covering jerk-off, cam, and personal scenes.",
+    heroTagline: "Solo male content. One performer, full focus.",
+    seoTitle: "Best Solo Male Gay Sites — Ranked & Reviewed",
+    seoDescription: "Solo male gay sites ranked. Single-performer JO, cam, and self-shot content scored on quality and catalog depth.",
+    emoji: "🎬",
+    related: ["amateur", "twink", "muscle"],
+  },
+  {
     slug: "japanese",
     displayName: "Japanese",
     description: "Japanese gay performers and JAV-style content — dedicated Japanese networks and crossover sites.",

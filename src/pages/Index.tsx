@@ -19,6 +19,9 @@ import { currentYear, currentMonthShort } from "../lib/dates";
 import { sitesCountLabel, REVIEWED_SITES } from "../lib/siteStats";
 import QuickPicks from "../components/QuickPicks";
 import NicheBrowser from "../components/NicheBrowser";
+import { siteNicheMap } from "../data/site-niches";
+import { getNiche } from "../data/niches";
+import { detectLocale } from "../lib/locale";
 
 const tickerItems = [
   "🔥 New: Helix Studios Review",
@@ -30,6 +33,7 @@ const tickerItems = [
 const HeroSection = () => {
   const words = "We Watched So You Don't Have To".split(" ");
   const [tickerIndex, setTickerIndex] = useState(0);
+  const locale = detectLocale();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -96,6 +100,17 @@ const HeroSection = () => {
         >
           We paid for every membership, tested them all, and ranked the ones actually worth your money.
         </motion.p>
+        {locale.heroTagline && (
+          <motion.p
+            className="mx-auto mt-3 text-xs text-muted-foreground/70"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            lang={locale.code.split("-")[0]}
+          >
+            {locale.heroTagline}
+          </motion.p>
+        )}
         <motion.div
           className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row"
           initial={{ opacity: 0, y: 10 }}
@@ -174,6 +189,19 @@ const TopPicksSection = () => {
                 <p className="mt-2 flex-1 text-xs text-muted-foreground line-clamp-2">{site.short_description}</p>
                 <span className="mt-1 inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Reviewed</span>
                 <VisitSiteButton site={site} label="Visit Site" className="mt-3" />
+                {(() => {
+                  const primary = siteNicheMap[site.slug]?.[0];
+                  const niche = primary ? getNiche(primary) : null;
+                  if (!niche) return null;
+                  return (
+                    <Link
+                      to={`/niche/${niche.slug}`}
+                      className="mt-2 block text-center text-[10px] text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      View all {niche.displayName.toLowerCase()} sites →
+                    </Link>
+                  );
+                })()}
               </MotionCard>
             </StaggerChild>
           ))}

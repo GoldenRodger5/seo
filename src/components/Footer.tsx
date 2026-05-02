@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
-import { sites } from "../data/sites";
 import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
 import { getNiche } from "@/data/niches";
+import { getPopularComparisons } from "@/data/comparisons";
+import { getSiteBySlug } from "@/data/sites";
 
 const footerLink = "text-sm text-muted-foreground hover:text-foreground transition-colors";
 
 // Top 8 niches for footer hub-linking
 const FOOTER_NICHES = ["twink", "bareback", "daddy", "bear", "asian", "latin", "amateur", "muscle"] as const;
+
+const POPULAR_COMPARISONS = getPopularComparisons(5);
 
 const Footer = () => (
   <footer className="border-t border-border bg-card/50">
@@ -16,23 +19,22 @@ const Footer = () => (
         Twink<span className="gold-shimmer">Vault</span>
       </Link>
 
-      {/* Column grid */}
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-        {/* Browse */}
+      {/* 4-column primary navigation backbone (Top Sites / Browse Niches / Compare / About) */}
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Top Sites */}
         <div>
-          <h3 className="font-heading text-sm font-semibold mb-3">Browse</h3>
+          <h3 className="font-heading text-sm font-semibold mb-3">Top Sites</h3>
           <ul className="space-y-2">
             <li><Link to="/top-sites" className={footerLink}>Top Sites</Link></li>
             <li><Link to="/reviews" className={footerLink}>All Reviews</Link></li>
             <li><Link to="/best-deals" className={`${footerLink} gold-gradient-text`}>Best Deals</Link></li>
-            <li><Link to="/compare" className={footerLink}>Compare Sites</Link></li>
             <li><Link to="/best-twink-sites" className={footerLink}>Best Twink Sites</Link></li>
             <li><Link to="/free-trial-twink-sites" className={footerLink}>Free Trial Sites</Link></li>
             <li><Link to="/cheapest-twink-sites" className={footerLink}>Cheapest Sites</Link></li>
           </ul>
         </div>
 
-        {/* Niches (hubs) */}
+        {/* Browse Niches — dynamic top 8 from siteStats */}
         <div>
           <h3 className="font-heading text-sm font-semibold mb-3">Browse Niches</h3>
           <ul className="space-y-2">
@@ -50,37 +52,55 @@ const Footer = () => (
           </ul>
         </div>
 
-        {/* Discounts */}
+        {/* Compare — multi-site builder + 5 most popular static comparisons */}
         <div>
-          <h3 className="font-heading text-sm font-semibold mb-3">Discounts</h3>
+          <h3 className="font-heading text-sm font-semibold mb-3">Compare</h3>
           <ul className="space-y-2">
-            {sites.slice(0, 8).map((site) => (
-              <li key={site.id}>
-                <Link to={`/discount/${site.slug}`} className={footerLink}>
-                  {site.name} Discount
-                </Link>
-              </li>
-            ))}
+            <li><Link to="/compare" className={footerLink}>Build a Comparison</Link></li>
+            {POPULAR_COMPARISONS.map((pair) => {
+              const a = getSiteBySlug(pair.siteA);
+              const b = getSiteBySlug(pair.siteB);
+              if (!a || !b) return null;
+              return (
+                <li key={pair.slug}>
+                  <Link to={`/compare/${pair.slug}`} className={footerLink}>
+                    {a.name} vs {b.name}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
 
-        {/* Tools / Company */}
+        {/* About */}
         <div>
-          <h3 className="font-heading text-sm font-semibold mb-3">Tools</h3>
-          <ul className="space-y-2">
-            <li><Link to="/ask-ai" className={footerLink}>AI Recommender</Link></li>
-            <li><Link to="/find-my-site" className={footerLink}>Site Finder Quiz</Link></li>
-          </ul>
-
-          <h3 className="font-heading text-sm font-semibold mb-3 mt-6">Company</h3>
+          <h3 className="font-heading text-sm font-semibold mb-3">About</h3>
           <ul className="space-y-2">
             <li><Link to="/about" className={footerLink}>About</Link></li>
             <li><Link to="/methodology" className={footerLink}>Methodology</Link></li>
             <li><Link to="/contact" className={footerLink}>Contact</Link></li>
+            <li><Link to="/privacy-policy" className={footerLink}>Privacy Policy</Link></li>
+            <li><Link to="/2257" className={footerLink}>2257 Statement</Link></li>
+            <li><Link to="/affiliate-disclosure" className={footerLink}>Affiliate Disclosure</Link></li>
+            <li><Link to="/terms" className={footerLink}>Terms of Service</Link></li>
+            <li><Link to="/sitemap" className={footerLink}>Sitemap</Link></li>
           </ul>
+        </div>
+      </div>
 
-          <h3 className="font-heading text-sm font-semibold mb-3 mt-6">Gay Dating</h3>
-          <ul className="space-y-2">
+      {/* Secondary row — Tools / Gay Dating */}
+      <div className="mt-10 grid gap-8 sm:grid-cols-2 border-t border-border/40 pt-8">
+        <div>
+          <h3 className="font-heading text-sm font-semibold mb-3">Tools</h3>
+          <ul className="flex flex-wrap gap-x-4 gap-y-2">
+            <li><Link to="/ask-ai" className={footerLink}>AI Recommender</Link></li>
+            <li><Link to="/find-my-site" className={footerLink}>Site Finder Quiz</Link></li>
+            <li><Link to="/gay-dating-sites" className={footerLink}>Dating Sites Guide</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h3 className="font-heading text-sm font-semibold mb-3">Gay Dating</h3>
+          <ul className="flex flex-wrap gap-x-4 gap-y-2">
             <li>
               <a
                 href={MANFINDER_URL}
@@ -103,21 +123,6 @@ const Footer = () => (
                 Gay Hookup Sites
               </a>
             </li>
-            <li>
-              <Link to="/gay-dating-sites" className={footerLink}>Dating Sites Guide</Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Legal */}
-        <div>
-          <h3 className="font-heading text-sm font-semibold mb-3">Legal</h3>
-          <ul className="space-y-2">
-            <li><Link to="/privacy-policy" className={footerLink}>Privacy Policy</Link></li>
-            <li><Link to="/terms" className={footerLink}>Terms of Service</Link></li>
-            <li><Link to="/affiliate-disclosure" className={footerLink}>Affiliate Disclosure</Link></li>
-            <li><Link to="/2257" className={footerLink}>2257 Statement</Link></li>
-            <li><Link to="/sitemap" className={footerLink}>Sitemap</Link></li>
           </ul>
         </div>
       </div>

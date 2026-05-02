@@ -13,6 +13,9 @@ import { currentYear } from "../lib/dates";
 import { siteNicheMap } from "@/data/site-niches";
 import { getNiche } from "@/data/niches";
 import { stripMonthlyUnit } from "@/lib/dealMath";
+import Breadcrumbs from "../components/Breadcrumbs";
+import { comparisonPairs } from "@/data/comparisons";
+import { trackEvent } from "@/lib/analytics";
 
 const scoreColor = (val: number, max: number) => {
   const ratio = val / max;
@@ -77,6 +80,7 @@ const CompareIndex = () => {
 
   const [selected, setSelected] = useState<string[]>(initialSlugs);
   const [filter, setFilter] = useState("");
+  const [savedFeedback, setSavedFeedback] = useState("");
 
   const selectedSites = useMemo(
     () => selected.map((s) => getSiteBySlug(s)).filter((s): s is SiteData => Boolean(s)),
@@ -114,16 +118,30 @@ const CompareIndex = () => {
     }
   };
 
-  const featuredPairs = useMemo(
-    () =>
-      sites
-        .slice(0, 8)
-        .flatMap((a, i) =>
-          sites.slice(i + 1, 8).map((b) => ({ a, b }))
-        )
-        .slice(0, 12),
-    []
-  );
+  const nicheFilter = searchParams.get("niche");
+
+  const featuredPairs = useMemo(() => {
+    // If ?niche=X is present, surface comparison pairs from src/data/comparisons.ts
+    // that share that niche — so "More {niche} comparisons →" lands on a real list.
+    if (nicheFilter) {
+      const matched = comparisonPairs.filter((p) => p.primaryNiche === nicheFilter);
+      const expanded = matched
+        .map((p) => {
+          const a = getSiteBySlug(p.siteA);
+          const b = getSiteBySlug(p.siteB);
+          return a && b ? { a, b } : null;
+        })
+        .filter((x): x is { a: SiteData; b: SiteData } => x !== null);
+      if (expanded.length) return expanded.slice(0, 18);
+    }
+    // Default: top-8 site cross-product
+    return sites
+      .slice(0, 8)
+      .flatMap((a, i) =>
+        sites.slice(i + 1, 8).map((b) => ({ a, b }))
+      )
+      .slice(0, 12);
+  }, [nicheFilter]);
 
   return (
     <Layout>
@@ -135,6 +153,12 @@ const CompareIndex = () => {
         </Helmet>
 
         <section className="hero-mesh py-12">
+          <div className="container max-w-5xl">
+            <Breadcrumbs
+              className="mb-6"
+              items={[{ label: "Home", to: "/" }, { label: "Compare" }]}
+            />
+          </div>
           <div className="container max-w-5xl text-center">
             <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">
               Compare Twink Sites
@@ -159,13 +183,34 @@ const CompareIndex = () => {
                   </p>
                 )}
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 {selected.length > 0 && (
                   <button
                     onClick={clearAll}
                     className="text-xs px-3 py-1.5 rounded-button border border-border text-muted-foreground hover:bg-muted/40 transition-colors"
                   >
                     Clear
+                  </button>
+                )}
+                {selected.length >= 2 && (
+                  <button
+                    onClick={() => {
+                      try {
+                        const stored = JSON.parse(localStorage.getItem("tv_saved_comparisons") || "[]");
+                        const next = [
+                          { slugs: selected, savedAt: new Date().toISOString() },
+                          ...stored.filter((c: { slugs: string[] }) => c.slugs.join(",") !== selected.join(",")),
+                        ].slice(0, 10);
+                        localStorage.setItem("tv_saved_comparisons", JSON.stringify(next));
+                        setSavedFeedback("✓ Saved");
+                        setTimeout(() => setSavedFeedback(""), 1800);
+                      } catch {
+                        setSavedFeedback("Save failed");
+                      }
+                    }}
+                    className="text-xs px-3 py-1.5 rounded-button border border-primary/40 text-primary hover:bg-primary/10 transition-colors"
+                  >
+                    {savedFeedback || "Save this comparison"}
                   </button>
                 )}
                 {selected.length === 2 && (
@@ -354,8 +399,16 @@ const CompareIndex = () => {
         <section className="py-12 border-t border-border">
           <div className="container max-w-5xl">
             <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
-              Popular Comparisons
+              {nicheFilter ? `${nicheFilter.charAt(0).toUpperCase()}${nicheFilter.slice(1)} Comparisons` : "Popular Comparisons"}
             </h2>
+            {nicheFilter && (
+              <Link
+                to="/compare"
+                className="ml-3 text-xs text-muted-foreground hover:text-primary align-middle"
+              >
+                Clear niche filter ×
+              </Link>
+            )}
             <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {featuredPairs.map(({ a, b }) => (
                 <Link
@@ -459,6 +512,14 @@ const ComparePage = () => {
         </Helmet>
         <section className="py-16">
           <div className="container max-w-4xl">
+            <Breadcrumbs
+              className="mb-6"
+              items={[
+                { label: "Home", to: "/" },
+                { label: "Compare", to: "/compare" },
+                { label: `${siteA.name} vs ${siteB.name}` },
+              ]}
+            />
             <h1 className="text-center font-heading text-2xl font-bold md:text-4xl heading-gradient inline-block w-full">
               {siteA.name} vs {siteB.name}
             </h1>
@@ -566,6 +627,7 @@ const ComparePage = () => {
                   </p>
                   <OutboundLink
                     site={winner}
+                    onClick={() => trackEvent("verdict_click", { site: winner.slug, comparison: slug, role: "winner" })}
                     className={`cta-btn mt-4 inline-flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!isAffiliated(winner) ? "opacity-85" : ""}`}
                   >
                     Visit {winner.name} <ArrowRight size={14} />
@@ -583,6 +645,7 @@ const ComparePage = () => {
                   </p>
                   <OutboundLink
                     site={budgetPick.id !== winner.id ? budgetPick : (siteA.id === winner.id ? siteB : siteA)}
+                    onClick={() => trackEvent("verdict_click", { site: (budgetPick.id !== winner.id ? budgetPick : (siteA.id === winner.id ? siteB : siteA)).slug, comparison: slug, role: "runner_up" })}
                     className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-button border border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
                   >
                     Try {(budgetPick.id !== winner.id ? budgetPick : (siteA.id === winner.id ? siteB : siteA)).name} Instead <ArrowRight size={14} />
@@ -664,12 +727,21 @@ const ComparePage = () => {
                       </Link>
                     ))}
                   </div>
-                  <Link
-                    to={`/niche/${sharedNiche}`}
-                    className="mt-4 inline-block text-sm text-primary hover:underline"
-                  >
-                    More {niche.displayName.toLowerCase()} sites →
-                  </Link>
+                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                    <Link
+                      to={`/compare?niche=${sharedNiche}`}
+                      className="text-primary hover:underline"
+                    >
+                      More {niche.displayName.toLowerCase()} comparisons →
+                    </Link>
+                    <span className="text-muted-foreground/40">·</span>
+                    <Link
+                      to={`/niche/${sharedNiche}`}
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      All {niche.displayName.toLowerCase()} sites →
+                    </Link>
+                  </div>
                 </div>
               );
             })()}

@@ -27,6 +27,8 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { stripMonthlyUnit } from "@/lib/dealMath";
 import { getSiteImagery } from "@/data/site-imagery";
 import { generateSiteFaqs } from "@/lib/faqGenerator";
+import StickyMobileCTA from "../components/StickyMobileCTA";
+import SimilarSites from "../components/SimilarSites";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
@@ -54,8 +56,6 @@ const ScoreBar = ({ label, value }: { label: string; value: number }) => {
 const ReviewPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const site = getSiteBySlug(slug || "");
-  const [showMobileCta, setShowMobileCta] = useState(false);
-  const [mobileDismissed, setMobileDismissed] = useState(false);
   const [helpfulCount, setHelpfulCount] = useState(0);
   const [hasVoted, setHasVoted] = useState(false);
 
@@ -66,14 +66,6 @@ const ReviewPage = () => {
       setHasVoted(!!localStorage.getItem(`tv_voted_${site.slug}`));
     }
   }, [site]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowMobileCta(window.scrollY > 400);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleVote = () => {
     if (hasVoted || !site) return;
@@ -446,16 +438,9 @@ const ReviewPage = () => {
               <CommunityRating siteSlug={site.slug} />
             </AnimateOnScroll>
 
-            {/* Similar Sites — niche-weighted */}
+            {/* Similar Sites — niche-weighted, extracted to dedicated component */}
             <AnimateOnScroll className="mt-12">
-              <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
-                If You Like {site.name}, Try These
-              </h2>
-              <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                {similar.map((s) => (
-                  <SiteCard key={s.id} site={s} variant="compact" />
-                ))}
-              </div>
+              <SimilarSites site={site} />
             </AnimateOnScroll>
 
             {/* Compare internal links */}
@@ -526,45 +511,84 @@ const ReviewPage = () => {
                   </Link>
                 );
               })()}
+
+              {/* All niches as larger clickable pills in the sidebar */}
+              {(siteNicheMap[site.slug]?.length ?? 0) > 0 && (
+                <div className="mt-5 border-t border-border/40 pt-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+                    Niches
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {(siteNicheMap[site.slug] ?? []).map((nslug) => {
+                      const n = getNiche(nslug);
+                      if (!n) return null;
+                      return (
+                        <Link
+                          key={nslug}
+                          to={`/niche/${nslug}`}
+                          className="rounded-button bg-muted/40 px-2.5 py-1.5 text-xs font-medium text-muted-foreground hover:bg-primary/15 hover:text-primary transition-colors"
+                        >
+                          {n.emoji} {n.displayName}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Compare with another site picker — niche-filtered dropdown */}
+              {(() => {
+                const primaryNiche = siteNicheMap[site.slug]?.[0];
+                const niched = primaryNiche
+                  ? sites.filter(
+                      (s) =>
+                        s.slug !== site.slug &&
+                        (siteNicheMap[s.slug] ?? []).includes(primaryNiche)
+                    )
+                  : [];
+                const fallback = sites
+                  .filter((s) => s.slug !== site.slug && !niched.includes(s))
+                  .slice(0, 5);
+                const options = [...niched, ...fallback].slice(0, 12);
+                if (options.length === 0) return null;
+                return (
+                  <div className="mt-5 border-t border-border/40 pt-4">
+                    <label
+                      htmlFor="compare-with"
+                      className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70"
+                    >
+                      Compare with
+                    </label>
+                    <select
+                      id="compare-with"
+                      defaultValue=""
+                      onChange={(e) => {
+                        const target = e.target.value;
+                        if (target) {
+                          window.location.href = `/compare/${site.slug}-vs-${target}`;
+                        }
+                      }}
+                      className="mt-2 w-full rounded-button border border-border bg-muted/30 px-3 py-2 text-xs focus:outline-none focus:border-primary/50"
+                    >
+                      <option value="" disabled>
+                        Pick a site…
+                      </option>
+                      {options.map((s) => (
+                        <option key={s.slug} value={s.slug}>
+                          {s.name} ({s.overall_score}/5)
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                );
+              })()}
             </div>
           </aside>
         </div>
       </div>
 
-      {/* Mobile sticky CTA - improved with scroll trigger and dismiss */}
-      {showMobileCta && !mobileDismissed && (
-        <div
-          className="fixed inset-x-0 bottom-0 z-40 border-t border-border glass-card lg:hidden animate-slide-up"
-          style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom))", paddingTop: "12px", paddingLeft: "12px", paddingRight: "12px" }}
-        >
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setMobileDismissed(true)}
-              className="text-muted-foreground hover:text-foreground shrink-0 p-2 -m-2"
-              aria-label="Dismiss"
-            >
-              <XIcon size={16} />
-            </button>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold truncate">{site.name}</p>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-secondary">{site.overall_score}/5</span>
-                {site.deal_discount > 0 && (
-                  <span className="rounded-button bg-emerald-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-400">
-                    −{site.deal_discount}%
-                  </span>
-                )}
-              </div>
-            </div>
-            <OutboundLink
-              site={site}
-              className={`cta-btn flex items-center gap-2 rounded-button gold-gradient px-5 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap min-h-[44px] ${!isAffiliated(site) ? "opacity-85" : ""}`}
-            >
-              Visit Site <ArrowRight size={14} />
-            </OutboundLink>
-          </div>
-        </div>
-      )}
+      {/* Mobile sticky CTA — extracted to dedicated component */}
+      <StickyMobileCTA site={site} />
     </Layout>
   );
 };

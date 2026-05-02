@@ -9,6 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Layout from "../components/Layout";
+import Breadcrumbs from "../components/Breadcrumbs";
 import { PageTransition, MotionCard, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
 import VisitSiteButton from "../components/VisitSiteButton";
 import StarRating from "../components/StarRating";
@@ -157,10 +158,37 @@ const DiscountPage = () => {
               ],
             })}
           </script>
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: `${site.name} Discount ${currentYear} — ${site.deal_discount}% Off`,
+              description: `Get ${site.name} for ${site.price_annual} with our active discount. ${site.deal_text}.`,
+              author: { "@type": "Organization", name: "TwinkVault" },
+              publisher: {
+                "@type": "Organization",
+                name: "TwinkVault",
+                logo: { "@type": "ImageObject", url: "https://twinkvault.com/pwa-512.png" },
+              },
+              datePublished: `${currentYear}-01-01`,
+              dateModified: new Date().toISOString().split("T")[0],
+              mainEntityOfPage: `https://twinkvault.com/discount/${site.slug}`,
+            })}
+          </script>
         </Helmet>
 
         {/* Hero */}
         <section className="hero-mesh py-16">
+          <div className="container">
+            <Breadcrumbs
+              className="mb-6"
+              items={[
+                { label: "Home", to: "/" },
+                { label: "Deals", to: "/best-deals" },
+                { label: `${site.name} Discount` },
+              ]}
+            />
+          </div>
           <div className="container text-center">
             <motion.div
               className="mb-4 inline-flex items-center gap-2 rounded-button bg-muted px-3 py-1.5 text-xs text-muted-foreground"

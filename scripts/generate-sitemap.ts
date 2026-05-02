@@ -90,6 +90,7 @@ const NICHE_SLUGS = [
   "muscle",
   "str8-curious",
   "japanese",
+  "solo",
 ] as const;
 
 // ---------------------------------------------------------------------------

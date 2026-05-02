@@ -5,6 +5,7 @@ import OutboundLink from "./OutboundLink";
 import { sites } from "@/data/sites";
 import type { SiteData } from "@/data/sites";
 import ScoreRing from "./ScoreRing";
+import { trackEvent } from "@/lib/analytics";
 
 interface Pick {
   intent: string;
@@ -152,6 +153,7 @@ const QuickPicks = () => {
                   {/* CTA */}
                   <OutboundLink
                     site={pick.site}
+                    onClick={() => trackEvent("quick_pick_click", { intent: pick.intent, site_slug: pick.site.slug })}
                     className="cta-btn gold-gradient inline-flex w-full items-center justify-center gap-2 rounded-button px-5 py-3 text-sm font-semibold text-secondary-foreground"
                   >
                     Visit Site <ArrowRight size={15} />

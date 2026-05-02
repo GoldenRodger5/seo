@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { sites } from "@/data/sites";
 import { FEATURED_NICHE_SLUGS, getNiche } from "@/data/niches";
 import { siteNicheMap } from "@/data/site-niches";
+import { trackEvent } from "@/lib/analytics";
 
 const tileGradients = [
   "from-orange-500/30 to-red-500/10",
@@ -57,6 +58,7 @@ const NicheBrowser = () => {
             >
               <Link
                 to={`/niche/${niche.slug}`}
+                onClick={() => trackEvent("niche_click", { niche: niche.slug })}
                 className={`relative block overflow-hidden rounded-lg border border-border/60 bg-card p-5 min-h-[120px] transition-colors hover:border-primary/40 group`}
               >
                 <div

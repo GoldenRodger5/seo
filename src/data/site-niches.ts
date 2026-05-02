@@ -36,8 +36,8 @@ export const siteNicheMap: Record<string, string[]> = {
   "barebackrtxxx": ["bareback", "amateur", "twink", "group"],
   "cumpigmen": ["bareback", "group", "fetish", "amateur"],
   "realmenfuck": ["amateur", "muscle", "bareback", "str8-curious"],
-  "swinginballs": ["amateur", "big-dick", "bareback"],
-  "squirtstudios": ["amateur", "twink", "bareback"],
+  "swinginballs": ["amateur", "big-dick", "bareback", "solo"],
+  "squirtstudios": ["amateur", "twink", "bareback", "solo"],
   "aussiesdoit": ["amateur", "twink", "bareback", "uncut"],
 
   // ChargedCash family/taboo + auth roleplay

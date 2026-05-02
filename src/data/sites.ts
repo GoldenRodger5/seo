@@ -27,6 +27,12 @@ export interface SiteData {
   deal_text: string;
   deal_discount: number;
   deal_type: "limited" | "flash" | "ongoing";
+  /** ISO datetime when the current deal ends. Null/undefined means evergreen — never display fake urgency. */
+  expires_at?: string | null;
+  /** Whether the site is monthly-only (no annual plan). Drives "Cancel anytime" copy on deal cards. */
+  monthly_only?: boolean;
+  /** Whether the site is annual-only (no monthly plan). Drives "Annual subscription required" copy. */
+  annual_only?: boolean;
 }
 
 /** Returns the correct outbound URL for a site */

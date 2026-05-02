@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { requestOverlay, releaseOverlay, useOverlaySlot } from "../hooks/useOverlayQueue";
 import { supabase } from "@/integrations/supabase/client";
 import { isValidEmail } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 
 async function saveEmail(email: string, source: string) {
   await supabase.from("subscribers").insert({
@@ -73,6 +74,7 @@ const EmailCapturePopup = () => {
     setLoading(true);
     try {
       await saveEmail(email.trim(), "popup");
+      trackEvent("email_signup", { source: "popup" });
     } catch { /* silent */ }
     setLoading(false);
     setSubmitted(true);

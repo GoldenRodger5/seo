@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Check, Crown, ArrowRight } from "lucide-react";
 import Layout from "../components/Layout";
+import Breadcrumbs from "../components/Breadcrumbs";
 import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../components/MotionWrappers";
 import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
@@ -36,6 +37,12 @@ const BestTwinkSites = () => (
       </Helmet>
 
       <section className="hero-mesh py-16">
+        <div className="container max-w-4xl">
+          <Breadcrumbs
+            className="mb-6"
+            items={[{ label: "Home", to: "/" }, { label: "Best Twink Sites" }]}
+          />
+        </div>
         <div className="container max-w-4xl text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="inline-flex items-center gap-2 rounded-button bg-primary/15 px-3 py-1.5 text-xs font-medium text-primary">

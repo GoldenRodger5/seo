@@ -3,6 +3,7 @@ import { Mail, Sparkles } from "lucide-react";
 import AnimateOnScroll from "./AnimateOnScroll";
 import { supabase } from "@/integrations/supabase/client";
 import { isValidEmail } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 
 async function saveEmail(email: string, source: string) {
   await supabase.from("subscribers").insert({
@@ -23,6 +24,7 @@ const InlineEmailCapture = () => {
     setLoading(true);
     try {
       await saveEmail(email.trim(), "homepage");
+      trackEvent("email_signup", { source: "homepage" });
     } catch {
       // Still show success — don't punish user for backend issues
     }

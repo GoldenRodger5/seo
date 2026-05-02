@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import Layout from "../components/Layout";
 import { PageTransition, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
 import SiteCard from "../components/SiteCard";
+import Breadcrumbs from "../components/Breadcrumbs";
 import { sites } from "../data/sites";
 import { getNiche } from "../data/niches";
 import { siteNicheMap } from "../data/site-niches";
@@ -105,6 +106,16 @@ const NicheCategoryPage = () => {
 
         {/* Hero */}
         <section className="hero-mesh py-16">
+          <div className="container max-w-4xl">
+            <Breadcrumbs
+              className="mb-6"
+              items={[
+                { label: "Home", to: "/" },
+                { label: "Reviews", to: "/reviews" },
+                { label: niche.displayName },
+              ]}
+            />
+          </div>
           <div className="container max-w-4xl text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <span className="inline-flex items-center gap-2 rounded-button bg-primary/15 px-3 py-1.5 text-xs font-medium text-primary">
