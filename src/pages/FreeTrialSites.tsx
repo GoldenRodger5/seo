@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../components/MotionWrappers";
 import StarRating from "../components/StarRating";
 import VisitSiteButton from "../components/VisitSiteButton";
+import LocalisedPrice from "../components/LocalisedPrice";
 import { sites } from "../data/sites";
 import { currentYear } from "../lib/dates";
 
@@ -71,8 +72,8 @@ const FreeTrialSites = () => (
                       <p className="mt-2 text-sm text-muted-foreground">{site.short_description}</p>
                       <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
                         <span className="text-emerald-400 font-semibold">{site.deal_text}</span>
-                        <span>Then {site.price_monthly}</span>
-                        <span>Annual: {site.price_annual}</span>
+                        <span>Then <LocalisedPrice usd={site.price_monthly} /></span>
+                        <span>Annual: <LocalisedPrice usd={site.price_annual} /></span>
                       </div>
                       <div className="mt-2 flex flex-wrap gap-3 text-xs text-muted-foreground">
                         {site.pros.slice(0, 3).map(p => (
@@ -102,7 +103,7 @@ const FreeTrialSites = () => (
                     <div>
                       <h3 className="font-heading text-lg font-bold">{site.name}</h3>
                       <StarRating score={site.overall_score} size={12} />
-                      <p className="mt-1 text-xs text-muted-foreground">{site.price_monthly} · {site.price_annual} annual</p>
+                      <p className="mt-1 text-xs text-muted-foreground"><LocalisedPrice usd={site.price_monthly} /> · <LocalisedPrice usd={site.price_annual} /> annual</p>
                     </div>
                     <div className="flex gap-2 shrink-0">
                       <Link to={`/reviews/${site.slug}`} className="rounded-button border border-primary px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors">

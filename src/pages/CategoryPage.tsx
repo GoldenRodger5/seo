@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import AnimateOnScroll from "../components/AnimateOnScroll";
+import LocalisedPrice from "../components/LocalisedPrice";
 import { categories, getSitesByCategory } from "../data/sites";
 import { currentYear } from "../lib/dates";
 
@@ -103,7 +104,7 @@ const CategoryPage = () => {
                       </div>
                       <StarRating score={site.overall_score} size={14} />
                     </div>
-                    <span className="text-sm font-semibold">{site.price_monthly}</span>
+                    <LocalisedPrice usd={site.price_monthly} className="text-sm font-semibold" />
                   </div>
                   <p className="mt-3 text-sm text-muted-foreground">{site.short_description}</p>
                   <div className="mt-3 flex flex-wrap gap-2">

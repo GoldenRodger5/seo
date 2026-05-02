@@ -14,6 +14,7 @@ import { parseMonthlyPrice, formatTotalAnnual, computeSavings } from "../lib/dea
 import { supabase } from "../integrations/supabase/client";
 import CountdownTimer from "../components/CountdownTimer";
 import { trackEvent } from "../lib/analytics";
+import LocalisedPrice from "../components/LocalisedPrice";
 
 type FilterKey = "all" | "trials" | "under10" | "fifty";
 type SortKey = "discount" | "price" | "score";
@@ -117,8 +118,8 @@ const DealCard = ({ site }: { site: SiteData }) => {
       {/* Pricing block */}
       <div className="mt-4 rounded-lg border border-border/40 bg-muted/20 p-3">
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-emerald-400">{site.price_annual}</span>
-          <span className="text-xs text-muted-foreground line-through">{site.price_monthly}</span>
+          <LocalisedPrice usd={site.price_annual} className="text-2xl font-bold text-emerald-400" />
+          <LocalisedPrice usd={site.price_monthly} className="text-xs text-muted-foreground line-through" />
         </div>
         {annualTotal && (
           <p className="mt-1 text-[11px] text-muted-foreground">

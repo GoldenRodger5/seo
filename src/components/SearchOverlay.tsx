@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Search, X, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { sites, categories } from "../data/sites";
+import LocalisedPrice from "./LocalisedPrice";
 
 interface SearchOverlayProps {
   open: boolean;
@@ -80,7 +81,7 @@ const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
                 >
                   <div>
                     <p className="font-semibold">{site.name}</p>
-                    <p className="text-xs text-muted-foreground">{site.overall_score}/5 · {site.price_monthly}</p>
+                    <p className="text-xs text-muted-foreground">{site.overall_score}/5 · <LocalisedPrice usd={site.price_monthly} /></p>
                   </div>
                   <span className="flex items-center gap-1 text-xs text-secondary">
                     View Review <ArrowRight size={12} />

@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import OutboundLink from "./OutboundLink";
 import ScoreRing from "./ScoreRing";
+import LocalisedPrice from "./LocalisedPrice";
 import type { SiteData } from "@/data/sites";
 import { getBrandPalette } from "@/data/site-brands";
 import { siteNicheMap } from "@/data/site-niches";
@@ -189,7 +190,7 @@ const SiteCard = ({
 
         {/* Pricing strip */}
         <div className="flex items-baseline gap-2 mt-1">
-          <span className="text-base font-bold">{site.price_monthly}</span>
+          <LocalisedPrice usd={site.price_monthly} className="text-base font-bold" />
           {site.deal_discount > 0 && (
             <span className="rounded-button bg-emerald-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-400">
               Save {site.deal_discount}%

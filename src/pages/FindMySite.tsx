@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import ScoreRing from "../components/ScoreRing";
 import VisitSiteButton from "../components/VisitSiteButton";
 import AnimateOnScroll from "../components/AnimateOnScroll";
+import LocalisedPrice from "../components/LocalisedPrice";
 import { sites, SiteData } from "../data/sites";
 
 type Step = 1 | 2 | 3 | "result";
@@ -186,7 +187,7 @@ const FindMySite = () => {
                         <div className="flex-1">
                           <h3 className="font-heading text-xl font-bold">{site.name}</h3>
                           <p className="mt-1 text-sm text-muted-foreground">{site.short_description}</p>
-                          <p className="mt-2 text-sm font-semibold">{site.price_monthly} · {site.price_annual} annual</p>
+                          <p className="mt-2 text-sm font-semibold"><LocalisedPrice usd={site.price_monthly} /> · <LocalisedPrice usd={site.price_annual} /> annual</p>
                         </div>
                       </div>
                       <div className="mt-4 flex gap-3">

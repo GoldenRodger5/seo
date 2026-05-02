@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Check, Crown, ArrowRight } from "lucide-react";
 import Layout from "../components/Layout";
 import Breadcrumbs from "../components/Breadcrumbs";
+import LocalisedPrice from "../components/LocalisedPrice";
 import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../components/MotionWrappers";
 import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
@@ -102,7 +103,7 @@ const BestTwinkSites = () => (
                       <div className="mt-3 flex flex-wrap gap-3 text-xs text-muted-foreground">
                         <span className="flex items-center gap-1"><Check size={11} className="text-emerald-400" /> {site.pros[0]}</span>
                         <span className="flex items-center gap-1"><Check size={11} className="text-emerald-400" /> {site.pros[1]}</span>
-                        <span>From <strong className="text-foreground">{site.price_annual}</strong> annual</span>
+                        <span>From <strong className="text-foreground"><LocalisedPrice usd={site.price_annual} /></strong> annual</span>
                       </div>
                     </div>
                     <div className="flex flex-col gap-2 shrink-0 sm:w-40">

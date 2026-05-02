@@ -7,6 +7,7 @@ import Layout from "../components/Layout";
 import { PageTransition } from "../components/MotionWrappers";
 import StarRating from "../components/StarRating";
 import VisitSiteButton from "../components/VisitSiteButton";
+import LocalisedPrice from "../components/LocalisedPrice";
 import { sites } from "../data/sites";
 
 interface Recommendation {
@@ -179,7 +180,7 @@ const AskAI = () => {
                             <h3 className="mt-2 font-heading text-lg font-bold">{site.name}</h3>
                             <StarRating score={site.overall_score} size={13} />
                             <p className="mt-2 text-sm text-muted-foreground">{rec.reason}</p>
-                            <p className="mt-1 text-xs text-muted-foreground">{site.price_monthly} · {site.price_annual} annual</p>
+                            <p className="mt-1 text-xs text-muted-foreground"><LocalisedPrice usd={site.price_monthly} /> · <LocalisedPrice usd={site.price_annual} /> annual</p>
                           </div>
                         </div>
                         <div className="mt-4 flex gap-3">

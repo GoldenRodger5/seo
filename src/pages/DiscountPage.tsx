@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import Layout from "../components/Layout";
 import Breadcrumbs from "../components/Breadcrumbs";
+import LocalisedPrice from "../components/LocalisedPrice";
 import { PageTransition, MotionCard, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
 import VisitSiteButton from "../components/VisitSiteButton";
 import StarRating from "../components/StarRating";
@@ -247,12 +248,8 @@ const DiscountPage = () => {
               </div>
 
               <div className="mt-5 flex items-center gap-4">
-                <span className="text-lg text-muted-foreground line-through">
-                  {site.price_monthly}
-                </span>
-                <span className="text-2xl font-bold text-emerald-400">
-                  {site.price_annual}
-                </span>
+                <LocalisedPrice usd={site.price_monthly} className="text-lg text-muted-foreground line-through" />
+                <LocalisedPrice usd={site.price_annual} className="text-2xl font-bold text-emerald-400" />
                 <span className="text-sm text-muted-foreground">/mo on annual</span>
               </div>
 
@@ -295,12 +292,12 @@ const DiscountPage = () => {
                 <tbody className="text-muted-foreground">
                   <tr className="border-b border-border/30">
                     <td className="px-4 py-3">Monthly</td>
-                    <td className="px-4 py-3">{site.price_monthly}</td>
+                    <td className="px-4 py-3"><LocalisedPrice usd={site.price_monthly} /></td>
                     <td className="px-4 py-3 text-muted-foreground/50">—</td>
                   </tr>
                   <tr className="border-b border-border/30 bg-muted/20">
                     <td className="px-4 py-3">Quarterly</td>
-                    <td className="px-4 py-3">{site.price_quarterly}</td>
+                    <td className="px-4 py-3"><LocalisedPrice usd={site.price_quarterly} /></td>
                     <td className="px-4 py-3 text-emerald-400">
                       Save {Math.round(((monthlyPriceNum - parseFloat(site.price_quarterly.replace(/[^0-9.]/g, ""))) / monthlyPriceNum) * 100)}%
                     </td>
@@ -312,7 +309,7 @@ const DiscountPage = () => {
                         BEST VALUE
                       </span>
                     </td>
-                    <td className="px-4 py-3 font-semibold text-emerald-400">{site.price_annual}</td>
+                    <td className="px-4 py-3 font-semibold text-emerald-400"><LocalisedPrice usd={site.price_annual} /></td>
                     <td className="px-4 py-3 text-emerald-400">
                       Save {Math.round(((monthlyPriceNum - annualPriceNum) / monthlyPriceNum) * 100)}%
                     </td>
@@ -470,13 +467,13 @@ const DiscountPage = () => {
               <p>
                 Finding the best price on {site.name} comes down to choosing the right plan and timing.
                 Right now, the best available deal is <strong className="text-foreground">{site.deal_text}</strong>,
-                which brings the effective monthly cost down to just {site.price_annual}. That's a{" "}
-                {site.deal_discount}% saving compared to the standard {site.price_monthly} monthly rate —
+                which brings the effective monthly cost down to just <LocalisedPrice usd={site.price_annual} />. That's a{" "}
+                {site.deal_discount}% saving compared to the standard <LocalisedPrice usd={site.price_monthly} /> monthly rate —
                 and it's the lowest price we've tracked for {site.name} in {currentYear}.
               </p>
               <p>
-                {site.name} offers three membership tiers: monthly at {site.price_monthly}, quarterly at{" "}
-                {site.price_quarterly}, and annual at {site.price_annual}. While the monthly plan gives you
+                {site.name} offers three membership tiers: monthly at <LocalisedPrice usd={site.price_monthly} />, quarterly at{" "}
+                <LocalisedPrice usd={site.price_quarterly} />, and annual at <LocalisedPrice usd={site.price_annual} />. While the monthly plan gives you
                 maximum flexibility, the annual plan delivers the best value by far — you'll save ${savingsPerMonth}{" "}
                 every single month compared to paying month-to-month. For most users, the annual plan is the
                 clear winner unless you're genuinely unsure about committing.

@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../components/MotionWrappers";
 import StarRating from "../components/StarRating";
 import VisitSiteButton from "../components/VisitSiteButton";
+import LocalisedPrice from "../components/LocalisedPrice";
 import { sites } from "../data/sites";
 import { currentYear } from "../lib/dates";
 
@@ -78,8 +79,8 @@ const CheapestTwinkSites = () => (
                       </Link>
                       {i === 0 && <span className="ml-2 rounded-button gold-gradient px-1.5 py-0.5 text-[10px] font-semibold text-secondary-foreground">Cheapest</span>}
                     </td>
-                    <td className="px-4 py-3 text-center font-semibold text-emerald-400">{site.price_annual}</td>
-                    <td className="px-4 py-3 text-center text-muted-foreground">{site.price_monthly}</td>
+                    <td className="px-4 py-3 text-center font-semibold text-emerald-400"><LocalisedPrice usd={site.price_annual} /></td>
+                    <td className="px-4 py-3 text-center text-muted-foreground"><LocalisedPrice usd={site.price_monthly} /></td>
                     <td className="px-4 py-3 text-center">{site.overall_score}/5</td>
                     <td className="px-4 py-3 text-center">{site.has_free_trial ? "✓" : "—"}</td>
                   </tr>
@@ -99,7 +100,7 @@ const CheapestTwinkSites = () => (
                         #{i + 1}
                       </span>
                       <div className="text-center">
-                        <p className="text-lg font-bold text-emerald-400">{site.price_annual}</p>
+                        <p className="text-lg font-bold text-emerald-400"><LocalisedPrice usd={site.price_annual} /></p>
                         <p className="text-[10px] text-muted-foreground">per month</p>
                       </div>
                     </div>

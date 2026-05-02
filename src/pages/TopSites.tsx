@@ -8,6 +8,7 @@ import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import VisitSiteButton from "../components/VisitSiteButton";
+import LocalisedPrice from "../components/LocalisedPrice";
 import { sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { currentYear, currentMonthLong } from "../lib/dates";
@@ -179,7 +180,7 @@ const TopSites = () => {
                       {/* CTA column */}
                       <div className="flex flex-col items-center gap-3 lg:w-44">
                         <div className="rounded-button border border-border bg-muted/50 px-3 py-1.5">
-                          <span className="text-lg font-semibold">{site.price_monthly}</span>
+                          <LocalisedPrice usd={site.price_monthly} className="text-lg font-semibold" />
                         </div>
                         <VisitSiteButton site={site} className="w-full" />
                         <Link
@@ -224,7 +225,7 @@ const TopSites = () => {
                           <Link to={`/reviews/${site.slug}`} className="hover:text-secondary transition-colors">{site.name}</Link>
                         </td>
                         <td className="px-4 py-3 font-semibold text-secondary">{site.overall_score}</td>
-                        <td className="px-4 py-3 text-muted-foreground">{site.price_monthly}</td>
+                        <td className="px-4 py-3 text-muted-foreground"><LocalisedPrice usd={site.price_monthly} /></td>
                         <td className="px-4 py-3">
                           {site.has_free_trial ? <Check size={14} className="text-emerald-400" /> : <XIcon size={14} className="text-muted-foreground/30" />}
                         </td>

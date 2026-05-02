@@ -29,6 +29,7 @@ import { getSiteImagery } from "@/data/site-imagery";
 import { generateSiteFaqs } from "@/lib/faqGenerator";
 import StickyMobileCTA from "../components/StickyMobileCTA";
 import SimilarSites from "../components/SimilarSites";
+import LocalisedPrice from "../components/LocalisedPrice";
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
@@ -313,18 +314,18 @@ const ReviewPage = () => {
                     <tbody className="text-muted-foreground">
                       <tr className="border-b border-border/30">
                         <td className="px-4 py-3">Monthly</td>
-                        <td className="px-4 py-3">{site.price_monthly}</td>
-                        <td className="px-4 py-3">{site.price_monthly}</td>
+                        <td className="px-4 py-3"><LocalisedPrice usd={site.price_monthly} /></td>
+                        <td className="px-4 py-3"><LocalisedPrice usd={site.price_monthly} /></td>
                       </tr>
                       <tr className="border-b border-border/30 bg-muted/20">
                         <td className="px-4 py-3">Quarterly</td>
-                        <td className="px-4 py-3">{site.price_quarterly}</td>
-                        <td className="px-4 py-3">{site.price_quarterly}</td>
+                        <td className="px-4 py-3"><LocalisedPrice usd={site.price_quarterly} /></td>
+                        <td className="px-4 py-3"><LocalisedPrice usd={site.price_quarterly} /></td>
                       </tr>
                       <tr>
                         <td className="px-4 py-3">Annual</td>
-                        <td className="px-4 py-3">{stripMonthlyUnit(site.price_annual)}/mo (billed annually)</td>
-                        <td className="px-4 py-3">{site.price_annual}</td>
+                        <td className="px-4 py-3"><LocalisedPrice usd={stripMonthlyUnit(site.price_annual)} stripUnit />/mo (billed annually)</td>
+                        <td className="px-4 py-3"><LocalisedPrice usd={site.price_annual} /></td>
                       </tr>
                     </tbody>
                   </table>
@@ -483,11 +484,11 @@ const ReviewPage = () => {
               </div>
               <div className="mt-3 flex justify-center">
                 <span className="rounded-button border border-border bg-muted/50 px-3 py-1.5 text-lg font-semibold">
-                  {site.price_monthly}
+                  <LocalisedPrice usd={site.price_monthly} />
                 </span>
               </div>
               <p className="mt-2 text-center text-[11px] text-muted-foreground">
-                or {site.price_annual} billed annually
+                or <LocalisedPrice usd={site.price_annual} /> billed annually
               </p>
               <VisitSiteButton site={site} className="mt-4" />
               {site.deal_discount > 0 && (

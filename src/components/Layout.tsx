@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import StickyDealBar from "./StickyDealBar";
+import CurrencyNotice from "./CurrencyNotice";
 
 const Layout = ({ children }: { children: ReactNode }) => (
   <div className="flex min-h-screen flex-col">
@@ -13,6 +14,7 @@ const Layout = ({ children }: { children: ReactNode }) => (
     </a>
     <StickyDealBar />
     <Navbar />
+    <CurrencyNotice />
     <main id="main-content" className="flex-1">{children}</main>
     <Footer />
   </div>

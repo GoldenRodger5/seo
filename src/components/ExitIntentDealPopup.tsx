@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { getSiteBySlug, sites, type SiteData } from "../data/sites";
 import { requestOverlay, releaseOverlay, useOverlaySlot } from "../hooks/useOverlayQueue";
 import { supabase } from "../integrations/supabase/client";
+import LocalisedPrice from "./LocalisedPrice";
 
 const trackEvent = (eventType: string, payload: Record<string, unknown> = {}): void => {
   // Fire-and-forget — never block UI on telemetry.
@@ -137,7 +138,7 @@ const ExitIntentDealPopup = () => {
               <span className="font-semibold text-foreground">{deal.name}</span>
               {deal.deal_discount > 0 ? ` is currently ${deal.deal_discount}% off.` : " is one of our top-rated picks."}
             </p>
-            <p className="mt-2 text-2xl font-bold text-emerald-400">{deal.price_annual} annual</p>
+            <p className="mt-2 text-2xl font-bold text-emerald-400"><LocalisedPrice usd={deal.price_annual} /> annual</p>
             <p className="text-sm text-muted-foreground">{deal.short_description.split(".")[0]}</p>
 
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>

@@ -16,6 +16,7 @@ import { stripMonthlyUnit } from "@/lib/dealMath";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { comparisonPairs } from "@/data/comparisons";
 import { trackEvent } from "@/lib/analytics";
+import LocalisedPrice from "../components/LocalisedPrice";
 
 const scoreColor = (val: number, max: number) => {
   const ratio = val / max;
@@ -33,7 +34,7 @@ const CompareColumn = ({ site }: { site: SiteData }) => (
     <div className="mt-2 flex justify-center">
       <StarRating score={site.overall_score} size={14} />
     </div>
-    <p className="mt-3 text-center text-lg font-semibold">{site.price_monthly}</p>
+    <p className="mt-3 text-center text-lg font-semibold"><LocalisedPrice usd={site.price_monthly} /></p>
     <div className="mt-4 space-y-1.5">
       {site.pros.map((p) => (
         <div key={p} className="flex items-start gap-2 text-sm">
@@ -314,13 +315,13 @@ const CompareIndex = () => {
                     <tr className="border-b border-border/30">
                       <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground">Monthly</td>
                       {selectedSites.map((s) => (
-                        <td key={s.slug} className="px-4 py-3 text-center font-semibold">{s.price_monthly}</td>
+                        <td key={s.slug} className="px-4 py-3 text-center font-semibold"><LocalisedPrice usd={s.price_monthly} /></td>
                       ))}
                     </tr>
                     <tr className="border-b border-border/30">
                       <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground">Annual (per mo)</td>
                       {selectedSites.map((s) => (
-                        <td key={s.slug} className="px-4 py-3 text-center font-semibold">{s.price_annual}</td>
+                        <td key={s.slug} className="px-4 py-3 text-center font-semibold"><LocalisedPrice usd={s.price_annual} /></td>
                       ))}
                     </tr>
                     <tr className="border-b border-border/30">
