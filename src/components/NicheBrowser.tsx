@@ -18,6 +18,8 @@ const nicheBannerMap: Record<string, string> = {
   amateur: "/site-banners/southern-strokes-hero.jpg",
   muscle: "/site-banners/athletic-twinks-hero.jpg",
   alternative: "/site-banners/alternadudes-hero.jpg",
+  "big-dick": "/site-banners/rawhole-hero.jpg",
+  jock: "/site-banners/athletic-twinks-hero.jpg",
 };
 
 const NicheBrowser = () => {
@@ -71,12 +73,12 @@ const NicheBrowser = () => {
                           backgroundImage: `url(${banner})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
-                          filter: "blur(2px)",
-                          transform: "scale(1.06)",
+                          filter: "blur(3px)",
+                          transform: "scale(1.08)",
                         }}
                         aria-hidden
                       />
-                      <div className="pointer-events-none absolute inset-0 bg-black/80 transition-colors group-hover:bg-black/70" />
+                      <div className="pointer-events-none absolute inset-0 bg-black/85 transition-colors group-hover:bg-black/75" />
                     </>
                   ) : (
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-card to-muted/40" />

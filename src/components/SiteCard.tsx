@@ -123,13 +123,17 @@ const SiteCard = ({
       {tip}
       {/* Hero image (when sourced from affiliate creative) — falls back to brand-color bar + watermark */}
       {heroImg ? (
-        <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted/40">
+        <div
+          className="relative w-full overflow-hidden bg-muted/40"
+          style={{ aspectRatio: "3 / 2" }}
+        >
           <img
             src={heroImg}
             alt={imagery.banner_alt}
             loading="lazy"
             decoding="async"
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            style={{ objectPosition: "center 20%" }}
           />
           <div className={`absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r ${palette.gradient}`} />
         </div>

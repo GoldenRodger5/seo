@@ -155,6 +155,7 @@ const ReviewPage = () => {
                     loading="eager"
                     decoding="async"
                     className="aspect-[21/9] w-full object-cover"
+                    style={{ objectPosition: "center 20%" }}
                   />
                 </div>
               );

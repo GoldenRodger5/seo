@@ -7,15 +7,18 @@ const SitePlaceholderImage = ({ site, className = "" }: { site: SiteData; classN
 
   if (heroImg) {
     return (
-      <div className={`relative aspect-video rounded-lg overflow-hidden bg-muted/40 ${className}`}>
+      <div
+        className={`relative rounded-lg overflow-hidden bg-muted/40 ${className}`}
+        style={{ aspectRatio: "3 / 2" }}
+      >
         <img
           src={heroImg}
           alt={imagery.banner_alt}
           loading="lazy"
           decoding="async"
           className="h-full w-full object-cover"
+          style={{ objectPosition: "center 20%" }}
         />
-        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-card/80 to-transparent" />
       </div>
     );
   }
