@@ -1,33 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { Lock, Users } from "lucide-react";
+import { motion } from "framer-motion";
+import { Lock, ShieldCheck } from "lucide-react";
 import { TOTAL_SITES } from "@/lib/siteStats";
-
-// Single source of truth: ~2 hours of paid-membership testing per site.
-// Scales with TOTAL_SITES so the homepage and any other surface stay in sync.
-const HOURS_TESTED = TOTAL_SITES * 2;
-
-const AnimatedCounter = ({ target, suffix = "" }: { target: number; suffix?: string }) => {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-
-  useEffect(() => {
-    if (!inView) return;
-    const duration = 1500;
-    const start = performance.now();
-    const animate = (now: number) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(eased * target));
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }, [inView, target]);
-
-  return <span ref={ref}>{count}{suffix}</span>;
-};
 
 const BentoGrid = () => (
   <section className="py-16">
@@ -59,13 +32,13 @@ const BentoGrid = () => (
           transition={{ delay: 0.1 }}
           whileHover={{ borderColor: "hsl(263, 70%, 58%, 0.5)", boxShadow: "0 8px 40px hsl(263, 70%, 58%, 0.2)" }}
         >
-          <h3 className="font-heading text-lg font-bold">Hours Tested</h3>
+          <h3 className="font-heading text-lg font-bold">Sites Reviewed</h3>
           <div className="mt-2">
             <span className="font-heading text-5xl font-bold gold-gradient-text">
-              <AnimatedCounter target={HOURS_TESTED} suffix="+" />
+              {TOTAL_SITES}
             </span>
           </div>
-          <p className="mt-2 text-xs text-muted-foreground">hours of hands-on testing</p>
+          <p className="mt-2 text-xs text-muted-foreground">Paid memberships only — no tour-page reviews</p>
         </motion.div>
 
         {/* Medium tile - Updated */}
@@ -108,18 +81,13 @@ const BentoGrid = () => (
           transition={{ delay: 0.25 }}
           whileHover={{ borderColor: "hsl(263, 70%, 58%, 0.5)", boxShadow: "0 8px 40px hsl(263, 70%, 58%, 0.2)" }}
         >
-          <Users size={24} className="text-primary" />
+          <ShieldCheck size={24} className="text-primary" />
           <h3 className="mt-2 font-heading text-lg font-bold">
-            Growing Community
+            Affiliate Disclosed
           </h3>
-          <p className="mt-1 text-xs text-muted-foreground">of readers trust our reviews</p>
-          <div className="mt-3 flex -space-x-2">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-7 w-7 rounded-full border-2 border-card bg-muted flex items-center justify-center text-[9px] font-bold text-muted-foreground">
-                {String.fromCharCode(65 + i)}
-              </div>
-            ))}
-          </div>
+          <p className="mt-1 text-xs text-muted-foreground">
+            We earn commissions on some links — but rankings are never for sale.
+          </p>
         </motion.div>
       </div>
     </div>
