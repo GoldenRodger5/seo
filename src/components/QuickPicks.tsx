@@ -120,11 +120,10 @@ const QuickPicks = () => {
                       loading="lazy"
                       decoding="async"
                       aria-hidden
-                      className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25 transition-opacity duration-300 group-hover:opacity-35"
-                      style={{ filter: "blur(3px)", transform: "scale(1.06)" }}
+                      className="pointer-events-none absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      style={{ objectPosition: "center 20%" }}
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-card/80" />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/70 to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/85 to-card/30" />
                   </>
                 ) : (
                   <>
