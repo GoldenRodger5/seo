@@ -99,8 +99,12 @@ const ReviewPage = () => {
   return (
     <Layout>
       <Helmet>
-        <title>{`${site.name} Review ${currentYear} — Is It Worth It? | TwinkVault`}</title>
-        <meta name="description" content={`Read our honest ${site.name} review. We tested the content, pricing, and usability so you know exactly what you're getting.`} />
+        <title>{`${site.name} Review ${currentYear}: Is It Worth It? | TwinkVault`}</title>
+        <meta name="description" content={(() => {
+          const verdict = getVerdict(site.slug);
+          const firstSentence = verdict ? verdict.split(/(?<=\.)\s/)[0] : `Honest ${site.name} review based on a paid membership.`;
+          return `${site.name} scored ${site.overall_score}/5 on TwinkVault. ${firstSentence} ${site.price_monthly}/mo — see the full breakdown.`;
+        })()} />
         <link rel="canonical" href={`https://twinkvault.com/reviews/${site.slug}`} />
         <script type="application/ld+json">
           {JSON.stringify({

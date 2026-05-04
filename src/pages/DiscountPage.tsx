@@ -15,7 +15,7 @@ import { PageTransition, MotionCard, StaggerContainer, StaggerChild } from "../c
 import VisitSiteButton from "../components/VisitSiteButton";
 import StarRating from "../components/StarRating";
 import VerifiedBadge from "../components/VerifiedBadge";
-import { currentYear, currentMonthLong, lastCheckedDate } from "../lib/dates";
+import { currentYear, currentMonthLong, lastCheckedDate, DEAL_VERIFIED_DATE } from "../lib/dates";
 import { sites, getSiteBySlug, isAffiliated } from "../data/sites";
 import { siteNicheMap } from "../data/site-niches";
 import { getNiche } from "../data/niches";
@@ -123,13 +123,13 @@ const DiscountPage = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>{`${site.name} Discount ${currentYear} — ${site.deal_discount}% Off (Lowest Price) | TwinkVault`}</title>
+          <title>{`${site.name} Discount: ${site.deal_discount || "Up to 67"}% Off Deal (Verified ${DEAL_VERIFIED_DATE}) | TwinkVault`}</title>
           <meta
             name="description"
-            content={`Get ${site.name} for ${site.price_annual} with our active discount. ${site.deal_text}. No promo code needed — discount auto-applies. Updated ${currentMonthLong} ${currentYear}.`}
+            content={`Get ${site.deal_discount || "up to 67"}% off ${site.name} — the lowest verified price we've found. Deal confirmed ${DEAL_VERIFIED_DATE}. Click to activate the discount before it expires.`}
           />
-          <meta property="og:title" content={`${site.name} Discount ${currentYear} — ${site.deal_discount}% Off`} />
-          <meta property="og:description" content={`Get ${site.name} for ${site.price_annual} with our active discount. No promo code needed.`} />
+          <meta property="og:title" content={`${site.name} Discount: ${site.deal_discount || "Up to 67"}% Off (Verified ${DEAL_VERIFIED_DATE})`} />
+          <meta property="og:description" content={`Get ${site.deal_discount || "up to 67"}% off ${site.name} — the lowest verified price we've found. Deal confirmed ${DEAL_VERIFIED_DATE}.`} />
           <meta property="og:url" content={`https://twinkvault.com/discount/${site.slug}`} />
           <link rel="canonical" href={`https://twinkvault.com/discount/${site.slug}`} />
           <script type="application/ld+json">

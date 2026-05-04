@@ -9,7 +9,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { sites, isAffiliated } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
-import { currentYear, lastCheckedDate } from "../lib/dates";
+import { currentYear, lastCheckedDate, DEAL_VERIFIED_DATE } from "../lib/dates";
 import { parseMonthlyPrice, formatTotalAnnual, computeSavings } from "../lib/dealMath";
 import { supabase } from "../integrations/supabase/client";
 import CountdownTimer from "../components/CountdownTimer";
@@ -275,11 +275,11 @@ const BestDeals = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>{`Best Gay Twink Site Deals & Discounts ${currentYear} — Up to 70% Off | TwinkVault`}</title>
-          <meta name="description" content={`Every active discount on premium gay twink sites in one place. Real prices, total cost shown upfront, free trials marked. Updated weekly.`} />
+          <title>{`Best Gay Twink Site Deals & Discounts (${DEAL_VERIFIED_DATE}) | TwinkVault`}</title>
+          <meta name="description" content="Save up to 67% on the top-rated twink sites. Verified deals updated monthly. All links tested — no expired discounts, no bait-and-switch pricing." />
           <link rel="canonical" href="https://twinkvault.com/best-deals" />
-          <meta property="og:title" content={`Best Gay Twink Site Deals ${currentYear} — Up to 70% Off`} />
-          <meta property="og:description" content="Every active discount in one place. Real prices, total cost shown upfront, free trials marked." />
+          <meta property="og:title" content={`Best Gay Twink Site Deals & Discounts (${DEAL_VERIFIED_DATE})`} />
+          <meta property="og:description" content="Save up to 67% on the top-rated twink sites. Verified deals updated monthly. All links tested — no expired discounts, no bait-and-switch pricing." />
           <meta property="og:url" content="https://twinkvault.com/best-deals" />
         </Helmet>
 

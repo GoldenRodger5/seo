@@ -9,6 +9,7 @@ import VisitSiteButton from "../components/VisitSiteButton";
 import LocalisedPrice from "../components/LocalisedPrice";
 import { sites, categories } from "../data/sites";
 import { currentYear, currentMonthLong } from "../lib/dates";
+import { TOTAL_SITES } from "../lib/siteStats";
 
 const sortOptions = ["Top Rated", "Newest", "Alphabetical"];
 
@@ -27,8 +28,8 @@ const ReviewsIndex = () => {
   return (
     <Layout>
       <Helmet>
-        <title>{`All Gay Twink Site Reviews ${currentYear} — Tested & Ranked | TwinkVault`}</title>
-        <meta name="description" content="Browse all 18 honest, independent gay site reviews. Sorted by rating, filtered by category. Updated monthly." />
+        <title>{`Gay Twink Site Reviews (${TOTAL_SITES} Tested & Scored) | TwinkVault`}</title>
+        <meta name="description" content={`In-depth reviews of ${TOTAL_SITES} gay twink sites. Each scored on content, value, updates and mobile UX. Find the right site for your budget and taste.`} />
         <link rel="canonical" href="https://twinkvault.com/reviews" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
