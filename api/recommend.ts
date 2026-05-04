@@ -65,7 +65,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
+        model: "claude-sonnet-4-6",
         max_tokens: 600,
         system: `You are TwinkVault's recommendation engine. A user will describe what they want from a gay twink content site. Recommend the top 2-3 best matches from our database.
 
