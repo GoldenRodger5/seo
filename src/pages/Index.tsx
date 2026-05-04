@@ -12,7 +12,7 @@ import BrandStory from "../components/BrandStory";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import VisitSiteButton from "../components/VisitSiteButton";
 import Layout from "../components/Layout";
-import { sites, getVisitUrl, isAffiliated, getTopRatedPromotable, getRecentlyUpdatedPromotable } from "../data/sites";
+import { sites, getVisitUrl, isAffiliated, getTopRatedPromotable, getTopRatedAffiliated, getRecentlyUpdatedPromotable } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { ReactNode } from "react";
 import { currentYear, currentMonthShort } from "../lib/dates";
@@ -183,7 +183,7 @@ const badgeColor = (badge: string | null) => {
 };
 
 const TopPicksSection = () => {
-  const featured = getTopRatedPromotable(5);
+  const featured = getTopRatedAffiliated(5);
   return (
     <section className="py-16">
       <div className="container">

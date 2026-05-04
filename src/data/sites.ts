@@ -2071,6 +2071,13 @@ export function getTopRatedPromotable(limit: number): SiteData[] {
     .slice(0, limit);
 }
 
+/** Top-rated affiliated sites regardless of banner — for the Top 5 card section. */
+export function getTopRatedAffiliated(limit: number): SiteData[] {
+  return [...sites.filter(s => isAffiliated(s))]
+    .sort((a, b) => b.overall_score - a.overall_score || b.update_frequency - a.update_frequency)
+    .slice(0, limit);
+}
+
 export function getRecentlyUpdatedPromotable(limit: number, exclude: SiteData[] = []): SiteData[] {
   const excludeIds = new Set(exclude.map(s => s.id));
   return getPromotableSites()
