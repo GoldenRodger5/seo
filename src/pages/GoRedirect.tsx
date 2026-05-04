@@ -29,8 +29,8 @@ const GoRedirect = () => {
     logClick(site.slug, referrer);
     const targetUrl = site.affiliate_url || site.homepage_url;
     const timer = setTimeout(() => {
-      window.open(targetUrl, "_blank");
-    }, 1200);
+      window.location.href = targetUrl;
+    }, 600);
     return () => clearTimeout(timer);
   }, [site]);
 
