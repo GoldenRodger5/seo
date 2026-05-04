@@ -58,6 +58,19 @@ const SITE_SLUGS = [
   "hairyandraw",
   "boyfun",
   "jawked",
+  "men",
+  "sean-cody",
+  "icon-male",
+  "gaywire",
+  "biempire",
+  "twinkpop",
+  "reality-dudes",
+  "bigstr",
+  "black-male-me",
+  "noirmale",
+  "guy-selector",
+  "spicevidsgay",
+  "maleaccess",
 ] as const;
 
 const CATEGORY_SLUGS = [

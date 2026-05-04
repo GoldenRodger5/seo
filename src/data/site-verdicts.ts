@@ -105,6 +105,32 @@ export const siteVerdicts: Record<string, string> = {
     "European twink studio with strong production from a dedicated Czech team — slim, smooth, natural casting. Skip it if you specifically want American performers.",
   "jawked":
     "Amateur jock and college-guy content with no studio gloss — real guys, real chemistry. Skip it if you want professional production over real-guy energy.",
+  "men":
+    "The flagship of the MEN Network — 9 sub-sites, award-winning production, and a consistent update cadence for fans who want variety within one ecosystem. Skip it if you want a tightly-focused single studio rather than a network subscription.",
+  "sean-cody":
+    "One of the most recognised names in gay adult content — 20+ years of exclusive athletic performers in an organised, searchable archive. Skip it if you want diversity of body types or ethnicities; the aesthetic is intentionally consistent.",
+  "icon-male":
+    "The go-to for scripted older/younger and daddy/son content with genuine narrative framing. Skip it if you're outside the age-gap niche — the catalog doesn't venture far from that dynamic.",
+  "gaywire":
+    "A solid pick for fans who want download access and a large amateur network library in one subscription. Skip it if you want premium studio production or a tightly focused content niche.",
+  "biempire":
+    "The leading dedicated bisexual studio — XBIZ award-winning with 4K production and a genuine focus on bi threesome and group content. Skip it entirely if you're looking for gay-only scenes; female performers are central to every scene.",
+  "twinkpop":
+    "MEN Network production quality pointed at a dedicated twink aesthetic — and your membership covers the entire 9-site network. Skip it if you want a standalone site; this is a channel within a larger subscription.",
+  "reality-dudes":
+    "The clearest pick for straight-guy and first-time fantasy scenarios across 7 sub-sites on one membership. Skip it if you need a large back catalog; the combined library is relatively modest at around 1,000 scenes.",
+  "bigstr":
+    "The budget option in the category at $9.99/mo — a 4-site network pass for viewers who want access over quality. Skip it if production standards or confirmed HD video matter to you.",
+  "black-male-me":
+    "A dedicated Black gay performer site for viewers who want niche representation that mainstream sites rarely provide at this depth. Production details are limited in public reviews — manage expectations accordingly.",
+  "noirmale":
+    "The premium option for Black gay content — Falcon | NakedSword production values, cinematic framing, and HD/4K delivery. Skip it if budget is a priority; you're paying for Falcon-level quality.",
+  "guy-selector":
+    "An interactive-format gay content site in the AdultForce network with limited independent review coverage. Approach as an exploratory option rather than a proven recommendation.",
+  "spicevidsgay":
+    "Exceptional value for volume-seekers — access to content from 1,700+ studios at $5.49/mo annual with 4K streaming included. Skip it if you want exclusive studio content or downloads; this is an aggregator, streaming only.",
+  "maleaccess":
+    "The best free trial in the category — 7 full days to evaluate 8,000+ scenes across 6 partner sites before committing. Skip it if knowing exactly which partner sites are included matters to your decision.",
 };
 
 export const getVerdict = (slug: string): string | undefined => siteVerdicts[slug];
