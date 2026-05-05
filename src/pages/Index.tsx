@@ -106,7 +106,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          We paid for every membership, tested them all, and ranked the ones actually worth your money.
+          We researched and scored every site, and ranked the ones actually worth your money.
         </motion.p>
         {locale.heroTagline && (
           <motion.p
@@ -279,7 +279,7 @@ const QuizBanner = () => (
         <div className="flex flex-col gap-2 sm:flex-row">
           <MotionButton>
             <Link to="/ask-ai" className="cta-btn inline-flex items-center gap-2 rounded-button gold-gradient px-6 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap">
-              Ask AI
+              Ask TwinkAI
             </Link>
           </MotionButton>
           <MotionButton>
@@ -331,7 +331,7 @@ const LatestReviewsSection = () => {
                     </OutboundLink>
                   </MotionButton>
                 </div>
-                <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab{isAffiliated(site) ? " · Affiliate link" : ""}</p>
+                <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab{isAffiliated(site) ? " · Partner link" : ""}</p>
               </MotionCard>
             </StaggerChild>
           ))}
@@ -409,7 +409,7 @@ const GayDatingSection = () => (
             >
               Join Manfinder Free <ArrowRight size={14} />
             </a>
-            <p className="mt-2 text-center text-[10px] text-muted-foreground/60">Free to join · Affiliate link</p>
+            <p className="mt-2 text-center text-[10px] text-muted-foreground/60">Free to join · Partner link</p>
           </MotionCard>
         </StaggerChild>
         {/* CrakRevenue Gay Smartlink */}
@@ -430,7 +430,7 @@ const GayDatingSection = () => (
             >
               Find Local Guys <ArrowRight size={14} />
             </a>
-            <p className="mt-2 text-center text-[10px] text-muted-foreground/60">Sponsored · Affiliate link</p>
+            <p className="mt-2 text-center text-[10px] text-muted-foreground/60">Sponsored · Partner link</p>
           </MotionCard>
         </StaggerChild>
       </StaggerContainer>

@@ -117,7 +117,7 @@ const Footer = () => (
         <div>
           <h3 className="font-heading text-sm font-semibold mb-3">Tools</h3>
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
-            <li><Link to="/ask-ai" className={footerLink}>AI Recommender</Link></li>
+            <li><Link to="/ask-ai" className={footerLink}>Ask TwinkAI</Link></li>
             <li><Link to="/find-my-site" className={footerLink}>Site Finder Quiz</Link></li>
             <li><Link to="/gay-dating-sites" className={footerLink}>Dating Sites Guide</Link></li>
           </ul>
@@ -157,7 +157,7 @@ const Footer = () => (
       </div>
 
       <p className="mt-4 text-center text-xs leading-relaxed text-muted-foreground/70">
-        TwinkVault.com is an adult content review site. All sites reviewed contain content intended for adults 18+. We earn commissions from affiliate links.
+        TwinkVault.com is an adult content review site. All sites reviewed contain content intended for adults 18+. TwinkVault uses partner links — commissions never influence our rankings.
       </p>
       <p className="mt-2 text-center text-xs text-muted-foreground/50">
         &copy; {new Date().getFullYear()} TwinkVault. All rights reserved.

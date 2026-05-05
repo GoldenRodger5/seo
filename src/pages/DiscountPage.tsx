@@ -274,7 +274,7 @@ const DiscountPage = () => {
               </div>
 
               <p className="mt-2 text-center text-[10px] text-muted-foreground">
-                Opens in new tab{affiliated ? " · Affiliate link" : ""}
+                Opens in new tab{affiliated ? " · Partner link" : ""}
               </p>
             </MotionCard>
           </div>

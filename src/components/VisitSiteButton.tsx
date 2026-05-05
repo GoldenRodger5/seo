@@ -25,7 +25,7 @@ const VisitSiteButton = ({ site, label = "Visit Site", className = "", showDiscl
       </MotionButton>
       {showDisclosure && (
         <p className="mt-1 text-center text-[10px] text-muted-foreground">
-          Opens in new tab · Affiliate link
+          Opens in new tab · Partner link
         </p>
       )}
     </div>

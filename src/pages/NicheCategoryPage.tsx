@@ -143,7 +143,7 @@ const NicheCategoryPage = () => {
         <section className="py-8 border-y border-border">
           <div className="container max-w-3xl prose prose-invert">
             <p className="text-muted-foreground">
-              {niche.description} We've tested every site on this page through a paid membership — content libraries, streaming quality, mobile UX, pricing, and update cadence are all scored consistently. Sites are ranked by overall score, with the highest-scored {niche.displayName.toLowerCase()} site at the top.
+              {niche.description} We've reviewed and scored every site on this page — content libraries, streaming quality, mobile UX, pricing, and update cadence are all scored consistently. Sites are ranked by overall score, with the highest-scored {niche.displayName.toLowerCase()} site at the top.
             </p>
             <p className="text-muted-foreground mt-3">
               People into {niche.displayName.toLowerCase()} content also tend to browse{" "}

@@ -55,7 +55,7 @@ const CompareColumn = ({ site }: { site: SiteData }) => (
     >
       Visit Site <ArrowRight size={14} />
     </OutboundLink>
-    <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab{isAffiliated(site) ? " · Affiliate link" : ""}</p>
+    <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab{isAffiliated(site) ? " · Partner link" : ""}</p>
   </div>
 );
 

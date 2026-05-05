@@ -91,7 +91,7 @@ const GayDatingSites = () => (
                   Join Manfinder Free <ArrowRight size={15} />
                 </a>
                 <p className="mt-2 text-center text-[10px] text-muted-foreground/60">
-                  Free to join · Affiliate link · Adult content
+                  Free to join · Partner link · Adult content
                 </p>
               </MotionCard>
             </StaggerChild>
@@ -135,7 +135,7 @@ const GayDatingSites = () => (
                   Find Local Guys <ArrowRight size={15} />
                 </a>
                 <p className="mt-2 text-center text-[10px] text-muted-foreground/60">
-                  Sponsored · Affiliate link · Adult content
+                  Sponsored · Partner link · Adult content
                 </p>
               </MotionCard>
             </StaggerChild>

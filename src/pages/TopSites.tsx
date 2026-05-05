@@ -14,7 +14,7 @@ import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "..
 import { currentYear, currentMonthLong } from "../lib/dates";
 import { sitesCountLabel, TOTAL_SITES } from "../lib/siteStats";
 
-const filters = ["All", "Best Value", "HD Quality", "Amateur", "Premium Studio", "Free Trial"];
+const filters = ["All", "Best Value", "HD Quality", "Amateur", "Premium Studio", "Has Trial"];
 
 const filterMap: Record<string, string | null> = {
   All: null,
@@ -22,7 +22,7 @@ const filterMap: Record<string, string | null> = {
   "HD Quality": "hd-quality",
   Amateur: "amateur-twinks",
   "Premium Studio": "premium-studios",
-  "Free Trial": "free-trials",
+  "Has Trial": "free-trials",
 };
 
 const badgeStyle = (badge: string | null) => {
@@ -62,7 +62,7 @@ const TopSites = () => {
                 {TOTAL_SITES} Sites. All Tested. Ranked Honestly.
               </h1>
               <p className="mt-4 text-muted-foreground">
-                We paid for every membership, scored them on content, value, updates, and mobile UX — then ranked them. No site paid us to be here.
+                We researched and scored every site, and ranked the ones actually worth your money. Scored on content, value, updates, and mobile UX. No site paid us to be here.
               </p>
               <div className="mt-3 flex items-center justify-center gap-3">
                 <span className="inline-flex items-center gap-1 rounded-button bg-muted px-3 py-1 text-xs text-muted-foreground">

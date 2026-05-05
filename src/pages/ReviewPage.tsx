@@ -131,7 +131,7 @@ const ReviewPage = () => {
       {/* Affiliate disclosure */}
       <div className="border-b border-primary/10 bg-secondary/5">
         <div className="container py-2 text-center text-xs text-muted-foreground">
-          Disclosure: We earn commissions from affiliate links. This doesn't affect our rankings.
+          TwinkVault uses partner links. Commissions never influence our rankings.
         </div>
       </div>
 
@@ -404,7 +404,7 @@ const ReviewPage = () => {
                   >
                     Join Manfinder Free <ArrowRight size={11} />
                   </a>
-                  <p className="text-[9px] text-muted-foreground/60">Affiliate link</p>
+                  <p className="text-[9px] text-muted-foreground/60">Partner link</p>
                 </div>
                 <div className="glass-card rounded-lg border border-border/50 p-4 flex flex-col gap-1.5">
                   <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Not ready to subscribe?</span>
@@ -419,7 +419,7 @@ const ReviewPage = () => {
                   >
                     Find Local Guys <ArrowRight size={11} />
                   </a>
-                  <p className="text-[9px] text-muted-foreground/60">Sponsored · Affiliate link</p>
+                  <p className="text-[9px] text-muted-foreground/60">Sponsored · Partner link</p>
                 </div>
               </div>
 
