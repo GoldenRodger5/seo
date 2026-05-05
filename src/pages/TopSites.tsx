@@ -94,7 +94,10 @@ const TopSites = () => {
             </div>
 
             {/* Ranked List */}
-            <StaggerContainer className="mt-10 space-y-4">
+            {/* key={active} forces remount on filter change so whileInView (once:true)
+                re-fires and child variants transition to "visible" again. Without this,
+                filtered children mount in "hidden" state (opacity:0) and stay invisible. */}
+            <StaggerContainer key={active} className="mt-10 space-y-4">
               {filtered.map((site) => (
                 <StaggerChild key={site.id}>
                   <motion.div
