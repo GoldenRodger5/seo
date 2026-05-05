@@ -88,6 +88,18 @@ const Footer = () => (
         </div>
       </div>
 
+      {/* Popular Lists */}
+      <div className="mt-10 border-t border-border/40 pt-8">
+        <h3 className="font-heading text-sm font-semibold mb-3">Popular Lists</h3>
+        <ul className="flex flex-wrap gap-x-4 gap-y-2">
+          <li><Link to="/best-gay-sites-under-10" className={footerLink}>Best Sites Under $10</Link></li>
+          <li><Link to="/best-bareback-gay-sites" className={footerLink}>Best Bareback Sites</Link></li>
+          <li><Link to="/best-amateur-gay-sites" className={footerLink}>Best Amateur Sites</Link></li>
+          <li><Link to="/best-premium-gay-sites" className={footerLink}>Best Premium Sites</Link></li>
+          <li><Link to="/best-asian-gay-sites" className={footerLink}>Best Asian Sites</Link></li>
+        </ul>
+      </div>
+
       {/* Secondary row — Tools / Gay Dating */}
       <div className="mt-10 grid gap-8 sm:grid-cols-2 border-t border-border/40 pt-8">
         <div>

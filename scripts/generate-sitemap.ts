@@ -158,6 +158,18 @@ const corePages = [
   "/free-trial-twink-sites",
   "/cheapest-twink-sites",
   "/gay-dating-sites",
+  "/best-gay-sites-under-10",
+  "/best-bareback-gay-sites",
+  "/best-asian-gay-sites",
+  "/best-amateur-gay-sites",
+  "/best-premium-gay-sites",
+  "/helix-studios-alternatives",
+  "/sean-cody-alternatives",
+  "/nakedsword-alternatives",
+  "/best-gay-sites-for-beginners",
+  "/best-gay-twink-sites-2026",
+  "/best-gay-sites-with-downloads",
+  "/best-daddy-twink-sites",
 ];
 for (const page of corePages) {
   urls.push(urlEntry({ loc: page, changefreq: "weekly", priority: "0.9" }));

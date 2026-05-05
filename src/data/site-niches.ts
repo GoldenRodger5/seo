@@ -63,6 +63,21 @@ export const siteNicheMap: Record<string, string[]> = {
   // XXXRewards
   "boyfun": ["twink", "smooth", "bareback", "amateur"],
   "jawked": ["jock", "college", "amateur", "smooth"],
+
+  // AdultForce additions
+  "men": ["twink", "muscle", "bareback", "group"],
+  "sean-cody": ["jock", "muscle", "bareback", "amateur"],
+  "icon-male": ["daddy", "muscle", "bareback"],
+  "gaywire": ["amateur", "bareback", "twink"],
+  "biempire": ["group", "fetish"],
+  "twinkpop": ["twink", "smooth", "bareback", "amateur"],
+  "reality-dudes": ["str8-curious", "amateur", "twink", "bareback"],
+  "bigstr": ["str8-curious", "amateur", "bareback"],
+  "black-male-me": ["interracial", "muscle", "bareback"],
+  "noirmale": ["interracial", "muscle", "bareback"],
+  "guy-selector": ["amateur"],
+  "spicevidsgay": ["twink", "muscle", "bareback", "amateur", "group"],
+  "maleaccess": ["twink", "muscle", "bareback", "amateur"],
 };
 
 export const getSiteNiches = (slug: string): string[] =>

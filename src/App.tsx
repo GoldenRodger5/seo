@@ -39,6 +39,18 @@ const DiscountPage = lazy(() => import("./pages/DiscountPage"));
 const SitemapPage = lazy(() => import("./pages/SitemapPage"));
 const GayDatingSites = lazy(() => import("./pages/GayDatingSites"));
 const NicheCategoryPage = lazy(() => import("./pages/NicheCategoryPage"));
+const BestUnder10 = lazy(() => import("./pages/seo/BestUnder10"));
+const BestBareback = lazy(() => import("./pages/seo/BestBareback"));
+const BestAsian = lazy(() => import("./pages/seo/BestAsian"));
+const BestAmateur = lazy(() => import("./pages/seo/BestAmateur"));
+const BestPremium = lazy(() => import("./pages/seo/BestPremium"));
+const HelixAlternatives = lazy(() => import("./pages/seo/HelixAlternatives"));
+const SeanCodyAlternatives = lazy(() => import("./pages/seo/SeanCodyAlternatives"));
+const NakedSwordAlternatives = lazy(() => import("./pages/seo/NakedSwordAlternatives"));
+const BestForBeginners = lazy(() => import("./pages/seo/BestForBeginners"));
+const BestTwink2026 = lazy(() => import("./pages/seo/BestTwink2026"));
+const BestWithDownloads = lazy(() => import("./pages/seo/BestWithDownloads"));
+const BestDaddy = lazy(() => import("./pages/seo/BestDaddy"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -119,6 +131,18 @@ const AnimatedRoutes = () => {
         <Route path="/sitemap" element={<SitemapPage />} />
         <Route path="/gay-dating-sites" element={<GayDatingSites />} />
         <Route path="/niche/:slug" element={<NicheCategoryPage />} />
+        <Route path="/best-gay-sites-under-10" element={<BestUnder10 />} />
+        <Route path="/best-bareback-gay-sites" element={<BestBareback />} />
+        <Route path="/best-asian-gay-sites" element={<BestAsian />} />
+        <Route path="/best-amateur-gay-sites" element={<BestAmateur />} />
+        <Route path="/best-premium-gay-sites" element={<BestPremium />} />
+        <Route path="/helix-studios-alternatives" element={<HelixAlternatives />} />
+        <Route path="/sean-cody-alternatives" element={<SeanCodyAlternatives />} />
+        <Route path="/nakedsword-alternatives" element={<NakedSwordAlternatives />} />
+        <Route path="/best-gay-sites-for-beginners" element={<BestForBeginners />} />
+        <Route path="/best-gay-twink-sites-2026" element={<BestTwink2026 />} />
+        <Route path="/best-gay-sites-with-downloads" element={<BestWithDownloads />} />
+        <Route path="/best-daddy-twink-sites" element={<BestDaddy />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

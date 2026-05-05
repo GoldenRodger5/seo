@@ -5,7 +5,8 @@
       "Bash(do git:*)",
       "Bash(git reflog:*)",
       "Bash(git gc:*)",
-      "WebFetch(domain:twinkvault.com)"
+      "WebFetch(domain:twinkvault.com)",
+      "WebSearch"
     ]
   }
 }
