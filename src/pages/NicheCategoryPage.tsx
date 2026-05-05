@@ -30,6 +30,14 @@ const NicheCategoryPage = () => {
   const url = `https://twinkvault.com/niche/${niche.slug}`;
   const title = `${niche.seoTitle} ${currentYear} | TwinkVault`;
 
+  const fullListMap: Record<string, { path: string; label: string }> = {
+    bareback: { path: "/best-bareback-gay-sites", label: "See full bareback list" },
+    asian: { path: "/best-asian-gay-sites", label: "See full Asian gay sites list" },
+    amateur: { path: "/best-amateur-gay-sites", label: "See full amateur list" },
+    daddy: { path: "/best-daddy-twink-sites", label: "See full daddy/twink list" },
+  };
+  const fullList = fullListMap[niche.slug];
+
   return (
     <Layout>
       <PageTransition>
@@ -228,12 +236,22 @@ const NicheCategoryPage = () => {
                 </Link>
               ))}
             </div>
-            <Link
-              to="/reviews"
-              className="mt-8 inline-flex items-center gap-2 text-sm text-primary hover:underline"
-            >
-              Browse all reviews <ArrowRight size={14} />
-            </Link>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              {fullList && (
+                <Link
+                  to={fullList.path}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:underline"
+                >
+                  {fullList.label} <ArrowRight size={14} />
+                </Link>
+              )}
+              <Link
+                to="/reviews"
+                className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+              >
+                Browse all reviews <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
         </section>
       </PageTransition>

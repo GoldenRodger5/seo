@@ -182,6 +182,36 @@ const badgeColor = (badge: string | null) => {
   return "bg-primary/15 text-primary";
 };
 
+const MORE_LISTS = [
+  { to: "/best-gay-porn-sites", label: "Best Gay Porn Sites", desc: "Top 15 across every niche, ranked by overall score." },
+  { to: "/best-gay-porn-subscription", label: "Best Subscription", desc: "Ranked by value-for-money. Annual vs monthly broken out." },
+  { to: "/gay-porn-sites-ranked", label: "Sites Ranked", desc: "All 62 sites in one sortable table — score on every pillar." },
+  { to: "/best-value-gay-porn-sites", label: "Best Value", desc: "The cheapest cost-per-scene and best value-score picks." },
+];
+
+const MoreListsSection = () => (
+  <section className="py-16">
+    <div className="container">
+      <h2 className="font-heading text-2xl md:text-3xl font-bold heading-gradient inline-block mb-6">More Lists</h2>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {MORE_LISTS.map((l) => (
+          <Link
+            key={l.to}
+            to={l.to}
+            className="glass-card rounded-lg p-5 hover:border-primary/50 transition-colors"
+          >
+            <p className="font-heading font-semibold">{l.label}</p>
+            <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{l.desc}</p>
+            <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-secondary">
+              View list <ArrowRight size={11} />
+            </span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 const TopPicksSection = () => {
   const featured = getTopRatedAffiliated(5);
   return (
@@ -446,6 +476,7 @@ const Index = () => (
       <QuickPicks />
       <InlineEmailCapture />
       <NicheBrowser />
+      <MoreListsSection />
       <TopPicksSection />
       <QuizBanner />
       <BentoGrid />

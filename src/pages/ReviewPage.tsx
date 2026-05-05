@@ -459,6 +459,23 @@ const ReviewPage = () => {
             {/* Similar Sites — niche-weighted, extracted to dedicated component */}
             <AnimateOnScroll className="mt-12">
               <SimilarSites site={site} />
+              {(() => {
+                const altMap: Record<string, string> = {
+                  "helix-studios": "/helix-studios-alternatives",
+                  "sean-cody": "/sean-cody-alternatives",
+                  "nakedsword": "/nakedsword-alternatives",
+                };
+                const altPath = altMap[site.slug];
+                if (!altPath) return null;
+                return (
+                  <Link
+                    to={altPath}
+                    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:underline"
+                  >
+                    Looking for alternatives to {site.name}? See the full list →
+                  </Link>
+                );
+              })()}
             </AnimateOnScroll>
 
             {/* Compare internal links */}

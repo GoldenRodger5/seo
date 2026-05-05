@@ -238,6 +238,31 @@ const TopSites = () => {
                 </table>
               </div>
             </motion.div>
+
+            {/* Related Lists — internal-link hub for the broad SEO landing pages */}
+            <div className="mt-16">
+              <h2 className="font-heading text-2xl font-bold heading-gradient inline-block mb-6">Related Lists</h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {[
+                  { to: "/best-gay-porn-sites", label: "Best Gay Porn Sites", desc: "Top 15 across every niche." },
+                  { to: "/best-twink-porn-sites", label: "Best Twink Porn Sites", desc: "Twink niche, content-quality first." },
+                  { to: "/best-premium-gay-sites", label: "Best Premium Sites", desc: "Studio-tier production rankings." },
+                  { to: "/best-value-gay-porn-sites", label: "Best Value", desc: "Most content per dollar." },
+                ].map((l) => (
+                  <Link
+                    key={l.to}
+                    to={l.to}
+                    className="glass-card rounded-lg p-5 hover:border-primary/50 transition-colors"
+                  >
+                    <p className="font-heading font-semibold">{l.label}</p>
+                    <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{l.desc}</p>
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-secondary">
+                      View list <ArrowRight size={11} />
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
       </PageTransition>
