@@ -90,23 +90,15 @@ function parseFlags(argv: string[]): Flags {
 }
 
 // ---------------------------------------------------------------------------
-// Day-of-week rotation
+// Queue resolution (priority-driven, no day-of-week rotation)
 // ---------------------------------------------------------------------------
+// Previously this used a day-of-week → content_type map. That left several
+// days with no eligible content (e.g. Wed/bestof was always empty because
+// hubs use content_type "hub", not "bestof"). Switched to pure priority:
+// every day picks the highest-priority queued item across both queues,
+// with reviews still gated on affiliate_url presence to avoid publishing
+// content for sites we can't monetize.
 type ContentTypeKey = "review" | SupportingContentType;
-
-function rotationFor(day: number): ContentTypeKey {
-  // 0=Sun 1=Mon ... 6=Sat
-  switch (day) {
-    case 1: return "review";        // Mon
-    case 2: return "discount";      // Tue
-    case 3: return "bestof";        // Wed
-    case 4: return "comparison";    // Thu
-    case 5: return "review";        // Fri
-    case 6: return "alternatives";  // Sat
-    case 0: return "guide";         // Sun
-    default: return "review";
-  }
-}
 
 // ---------------------------------------------------------------------------
 // Logger
@@ -794,21 +786,19 @@ function resolveTarget(flags: Flags): { kind: "review"; entry: ReviewQueueEntry 
     if (sorted.length) return { kind: "review", entry: sorted[0] };
   }
 
-  // Critical-gap pass: any review without a discount page?
-  // (DiscountPage already covers all sites generically; this is a placeholder
-  // hook for the future — the spec asks us to prioritize critical gaps.)
+  // Priority-driven queue resolution.
+  // Compare top of review queue (priority + affiliate_url gate) against
+  // top of supporting queue (priority only) and return the higher.
+  const r = nextReviewToPublish();
+  const s = nextSupporting();
 
-  // Day-of-week rotation.
-  const day = new Date().getDay();
-  const desired = rotationFor(day);
-
-  if (desired === "review") {
-    const r = nextReviewToPublish();
-    if (r) return { kind: "review", entry: r };
-  } else {
-    const s = nextSupporting(desired);
-    if (s) return { kind: "supporting", entry: s };
+  if (r && s) {
+    return r.priority >= s.priority
+      ? { kind: "review", entry: r }
+      : { kind: "supporting", entry: s };
   }
+  if (r) return { kind: "review", entry: r };
+  if (s) return { kind: "supporting", entry: s };
   return null;
 }
 

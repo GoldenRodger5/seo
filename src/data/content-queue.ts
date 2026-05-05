@@ -61,7 +61,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
     niche: ["premium-studios", "hd-quality"],
     priority: 10,
     estimated_monthly_searches: 165000,
-    status: "queued",
+    status: "published",
     content_type: "review",
   },
   {
@@ -73,7 +73,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
     niche: ["premium-studios", "hd-quality", "amateur-twinks"],
     priority: 10,
     estimated_monthly_searches: 110000,
-    status: "queued",
+    status: "published",
     content_type: "review",
   },
   {
@@ -111,7 +111,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
     niche: ["premium-studios"],
     priority: 7,
     estimated_monthly_searches: 18100,
-    status: "queued",
+    status: "published",
     content_type: "review",
   },
   {
@@ -153,7 +153,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
   { name: "SpunkWorthy", slug: "spunkworthy", homepage_url: "https://www.spunkworthy.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review" },
   { name: "ChaosMen", slug: "chaos-men", homepage_url: "https://www.chaosmen.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "premium-studios"], priority: 7, estimated_monthly_searches: 18100, status: "queued", content_type: "review" },
   { name: "SexuallyBroken", slug: "sexually-broken", homepage_url: "https://www.sexuallybroken.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 4, estimated_monthly_searches: 4400, status: "queued", content_type: "review" },
-  { name: "TwinkPop", slug: "twinkpop", homepage_url: "https://www.twinkpop.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "hd-quality"], priority: 7, estimated_monthly_searches: 18100, status: "queued", content_type: "review" },
+  { name: "TwinkPop", slug: "twinkpop", homepage_url: "https://www.twinkpop.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "hd-quality"], priority: 7, estimated_monthly_searches: 18100, status: "published", content_type: "review" },
   { name: "BoyNapped", slug: "boy-napped", homepage_url: "https://www.boynapped.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 5, estimated_monthly_searches: 6600, status: "queued", content_type: "review" },
   { name: "English Lads", slug: "english-lads", homepage_url: "https://www.englishlads.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review" },
   { name: "Bel Ami", slug: "bel-ami", homepage_url: "https://www.belami.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "amateur-twinks"], priority: 8, estimated_monthly_searches: 33100, status: "queued", content_type: "review" },
@@ -284,12 +284,62 @@ const pricingEntries: SupportingQueueEntry[] = TOP_10_SLUGS.map((slug) => ({
   status: "queued",
 }));
 
+// Renamed from hub → bestof. Rotation map previously expected "bestof" but
+// these were tagged "hub", which left Wed permanently empty. With queue-driven
+// resolution this is less critical, but the names now match the rotation
+// constant so older references don't drift.
 const hubEntries: SupportingQueueEntry[] = [
-  { title: "Best Gay Twink Sites", slug: "gay-twink-sites", content_type: "hub", target_keyword: "gay twink sites", related_sites: ["helix-studios", "next-door-twink", "twinks-in-shorts", "athletic-twinks", "southern-strokes", "daddy-on-twink", "touch-that-boy", "twinkpop"], priority: 9, status: "queued" },
-  { title: "Best Gay Bareback Sites", slug: "gay-bareback-sites", content_type: "hub", target_keyword: "gay bareback sites", related_sites: ["rawhole", "dudesraw", "bareback-that-hole", "breed-me-raw"], priority: 9, status: "queued" },
-  { title: "Best Gay Asian Sites", slug: "gay-asian-sites", content_type: "hub", target_keyword: "gay asian porn sites", related_sites: ["peterfever", "gayasiannetwork"], priority: 8, status: "queued" },
-  { title: "Best Gay Amateur Sites", slug: "gay-amateur-sites", content_type: "hub", target_keyword: "gay amateur sites", related_sites: ["next-door-twink", "twinks-in-shorts", "southern-strokes", "breed-me-raw", "bareback-that-hole", "hard-brit-lads", "prideflame"], priority: 9, status: "queued" },
-  { title: "Best Gay Premium Studios", slug: "gay-premium-sites", content_type: "hub", target_keyword: "gay premium porn sites", related_sites: ["helix-studios", "next-door-world", "peterfever", "alternadudes"], priority: 8, status: "queued" },
+  { title: "Best Gay Twink Sites", slug: "gay-twink-sites", content_type: "bestof", target_keyword: "gay twink sites", related_sites: ["helix-studios", "next-door-twink", "twinks-in-shorts", "athletic-twinks", "southern-strokes", "daddy-on-twink", "touch-that-boy", "twinkpop"], priority: 9, status: "queued" },
+  { title: "Best Gay Bareback Sites", slug: "gay-bareback-sites", content_type: "bestof", target_keyword: "gay bareback sites", related_sites: ["rawhole", "dudesraw", "bareback-that-hole", "breed-me-raw"], priority: 9, status: "queued" },
+  { title: "Best Gay Asian Sites", slug: "gay-asian-sites", content_type: "bestof", target_keyword: "gay asian porn sites", related_sites: ["peterfever", "gayasiannetwork"], priority: 8, status: "queued" },
+  { title: "Best Gay Amateur Sites", slug: "gay-amateur-sites", content_type: "bestof", target_keyword: "gay amateur sites", related_sites: ["next-door-twink", "twinks-in-shorts", "southern-strokes", "breed-me-raw", "bareback-that-hole", "hard-brit-lads", "prideflame"], priority: 9, status: "queued" },
+  { title: "Best Gay Premium Studios", slug: "gay-premium-sites", content_type: "bestof", target_keyword: "gay premium porn sites", related_sites: ["helix-studios", "next-door-world", "peterfever", "alternadudes"], priority: 8, status: "queued" },
+];
+
+// ---------------------------------------------------------------------------
+// 30-day priority backlog (May 6 – Jun 4, 2026)
+// Priorities 100→71 — these fire BEFORE existing entries (priority ≤ 9) so
+// the order matches the publishing plan exactly. Descending priority = next
+// in line. Days listed are guidance only; the script publishes one per run.
+// ---------------------------------------------------------------------------
+const backlogEntries: SupportingQueueEntry[] = [
+  // Days 1-7 — Comparison content (priority 100 → 94)
+  { title: "Men.com vs Sean Cody", slug: "compare/men-vs-sean-cody", content_type: "comparison", target_keyword: "men.com vs sean cody", related_sites: ["men", "sean-cody"], priority: 100, status: "queued" },
+  { title: "NakedSword vs Men.com", slug: "compare/nakedsword-vs-men", content_type: "comparison", target_keyword: "nakedsword vs men.com", related_sites: ["nakedsword", "men"], priority: 99, status: "queued" },
+  { title: "Helix Studios vs Sean Cody", slug: "compare/helix-studios-vs-sean-cody", content_type: "comparison", target_keyword: "helix studios vs sean cody", related_sites: ["helix-studios", "sean-cody"], priority: 98, status: "queued" },
+  { title: "Twinks in Shorts vs Athletic Twinks", slug: "compare/twinks-in-shorts-vs-athletic-twinks", content_type: "comparison", target_keyword: "twinks in shorts vs athletic twinks", related_sites: ["twinks-in-shorts", "athletic-twinks"], priority: 97, status: "queued" },
+  { title: "PeterFever vs GayAsianNetwork", slug: "compare/peterfever-vs-gayasiannetwork", content_type: "comparison", target_keyword: "peterfever vs gayasiannetwork", related_sites: ["peterfever", "gayasiannetwork"], priority: 96, status: "queued" },
+  { title: "RawHole vs DudesRaw", slug: "compare/rawhole-vs-dudesraw", content_type: "comparison", target_keyword: "rawhole vs dudesraw", related_sites: ["rawhole", "dudesraw"], priority: 95, status: "queued" },
+  { title: "SayUncle vs FamilyDick", slug: "compare/sayuncle-vs-familydick", content_type: "comparison", target_keyword: "sayuncle vs familydick", related_sites: ["sayuncle", "familydick"], priority: 94, status: "queued" },
+
+  // Days 8-14 — Alternatives content (priority 93 → 87)
+  { title: "Best Alternatives to Helix Studios", slug: "alternatives-to-helix-studios", content_type: "alternatives", target_keyword: "helix studios alternatives", related_sites: ["helix-studios"], priority: 93, status: "queued" },
+  { title: "Best Alternatives to Sean Cody", slug: "alternatives-to-sean-cody", content_type: "alternatives", target_keyword: "sean cody alternatives", related_sites: ["sean-cody"], priority: 92, status: "queued" },
+  { title: "Best Alternatives to NakedSword", slug: "alternatives-to-nakedsword", content_type: "alternatives", target_keyword: "nakedsword alternatives", related_sites: ["nakedsword"], priority: 91, status: "queued" },
+  { title: "Best Alternatives to Men.com", slug: "alternatives-to-men", content_type: "alternatives", target_keyword: "men.com alternatives", related_sites: ["men"], priority: 90, status: "queued" },
+  { title: "Best Alternatives to PeterFever", slug: "alternatives-to-peterfever", content_type: "alternatives", target_keyword: "peterfever alternatives", related_sites: ["peterfever"], priority: 89, status: "queued" },
+  { title: "Best Alternatives to Twinks in Shorts", slug: "alternatives-to-twinks-in-shorts", content_type: "alternatives", target_keyword: "twinks in shorts alternatives", related_sites: ["twinks-in-shorts"], priority: 88, status: "queued" },
+  { title: "Best Alternatives to Southern Strokes", slug: "alternatives-to-southern-strokes", content_type: "alternatives", target_keyword: "southern strokes alternatives", related_sites: ["southern-strokes"], priority: 87, status: "queued" },
+
+  // Days 15-21 — "Is X Worth It" body content (priority 86 → 80)
+  { title: "Is NakedSword Worth It?", slug: "nakedsword-worth-it-body", content_type: "isworthit", target_keyword: "is nakedsword worth it", related_sites: ["nakedsword"], priority: 86, status: "queued" },
+  { title: "Is Sean Cody Worth It?", slug: "sean-cody-worth-it-body", content_type: "isworthit", target_keyword: "is sean cody worth it", related_sites: ["sean-cody"], priority: 85, status: "queued" },
+  { title: "Is Helix Studios Worth It?", slug: "helix-studios-worth-it-body", content_type: "isworthit", target_keyword: "is helix studios worth it", related_sites: ["helix-studios"], priority: 84, status: "queued" },
+  { title: "Is Men.com Worth It?", slug: "men-worth-it-body", content_type: "isworthit", target_keyword: "is men.com worth it", related_sites: ["men"], priority: 83, status: "queued" },
+  { title: "Is Twinks in Shorts Worth It?", slug: "twinks-in-shorts-worth-it-body", content_type: "isworthit", target_keyword: "is twinks in shorts worth it", related_sites: ["twinks-in-shorts"], priority: 82, status: "queued" },
+  { title: "Is Southern Strokes Worth It?", slug: "southern-strokes-worth-it-body", content_type: "isworthit", target_keyword: "is southern strokes worth it", related_sites: ["southern-strokes"], priority: 81, status: "queued" },
+  { title: "Is PeterFever Worth It?", slug: "peterfever-worth-it-body", content_type: "isworthit", target_keyword: "is peterfever worth it", related_sites: ["peterfever"], priority: 80, status: "queued" },
+
+  // Days 22-30 — Guides (priority 79 → 71)
+  { title: "How To Cancel Gay Porn Site Subscriptions", slug: "guide/how-to-cancel-gay-porn-subscriptions", content_type: "guide", target_keyword: "cancel gay porn subscription", related_sites: TOP_10_SLUGS, priority: 79, status: "queued" },
+  { title: "Gay Porn Site Billing — What To Expect", slug: "guide/gay-porn-billing-guide", content_type: "guide", target_keyword: "gay porn site billing", related_sites: TOP_10_SLUGS, priority: 78, status: "queued" },
+  { title: "Best Gay Porn Sites For Mobile Users", slug: "guide/gay-porn-sites-for-mobile", content_type: "guide", target_keyword: "best gay porn sites for mobile", related_sites: TOP_10_SLUGS, priority: 77, status: "queued" },
+  { title: "Gay Porn Free Trials — What You Actually Get", slug: "guide/gay-porn-free-trials-explained", content_type: "guide", target_keyword: "gay porn free trials", related_sites: ["next-door-twink", "next-door-world"], priority: 76, status: "queued" },
+  { title: "How To Find Gay Porn Site Discounts", slug: "guide/how-to-find-gay-porn-discounts", content_type: "guide", target_keyword: "gay porn discounts", related_sites: TOP_10_SLUGS, priority: 75, status: "queued" },
+  { title: "Gay Porn Site Security & Privacy Guide", slug: "guide/gay-porn-security-privacy", content_type: "guide", target_keyword: "gay porn site privacy", related_sites: TOP_10_SLUGS, priority: 74, status: "queued" },
+  { title: "Best Gay Porn Sites For Beginners", slug: "guide/gay-porn-sites-for-beginners-2026", content_type: "guide", target_keyword: "gay porn sites for beginners", related_sites: ["next-door-world", "maleaccess", "twinks-in-shorts"], priority: 73, status: "queued" },
+  { title: "Gay Porn Network Sites Explained", slug: "guide/gay-porn-network-sites-explained", content_type: "guide", target_keyword: "gay porn network sites", related_sites: ["next-door-world", "men", "nakedsword", "sayuncle"], priority: 72, status: "queued" },
+  { title: "Gay Porn Site Value Guide 2026", slug: "guide/gay-porn-value-guide-2026", content_type: "guide", target_keyword: "gay porn value", related_sites: TOP_10_SLUGS, priority: 71, status: "queued" },
 ];
 
 const guideEntries: SupportingQueueEntry[] = [
@@ -320,6 +370,9 @@ const awardsEntry: SupportingQueueEntry = {
 };
 
 export const supportingQueue: SupportingQueueEntry[] = [
+  // 30-day backlog fires first (priorities 71-100)
+  ...backlogEntries,
+  // Existing supporting entries (priorities 5-9) fire after backlog drains
   ...discountEntries,
   ...comparisonEntries,
   ...isWorthItEntries,
