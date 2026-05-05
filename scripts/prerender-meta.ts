@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
+import { sites, categories } from "../src/data/sites.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = resolve(__dirname, "..", "dist");
@@ -29,153 +30,17 @@ interface RouteMeta {
   description: string;
 }
 
-const SITE_SLUGS = [
-  "helix-studios",
-  "next-door-twink",
-  "next-door-world",
-  "twinks-in-shorts",
-  "athletic-twinks",
-  "southern-strokes",
-  "daddy-on-twink",
-  "touch-that-boy",
-  "breed-me-raw",
-  "bareback-that-hole",
-  "hard-brit-lads",
-  "prideflame",
-  "rawhole",
-  "peterfever",
-  "gayasiannetwork",
-  "alternadudes",
-  "dirtyboyvideo",
-  "dudesraw",
-  "nakedsword",
-  "trailertrashboys",
-  "japanboyz",
-  "sexjapantv",
-  "hiroyaxxx",
-  "yoshikawasakixxx",
-  "wuboyz",
-  "barebackrtxxx",
-  "cumpigmen",
-  "realmenfuck",
-  "swinginballs",
-  "squirtstudios",
-  "aussiesdoit",
-  "twinktrade",
-  "dadcreep",
-  "brothercrush",
-  "familydick",
-  "sayuncle",
-  "boysatcamp",
-  "missionaryboys",
-  "militarydick",
-  "latinleche",
-  "yesfather",
-  "bullyhim",
-  "youngperps",
-  "barebackcumpigs",
-  "bearchubs",
-  "bearfilms",
-  "hairyandraw",
-  "boyfun",
-  "jawked",
-  "men",
-  "sean-cody",
-  "icon-male",
-  "gaywire",
-  "biempire",
-  "twinkpop",
-  "reality-dudes",
-  "bigstr",
-  "black-male-me",
-  "noirmale",
-  "guy-selector",
-  "spicevidsgay",
-  "maleaccess",
-] as const;
+// Single source of truth — sites.ts drives both the slug list and display names.
+const SITE_SLUGS = sites.map((s) => s.slug);
 
-const SITE_NAMES: Record<string, string> = {
-  "helix-studios": "Helix Studios",
-  "next-door-twink": "Next Door Twink",
-  "next-door-world": "Next Door World",
-  "twinks-in-shorts": "Twinks in Shorts",
-  "athletic-twinks": "Athletic Twinks",
-  "southern-strokes": "Southern Strokes",
-  "daddy-on-twink": "Daddy on Twink",
-  "touch-that-boy": "Touch That Boy",
-  "breed-me-raw": "Breed Me Raw",
-  "bareback-that-hole": "Bareback That Hole",
-  "hard-brit-lads": "Hard Brit Lads",
-  "prideflame": "Prideflame",
-  "rawhole": "RawHole",
-  "peterfever": "PeterFever",
-  "gayasiannetwork": "GayAsianNetwork",
-  "alternadudes": "AlternaDudes",
-  "dirtyboyvideo": "DirtyBoyVideo",
-  "dudesraw": "DudesRaw",
-  "nakedsword": "NakedSword",
-  "trailertrashboys": "TrailerTrashBoys",
-  "japanboyz": "Japanboyz",
-  "sexjapantv": "SexJapanTV",
-  "hiroyaxxx": "HiroyaXXX",
-  "yoshikawasakixxx": "Yoshi Kawasaki XXX",
-  "wuboyz": "WuBoyz",
-  "barebackrtxxx": "Bareback RT XXX",
-  "cumpigmen": "Cum Pig Men",
-  "realmenfuck": "Real Men Fuck",
-  "swinginballs": "Swingin Balls",
-  "squirtstudios": "Squirt Studios",
-  "aussiesdoit": "Aussies Do It",
-  "twinktrade": "Twink Trade",
-  "dadcreep": "Dad Creep",
-  "brothercrush": "Brother Crush",
-  "familydick": "Family Dick",
-  "sayuncle": "Say Uncle",
-  "boysatcamp": "Boys at Camp",
-  "missionaryboys": "Missionary Boys",
-  "militarydick": "Military Dick",
-  "latinleche": "Latin Leche",
-  "yesfather": "Yes Father",
-  "bullyhim": "Bully Him",
-  "youngperps": "Young Perps",
-  "barebackcumpigs": "Bareback Cum Pigs",
-  "bearchubs": "Bear Chubs",
-  "bearfilms": "Bear Films",
-  "hairyandraw": "Hairy and Raw",
-  "boyfun": "BoyFun",
-  "jawked": "Jawked",
-  "men": "Men.com",
-  "sean-cody": "Sean Cody",
-  "icon-male": "Icon Male",
-  "gaywire": "Gay Wire",
-  "biempire": "BiEmpire",
-  "twinkpop": "Twinkpop",
-  "reality-dudes": "Reality Dudes",
-  "bigstr": "BigStr",
-  "black-male-me": "Black Male Me",
-  "noirmale": "NoirMale",
-  "guy-selector": "Guy Selector",
-  "spicevidsgay": "SpiceVidsGay",
-  "maleaccess": "MaleAccess",
-};
+const SITE_NAMES: Record<string, string> = Object.fromEntries(
+  sites.map((s) => [s.slug, s.name])
+);
 
-const CATEGORY_SLUGS = [
-  "amateur-twinks",
-  "premium-studios",
-  "best-value",
-  "hd-quality",
-  "free-trials",
-  "mobile-friendly",
-] as const;
-
-const CATEGORY_NAMES: Record<string, string> = {
-  "amateur-twinks": "Amateur Twinks",
-  "premium-studios": "Premium Studios",
-  "best-value": "Best Value",
-  "hd-quality": "HD Quality",
-  "free-trials": "Free Trials",
-  "mobile-friendly": "Mobile Friendly",
-};
+const CATEGORY_SLUGS = categories.map((c) => c.slug);
+const CATEGORY_NAMES: Record<string, string> = Object.fromEntries(
+  categories.map((c) => [c.slug, c.name])
+);
 
 const NICHE_META: Record<string, { displayName: string; seoTitle: string; seoDescription: string }> = {
   "twink": { displayName: "Twink", seoTitle: "Best Twink Sites — Ranked & Reviewed", seoDescription: "Every twink site we've tested, ranked by content quality, pricing, and updates. Slim, smooth performers from studio-polished to genuinely amateur." },

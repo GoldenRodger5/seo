@@ -1,6 +1,7 @@
 import { writeFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
+import { sites, categories } from "../src/data/sites.js";
 
 // ---------------------------------------------------------------------------
 // Config
@@ -8,79 +9,9 @@ import { fileURLToPath } from "url";
 const BASE_URL = "https://twinkvault.com";
 const TODAY = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
 
-const SITE_SLUGS = [
-  "helix-studios",
-  "next-door-twink",
-  "next-door-world",
-  "twinks-in-shorts",
-  "athletic-twinks",
-  "southern-strokes",
-  "daddy-on-twink",
-  "touch-that-boy",
-  "breed-me-raw",
-  "bareback-that-hole",
-  "hard-brit-lads",
-  "prideflame",
-  "rawhole",
-  "peterfever",
-  "gayasiannetwork",
-  "alternadudes",
-  "dirtyboyvideo",
-  "dudesraw",
-  "nakedsword",
-  "trailertrashboys",
-  "japanboyz",
-  "sexjapantv",
-  "hiroyaxxx",
-  "yoshikawasakixxx",
-  "wuboyz",
-  "barebackrtxxx",
-  "cumpigmen",
-  "realmenfuck",
-  "swinginballs",
-  "squirtstudios",
-  "aussiesdoit",
-  "twinktrade",
-  "dadcreep",
-  "brothercrush",
-  "familydick",
-  "sayuncle",
-  "boysatcamp",
-  "missionaryboys",
-  "militarydick",
-  "latinleche",
-  "yesfather",
-  "bullyhim",
-  "youngperps",
-  "barebackcumpigs",
-  "bearchubs",
-  "bearfilms",
-  "hairyandraw",
-  "boyfun",
-  "jawked",
-  "men",
-  "sean-cody",
-  "icon-male",
-  "gaywire",
-  "biempire",
-  "twinkpop",
-  "reality-dudes",
-  "bigstr",
-  "black-male-me",
-  "noirmale",
-  "guy-selector",
-  "spicevidsgay",
-  "maleaccess",
-] as const;
-
-const CATEGORY_SLUGS = [
-  "amateur-twinks",
-  "premium-studios",
-  "best-value",
-  "hd-quality",
-  "free-trials",
-  "mobile-friendly",
-] as const;
+// Single source of truth — adding a site to sites.ts auto-includes it here.
+const SITE_SLUGS = sites.map((s) => s.slug);
+const CATEGORY_SLUGS = categories.map((c) => c.slug);
 
 const NICHE_SLUGS = [
   "twink",
