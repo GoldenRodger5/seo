@@ -79,6 +79,19 @@ const SITE_SLUGS = [
   "hairyandraw",
   "boyfun",
   "jawked",
+  "men",
+  "sean-cody",
+  "icon-male",
+  "gaywire",
+  "biempire",
+  "twinkpop",
+  "reality-dudes",
+  "bigstr",
+  "black-male-me",
+  "noirmale",
+  "guy-selector",
+  "spicevidsgay",
+  "maleaccess",
 ] as const;
 
 const SITE_NAMES: Record<string, string> = {
@@ -131,6 +144,19 @@ const SITE_NAMES: Record<string, string> = {
   "hairyandraw": "Hairy and Raw",
   "boyfun": "BoyFun",
   "jawked": "Jawked",
+  "men": "Men.com",
+  "sean-cody": "Sean Cody",
+  "icon-male": "Icon Male",
+  "gaywire": "Gay Wire",
+  "biempire": "BiEmpire",
+  "twinkpop": "Twinkpop",
+  "reality-dudes": "Reality Dudes",
+  "bigstr": "BigStr",
+  "black-male-me": "Black Male Me",
+  "noirmale": "NoirMale",
+  "guy-selector": "Guy Selector",
+  "spicevidsgay": "SpiceVidsGay",
+  "maleaccess": "MaleAccess",
 };
 
 const CATEGORY_SLUGS = [
