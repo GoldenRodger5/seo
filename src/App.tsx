@@ -51,6 +51,25 @@ const BestForBeginners = lazy(() => import("./pages/seo/BestForBeginners"));
 const BestTwink2026 = lazy(() => import("./pages/seo/BestTwink2026"));
 const BestWithDownloads = lazy(() => import("./pages/seo/BestWithDownloads"));
 const BestDaddy = lazy(() => import("./pages/seo/BestDaddy"));
+const BestGayPornSites = lazy(() => import("./pages/seo/BestGayPornSites"));
+const BestSubscription = lazy(() => import("./pages/seo/BestSubscription"));
+const BestTwinkPorn = lazy(() => import("./pages/seo/BestTwinkPorn"));
+const SitesWithFreeTrial = lazy(() => import("./pages/seo/SitesWithFreeTrial"));
+const BestValueGayPorn = lazy(() => import("./pages/seo/BestValueGayPorn"));
+const GayPornReviews = lazy(() => import("./pages/seo/GayPornReviews"));
+const SitesRanked = lazy(() => import("./pages/seo/SitesRanked"));
+const WorthIt = {
+  NakedSword: lazy(() => import("./pages/seo/WorthItRoutes").then(m => ({ default: m.IsNakedSwordWorthIt }))),
+  SeanCody: lazy(() => import("./pages/seo/WorthItRoutes").then(m => ({ default: m.IsSeanCodyWorthIt }))),
+  Helix: lazy(() => import("./pages/seo/WorthItRoutes").then(m => ({ default: m.IsHelixWorthIt }))),
+  Men: lazy(() => import("./pages/seo/WorthItRoutes").then(m => ({ default: m.IsMenWorthIt }))),
+  TwinksInShorts: lazy(() => import("./pages/seo/WorthItRoutes").then(m => ({ default: m.IsTwinksInShortsWorthIt }))),
+  SouthernStrokes: lazy(() => import("./pages/seo/WorthItRoutes").then(m => ({ default: m.IsSouthernStrokesWorthIt }))),
+  PeterFever: lazy(() => import("./pages/seo/WorthItRoutes").then(m => ({ default: m.IsPeterFeverWorthIt }))),
+  SayUncle: lazy(() => import("./pages/seo/WorthItRoutes").then(m => ({ default: m.IsSayUncleWorthIt }))),
+  RawHole: lazy(() => import("./pages/seo/WorthItRoutes").then(m => ({ default: m.IsRawHoleWorthIt }))),
+  AthleticTwinks: lazy(() => import("./pages/seo/WorthItRoutes").then(m => ({ default: m.IsAthleticTwinksWorthIt }))),
+};
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -143,6 +162,23 @@ const AnimatedRoutes = () => {
         <Route path="/best-gay-twink-sites-2026" element={<BestTwink2026 />} />
         <Route path="/best-gay-sites-with-downloads" element={<BestWithDownloads />} />
         <Route path="/best-daddy-twink-sites" element={<BestDaddy />} />
+        <Route path="/best-gay-porn-sites" element={<BestGayPornSites />} />
+        <Route path="/best-gay-porn-subscription" element={<BestSubscription />} />
+        <Route path="/best-twink-porn-sites" element={<BestTwinkPorn />} />
+        <Route path="/gay-porn-sites-with-free-trial" element={<SitesWithFreeTrial />} />
+        <Route path="/best-value-gay-porn-sites" element={<BestValueGayPorn />} />
+        <Route path="/gay-porn-site-reviews" element={<GayPornReviews />} />
+        <Route path="/gay-porn-sites-ranked" element={<SitesRanked />} />
+        <Route path="/is-nakedsword-worth-it" element={<WorthIt.NakedSword />} />
+        <Route path="/is-sean-cody-worth-it" element={<WorthIt.SeanCody />} />
+        <Route path="/is-helix-studios-worth-it" element={<WorthIt.Helix />} />
+        <Route path="/is-men-worth-it" element={<WorthIt.Men />} />
+        <Route path="/is-twinks-in-shorts-worth-it" element={<WorthIt.TwinksInShorts />} />
+        <Route path="/is-southern-strokes-worth-it" element={<WorthIt.SouthernStrokes />} />
+        <Route path="/is-peterfever-worth-it" element={<WorthIt.PeterFever />} />
+        <Route path="/is-sayuncle-worth-it" element={<WorthIt.SayUncle />} />
+        <Route path="/is-rawhole-worth-it" element={<WorthIt.RawHole />} />
+        <Route path="/is-athletic-twinks-worth-it" element={<WorthIt.AthleticTwinks />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

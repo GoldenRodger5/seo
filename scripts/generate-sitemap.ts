@@ -170,6 +170,23 @@ const corePages = [
   "/best-gay-twink-sites-2026",
   "/best-gay-sites-with-downloads",
   "/best-daddy-twink-sites",
+  "/best-gay-porn-sites",
+  "/best-gay-porn-subscription",
+  "/best-twink-porn-sites",
+  "/gay-porn-sites-with-free-trial",
+  "/best-value-gay-porn-sites",
+  "/gay-porn-site-reviews",
+  "/gay-porn-sites-ranked",
+  "/is-nakedsword-worth-it",
+  "/is-sean-cody-worth-it",
+  "/is-helix-studios-worth-it",
+  "/is-men-worth-it",
+  "/is-twinks-in-shorts-worth-it",
+  "/is-southern-strokes-worth-it",
+  "/is-peterfever-worth-it",
+  "/is-sayuncle-worth-it",
+  "/is-rawhole-worth-it",
+  "/is-athletic-twinks-worth-it",
 ];
 for (const page of corePages) {
   urls.push(urlEntry({ loc: page, changefreq: "weekly", priority: "0.9" }));

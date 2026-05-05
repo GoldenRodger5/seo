@@ -89,15 +89,27 @@ const Footer = () => (
       </div>
 
       {/* Popular Lists */}
-      <div className="mt-10 border-t border-border/40 pt-8">
-        <h3 className="font-heading text-sm font-semibold mb-3">Popular Lists</h3>
-        <ul className="flex flex-wrap gap-x-4 gap-y-2">
-          <li><Link to="/best-gay-sites-under-10" className={footerLink}>Best Sites Under $10</Link></li>
-          <li><Link to="/best-bareback-gay-sites" className={footerLink}>Best Bareback Sites</Link></li>
-          <li><Link to="/best-amateur-gay-sites" className={footerLink}>Best Amateur Sites</Link></li>
-          <li><Link to="/best-premium-gay-sites" className={footerLink}>Best Premium Sites</Link></li>
-          <li><Link to="/best-asian-gay-sites" className={footerLink}>Best Asian Sites</Link></li>
-        </ul>
+      <div className="mt-10 grid gap-8 sm:grid-cols-2 border-t border-border/40 pt-8">
+        <div>
+          <h3 className="font-heading text-sm font-semibold mb-3">Popular Lists</h3>
+          <ul className="flex flex-wrap gap-x-4 gap-y-2">
+            <li><Link to="/best-gay-sites-under-10" className={footerLink}>Best Sites Under $10</Link></li>
+            <li><Link to="/best-bareback-gay-sites" className={footerLink}>Best Bareback Sites</Link></li>
+            <li><Link to="/best-amateur-gay-sites" className={footerLink}>Best Amateur Sites</Link></li>
+            <li><Link to="/best-premium-gay-sites" className={footerLink}>Best Premium Sites</Link></li>
+            <li><Link to="/best-asian-gay-sites" className={footerLink}>Best Asian Sites</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h3 className="font-heading text-sm font-semibold mb-3">Gay Porn Site Reviews</h3>
+          <ul className="flex flex-wrap gap-x-4 gap-y-2">
+            <li><Link to="/best-gay-porn-sites" className={footerLink}>Best Gay Porn Sites</Link></li>
+            <li><Link to="/best-gay-porn-subscription" className={footerLink}>Best Subscription</Link></li>
+            <li><Link to="/gay-porn-site-reviews" className={footerLink}>All Reviews</Link></li>
+            <li><Link to="/best-value-gay-porn-sites" className={footerLink}>Best Value</Link></li>
+            <li><Link to="/gay-porn-sites-ranked" className={footerLink}>Sites Ranked</Link></li>
+          </ul>
+        </div>
       </div>
 
       {/* Secondary row — Tools / Gay Dating */}
