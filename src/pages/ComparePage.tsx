@@ -586,7 +586,7 @@ const ComparePage = () => {
             {/* Intro section */}
             <div className="mt-6 text-sm text-muted-foreground leading-relaxed space-y-4">
               <p>
-                We had active memberships on both. Here's how they stack up across content, value, updates, and mobile experience.
+                Here's how they compare across content quality, value for money, update frequency, and mobile experience.
               </p>
               <p>
                 {siteA.name}: {siteA.overall_score}/5 overall, {siteA.content_quality}/100 content quality, {siteA.price_monthly}.
@@ -736,28 +736,56 @@ const ComparePage = () => {
               </div>
             </div>
 
-            {/* Other comparisons in primary niche */}
+            {/* Other comparisons in primary niche.
+                Picks the strongest shared niche from a curated list of
+                category-defining tags. Body-type tags like muscle/smooth/
+                hairy/jock are excluded as section headings — they read as
+                minor descriptors rather than primary site identities,
+                which made "Other muscle comparisons" misleading on pairs
+                like Men.com vs Sean Cody. Falls back to a generic
+                "Similar comparisons" header when no strong shared niche
+                exists. */}
             {(() => {
-              const sharedNiche = (siteNicheMap[siteA.slug] ?? []).find((n) =>
-                (siteNicheMap[siteB.slug] ?? []).includes(n)
-              );
-              if (!sharedNiche) return null;
-              const niche = getNiche(sharedNiche);
-              if (!niche) return null;
-              const otherSites = sites
-                .filter(
-                  (s) =>
-                    s.slug !== siteA.slug &&
-                    s.slug !== siteB.slug &&
-                    (siteNicheMap[s.slug] ?? []).includes(sharedNiche)
-                )
-                .sort((a, b) => b.overall_score - a.overall_score)
-                .slice(0, 3);
+              const PRIMARY_NICHES = new Set([
+                "twink", "bareback", "asian", "japanese", "latin",
+                "bear", "daddy", "amateur", "college", "fetish",
+                "interracial", "str8-curious", "group",
+              ]);
+              const aNiches = siteNicheMap[siteA.slug] ?? [];
+              const bNiches = siteNicheMap[siteB.slug] ?? [];
+              const allShared = aNiches.filter((n) => bNiches.includes(n));
+              // Prefer category-defining niches over body-type tags. Among
+              // those, pick the one with the lowest combined index (most
+              // prominent in both sites' niche arrays).
+              const primaryShared = allShared
+                .filter((n) => PRIMARY_NICHES.has(n))
+                .sort((a, b) => (aNiches.indexOf(a) + bNiches.indexOf(a)) - (aNiches.indexOf(b) + bNiches.indexOf(b)))[0];
+              const sharedNiche = primaryShared ?? allShared[0];
+
+              const otherSites = sharedNiche
+                ? sites
+                    .filter(
+                      (s) =>
+                        s.slug !== siteA.slug &&
+                        s.slug !== siteB.slug &&
+                        (siteNicheMap[s.slug] ?? []).includes(sharedNiche)
+                    )
+                    .sort((a, b) => b.overall_score - a.overall_score)
+                    .slice(0, 3)
+                : sites
+                    .filter((s) => s.slug !== siteA.slug && s.slug !== siteB.slug)
+                    .sort((a, b) => b.overall_score - a.overall_score)
+                    .slice(0, 3);
               if (otherSites.length === 0) return null;
+
+              const niche = primaryShared ? getNiche(primaryShared) : null;
+              const heading = niche
+                ? `Other ${niche.displayName.toLowerCase()} comparisons`
+                : "Similar comparisons";
               return (
                 <div className="mt-10">
                   <h3 className="font-heading text-lg font-bold">
-                    Other {niche.displayName.toLowerCase()} comparisons
+                    {heading}
                   </h3>
                   <div className="mt-4 grid gap-3 sm:grid-cols-3">
                     {otherSites.map((s) => (
@@ -774,21 +802,23 @@ const ComparePage = () => {
                       </Link>
                     ))}
                   </div>
-                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-                    <Link
-                      to={`/compare?niche=${sharedNiche}`}
-                      className="text-primary hover:underline"
-                    >
-                      More {niche.displayName.toLowerCase()} comparisons →
-                    </Link>
-                    <span className="text-muted-foreground/40">·</span>
-                    <Link
-                      to={`/niche/${sharedNiche}`}
-                      className="text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      All {niche.displayName.toLowerCase()} sites →
-                    </Link>
-                  </div>
+                  {niche && primaryShared && (
+                    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                      <Link
+                        to={`/compare?niche=${primaryShared}`}
+                        className="text-primary hover:underline"
+                      >
+                        More {niche.displayName.toLowerCase()} comparisons →
+                      </Link>
+                      <span className="text-muted-foreground/40">·</span>
+                      <Link
+                        to={`/niche/${primaryShared}`}
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        All {niche.displayName.toLowerCase()} sites →
+                      </Link>
+                    </div>
+                  )}
                 </div>
               );
             })()}
