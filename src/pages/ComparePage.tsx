@@ -468,7 +468,44 @@ const ComparePage = () => {
     );
   }
 
-  const winner = siteA.overall_score >= siteB.overall_score ? siteA : siteB;
+  // Verdict logic. Three signals get composed:
+  //   1. Score parity: tied → use neutral "TOP PICK" labels and "evenly matched" BLUF
+  //   2. AI preference: when AI body exists, count site-name mentions in the
+  //      verdict + who_should_choose fields. A clear lead overrides the
+  //      score-based winner (resolves the contradiction where the AI body
+  //      recommended Sean Cody but the cards declared Men.com the winner).
+  //   3. Score-based fallback: higher overall_score wins; tiebreaker = siteA.
+  const aiBody = getComparisonBody(slug);
+  const tied = siteA.overall_score === siteB.overall_score;
+  const aiPreferred: SiteData | null = (() => {
+    if (!aiBody) return null;
+    const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    // Recommendation-phrase detection. Raw mention counts are unreliable
+    // because both sites get described positively in `who_should_choose_a/b`.
+    // Instead, split the verdict into sentences and find ones that contain
+    // explicit recommendation phrases ("X is the safer pick", "X is the
+    // more satisfying spend", etc.). Whichever site is named exclusively
+    // in those sentences wins — falls through to score-based otherwise.
+    const RECO_RE = /\bis the (?:safer|better|smarter|stronger|cleaner|wiser|more (?:recommended|trustworthy|satisfying|consistent|reliable|valuable|sensible))\b/i;
+    const sentences = `${aiBody.verdict} ${aiBody.who_should_choose_a} ${aiBody.who_should_choose_b}`
+      .split(/(?<=[.!?])\s+/);
+    const aRe = new RegExp(escapeRe(siteA.name), "i");
+    const bRe = new RegExp(escapeRe(siteB.name), "i");
+    let aHits = 0;
+    let bHits = 0;
+    for (const s of sentences) {
+      if (!RECO_RE.test(s)) continue;
+      const inA = aRe.test(s);
+      const inB = bRe.test(s);
+      if (inA && !inB) aHits++;
+      else if (inB && !inA) bHits++;
+    }
+    if (aHits > bHits) return siteA;
+    if (bHits > aHits) return siteB;
+    return null;
+  })();
+  const winner = aiPreferred ?? (siteA.overall_score >= siteB.overall_score ? siteA : siteB);
+  const runnerUp = winner.id === siteA.id ? siteB : siteA;
   const budgetPick = parseFloat(siteA.price_annual.replace(/[^0-9.]/g, "")) <= parseFloat(siteB.price_annual.replace(/[^0-9.]/g, "")) ? siteA : siteB;
 
   return (
@@ -576,10 +613,16 @@ const ComparePage = () => {
             <div className="mt-8 glass-card rounded-lg p-6 border-l-4 border-l-secondary">
               <h2 className="font-heading text-lg font-bold text-secondary">Bottom Line Up Front</h2>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                {winner.name} takes the overall win with a {winner.overall_score}/5 score, excelling in {winner.content_quality >= winner.value_score ? "content quality" : "value for money"}.
-                {budgetPick.id !== winner.id
-                  ? ` However, ${budgetPick.name} at ${stripMonthlyUnit(budgetPick.price_annual)}/mo (annual) is the smarter pick if you're watching your budget.`
-                  : ` It also happens to be the more affordable option at ${stripMonthlyUnit(winner.price_annual)}/mo on the annual plan.`}
+                {tied && !aiPreferred
+                  ? `${siteA.name} and ${siteB.name} are evenly matched at ${siteA.overall_score}/5 — here's how to choose between them. ${budgetPick.name} at ${stripMonthlyUnit(budgetPick.price_annual)}/mo (annual) is the cheaper of the two if budget is the deciding factor.`
+                  : (
+                    <>
+                      {winner.name} takes the overall {tied ? "edge" : "win"}{tied ? "" : ` with a ${winner.overall_score}/5 score`}, excelling in {winner.content_quality >= winner.value_score ? "content quality" : "value for money"}.
+                      {budgetPick.id !== winner.id
+                        ? ` However, ${budgetPick.name} at ${stripMonthlyUnit(budgetPick.price_annual)}/mo (annual) is the smarter pick if you're watching your budget.`
+                        : ` It also happens to be the more affordable option at ${stripMonthlyUnit(winner.price_annual)}/mo on the annual plan.`}
+                    </>
+                  )}
               </p>
             </div>
 
@@ -663,42 +706,57 @@ const ComparePage = () => {
             {/* Verdict with CTAs */}
             <div className="mt-10 glass-card rounded-lg p-8">
               <h2 className="text-center font-heading text-2xl font-bold heading-gradient inline-block w-full">Our Verdict</h2>
-              <div className="mt-6 grid gap-5 sm:grid-cols-2">
-                <div className="rounded-lg border-2 border-secondary/40 bg-secondary/5 p-5 flex flex-col">
-                  <span className="rounded-button gold-gradient px-2.5 py-1 text-[10px] font-bold text-secondary-foreground self-start">
-                    OVERALL WINNER
-                  </span>
-                  <p className="mt-3 font-heading text-2xl font-bold">{winner.name}</p>
-                  <p className="mt-1 text-sm text-muted-foreground flex-1">
-                    Best for {winner.content_quality >= winner.value_score ? "premium production value" : "overall quality"}.
-                  </p>
-                  <OutboundLink
-                    site={winner}
-                    onClick={() => trackEvent("verdict_click", { site: winner.slug, comparison: slug, role: "winner" })}
-                    className={`cta-btn mt-4 inline-flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!isAffiliated(winner) ? "opacity-85" : ""}`}
-                  >
-                    Visit {winner.name} <ArrowRight size={14} />
-                  </OutboundLink>
-                </div>
-                <div className="rounded-lg border-2 border-primary/30 p-5 flex flex-col">
-                  <span className="rounded-button bg-primary/15 px-2.5 py-1 text-[10px] font-bold text-primary self-start">
-                    💸 {budgetPick.id !== winner.id ? "BUDGET PICK" : "RUNNER-UP"}
-                  </span>
-                  <p className="mt-3 font-heading text-2xl font-bold">
-                    {budgetPick.id !== winner.id ? budgetPick.name : (siteA.id === winner.id ? siteB.name : siteA.name)}
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground flex-1">
-                    {budgetPick.id !== winner.id ? "Best if budget matters." : "Solid alternative if winner doesn't fit."}
-                  </p>
-                  <OutboundLink
-                    site={budgetPick.id !== winner.id ? budgetPick : (siteA.id === winner.id ? siteB : siteA)}
-                    onClick={() => trackEvent("verdict_click", { site: (budgetPick.id !== winner.id ? budgetPick : (siteA.id === winner.id ? siteB : siteA)).slug, comparison: slug, role: "runner_up" })}
-                    className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-button border border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
-                  >
-                    Try {(budgetPick.id !== winner.id ? budgetPick : (siteA.id === winner.id ? siteB : siteA)).name} Instead <ArrowRight size={14} />
-                  </OutboundLink>
-                </div>
-              </div>
+              {(() => {
+                // When scores are genuinely tied (and AI doesn't break the
+                // tie), use neutral "TOP PICK" / "ALTERNATIVE PICK" labels
+                // instead of declaring an arbitrary winner.
+                const useNeutralLabels = tied && !aiPreferred;
+                const primaryLabel = useNeutralLabels ? "TOP PICK" : "OVERALL WINNER";
+                const secondaryIsBudget = budgetPick.id !== winner.id;
+                const secondaryLabel = useNeutralLabels
+                  ? "ALTERNATIVE PICK"
+                  : secondaryIsBudget ? "💸 BUDGET PICK" : "💸 RUNNER-UP";
+                const secondarySite = secondaryIsBudget ? budgetPick : runnerUp;
+                const secondaryDesc = useNeutralLabels
+                  ? "Equally strong on the scorecard — a different fit for different priorities."
+                  : secondaryIsBudget
+                    ? "Best if budget matters."
+                    : "Solid alternative if winner doesn't fit.";
+                return (
+                  <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                    <div className="rounded-lg border-2 border-secondary/40 bg-secondary/5 p-5 flex flex-col">
+                      <span className="rounded-button gold-gradient px-2.5 py-1 text-[10px] font-bold text-secondary-foreground self-start">
+                        {primaryLabel}
+                      </span>
+                      <p className="mt-3 font-heading text-2xl font-bold">{winner.name}</p>
+                      <p className="mt-1 text-sm text-muted-foreground flex-1">
+                        Best for {winner.content_quality >= winner.value_score ? "premium production value" : "overall quality"}.
+                      </p>
+                      <OutboundLink
+                        site={winner}
+                        onClick={() => trackEvent("verdict_click", { site: winner.slug, comparison: slug, role: "winner" })}
+                        className={`cta-btn mt-4 inline-flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!isAffiliated(winner) ? "opacity-85" : ""}`}
+                      >
+                        Visit {winner.name} <ArrowRight size={14} />
+                      </OutboundLink>
+                    </div>
+                    <div className="rounded-lg border-2 border-primary/30 p-5 flex flex-col">
+                      <span className="rounded-button bg-primary/15 px-2.5 py-1 text-[10px] font-bold text-primary self-start">
+                        {secondaryLabel}
+                      </span>
+                      <p className="mt-3 font-heading text-2xl font-bold">{secondarySite.name}</p>
+                      <p className="mt-1 text-sm text-muted-foreground flex-1">{secondaryDesc}</p>
+                      <OutboundLink
+                        site={secondarySite}
+                        onClick={() => trackEvent("verdict_click", { site: secondarySite.slug, comparison: slug, role: "runner_up" })}
+                        className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-button border border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
+                      >
+                        Try {secondarySite.name} Instead <ArrowRight size={14} />
+                      </OutboundLink>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
 
             {/* FAQ */}
