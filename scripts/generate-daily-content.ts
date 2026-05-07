@@ -833,10 +833,22 @@ async function pingBing(url: string): Promise<boolean> {
 // Supabase logging (Part 3K)
 // ---------------------------------------------------------------------------
 async function logToSupabase(row: Record<string, unknown>) {
-  const url = process.env.VITE_SUPABASE_URL;
-  const key = process.env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  // Sanitize: GitHub Secrets sometimes get saved with surrounding quotes
+  // (if the user pasted "https://..." instead of https://...). Supabase's
+  // createClient validator rejects values with quotes as invalid URLs.
+  // Strip wrapping quotes and trim whitespace defensively.
+  const sanitize = (v: string | undefined): string | undefined => {
+    if (!v) return v;
+    return v.trim().replace(/^["']|["']$/g, "");
+  };
+  const url = sanitize(process.env.VITE_SUPABASE_URL);
+  const key = sanitize(process.env.VITE_SUPABASE_ANON_KEY) || sanitize(process.env.VITE_SUPABASE_PUBLISHABLE_KEY);
   if (!url || !key) {
     log.warn("Supabase env vars missing — skipping content_log insert");
+    return;
+  }
+  if (!/^https?:\/\//.test(url)) {
+    log.warn(`Supabase URL invalid (got "${url.slice(0, 40)}..."). Check the GitHub Secret value — must start with https:// and contain no surrounding quotes.`);
     return;
   }
   try {
