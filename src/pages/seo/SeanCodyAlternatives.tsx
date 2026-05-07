@@ -1,7 +1,9 @@
 import SeoLandingPage from "../../components/SeoLandingPage";
 import { getSimilarSites } from "../../lib/similarSites";
+import { getAlternativesBody } from "../../data/alternatives-content";
 
 const sites = getSimilarSites("sean-cody", 5);
+const aiBody = getAlternativesBody("sean-cody-alternatives");
 
 const SeanCodyAlternatives = () => (
   <SeoLandingPage
@@ -17,6 +19,7 @@ const SeanCodyAlternatives = () => (
       { to: "/reviews/sean-cody", label: "Sean Cody review" },
       { to: "/best-premium-gay-sites", label: "All premium sites" },
     ]}
+    aiBody={aiBody}
   />
 );
 

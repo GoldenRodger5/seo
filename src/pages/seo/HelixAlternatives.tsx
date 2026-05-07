@@ -1,7 +1,9 @@
 import SeoLandingPage from "../../components/SeoLandingPage";
 import { getSimilarSites } from "../../lib/similarSites";
+import { getAlternativesBody } from "../../data/alternatives-content";
 
 const sites = getSimilarSites("helix-studios", 5);
+const aiBody = getAlternativesBody("helix-studios-alternatives");
 
 const HelixAlternatives = () => (
   <SeoLandingPage
@@ -17,6 +19,7 @@ const HelixAlternatives = () => (
       { to: "/reviews/helix-studios", label: "Helix Studios review" },
       { to: "/best-premium-gay-sites", label: "All premium sites" },
     ]}
+    aiBody={aiBody}
   />
 );
 

@@ -49,8 +49,10 @@ const ROOT = resolve(__dirname, "..");
 const SITES_FILE = resolve(ROOT, "src/data/sites.ts");
 const QUEUE_FILE = resolve(ROOT, "src/data/content-queue.ts");
 const REVIEWS_FILE = resolve(ROOT, "src/hooks/useAIReview.ts");
-const SITEMAP_SCRIPT = resolve(ROOT, "scripts/generate-sitemap.ts");
-const PRERENDER_SCRIPT = resolve(ROOT, "scripts/prerender-meta.ts");
+const COMPARISON_CONTENT_FILE = resolve(ROOT, "src/data/comparison-content.ts");
+const ALTERNATIVES_CONTENT_FILE = resolve(ROOT, "src/data/alternatives-content.ts");
+const ISWORTHIT_CONTENT_FILE = resolve(ROOT, "src/data/isworthit-content.ts");
+const GUIDE_CONTENT_FILE = resolve(ROOT, "src/data/guide-content.ts");
 
 const BASE_URL = "https://twinkvault.com";
 // Sonnet 4.6 is the current latest at time of writing. Override here if you
@@ -644,27 +646,77 @@ function appendReviewBody(slug: string, generated: Record<string, unknown>) {
   log.info(`Appended review body for ${slug}`);
 }
 
-function addSlugToScripts(slug: string, name: string) {
-  for (const file of [SITEMAP_SCRIPT, PRERENDER_SCRIPT]) {
-    const src = readFileSync(file, "utf-8");
-    if (src.includes(`"${slug}"`)) continue;
-    const updated = src.replace(/(\n] as const;)/, `,\n  "${slug}"$1`);
-    if (updated === src) {
-      log.warn(`Could not splice ${slug} into ${file}`);
-      continue;
-    }
-    writeFileSync(file, updated, "utf-8");
+// Removed addSlugToScripts() — generate-sitemap.ts and prerender-meta.ts
+// now derive SITE_SLUGS / SITE_NAMES from src/data/sites.ts via
+// `sites.map(s => s.slug)`, so any new site appended to sites.ts is
+// automatically picked up by both scripts on the next build. The old
+// splice-into-hardcoded-array logic is no longer needed and was
+// silently a no-op against the refactored scripts.
+
+/**
+ * Generic upsert into a TypeScript Record<string, T> file. Reads the file,
+ * inserts a new entry literal before the closing `};` of the record, writes
+ * back. If a key already exists, leaves the file untouched and warns.
+ *
+ * Used to persist generated body content for comparison / alternatives /
+ * isworthit / guide content types into their respective data files.
+ */
+function upsertContentEntry(file: string, key: string, body: unknown): void {
+  const src = readFileSync(file, "utf-8");
+  const literal = `  ${JSON.stringify(key)}: ${JSON.stringify(body, null, 2).replace(/\n/g, "\n  ")},\n`;
+
+  // Detect existing key — skip rather than overwrite to avoid clobbering
+  // hand-edited content. Re-runs on the same key are a no-op.
+  if (new RegExp(`^\\s*${JSON.stringify(key).replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}\\s*:`, "m").test(src)) {
+    log.info(`upsert: ${key} already in ${file.split("/").pop()}, skipping`);
+    return;
   }
-  // Also patch SITE_NAMES in prerender-meta.
-  const pre = readFileSync(PRERENDER_SCRIPT, "utf-8");
-  if (!pre.includes(`"${slug}":`)) {
-    const updated = pre.replace(
-      /(\n};\s*\nconst CATEGORY_SLUGS)/,
-      `,\n  "${slug}": "${name}"\n};\nconst CATEGORY_SLUGS`
-    );
-    if (updated !== pre) writeFileSync(PRERENDER_SCRIPT, updated, "utf-8");
+
+  // Two formats to handle:
+  //   1. Empty record: `= {};` (initial state — single line)
+  //   2. Populated record: `\n};` on its own line (after first insert)
+  let updated: string;
+  if (/=\s*\{\s*\};/.test(src)) {
+    // Empty record — convert to multi-line and insert.
+    updated = src.replace(/=\s*\{\s*\};/, `= {\n${literal}};`);
+  } else {
+    // Populated record — splice before the closing `\n};`.
+    updated = src.replace(/(\n};\s*$)/m, `${literal}};\n`);
   }
-  log.info(`Added ${slug} to sitemap + prerender scripts`);
+
+  if (updated === src) {
+    log.warn(`upsert: could not find record terminator in ${file}`);
+    return;
+  }
+  writeFileSync(file, updated, "utf-8");
+  log.info(`upsert: wrote ${key} to ${file.split("/").pop()}`);
+}
+
+function persistSupportingContent(entry: SupportingQueueEntry, generated: Record<string, unknown>): void {
+  // The comparison/alternatives/isworthit/guide entries store their slug
+  // with a path prefix like "compare/" or "guide/". The persistence map
+  // is keyed by the bare identifier (the prefix is implied by the file).
+  const key = entry.slug.replace(/^(compare|guide)\//, "");
+  switch (entry.content_type) {
+    case "comparison":
+      upsertContentEntry(COMPARISON_CONTENT_FILE, key, generated);
+      break;
+    case "alternatives":
+      upsertContentEntry(ALTERNATIVES_CONTENT_FILE, key, generated);
+      break;
+    case "isworthit":
+      upsertContentEntry(ISWORTHIT_CONTENT_FILE, key, generated);
+      break;
+    case "guide":
+      upsertContentEntry(GUIDE_CONTENT_FILE, key, generated);
+      break;
+    default:
+      // discount, bestof, hub, awards, freetrial, pricing — these either
+      // render dynamically from sites.ts (discount) or don't have route
+      // components yet. Generated content is logged via Supabase but not
+      // persisted to a per-type data file.
+      log.info(`persist: no data file wired for content_type=${entry.content_type}, content logged only`);
+  }
 }
 
 function markQueuePublished(slug: string, kind: "review" | "supporting") {
@@ -928,17 +980,14 @@ async function main() {
     imageUrl = await fetchOgImage(entry.homepage_url);
     appendSiteEntry(entry, generated, imageUrl);
     appendReviewBody(entry.slug, generated);
-    addSlugToScripts(entry.slug, entry.name);
     markQueuePublished(entry.slug, "review");
   } else {
     const entry = target.entry as SupportingQueueEntry;
-    // Supporting pages are rendered dynamically by the existing page templates
-    // (DiscountPage, ComparePage, etc.). For new content types not yet
-    // implemented as SPA routes (hub/guide/alternatives/isworthit/awards),
-    // the generated JSON is currently logged but not yet rendered as a route.
-    // Building those route components is the next step in the engine — for
-    // now we publish-flag the queue entry and rely on the existing dynamic
-    // pages.
+    // Persist generated body to the per-type data file (comparison /
+    // alternatives / isworthit / guide). Frontend route components read
+    // from these files and fall back to the generic template when no
+    // entry exists.
+    persistSupportingContent(entry, generated);
     markQueuePublished(entry.slug, "supporting");
   }
 

@@ -8,6 +8,7 @@ import Layout from "../components/Layout";
 import ScoreRing from "../components/ScoreRing";
 import StarRating from "../components/StarRating";
 import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
+import { getComparisonBody } from "../data/comparison-content";
 import { PageTransition } from "../components/MotionWrappers";
 import { currentYear } from "../lib/dates";
 import { siteNicheMap } from "@/data/site-niches";
@@ -525,6 +526,51 @@ const ComparePage = () => {
               {siteA.name} vs {siteB.name}
             </h1>
             <p className="mt-2 text-center text-muted-foreground">Which Is Worth It? ({currentYear})</p>
+
+            {/* AI-generated body (head-to-head deep dive) — renders above the
+                deterministic template when comparison-content.ts has an entry
+                for this slug. Falls through to the template below otherwise. */}
+            {(() => {
+              const ai = getComparisonBody(slug);
+              if (!ai) return null;
+              return (
+                <article className="mt-8 space-y-6 text-sm text-foreground/90 leading-relaxed">
+                  <p className="text-base">{ai.intro}</p>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="glass-card rounded-lg p-5">
+                      <h3 className="font-heading text-base font-bold">{siteA.name} — Strengths</h3>
+                      <p className="mt-2 text-sm text-muted-foreground">{ai.site_a_summary}</p>
+                    </div>
+                    <div className="glass-card rounded-lg p-5">
+                      <h3 className="font-heading text-base font-bold">{siteB.name} — Strengths</h3>
+                      <p className="mt-2 text-sm text-muted-foreground">{ai.site_b_summary}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {ai.comparison_categories.map((row) => (
+                      <div key={row.category} className="glass-card rounded-lg p-5">
+                        <div className="flex items-baseline justify-between gap-3">
+                          <h4 className="font-heading text-sm font-semibold">{row.category}</h4>
+                          <span className="text-xs text-muted-foreground">
+                            {siteA.name} {row.site_a_score}/10 · {siteB.name} {row.site_b_score}/10
+                          </span>
+                        </div>
+                        <p className="mt-2 text-xs text-muted-foreground"><strong className="text-foreground">{siteA.name}:</strong> {row.site_a_detail}</p>
+                        <p className="mt-1 text-xs text-muted-foreground"><strong className="text-foreground">{siteB.name}:</strong> {row.site_b_detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="glass-card rounded-lg p-6 border-l-4 border-l-secondary">
+                    <h3 className="font-heading text-lg font-bold">Verdict</h3>
+                    <p className="mt-2 text-sm text-foreground/90">{ai.verdict}</p>
+                    <div className="mt-4 grid gap-3 md:grid-cols-2 text-xs">
+                      <p><strong className="text-foreground">Choose {siteA.name} if:</strong> {ai.who_should_choose_a}</p>
+                      <p><strong className="text-foreground">Choose {siteB.name} if:</strong> {ai.who_should_choose_b}</p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })()}
 
             {/* BLUF Summary */}
             <div className="mt-8 glass-card rounded-lg p-6 border-l-4 border-l-secondary">

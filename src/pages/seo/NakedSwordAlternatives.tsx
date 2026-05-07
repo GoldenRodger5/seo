@@ -1,7 +1,9 @@
 import SeoLandingPage from "../../components/SeoLandingPage";
 import { getSimilarSites } from "../../lib/similarSites";
+import { getAlternativesBody } from "../../data/alternatives-content";
 
 const sites = getSimilarSites("nakedsword", 5);
+const aiBody = getAlternativesBody("nakedsword-alternatives");
 
 const NakedSwordAlternatives = () => (
   <SeoLandingPage
@@ -17,6 +19,7 @@ const NakedSwordAlternatives = () => (
       { to: "/reviews/nakedsword", label: "NakedSword review" },
       { to: "/best-premium-gay-sites", label: "All premium sites" },
     ]}
+    aiBody={aiBody}
   />
 );
 

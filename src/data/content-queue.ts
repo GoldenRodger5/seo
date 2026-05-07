@@ -304,7 +304,7 @@ const hubEntries: SupportingQueueEntry[] = [
 // ---------------------------------------------------------------------------
 const backlogEntries: SupportingQueueEntry[] = [
   // Days 1-7 — Comparison content (priority 100 → 94)
-  { title: "Men.com vs Sean Cody", slug: "compare/men-vs-sean-cody", content_type: "comparison", target_keyword: "men.com vs sean cody", related_sites: ["men", "sean-cody"], priority: 100, status: "published" },
+  { title: "Men.com vs Sean Cody", slug: "compare/men-vs-sean-cody", content_type: "comparison", target_keyword: "men.com vs sean cody", related_sites: ["men", "sean-cody"], priority: 100, status: "queued" },
   { title: "NakedSword vs Men.com", slug: "compare/nakedsword-vs-men", content_type: "comparison", target_keyword: "nakedsword vs men.com", related_sites: ["nakedsword", "men"], priority: 99, status: "queued" },
   { title: "Helix Studios vs Sean Cody", slug: "compare/helix-studios-vs-sean-cody", content_type: "comparison", target_keyword: "helix studios vs sean cody", related_sites: ["helix-studios", "sean-cody"], priority: 98, status: "queued" },
   { title: "Twinks in Shorts vs Athletic Twinks", slug: "compare/twinks-in-shorts-vs-athletic-twinks", content_type: "comparison", target_keyword: "twinks in shorts vs athletic twinks", related_sites: ["twinks-in-shorts", "athletic-twinks"], priority: 97, status: "queued" },

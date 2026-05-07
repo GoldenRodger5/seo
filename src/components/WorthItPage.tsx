@@ -10,6 +10,7 @@ import LocalisedPrice from "./LocalisedPrice";
 import SitePlaceholderImage from "./SitePlaceholderImage";
 import { SiteData, isAffiliated } from "../data/sites";
 import { getVerdict } from "../data/site-verdicts";
+import { getWorthItBody } from "../data/isworthit-content";
 import { currentYear } from "../lib/dates";
 
 type Verdict = "yes" | "no" | "depends";
@@ -199,6 +200,25 @@ const WorthItPage = ({ site }: { site: SiteData }) => {
                 </ul>
               </MotionCard>
             </div>
+
+            {/* AI-generated long-form body (renders above the auto-derived
+                Bottom Line when isworthit-content.ts has an entry). */}
+            {(() => {
+              const ai = getWorthItBody(site.slug);
+              if (!ai) return null;
+              return (
+                <article className="space-y-5 text-sm text-foreground/90 leading-relaxed">
+                  <p className="text-base">{ai.intro}</p>
+                  {ai.sections.map((s) => (
+                    <section key={s.h2}>
+                      <h3 className="font-heading text-base font-bold">{s.h2}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground">{s.content}</p>
+                    </section>
+                  ))}
+                  <p className="text-sm text-muted-foreground">{ai.conclusion}</p>
+                </article>
+              );
+            })()}
 
             <MotionCard className="glass-card rounded-lg p-6 border-l-4 border-l-secondary">
               <h2 className="font-heading text-lg font-bold">Bottom Line</h2>

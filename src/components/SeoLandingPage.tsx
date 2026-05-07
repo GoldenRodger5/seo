@@ -8,6 +8,7 @@ import StarRating from "./StarRating";
 import VisitSiteButton from "./VisitSiteButton";
 import LocalisedPrice from "./LocalisedPrice";
 import { SiteData } from "../data/sites";
+import { AlternativesBody } from "../data/alternatives-content";
 import { currentYear } from "../lib/dates";
 
 export interface SeoLandingPageProps {
@@ -29,6 +30,9 @@ export interface SeoLandingPageProps {
   closing?: string;
   /** Optional cross-link cards at the end */
   related?: { to: string; label: string }[];
+  /** Optional AI-generated long-form body — renders above the site list
+   *  when present (used by alternatives pages to surface daily-engine output). */
+  aiBody?: AlternativesBody;
 }
 
 const SeoLandingPage = ({
@@ -41,6 +45,7 @@ const SeoLandingPage = ({
   sites,
   closing,
   related,
+  aiBody,
 }: SeoLandingPageProps) => {
   const fullTitle = `${title} (${currentYear}) | TwinkVault`;
   const url = `https://twinkvault.com${path}`;
@@ -100,6 +105,15 @@ const SeoLandingPage = ({
 
         <section className="py-12">
           <div className="container max-w-4xl">
+            {aiBody && (
+              <article className="mb-10 space-y-5 text-sm text-foreground/90 leading-relaxed">
+                <p className="text-base">{aiBody.intro}</p>
+                <div className="glass-card rounded-lg p-6 border-l-4 border-l-secondary">
+                  <h2 className="font-heading text-lg font-bold">Verdict</h2>
+                  <p className="mt-2 text-sm text-foreground/90">{aiBody.verdict}</p>
+                </div>
+              </article>
+            )}
             <StaggerContainer className="space-y-4 mb-12">
               {sites.map((site, i) => (
                 <StaggerChild key={site.id}>
