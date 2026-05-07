@@ -320,6 +320,27 @@ const BestDeals = () => {
           </div>
         </section>
 
+        {/* Featured Deal callout */}
+        <section className="py-6">
+          <div className="container max-w-4xl">
+            <Link
+              to="/discount/twinktrade"
+              className="block glass-card gold-pulse-border rounded-lg p-5 hover:bg-card/80 transition-colors"
+            >
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-secondary">Featured Deal</p>
+                  <h2 className="mt-1 font-heading text-lg font-bold">TwinkTrade — 67% off, just $9.95/mo on annual</h2>
+                  <p className="mt-1 text-xs text-muted-foreground">Active and verified. No promo code — discount applies through our link.</p>
+                </div>
+                <span className="rounded-button gold-gradient px-4 py-2 text-xs font-semibold text-secondary-foreground whitespace-nowrap">
+                  See Deal →
+                </span>
+              </div>
+            </Link>
+          </div>
+        </section>
+
         {/* Filter bar */}
         <section className="border-y border-border bg-card/40 sticky top-16 z-20">
           <div className="container py-3">

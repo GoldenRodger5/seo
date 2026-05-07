@@ -17,10 +17,10 @@ const StickyDealBar = () => {
   return (
     <div className="relative z-50 gold-gradient py-2">
       <div className="container flex items-center justify-center gap-2 text-xs font-semibold text-secondary-foreground sm:text-sm">
-        <span className="hidden sm:inline">Best Value Right Now: 45+ channels for $10.95/mo (annual) — Next Door Twink</span>
-        <span className="sm:hidden">45+ channels $10.95/mo — NDT</span>
+        <span className="hidden sm:inline">Active Deal: TwinkTrade — 67% off, just $9.95/mo on annual</span>
+        <span className="sm:hidden">TwinkTrade — 67% off, $9.95/mo</span>
         <Link
-          to="/discount/next-door-twink"
+          to="/discount/twinktrade"
           className="inline-flex items-center gap-1 underline underline-offset-2 hover:opacity-80"
         >
           View Deal <ArrowRight size={12} />

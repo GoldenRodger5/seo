@@ -137,14 +137,24 @@ const SeoLandingPage = ({
                           ))}
                         </div>
                       </div>
-                      <div className="flex gap-2 shrink-0">
-                        <Link
-                          to={`/reviews/${site.slug}`}
-                          className="rounded-button border border-primary px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
-                        >
-                          Read Review
-                        </Link>
-                        <VisitSiteButton site={site} showDisclosure={false} />
+                      <div className="flex flex-col gap-2 shrink-0">
+                        <div className="flex gap-2">
+                          <Link
+                            to={`/reviews/${site.slug}`}
+                            className="rounded-button border border-primary px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
+                          >
+                            Read Review
+                          </Link>
+                          <VisitSiteButton site={site} showDisclosure={false} />
+                        </div>
+                        {site.deal_discount > 0 && (
+                          <Link
+                            to={`/discount/${site.slug}`}
+                            className="text-center text-[10px] font-medium text-secondary hover:underline"
+                          >
+                            {site.deal_discount}% off — see deal →
+                          </Link>
+                        )}
                       </div>
                     </div>
                   </MotionCard>

@@ -93,6 +93,7 @@ const Footer = () => (
         <div>
           <h3 className="font-heading text-sm font-semibold mb-3">Popular Lists</h3>
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
+            <li><Link to="/discount/twinktrade" className={`${footerLink} gold-gradient-text`}>Featured Deal: TwinkTrade — 67% Off</Link></li>
             <li><Link to="/best-gay-sites-under-10" className={footerLink}>Best Sites Under $10</Link></li>
             <li><Link to="/best-bareback-gay-sites" className={footerLink}>Best Bareback Sites</Link></li>
             <li><Link to="/best-amateur-gay-sites" className={footerLink}>Best Amateur Sites</Link></li>

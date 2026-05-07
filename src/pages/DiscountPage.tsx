@@ -19,6 +19,7 @@ import { currentYear, currentMonthLong, lastCheckedDate, DEAL_VERIFIED_DATE } fr
 import { sites, getSiteBySlug, isAffiliated } from "../data/sites";
 import { siteNicheMap } from "../data/site-niches";
 import { getNiche } from "../data/niches";
+import { getVerdict } from "../data/site-verdicts";
 
 const StatusIndicator = ({ expiry }: { expiry: "limited" | "flash" | "ongoing" }) => (
   <div className="flex items-center gap-2 text-xs">
@@ -116,6 +117,20 @@ const DiscountPage = () => {
     {
       q: `What's the cheapest ${site.name} plan?`,
       a: `The cheapest ${site.name} plan is the annual membership at ${site.price_annual}. That's significantly less than the ${site.price_monthly} monthly rate and the ${site.price_quarterly} quarterly option. The annual plan is always the best value.`,
+    },
+    {
+      q: `How long is the ${site.name} discount valid?`,
+      a: `The discounted rate applies to your first billing period when you sign up through our link. After that, standard pricing applies on renewal unless you cancel before the renewal date. We re-verify all listed deals monthly — last verified ${lastCheckedDate}.`,
+    },
+    {
+      q: `Does ${site.name} offer a free trial?`,
+      a: site.has_free_trial
+        ? `Yes — ${site.name} offers a free trial period. The discount listed here applies after the trial converts to a paid membership.`
+        : `No fully free trial is currently available, but the ${site.deal_discount}% discount brings the cost significantly below the standard ${site.price_monthly} rate. Some sites in this category offer paid intro periods around $1-3 — check the site directly for current promotions.`,
+    },
+    {
+      q: `Can I cancel ${site.name} easily?`,
+      a: `Yes — cancel through your account settings on the ${site.name} site before the renewal date to avoid being charged. We recommend setting a calendar reminder a few days before your renewal date to make the cancellation decision deliberately rather than reactively.`,
     },
   ];
 
@@ -326,6 +341,35 @@ const DiscountPage = () => {
                 </tbody>
               </table>
             </div>
+          </div>
+        </section>
+
+        {/* What You Get + Editorial Take */}
+        <section className="py-12">
+          <div className="container max-w-2xl">
+            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
+              What You Get With {site.name}
+            </h2>
+            <ul className="mt-4 space-y-2">
+              {site.pros.slice(0, 4).map((pro) => (
+                <li key={pro} className="flex items-start gap-2 text-sm">
+                  <span className="mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-secondary" aria-hidden />
+                  <span className="text-muted-foreground">{pro}</span>
+                </li>
+              ))}
+            </ul>
+            {(() => {
+              const verdict = getVerdict(site.slug);
+              if (!verdict) return null;
+              return (
+                <div className="mt-6 rounded-lg border-l-4 border-l-secondary bg-card/60 p-5">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-secondary">
+                    Is the {site.name} Discount Worth It?
+                  </span>
+                  <p className="mt-2 text-sm leading-relaxed text-foreground/90">{verdict}</p>
+                </div>
+              );
+            })()}
           </div>
         </section>
 
