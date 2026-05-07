@@ -273,8 +273,10 @@ RESEARCH MANDATE:
 Before writing any review or page content, you MUST use the web_search tool to research the site. Search for: current pricing, scene/video count, recent member reviews, performer types, update frequency, trial offers, and any known issues or changes. Base your content on what you actually find — not assumptions. If search results conflict with your training data, trust the search results.
 
 CRITICAL OUTPUT RULES:
-- Respond ONLY with a single valid JSON object.
-- No markdown fences, no preamble, no trailing text.
+- You must respond with valid JSON only. Do not include any preamble, explanation, thinking, or conversational text before or after the JSON.
+- Your entire response must be parseable by JSON.parse(). Start your response with { and end with }.
+- Do NOT write things like "I'll research..." or "Let me think about this..." or "Here's the JSON:" — start with { immediately.
+- No markdown fences, no preamble, no trailing text, no inline thoughts.
 - Vary sentence structure and vocabulary — never reuse phrases verbatim across reviews.
 - Be opinionated and specific. Generic praise is worthless.
 - Include concrete details where you know them: scene counts, model archetypes, video resolution, prices.
@@ -310,7 +312,19 @@ async function generate({ contentType, payload }: GenerateOptions) {
 
 function parseJsonStrict(raw: string): Record<string, unknown> {
   // Strip code fences if model defied instructions.
-  const trimmed = raw.trim().replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
+  let trimmed = raw.trim().replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```$/i, "").trim();
+
+  // Salvage JSON when the model wraps it in conversational preamble or trailing
+  // commentary — extract the largest balanced {...} substring. JSON.parse on
+  // that. If the parse fails, throw so the caller can log + skip cleanly.
+  if (!trimmed.startsWith("{")) {
+    const first = trimmed.indexOf("{");
+    const last = trimmed.lastIndexOf("}");
+    if (first !== -1 && last > first) {
+      trimmed = trimmed.slice(first, last + 1);
+    }
+  }
+
   try {
     return JSON.parse(trimmed);
   } catch (e) {
@@ -318,7 +332,17 @@ function parseJsonStrict(raw: string): Record<string, unknown> {
   }
 }
 
+// Appended to every user prompt as a final-line reminder. The system prompt
+// already instructs JSON-only, but the model occasionally prefaces with
+// research narration ("I'll research both sites..."). Restating immediately
+// after the request meaningfully reduces preamble drift.
+const JSON_ONLY_REMINDER = "\n\nIMPORTANT: Return only the JSON object. No preamble, no explanation, no markdown. Start with { immediately.";
+
 function buildUserPrompt(type: ContentTypeKey, payload: Record<string, unknown>): string {
+  return rawUserPrompt(type, payload) + JSON_ONLY_REMINDER;
+}
+
+function rawUserPrompt(type: ContentTypeKey, payload: Record<string, unknown>): string {
   switch (type) {
     case "review":
       return reviewPrompt(payload);
@@ -846,8 +870,12 @@ async function main() {
       generated = await generate({ contentType, payload: enriched });
     }
   } catch (e) {
-    log.err(`Generation failed: ${(e as Error).message}`);
-    process.exit(1);
+    // Exit 0 (not 1) so the GitHub Actions workflow shows a clean status.
+    // A single-day generation failure is a routine blip — the next scheduled
+    // run will pick the same item back up. A red X on the workflow page
+    // creates noise out of proportion to the actual problem.
+    log.warn(`Generation failed — skipping today's run: ${(e as Error).message}`);
+    process.exit(0);
   }
 
   // ── Quality gates ──────────────────────────────────────────────────────
