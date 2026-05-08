@@ -92,6 +92,64 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
       }
     ],
     "meta_description": "Men.com vs Sean Cody compared in 2026 — pricing, content, UX, and update frequency reviewed honestly so you know where to spend your money."
+  },  "nakedsword-vs-men": {
+    "site_a_slug": "nakedsword",
+    "site_b_slug": "men",
+    "h1": "NakedSword vs Men.com — Which Is Better in 2026?",
+    "intro": "Two giants, two completely different philosophies. NakedSword operates like a streaming service for gay porn — a cavernous warehouse of content from dozens of partner studios sitting under one login. Men.com, owned by Aylo (formerly MindGeek), is a purpose-built production house: original series, cinematic fantasy shoots, and a bareback-first ethos spanning nine interconnected sub-sites. If you've spent any time in gay subscription sites, you've bumped into both of these names. The question is never really 'is this good?' — it's 'which one is good for me?' We dug into current pricing, member complaint patterns, update cadence, and catalog depth to give you a straight answer. Spoiler: they're not actually competing for the same subscriber.",
+    "site_a_summary": "NakedSword's strongest argument is pure scale. Their own Instagram puts the library at 45,000+ scenes from 200+ top studios, with 8+ daily updates across the network. That means you're not just subscribing to one studio's output — you're getting Falcon Studios, Raging Stallion, Hot House, NakedSword Originals, and a long roster of partner labels in a single membership. The performer range is genuinely broad: muscle bears, twinks, twunks, leather daddies, and everything between. Both streaming and download options are included. For gay men who exhaust single-studio sites fast, the breadth here is hard to match.",
+    "site_b_summary": "Men.com's pitch is tighter and more coherent: you get one unified aesthetic executed at a high production level. The studio launched episodic series like Campus Cock and lavish fantasy productions like Cinderello, treating gay porn with something closer to a TV-production mentality. As of 2020 the platform had expanded to nine individual sub-sites, and it has continued producing award-nominated content — the studio was featured prominently at the 2026 GayVN Awards. If you have a taste for narrative-driven bareback content, recognizable recurring performers, and a consistent visual style, Men.com delivers that consistently.",
+    "comparison_categories": [
+      {
+        "category": "Content Library",
+        "site_a_score": 10,
+        "site_b_score": 7,
+        "site_a_detail": "NakedSword claims 45,000+ scenes from over 200 studios, a number that dwarfs virtually any single-studio competitor. The multi-studio model means the catalog spans decades of gay porn history, from pre-bareback Falcon classics to current raw productions. If volume and variety are your metrics, there's no contest.",
+        "site_b_detail": "Men.com's catalog is substantial but narrower — nine sub-sites worth of original content, all produced in-house under a consistent bareback-first banner. The quality control is tighter precisely because everything comes from one production entity. Depth of niche rather than breadth of variety is the operating principle here."
+      },
+      {
+        "category": "Pricing & Value",
+        "site_a_score": 8,
+        "site_b_score": 5,
+        "site_a_detail": "NakedSword pricing runs roughly $20–$60 depending on plan length, with monthly, quarterly, and annual tiers available. Occasional trial and bundle promotions bring the entry cost down further. Given the sheer scene count you're unlocking, the per-scene cost math works heavily in the subscriber's favor on longer plans.",
+        "site_b_detail": "Men.com sits around $32/month at standard pricing, and the billing practices have drawn consistent criticism — multiple Trustpilot reviewers report difficulty canceling, surprise premium tier charges, and paywalls blocking 1080p streaming on what's marketed as full-access membership. The content itself is solid, but the billing experience is a documented liability."
+      },
+      {
+        "category": "Site Design & UX",
+        "site_a_score": 7,
+        "site_b_score": 6,
+        "site_a_detail": "NakedSword's interface carries the complexity of aggregating hundreds of studios — finding content is genuinely good when you use studio filters, but newer members can feel overwhelmed. Search functionality is functional, and the platform supports multiple devices with stable playback across connections.",
+        "site_b_detail": "Men.com's member area has been explicitly called out as 'user unfriendly' by paying subscribers, with advertising interfering with account access and a confusing paywall structure that obscures what's actually included in a standard membership. The site's design hasn't kept pace with its production ambitions."
+      },
+      {
+        "category": "Update Frequency",
+        "site_a_score": 10,
+        "site_b_score": 8,
+        "site_a_detail": "NakedSword publicly advertises 8+ daily updates across its studio network — a figure that makes sense given how many production companies feed into the platform. Even if a third of those drops are catalog recirculations, the active content pipeline is the most aggressive in the gay membership space.",
+        "site_b_detail": "Men.com maintains a genuinely active release schedule: in January 2026 alone the studio announced the Campus Cock series premiere, a new standalone scene with Ashton Summers, and multiple DVD confirmations from recent digital exclusives. The cadence appears to be multiple new scenes per week, which is competitive for a single-studio network."
+      },
+      {
+        "category": "Niche Focus",
+        "site_a_score": 6,
+        "site_b_score": 9,
+        "site_a_detail": "NakedSword is deliberately unfocused — the multi-studio aggregator model means you can find almost any niche, but the platform doesn't curate toward any specific taste. That's a strength for browsers and a weakness for members who want a coherent experience. NakedSword Originals offer some identity, but they're a fraction of the total catalog.",
+        "site_b_detail": "Men.com has a clear identity: big-budget, narrative-framed, bareback gay porn with recurring performers and episodic series that reward regular watching. The transition away from condom content has been thorough, and the studio invests in fantasy and genre filmmaking — Cinderello being a recent example — that no aggregator platform can replicate."
+      }
+    ],
+    "verdict": "These two sites aren't really fighting for the same wallet. NakedSword is the correct answer if you want the widest possible catalog under a single subscription — 45,000+ scenes, 200+ studios, 8+ daily updates, and a price point that rewards long-term commitment. It's a streaming service in the truest sense, and for gay men who burn through single-studio content fast, it's the most defensible spend in the space. Men.com is the correct answer if you have a specific aesthetic preference — slick production, episodic storytelling, bareback focus, recognizable performers across a nine-site network. The content quality is genuinely strong, and the studio's GayVN presence confirms it's still taken seriously by the industry. What you have to weigh against that is a billing reputation that remains a real problem. Multiple credible reviews document unexpected charges, paywalls inside paid memberships, and support infrastructure that doesn't function. If you join Men.com, go in with eyes open: use a payment method you can dispute, read the checkout screen carefully, and don't assume 'full access' means what it says. NakedSword wins on value math and scale. Men.com wins on cohesive identity. Pick accordingly.",
+    "who_should_choose_a": "Choose NakedSword if you want the closest thing to a complete gay porn streaming library — one login, hundreds of studios, thousands of performers, and daily new drops that will take years to exhaust.",
+    "who_should_choose_b": "Choose Men.com if you're drawn to polished, narrative-driven bareback productions with a consistent visual identity, and you're prepared to navigate their billing experience carefully.",
+    "faq": [
+      {
+        "question": "Does a NakedSword membership include Men.com content, or vice versa?",
+        "answer": "No — these are completely separate platforms with no cross-membership access. NakedSword aggregates content from Falcon Studios, Raging Stallion, Hot House, and 200+ other partner studios, but Men.com (owned by Aylo) is not among them. If you want both catalogs, you need two separate subscriptions."
+      },
+      {
+        "question": "Which site is safer to subscribe to from a billing standpoint?",
+        "answer": "NakedSword has a cleaner billing reputation. Men.com has accumulated consistent complaints about surprise premium-tier charges, paywalled HD streams on standard memberships, and difficult cancellation processes. If billing transparency matters to you — and it should — NakedSword is the lower-risk option, though always read checkout screens carefully on any adult subscription site."
+      }
+    ],
+    "meta_description": "NakedSword vs Men.com in 2026: we compare pricing, scene counts, update frequency, and billing reputation to find the better gay porn subscription."
   },
 };
 
