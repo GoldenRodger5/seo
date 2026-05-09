@@ -691,13 +691,18 @@ function upsertContentEntry(file: string, key: string, body: unknown): void {
   // Two formats to handle:
   //   1. Empty record: `= {};` (initial state — single line)
   //   2. Populated record: `\n};` on its own line (after first insert)
+  //
+  // CRITICAL: pass the replacement as a function, not a string. String
+  // replacements treat `$` as a backreference prefix ($1, $&, $$ etc.), and
+  // AI-generated content frequently contains prices like "$11.99" — when
+  // that hit `replace()` as a literal string, "$1" was interpreted as
+  // capture-group 1 (the matched terminator) and silently corrupted the
+  // JSON output mid-string. Function form has no such interpretation.
   let updated: string;
   if (/=\s*\{\s*\};/.test(src)) {
-    // Empty record — convert to multi-line and insert.
-    updated = src.replace(/=\s*\{\s*\};/, `= {\n${literal}};`);
+    updated = src.replace(/=\s*\{\s*\};/, () => `= {\n${literal}};`);
   } else {
-    // Populated record — splice before the closing `\n};`.
-    updated = src.replace(/(\n};\s*$)/m, `${literal}};\n`);
+    updated = src.replace(/\n};\s*$/m, () => `${literal}};\n`);
   }
 
   if (updated === src) {
