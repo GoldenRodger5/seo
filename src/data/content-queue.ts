@@ -312,23 +312,27 @@ const backlogEntries: SupportingQueueEntry[] = [
   { title: "RawHole vs DudesRaw", slug: "compare/rawhole-vs-dudesraw", content_type: "comparison", target_keyword: "rawhole vs dudesraw", related_sites: ["rawhole", "dudesraw"], priority: 95, status: "queued" },
   { title: "SayUncle vs FamilyDick", slug: "compare/sayuncle-vs-familydick", content_type: "comparison", target_keyword: "sayuncle vs familydick", related_sites: ["sayuncle", "familydick"], priority: 94, status: "queued" },
 
-  // Days 8-14 — Alternatives content (priority 93 → 87)
-  { title: "Best Alternatives to Helix Studios", slug: "alternatives-to-helix-studios", content_type: "alternatives", target_keyword: "helix studios alternatives", related_sites: ["helix-studios"], priority: 93, status: "queued" },
-  { title: "Best Alternatives to Sean Cody", slug: "alternatives-to-sean-cody", content_type: "alternatives", target_keyword: "sean cody alternatives", related_sites: ["sean-cody"], priority: 92, status: "queued" },
-  { title: "Best Alternatives to NakedSword", slug: "alternatives-to-nakedsword", content_type: "alternatives", target_keyword: "nakedsword alternatives", related_sites: ["nakedsword"], priority: 91, status: "queued" },
-  { title: "Best Alternatives to Men.com", slug: "alternatives-to-men", content_type: "alternatives", target_keyword: "men.com alternatives", related_sites: ["men"], priority: 90, status: "queued" },
-  { title: "Best Alternatives to PeterFever", slug: "alternatives-to-peterfever", content_type: "alternatives", target_keyword: "peterfever alternatives", related_sites: ["peterfever"], priority: 89, status: "queued" },
-  { title: "Best Alternatives to Twinks in Shorts", slug: "alternatives-to-twinks-in-shorts", content_type: "alternatives", target_keyword: "twinks in shorts alternatives", related_sites: ["twinks-in-shorts"], priority: 88, status: "queued" },
-  { title: "Best Alternatives to Southern Strokes", slug: "alternatives-to-southern-strokes", content_type: "alternatives", target_keyword: "southern strokes alternatives", related_sites: ["southern-strokes"], priority: 87, status: "queued" },
+  // Days 8-14 — Alternatives content (priority 93 → 87).
+  // Slug must match the frontend route exactly so getAlternativesBody()
+  // resolves correctly: e.g. /helix-studios-alternatives → key
+  // "helix-studios-alternatives".
+  { title: "Best Alternatives to Helix Studios", slug: "helix-studios-alternatives", content_type: "alternatives", target_keyword: "helix studios alternatives", related_sites: ["helix-studios"], priority: 93, status: "queued" },
+  { title: "Best Alternatives to Sean Cody", slug: "sean-cody-alternatives", content_type: "alternatives", target_keyword: "sean cody alternatives", related_sites: ["sean-cody"], priority: 92, status: "queued" },
+  { title: "Best Alternatives to NakedSword", slug: "nakedsword-alternatives", content_type: "alternatives", target_keyword: "nakedsword alternatives", related_sites: ["nakedsword"], priority: 91, status: "queued" },
+  { title: "Best Alternatives to Men.com", slug: "men-alternatives", content_type: "alternatives", target_keyword: "men.com alternatives", related_sites: ["men"], priority: 90, status: "queued" },
+  { title: "Best Alternatives to PeterFever", slug: "peterfever-alternatives", content_type: "alternatives", target_keyword: "peterfever alternatives", related_sites: ["peterfever"], priority: 89, status: "queued" },
+  { title: "Best Alternatives to Twinks in Shorts", slug: "twinks-in-shorts-alternatives", content_type: "alternatives", target_keyword: "twinks in shorts alternatives", related_sites: ["twinks-in-shorts"], priority: 88, status: "queued" },
+  { title: "Best Alternatives to Southern Strokes", slug: "southern-strokes-alternatives", content_type: "alternatives", target_keyword: "southern strokes alternatives", related_sites: ["southern-strokes"], priority: 87, status: "queued" },
 
-  // Days 15-21 — "Is X Worth It" body content (priority 86 → 80)
-  { title: "Is NakedSword Worth It?", slug: "nakedsword-worth-it-body", content_type: "isworthit", target_keyword: "is nakedsword worth it", related_sites: ["nakedsword"], priority: 86, status: "queued" },
-  { title: "Is Sean Cody Worth It?", slug: "sean-cody-worth-it-body", content_type: "isworthit", target_keyword: "is sean cody worth it", related_sites: ["sean-cody"], priority: 85, status: "queued" },
-  { title: "Is Helix Studios Worth It?", slug: "helix-studios-worth-it-body", content_type: "isworthit", target_keyword: "is helix studios worth it", related_sites: ["helix-studios"], priority: 84, status: "queued" },
-  { title: "Is Men.com Worth It?", slug: "men-worth-it-body", content_type: "isworthit", target_keyword: "is men.com worth it", related_sites: ["men"], priority: 83, status: "queued" },
-  { title: "Is Twinks in Shorts Worth It?", slug: "twinks-in-shorts-worth-it-body", content_type: "isworthit", target_keyword: "is twinks in shorts worth it", related_sites: ["twinks-in-shorts"], priority: 82, status: "queued" },
-  { title: "Is Southern Strokes Worth It?", slug: "southern-strokes-worth-it-body", content_type: "isworthit", target_keyword: "is southern strokes worth it", related_sites: ["southern-strokes"], priority: 81, status: "queued" },
-  { title: "Is PeterFever Worth It?", slug: "peterfever-worth-it-body", content_type: "isworthit", target_keyword: "is peterfever worth it", related_sites: ["peterfever"], priority: 80, status: "queued" },
+  // Days 15-21 — "Is X Worth It" body content (priority 86 → 80).
+  // Slug = bare site slug, matching WorthItPage's getWorthItBody(site.slug).
+  { title: "Is NakedSword Worth It?", slug: "nakedsword", content_type: "isworthit", target_keyword: "is nakedsword worth it", related_sites: ["nakedsword"], priority: 86, status: "queued" },
+  { title: "Is Sean Cody Worth It?", slug: "sean-cody", content_type: "isworthit", target_keyword: "is sean cody worth it", related_sites: ["sean-cody"], priority: 85, status: "queued" },
+  { title: "Is Helix Studios Worth It?", slug: "helix-studios", content_type: "isworthit", target_keyword: "is helix studios worth it", related_sites: ["helix-studios"], priority: 84, status: "queued" },
+  { title: "Is Men.com Worth It?", slug: "men", content_type: "isworthit", target_keyword: "is men.com worth it", related_sites: ["men"], priority: 83, status: "queued" },
+  { title: "Is Twinks in Shorts Worth It?", slug: "twinks-in-shorts", content_type: "isworthit", target_keyword: "is twinks in shorts worth it", related_sites: ["twinks-in-shorts"], priority: 82, status: "queued" },
+  { title: "Is Southern Strokes Worth It?", slug: "southern-strokes", content_type: "isworthit", target_keyword: "is southern strokes worth it", related_sites: ["southern-strokes"], priority: 81, status: "queued" },
+  { title: "Is PeterFever Worth It?", slug: "peterfever", content_type: "isworthit", target_keyword: "is peterfever worth it", related_sites: ["peterfever"], priority: 80, status: "queued" },
 
   // Days 22-30 — Guides (priority 79 → 71)
   { title: "How To Cancel Gay Porn Site Subscriptions", slug: "guide/how-to-cancel-gay-porn-subscriptions", content_type: "guide", target_keyword: "cancel gay porn subscription", related_sites: TOP_10_SLUGS, priority: 79, status: "queued" },

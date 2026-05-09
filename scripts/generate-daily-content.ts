@@ -702,7 +702,10 @@ function upsertContentEntry(file: string, key: string, body: unknown): void {
   if (/=\s*\{\s*\};/.test(src)) {
     updated = src.replace(/=\s*\{\s*\};/, () => `= {\n${literal}};`);
   } else {
-    updated = src.replace(/\n};\s*$/m, () => `${literal}};\n`);
+    // Preserve the leading newline that the regex consumes, otherwise the
+    // new entry joins the previous "}," on the same line — valid JS but
+    // visually broken (and fragile if anything later parses by line).
+    updated = src.replace(/\n};\s*$/m, () => `\n${literal}};\n`);
   }
 
   if (updated === src) {
@@ -713,31 +716,72 @@ function upsertContentEntry(file: string, key: string, body: unknown): void {
   log.info(`upsert: wrote ${key} to ${file.split("/").pop()}`);
 }
 
+/**
+ * Persists generated content to the per-type data file. Each content type
+ * has a distinct convention for how the queue slug maps to the
+ * persistence-map key — and to the URL fragment the frontend uses to look
+ * the entry back up. Mismatches between any of these three (queue slug /
+ * file key / frontend lookup) silently break rendering.
+ *
+ * This function is the single canonical place that derives the file key
+ * from the queue slug AND validates that the resulting key matches what
+ * the frontend will look up. A mismatch throws — better to fail loudly
+ * at write time than to ship invisible content.
+ */
 function persistSupportingContent(entry: SupportingQueueEntry, generated: Record<string, unknown>): void {
-  // The comparison/alternatives/isworthit/guide entries store their slug
-  // with a path prefix like "compare/" or "guide/". The persistence map
-  // is keyed by the bare identifier (the prefix is implied by the file).
-  const key = entry.slug.replace(/^(compare|guide)\//, "");
-  switch (entry.content_type) {
-    case "comparison":
-      upsertContentEntry(COMPARISON_CONTENT_FILE, key, generated);
-      break;
-    case "alternatives":
-      upsertContentEntry(ALTERNATIVES_CONTENT_FILE, key, generated);
-      break;
-    case "isworthit":
-      upsertContentEntry(ISWORTHIT_CONTENT_FILE, key, generated);
-      break;
-    case "guide":
-      upsertContentEntry(GUIDE_CONTENT_FILE, key, generated);
-      break;
-    default:
-      // discount, bestof, hub, awards, freetrial, pricing — these either
-      // render dynamically from sites.ts (discount) or don't have route
-      // components yet. Generated content is logged via Supabase but not
-      // persisted to a per-type data file.
-      log.info(`persist: no data file wired for content_type=${entry.content_type}, content logged only`);
+  type ContentBinding = {
+    file: string;
+    /** Derive the persistence key from the queue slug. */
+    keyFromSlug: (slug: string) => string;
+    /** Derive what the frontend will look up — for validation only. */
+    frontendLookup: (slug: string) => string;
+    fileLabel: string;
+  };
+
+  const bindings: Record<string, ContentBinding> = {
+    comparison: {
+      file: COMPARISON_CONTENT_FILE,
+      keyFromSlug: (s) => s.replace(/^compare\//, ""),
+      frontendLookup: (s) => s.replace(/^compare\//, ""),
+      fileLabel: "comparison-content.ts",
+    },
+    alternatives: {
+      file: ALTERNATIVES_CONTENT_FILE,
+      keyFromSlug: (s) => s,
+      frontendLookup: (s) => s,
+      fileLabel: "alternatives-content.ts",
+    },
+    isworthit: {
+      file: ISWORTHIT_CONTENT_FILE,
+      keyFromSlug: (s) => s,
+      frontendLookup: (s) => s,
+      fileLabel: "isworthit-content.ts",
+    },
+    guide: {
+      file: GUIDE_CONTENT_FILE,
+      keyFromSlug: (s) => s.replace(/^guide\//, ""),
+      frontendLookup: (s) => s.replace(/^guide\//, ""),
+      fileLabel: "guide-content.ts",
+    },
+  };
+
+  const binding = bindings[entry.content_type];
+  if (!binding) {
+    log.info(`persist: no data file wired for content_type=${entry.content_type}, content logged only`);
+    return;
   }
+
+  const writeKey = binding.keyFromSlug(entry.slug);
+  const expectedLookup = binding.frontendLookup(entry.slug);
+  log.info(`Writing key: "${writeKey}" to ${binding.fileLabel}`);
+  log.info(`Frontend will look up: "${expectedLookup}"`);
+  if (writeKey !== expectedLookup) {
+    throw new Error(
+      `Slug mismatch: write key "${writeKey}" ≠ frontend lookup "${expectedLookup}". ` +
+      `Refusing to write invisible content. Fix keyFromSlug/frontendLookup in persistSupportingContent for content_type=${entry.content_type}.`
+    );
+  }
+  upsertContentEntry(binding.file, writeKey, generated);
 }
 
 function markQueuePublished(slug: string, kind: "review" | "supporting") {

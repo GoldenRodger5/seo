@@ -92,7 +92,8 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
       }
     ],
     "meta_description": "Men.com vs Sean Cody compared in 2026 — pricing, content, UX, and update frequency reviewed honestly so you know where to spend your money."
-  },  "nakedsword-vs-men": {
+  },
+  "nakedsword-vs-men": {
     "site_a_slug": "nakedsword",
     "site_b_slug": "men",
     "h1": "NakedSword vs Men.com — Which Is Better in 2026?",
