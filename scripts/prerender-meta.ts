@@ -13,6 +13,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { sites, categories } from "../src/data/sites.js";
+import { DEAL_VERIFIED_DATE } from "../src/lib/dates.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = resolve(__dirname, "..", "dist");
@@ -129,13 +130,24 @@ for (const slug of SITE_SLUGS) {
   });
 }
 
-// Discount pages
-for (const slug of SITE_SLUGS) {
-  const name = SITE_NAMES[slug];
+// Discount pages — title template optimized for "{site} discount" buyer
+// queries. Uses actual deal_discount %, price_annual, and DEAL_VERIFIED_DATE
+// from sites.ts so each page gets a compelling, accurate snippet rather
+// than a generic placeholder. Sites without an active deal fall back to a
+// less promotional format (no false percentages).
+for (const site of sites) {
+  const name = site.name;
+  const pct = site.deal_discount;
+  const price = site.price_annual;
+  const hasDeal = pct > 0;
   routes.push({
-    path: `/discount/${slug}`,
-    title: `${name} Discount Code ${YEAR} — Save Big | TwinkVault`,
-    description: `Get the latest ${name} discount code. Verified deals and savings for ${YEAR}.`,
+    path: `/discount/${site.slug}`,
+    title: hasDeal
+      ? `${name} Discount Code: ${pct}% Off (Verified ${DEAL_VERIFIED_DATE}) — Save Now`
+      : `${name} Discount Code (${YEAR}) — Best Verified Price`,
+    description: hasDeal
+      ? `Get ${name} for just ${price} with our verified ${pct}% discount. Lowest price guaranteed — deal confirmed ${DEAL_VERIFIED_DATE}. Click to activate instantly.`
+      : `Looking for a ${name} discount code? Get the lowest verified price on ${name} membership. Updated ${DEAL_VERIFIED_DATE}.`,
   });
 }
 

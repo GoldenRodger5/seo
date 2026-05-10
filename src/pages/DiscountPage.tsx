@@ -138,10 +138,10 @@ const DiscountPage = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>{`${site.name} Discount: ${site.deal_discount || "Up to 67"}% Off Deal (Verified ${DEAL_VERIFIED_DATE}) | TwinkVault`}</title>
+          <title>{`${site.name} Discount Code: ${site.deal_discount || "Up to 67"}% Off (Verified ${DEAL_VERIFIED_DATE}) — Save Now`}</title>
           <meta
             name="description"
-            content={`Get ${site.deal_discount || "up to 67"}% off ${site.name} — the lowest verified price we've found. Deal confirmed ${DEAL_VERIFIED_DATE}. Click to activate the discount before it expires.`}
+            content={`Get ${site.name} for just ${site.price_annual} with our verified ${site.deal_discount || "up to 67"}% discount. Lowest price guaranteed — deal confirmed ${DEAL_VERIFIED_DATE}. Click to activate instantly.`}
           />
           <meta property="og:title" content={`${site.name} Discount: ${site.deal_discount || "Up to 67"}% Off (Verified ${DEAL_VERIFIED_DATE})`} />
           <meta property="og:description" content={`Get ${site.deal_discount || "up to 67"}% off ${site.name} — the lowest verified price we've found. Deal confirmed ${DEAL_VERIFIED_DATE}.`} />

@@ -982,7 +982,7 @@ export const sites: SiteData[] = [
   },
   {
     id: "32",
-    name: "Twink Trade",
+    name: "TwinkTrade",
     slug: "twinktrade",
     short_description: "Bareback twink content with an authentic amateur energy. One of ChargedCash's most popular niche sites.",
     description: "Twink Trade delivers bareback twink content with a raw, unfiltered amateur quality that polished studio productions can't replicate. Part of the ChargedCash network, it offers HD streaming, regular updates, and a straightforward no-frills player. If authentic twink energy is what you're after and production sheen isn't the priority, this delivers.",
