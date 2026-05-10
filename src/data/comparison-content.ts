@@ -210,6 +210,65 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     ],
     "meta_description": "Helix Studios vs Sean Cody in 2026: pricing, library size, update schedules, and niche focus compared so you can spend your membership money wisely."
   },
+  "twinks-in-shorts-vs-athletic-twinks": {
+    "site_a_slug": "twinks-in-shorts",
+    "site_b_slug": "athletic-twinks",
+    "h1": "Twinks in Shorts vs Athletic Twinks — Which Is Better in 2026?",
+    "intro": "Two niche corners of the twink-content market, and they couldn't feel more different in practice. Twinks in Shorts leans hard into that unpolished, authentic energy — the kind of site where the appeal is guys who feel genuinely into each other rather than performing for a director. Athletic Twinks goes the other direction entirely: sculpted bodies, sportswear aesthetics, and a gym-locker-room fantasy built for fans who want their twinks with visible abs and a pump. Both carve out specific lanes, and neither is trying to be everything to everyone. That focus is either a selling point or a dealbreaker depending on what you're after. We spent time with both to figure out which one actually delivers on its own terms — and whether either is worth your subscription money in 2026.",
+    "site_a_summary": "Twinks in Shorts earns its following by refusing to sand down the rough edges. The chemistry between performers reads as genuinely unscripted, and the wardrobe conceit — guys staying partially clothed in shorts throughout — gives the content a distinct visual identity that goes beyond a throwaway gimmick. The library skews toward Euro-cast performers: lean, naturally built, and convincingly young-looking without tipping into anything uncomfortable. Production is modest but clean enough that the lo-fi quality feels deliberate rather than cheap. If you're exhausted by overlit, over-directed studio content and want something that feels like it was shot with real arousal behind it, this is a reliable destination.",
+    "site_b_summary": "Athletic Twinks delivers exactly what the name promises: performers who look like they actually use a gym, dressed in the kind of sportswear — compression shorts, training tanks, soccer kits — that the site's fan base is specifically here for. Scenes tend to be more structured and production-forward than Twinks in Shorts, with better lighting and more deliberate camera work. The physique bar is consistently higher, leaning toward the lean-muscular end of the twink spectrum rather than the waif end. For members who find conventional twink content too soft and conventional muscle content too beefy, Athletic Twinks sits in a genuinely underserved middle ground.",
+    "comparison_categories": [
+      {
+        "category": "Content Library",
+        "site_a_score": 7,
+        "site_b_score": 7,
+        "site_a_detail": "Twinks in Shorts has built a respectable back catalogue over several years of production, with a consistent visual style that makes scenes feel like a cohesive collection rather than a random dump of content. Scene lengths tend to be generous, and photo sets accompany most videos. The niche is narrow enough that there's no filler padding out the library — everything on the site fits the brand, even if the overall scene count won't compete with major network sites.",
+        "site_b_detail": "Athletic Twinks maintains a focused library built around its sportswear-and-fitness identity, with scenes that range from gym-setting hookups to locker room scenarios and outdoor athletic shoots. The catalogue is comparably sized to Twinks in Shorts, and the consistency of the performer type keeps things from feeling scattered. One limitation is that the niche itself sets a ceiling — there are only so many ways to stage a sports-themed encounter before themes start to repeat."
+      },
+      {
+        "category": "Pricing & Value",
+        "site_a_score": 7,
+        "site_b_score": 7,
+        "site_a_detail": "Twinks in Shorts operates at a price point typical for independent niche sites — monthly memberships in the mid-to-high single-site range, with better per-month value on quarterly or annual plans. No verifiable trial offer surfaced during our research, which is a small strike against it for risk-averse newcomers. The value proposition depends heavily on how much the specific aesthetic speaks to you; casual browsers may find the catalogue too narrow to justify the ongoing cost.",
+        "site_b_detail": "Athletic Twinks prices similarly to other independent niche gay sites, and the lack of a widely advertised discounted trial is a recurring complaint in community discussions. The value case is stronger if you're a genuine sportswear fetishist — the content is harder to find elsewhere at this volume. For someone only mildly interested in the athletic angle, however, the per-scene cost starts to feel steep once you've worked through the newer additions."
+      },
+      {
+        "category": "Site Design & UX",
+        "site_a_score": 6,
+        "site_b_score": 7,
+        "site_a_detail": "The Twinks in Shorts member area is functional without being especially impressive — browsing and search work, video playback is reliable, and the mobile experience is acceptable. It doesn't feel like a site that's had significant design investment recently, and the navigation can feel dated compared to bigger-budget competitors. Download options are present, which is a meaningful plus for members who prefer offline access.",
+        "site_b_detail": "Athletic Twinks edges ahead on the UX front with a slightly more polished member interface, better thumbnail presentation, and cleaner category organisation that makes finding sportswear-specific content faster. Video streaming quality holds up well, and the site doesn't pepper you with intrusive upsell prompts once you're inside the member area — a small thing that makes a noticeable difference during extended browsing sessions."
+      },
+      {
+        "category": "Update Frequency",
+        "site_a_score": 6,
+        "site_b_score": 6,
+        "site_a_detail": "Update cadence at Twinks in Shorts appears to be roughly weekly to bi-weekly based on available community reporting, which is adequate but not impressive for a paid membership site in 2026. There have been periods where the gap between new additions stretched noticeably, which is a legitimate concern for members who join primarily for fresh content rather than catalogue depth. Returning subscribers report this is the site's most consistent criticism.",
+        "site_b_detail": "Athletic Twinks lands in roughly the same tier for update frequency — new scenes arrive regularly enough to keep active members engaged, but don't expect the daily or near-daily cadence of the large network sites. The upside is that when new content does drop, it tends to be on-brand and properly produced rather than rushed filler. Members who binge-watch may burn through the recent additions quickly and find themselves waiting."
+      },
+      {
+        "category": "Niche Focus",
+        "site_a_score": 8,
+        "site_b_score": 9,
+        "site_a_detail": "The shorts-on aesthetic is a genuine differentiator that Twinks in Shorts executes consistently and convincingly. It's more specific than a simple 'amateur twink' label, and the brand identity holds across the library in a way that feels intentional. That said, the niche is soft enough that partial-undress content isn't impossible to find elsewhere — the site's edge is execution and chemistry, not an entirely uncrowded market.",
+        "site_b_detail": "Athletic Twinks owns a more tightly defined niche than its counterpart here, and it's one that's genuinely underserved at scale. The intersection of believable athletic physiques, sports-context scenarios, and branded sportswear costuming is specific enough that it's hard to replicate with a free-site scroll session. For members whose kink lives specifically in that space, there's a strong argument this is the only site doing it properly and consistently."
+      }
+    ],
+    "verdict": "These two sites are close enough in size, price, and update frequency that the decision almost entirely comes down to taste rather than objective quality. Twinks in Shorts wins on raw performer chemistry and that slightly scruffy authenticity that studio-polished content can never fake — if what gets you there is the feeling that these guys are actually into each other and not just doing a job, it delivers consistently. Athletic Twinks wins on niche precision and production confidence — the physiques are more sculpted, the aesthetic is more defined, and if sportswear is part of the fantasy, it's genuinely the better-built site for that specific desire. Neither site should be your first membership if you're brand new to paid gay content — start with a major network and come back to these once you know your tastes precisely enough to justify a single-niche subscription. But for returning members who already know the difference between 'I like twinks' and 'I like twinks in compression shorts who look like they just finished a training session,' Athletic Twinks earns a slight overall edge for the tightness of its execution. Twinks in Shorts is the better call if you'd trade a bit of production sheen for scenes that feel genuinely unscripted and performers with real on-screen heat between them.",
+    "who_should_choose_a": "Choose Twinks in Shorts if authentic performer chemistry and a candid, unpolished energy matter more to you than chiseled physiques and slick production.",
+    "who_should_choose_b": "Choose Athletic Twinks if your attraction is specifically to lean-muscular, gym-fit performers in sportswear contexts and you want that niche served with real production consistency.",
+    "faq": [
+      {
+        "question": "Do Twinks in Shorts and Athletic Twinks share any content or network access?",
+        "answer": "Based on available information, these appear to be independent sites with no shared network or cross-membership access — subscribing to one does not unlock the other. Always verify on the membership sign-up page before purchasing, as bundle arrangements can change."
+      },
+      {
+        "question": "Which site is better for someone who wants both amateur energy and athletic physiques?",
+        "answer": "Neither site is a perfect overlap of both qualities — Twinks in Shorts prioritises the amateur feel with naturally built performers, while Athletic Twinks prioritises physique and production structure. If you genuinely want both, Athletic Twinks is the closer fit, since its performers still read as young and accessible even with more defined bodies; Twinks in Shorts skews softer in build but warmer in chemistry."
+      }
+    ],
+    "meta_description": "Twinks in Shorts vs Athletic Twinks compared on content, pricing, niche focus & UX — find out which gay site is actually worth your money in 2026."
+  },
 };
 
 export const getComparisonBody = (slug: string): ComparisonBody | undefined =>
