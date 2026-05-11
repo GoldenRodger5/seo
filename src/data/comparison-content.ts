@@ -269,6 +269,65 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     ],
     "meta_description": "Twinks in Shorts vs Athletic Twinks compared on content, pricing, niche focus & UX — find out which gay site is actually worth your money in 2026."
   },
+  "peterfever-vs-gayasiannetwork": {
+    "site_a_slug": "peterfever",
+    "site_b_slug": "gayasiannetwork",
+    "h1": "PeterFever vs GayAsianNetwork — Which Is Better in 2026?",
+    "intro": "Gay Asian content has never had more dedicated homes online, but the two most-discussed options couldn't be more different in philosophy. PeterFever built its reputation on a single, unmistakable aesthetic: Peter Le-adjacent muscular Asian men, glossy production, and a brand identity that feels closer to a fitness magazine than a typical adult site. GayAsianNetwork took the opposite route — aggregate everything, brand second. One membership unlocks a constellation of sub-sites covering diverse body types, nationalities, and production styles under one roof. Both are legitimate choices, but they serve genuinely different appetites. If you want a tightly curated auteur experience, you're looking at PeterFever. If you want volume, variety, and the freedom to hop between sites without paying separately, GayAsianNetwork makes the stronger case. We dug into both to figure out which is actually worth your money in 2026.",
+    "site_a_summary": "PeterFever is the flagship gay Asian studio brand, centered on founder and performer Peter Le and an exclusive roster of muscular, often mixed-heritage Asian men. The production values lean cinematic — real lighting setups, storylines, and an emphasis on performer physique that sets it apart from most competitors. The site offers high-definition video streaming and download, photo galleries, and exclusive original series unavailable elsewhere. It's a boutique operation in the best sense: every scene feels deliberate rather than mass-produced. The brand has been active for well over a decade and maintains a loyal following that values consistent aesthetics over sheer quantity. For members who care deeply about a specific type — fit, confident, Asian male performers — PeterFever delivers with more intentionality than almost any competitor.",
+    "site_b_summary": "GayAsianNetwork functions as a one-stop umbrella for gay Asian content across multiple production styles and sub-sites, all unlocked under a single membership. Rather than betting everything on one aesthetic, the network aggregates content featuring East Asian, Southeast Asian, and South Asian performers across twink, athletic, and bear body types. Production quality varies by sub-site — some material is polished, some is rawer and more candid — which actually works in the network's favor for members who tire of a single look. The sheer breadth of the library means less risk of content fatigue, and the consolidated billing model makes financial sense for anyone who'd otherwise juggle multiple standalone subscriptions chasing the same performers.",
+    "comparison_categories": [
+      {
+        "category": "Content Library",
+        "site_a_score": 7,
+        "site_b_score": 8,
+        "site_a_detail": "PeterFever's library is deliberately focused — the site features scripted scenes, reality-style content, and exclusive series built around a defined stable of performers. The depth within its niche is impressive, but the overall scene count is smaller than what a multi-site network can offer. Members who want variety outside the PeterFever aesthetic will hit the ceiling faster than they'd like.",
+        "site_b_detail": "GayAsianNetwork's multi-site structure means the combined library substantially outguns any single-site competitor on raw numbers. Content spans multiple sub-brands with different regional focuses and performer types, so discovery remains viable well into a long membership. The trade-off is uneven production quality across the network — not every sub-site is shooting at the same standard."
+      },
+      {
+        "category": "Pricing & Value",
+        "site_a_score": 6,
+        "site_b_score": 8,
+        "site_a_detail": "PeterFever sits at a premium price point for a single-brand site — monthly access is competitive with mid-tier studio memberships, but the scene count doesn't always justify the cost relative to networks. Recurring subscribers who primarily value the PeterFever brand will find it worth it; those testing the waters may feel the per-scene math works against them. Annual billing improves value meaningfully.",
+        "site_b_detail": "GayAsianNetwork's single-price-for-all-sites model is where it wins the value argument decisively. Paying one monthly fee for access to multiple sub-sites, thousands of videos, and a broad performer roster is difficult to beat in this niche. Trial pricing has historically been available, and the overall cost-per-scene ratio is among the best you'll find for dedicated gay Asian content."
+      },
+      {
+        "category": "Site Design & UX",
+        "site_a_score": 8,
+        "site_b_score": 6,
+        "site_a_detail": "PeterFever's interface reflects its brand-forward identity — clean layout, professional imagery in thumbnails, and a browsing experience that doesn't feel like you stumbled into 2009. The site works well on mobile, and the video player handles HD streaming without the stuttering or forced redirects you get on poorly maintained adult platforms. Navigation is intuitive and the aesthetic is consistent throughout.",
+        "site_b_detail": "Managing content from multiple sub-sites under one roof creates predictable UX friction for GayAsianNetwork. The member area can feel disjointed as design language shifts between properties, and search and filtering tools don't always surface content as cleanly as a unified platform would. It's functional, but members used to polished single-brand sites will notice the inconsistency."
+      },
+      {
+        "category": "Update Frequency",
+        "site_a_score": 6,
+        "site_b_score": 7,
+        "site_a_detail": "PeterFever's update schedule has historically been slower than prolific studios — as a boutique production operation, new scenes are released periodically rather than on a rigid weekly cadence. Long-term members have noted gaps between new releases, and the backlog, while quality-consistent, is finite. If frequent fresh content is your primary driver, this is the site's most honest weakness.",
+        "site_b_detail": "Because GayAsianNetwork aggregates uploads across multiple sub-sites, the effective new-content drip into the member area is more regular than any single property could sustain alone. Even if one sub-site goes quiet for a few weeks, others continue adding scenes. That said, active production across all network branches simultaneously is not always guaranteed, so peak update frequency depends on which sub-sites are actively shooting."
+      },
+      {
+        "category": "Niche Focus",
+        "site_a_score": 9,
+        "site_b_score": 7,
+        "site_a_detail": "If the niche you're chasing is specifically muscular, aesthetic, fitness-adjacent Asian men — and you want that delivered with a consistent brand voice — PeterFever has no real equal. The performer type is tightly defined, the brand identity is unmistakable, and the site has spent years cultivating a specific fantasy that it executes better than anyone else in that lane. It's a ten narrowly missing because the sub-niche excludes many Asian body types.",
+        "site_b_detail": "GayAsianNetwork covers more ground demographically — twinks, bears, jocks, and performers from a wider range of Asian ethnicities — which is strength if your taste isn't perfectly matched to PeterFever's archetype. The trade-off is that the more inclusive positioning dilutes the sense of a singular vision. It serves the broader community well but lands fewer dedicated knockout performances in any single sub-niche."
+      }
+    ],
+    "verdict": "These two sites are almost perfectly complementary, which makes choosing between them less about which is objectively better and more about what you're actually paying for. PeterFever wins on production quality, performer consistency, and brand identity. If you're specifically drawn to muscular, confident Asian men shot with real cinematic care — and you want a site that feels like it was made by people who actually have a point of view — PeterFever earns its price. The UX is cleaner, the aesthetic is sharper, and the exclusive content is genuinely exclusive. The weaknesses are real though: a smaller library, slower update cadence, and a premium price tag for a single-brand experience. GayAsianNetwork is the smarter value play for members who either aren't locked into one body type or simply want more content per dollar. The multi-site access model is a genuine differentiator — you're essentially buying a pass to a collection of studios rather than one imprint. The interface is rougher around the edges and production quality varies, but quantity and variety are legitimately strong. Our call: if budget is a real consideration or you crave diversity, go GayAsianNetwork. If you want the prestige lane and already know you're a Peter Le fan, PeterFever is worth every cent.",
+    "who_should_choose_a": "Choose PeterFever if you want a prestige, brand-consistent experience centered on muscular Asian men and cinematic production — and you're willing to pay a slight premium for it.",
+    "who_should_choose_b": "Choose GayAsianNetwork if you want maximum variety across Asian performer types and production styles, all covered by a single membership with strong per-scene value.",
+    "faq": [
+      {
+        "question": "Can I get both PeterFever and GayAsianNetwork content under one membership?",
+        "answer": "No — these are entirely separate memberships with no crossover. GayAsianNetwork bundles its own affiliated sub-sites, but PeterFever is an independent brand not included in any network pass. If you want both, you'll need two separate subscriptions. Most members pick one based on whether they prioritize aesthetic quality (PeterFever) or library breadth (GayAsianNetwork)."
+      },
+      {
+        "question": "Which site has better video quality — PeterFever or GayAsianNetwork?",
+        "answer": "PeterFever wins this category without much debate. As a single boutique studio, it controls production end-to-end and consistently delivers well-lit, high-definition scenes with real production effort behind them. GayAsianNetwork's quality varies significantly across its sub-sites — some properties shoot professional HD content, while others lean more toward raw or amateur-style footage. If technical video quality is your deciding factor, PeterFever is the more reliable choice."
+      }
+    ],
+    "meta_description": "PeterFever vs GayAsianNetwork compared in 2026 — pricing, content libraries, UX, and niche focus reviewed side by side to help you choose."
+  },
 };
 
 export const getComparisonBody = (slug: string): ComparisonBody | undefined =>
