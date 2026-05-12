@@ -80,7 +80,7 @@ const AskAI = () => {
                 Tell Us What You Want
               </h1>
               <p className="mt-4 text-muted-foreground">
-                Describe your budget, preferences, or what you're into — we'll match you to the best sites from our tested library of 12.
+                Describe your budget, preferences, or what you're into — we'll match you to the best sites from our tested library of {sites.length}.
               </p>
             </motion.div>
 

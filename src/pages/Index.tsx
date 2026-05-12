@@ -85,13 +85,27 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <h1 className="hero-heading font-heading font-bold leading-tight">
+        <motion.h1
+          className="hero-heading font-heading font-bold leading-tight heading-gradient inline-block"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          Best Gay Twink Porn Sites {new Date().getFullYear()}
+        </motion.h1>
+        <motion.p
+          className="mx-auto mt-4 text-2xl md:text-3xl font-heading font-bold leading-tight"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          aria-label="We Watched So You Don't Have To"
+        >
           {words.map((word, i) => (
             <motion.span
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.08, duration: 0.4 }}
+              transition={{ delay: 0.3 + i * 0.08, duration: 0.4 }}
               className={`inline-block mr-[0.3em] ${
                 word === "Watched" || word === "Don't" ? "gold-gradient-text" : ""
               }`}
@@ -99,14 +113,14 @@ const HeroSection = () => {
               {word}
             </motion.span>
           ))}
-        </h1>
+        </motion.p>
         <motion.p
-          className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl"
+          className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.8 }}
         >
-          We researched and scored every site, and ranked the ones actually worth your money.
+          Independent rankings of every major twink porn site and gay porn site we've tested. Real scores, verified pricing, monthly updates. We researched every gay porn site and ranked the ones actually worth your money.
         </motion.p>
         {locale.heroTagline && (
           <motion.p
