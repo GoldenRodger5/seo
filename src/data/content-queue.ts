@@ -309,7 +309,7 @@ const backlogEntries: SupportingQueueEntry[] = [
   { title: "Helix Studios vs Sean Cody", slug: "compare/helix-studios-vs-sean-cody", content_type: "comparison", target_keyword: "helix studios vs sean cody", related_sites: ["helix-studios", "sean-cody"], priority: 98, status: "published" },
   { title: "Twinks in Shorts vs Athletic Twinks", slug: "compare/twinks-in-shorts-vs-athletic-twinks", content_type: "comparison", target_keyword: "twinks in shorts vs athletic twinks", related_sites: ["twinks-in-shorts", "athletic-twinks"], priority: 97, status: "published" },
   { title: "PeterFever vs GayAsianNetwork", slug: "compare/peterfever-vs-gayasiannetwork", content_type: "comparison", target_keyword: "peterfever vs gayasiannetwork", related_sites: ["peterfever", "gayasiannetwork"], priority: 96, status: "published" },
-  { title: "RawHole vs DudesRaw", slug: "compare/rawhole-vs-dudesraw", content_type: "comparison", target_keyword: "rawhole vs dudesraw", related_sites: ["rawhole", "dudesraw"], priority: 95, status: "queued" },
+  { title: "RawHole vs DudesRaw", slug: "compare/rawhole-vs-dudesraw", content_type: "comparison", target_keyword: "rawhole vs dudesraw", related_sites: ["rawhole", "dudesraw"], priority: 95, status: "published" },
   { title: "SayUncle vs FamilyDick", slug: "compare/sayuncle-vs-familydick", content_type: "comparison", target_keyword: "sayuncle vs familydick", related_sites: ["sayuncle", "familydick"], priority: 94, status: "queued" },
 
   // Days 8-14 — Alternatives content (priority 93 → 87).

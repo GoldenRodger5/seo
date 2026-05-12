@@ -328,6 +328,65 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     ],
     "meta_description": "PeterFever vs GayAsianNetwork compared in 2026 — pricing, content libraries, UX, and niche focus reviewed side by side to help you choose."
   },
+  "rawhole-vs-dudesraw": {
+    "site_a_slug": "rawhole",
+    "site_b_slug": "dudesraw",
+    "h1": "RawHole vs DudesRaw — Which Is Better in 2026?",
+    "intro": "Two bareback-focused sites. Same parent network. Completely different personalities. RawHole and DudesRaw both live under the zBuckz/WebMediaProz umbrella — a network that's been running gay membership sites since 2003 — but they're not interchangeable. RawHole leans into sleek, produced bareback content with a broad cast and a steady publishing cadence. DudesRaw bets on something grittier: real-guy energy, a convincingly large model roster north of 450 performers, and a library that's grown to over 567 videos with companion photo sets. If you're dropping $30 a month on bareback content, the choice between these two matters. We dug into both to figure out which one actually delivers.",
+    "site_a_summary": "RawHole launched in 2019 and has been a consistent presence in the zBuckz bareback lineup ever since. It's the more polished of the two — scenes are well-lit, editing is competent, and the network infrastructure (hosted by MojoHost) keeps things technically stable. The performer mix tends toward versatile guys in their 20s and 30s, with a focus on heat-of-the-moment pairings rather than elaborate storylines. For members who want bareback content that feels deliberate rather than chaotic, RawHole delivers a reliable, if not always thrilling, experience. The network-wide promotional deals — like zBuckz's recurring 2-for-1 campaigns — make trial membership a low-risk proposition.",
+    "site_b_summary": "DudesRaw has quietly built one of the more substantive libraries in the zBuckz stable: 567+ videos, 436 photo sets, and a roster of 458 models as of the most recent public data. That's a meaningful headcount — enough that you're genuinely unlikely to exhaust familiar faces quickly. The site leans into authentic, unfiltered presentation: these aren't polished studio setups so much as encounters that feel lived-in. For viewers who find over-produced bareback content sterile, DudesRaw's rougher edges are a selling point. Regular updates keep the content calendar moving, and the photo-set accompaniment gives members more material per scene than most comparable sites offer.",
+    "comparison_categories": [
+      {
+        "category": "Content Library",
+        "site_a_score": 7,
+        "site_b_score": 8,
+        "site_a_detail": "RawHole has built a solid catalog since its 2019 launch, with a consistent mix of bareback pairings and group scenes. Exact public scene counts are harder to pin down than DudesRaw's, but the content depth appears competitive within the zBuckz network. The library skews toward produced, repeatable formats rather than experimental casting.",
+        "site_b_detail": "DudesRaw's publicly documented library stands at 567+ videos paired with 436 photo sets and a model roster of 458 performers — numbers that put it ahead of most mid-tier bareback sites. The volume means new members have genuine depth to explore, and the photo sets add a layer of value that solo-video sites skip entirely."
+      },
+      {
+        "category": "Pricing & Value",
+        "site_a_score": 7,
+        "site_b_score": 7,
+        "site_a_detail": "RawHole follows the standard zBuckz pricing structure, which typically runs in the $29–$30/month range for recurring memberships, with periodic promotional deals like the network's documented 2-for-1 campaigns. Neither site publicly advertises a dirt-cheap trial, so the entry cost is roughly equivalent across the board. Value depends heavily on how frequently you'd actually use it.",
+        "site_b_detail": "DudesRaw sits at the same zBuckz price tier as RawHole, making the choice between them less about cost and more about content fit. When the network runs promotions — and it does, including multi-site discount pushes — both sites participate equally. The larger video and photo library arguably tips the value calculation slightly in DudesRaw's favor at equivalent pricing."
+      },
+      {
+        "category": "Site Design & UX",
+        "site_a_score": 6,
+        "site_b_score": 6,
+        "site_a_detail": "RawHole's design is functional but not distinguished — it carries the standard zBuckz platform aesthetic, which prioritizes content delivery over visual polish. Mobile optimization has been flagged as a weak point, so desktop viewing is the safer bet. Navigation is intuitive enough once you're inside, but the site doesn't feel built for 2026 browsing habits.",
+        "site_b_detail": "DudesRaw shares the same network platform as RawHole, which means UX strengths and weaknesses are largely mirrored. The site uses Google Font API and Font Awesome, suggesting a reasonably modern front-end stack, but the overall design sensibility remains utilitarian. Photo-set browsing is a genuine UX advantage DudesRaw has over many competitors."
+      },
+      {
+        "category": "Update Frequency",
+        "site_a_score": 7,
+        "site_b_score": 7,
+        "site_a_detail": "RawHole maintains a regular update schedule consistent with other active zBuckz network properties. The network has a documented history of keeping its flagship bareback titles current — RawHole's inclusion in recurring network-wide promos suggests it's treated as an active, maintained property rather than a catalog archive.",
+        "site_b_detail": "DudesRaw is explicitly described as updating its offerings regularly to keep content fresh, and the library size relative to its launch trajectory supports that claim. Both sites appear to operate on comparable weekly cadences, but DudesRaw's larger existing library means any given update week adds to a more substantial foundation."
+      },
+      {
+        "category": "Niche Focus",
+        "site_a_score": 7,
+        "site_b_score": 8,
+        "site_a_detail": "RawHole's niche is bareback content with a produced, presentable aesthetic. It's raw in act, not necessarily in feel — scenes are competent and watchable without veering into either high-gloss fantasy or gritty realism. That middle ground works for members who want reliability over provocation.",
+        "site_b_detail": "DudesRaw commits harder to the 'real men, real encounters' lane — condom-free scenes anchored by performer authenticity rather than production value. With 458 documented models, the casting breadth is genuine, not cosmetic. For members specifically seeking bareback content that feels unscripted and unglamourized, DudesRaw's focus is sharper and more consistent."
+      }
+    ],
+    "verdict": "On paper, these are near-twins: same network, same pricing tier, same broad bareback mandate. In practice, DudesRaw pulls ahead for most members shopping in this category. The numbers aren't close — 567+ videos and 458 models versus a RawHole library that's harder to quantify publicly — and the dual photo-set accompaniment genuinely adds value. DudesRaw also has a clearer creative identity: it knows exactly what it's selling and who it's selling to. RawHole isn't a bad site, but it occupies a less defined space. It's produced enough to feel polished, but not polished enough to compete with the premium bareback studios, and raw enough to attract authenticity-seekers, but not quite raw enough to win against DudesRaw on that front either. If you're a first-time subscriber choosing between the two at identical pricing, DudesRaw is the smarter bet. The only scenario where RawHole wins outright is if you've already burned through DudesRaw's library and want a stylistically adjacent second property — in which case the zBuckz network is doing exactly what it's designed to do.",
+    "who_should_choose_a": "Choose RawHole if you've exhausted DudesRaw's catalog and want a similarly-priced bareback alternative with a slightly more produced aesthetic.",
+    "who_should_choose_b": "Choose DudesRaw if you want the deeper library, a larger and more varied model roster, and bareback content that leans into genuine, unpolished chemistry over studio gloss.",
+    "faq": [
+      {
+        "question": "Are RawHole and DudesRaw part of the same network, and does that mean I'm paying for duplicate content?",
+        "answer": "Both sites operate under the zBuckz/WebMediaProz network, but they maintain separate content libraries rather than sharing scenes. Being on the same network means similar platform infrastructure, pricing structures, and promotional deals — not recycled videos. You'd join each as a separate membership to access their respective catalogs."
+      },
+      {
+        "question": "Which site has more content for the same monthly price?",
+        "answer": "DudesRaw has the documented edge: 567+ videos, 436 photo sets, and 458 models on record. RawHole's library count is less publicly documented, but based on its 2019 launch date and update activity, DudesRaw's library appears meaningfully larger. At equivalent pricing, DudesRaw delivers more content per dollar on current evidence."
+      }
+    ],
+    "meta_description": "RawHole vs DudesRaw: we compare both zBuckz bareback sites on content, pricing, and niche focus to help you decide where to spend in 2026."
+  },
 };
 
 export const getComparisonBody = (slug: string): ComparisonBody | undefined => {
