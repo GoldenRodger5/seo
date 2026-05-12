@@ -14,7 +14,13 @@
 
 import { rankComparePairs } from "../lib/compareRanking";
 
-const TOP_N = 50;
+// Threshold-based selection rather than fixed top-N. Now that every site
+// has an AI review body (the +20 review-bonus is universal), the natural
+// score distribution gives a sensible cutoff at 60: pairs above this
+// score have meaningful SEO signals (high overall scores, niche overlap,
+// price differentiation, deal monetization, or pre-existing AI body).
+// Pairs below score 60 are eligible to render but stay noindex'd.
+const SCORE_THRESHOLD = 60;
 
 /**
  * 15 compare pairs that were prerendered from project inception (top-6
@@ -44,7 +50,9 @@ let cached: Set<string> | null = null;
 /** Returns the canonical featured-pairs Set (memoized). */
 export function getFeaturedComparePairs(): Set<string> {
   if (cached) return cached;
-  const ranked = rankComparePairs().slice(0, TOP_N).map((p) => p.slug);
+  const ranked = rankComparePairs()
+    .filter((p) => p.score >= SCORE_THRESHOLD)
+    .map((p) => p.slug);
   cached = new Set([...ranked, ...LEGACY_PRERENDERED_PAIRS]);
   return cached;
 }
