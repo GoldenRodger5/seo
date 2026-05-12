@@ -28,8 +28,8 @@ const ReviewsIndex = () => {
   return (
     <Layout>
       <Helmet>
-        <title>{`Gay Twink Site Reviews (${TOTAL_SITES} Tested & Scored) | TwinkVault`}</title>
-        <meta name="description" content={`In-depth reviews of ${TOTAL_SITES} gay twink sites. Each scored on content, value, updates and mobile UX. Find the right site for your budget and taste.`} />
+        <title>{`Twink Site Reviews — ${TOTAL_SITES} Gay Porn Sites Tested & Scored | TwinkVault`}</title>
+        <meta name="description" content={`In-depth twink site reviews — ${TOTAL_SITES} gay porn sites tested and scored on content, value, updates and mobile UX. Find the right site for your budget and taste.`} />
         <link rel="canonical" href="https://twinkvault.com/reviews" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -50,10 +50,10 @@ const ReviewsIndex = () => {
           <AnimateOnScroll>
             <div className="text-center stagger-in">
               <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">
-                All Reviews
+                Twink Site Reviews
               </h1>
               <p className="mt-4 text-muted-foreground">
-                Browse all our honest, independent reviews. Updated monthly.
+                Every gay porn site we've tested in one place — {TOTAL_SITES} honest twink reviews scored on the same four-pillar methodology. Updated monthly.
               </p>
               <span className="mt-3 inline-flex items-center gap-1 rounded-button bg-muted px-3 py-1 text-xs text-muted-foreground">
                 {`Updated ${currentMonthLong} ${currentYear}`}

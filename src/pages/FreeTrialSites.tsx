@@ -17,8 +17,8 @@ const FreeTrialSites = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>{`Twink Sites with Free Trials ${currentYear} — Try Before You Buy | TwinkVault`}</title>
-        <meta name="description" content={`The best gay twink sites offering free trials in ${currentYear}. Try before you commit — staff-verified trial offers with no hidden fees.`} />
+        <title>{`Twink Porn Sites with Free Trials ${currentYear} — Try Before You Buy | TwinkVault`}</title>
+        <meta name="description" content={`The best twink porn sites offering free trials in ${currentYear}. Try every major gay porn site before you commit — verified trial offers with no hidden fees.`} />
         <link rel="canonical" href="https://twinkvault.com/free-trial-twink-sites" />
       </Helmet>
 
@@ -29,10 +29,10 @@ const FreeTrialSites = () => (
               <Gift size={12} /> Try Before You Buy
             </span>
             <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
-              Twink Sites with Free Trials
+              Twink Porn Sites with Free Trials
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Don't commit blind. These sites offer trial memberships so you can test the content before paying full price.
+              Don't commit blind to a gay porn site you've never used. These twink porn sites offer trial memberships so you can test the actual content before paying full price — verified offers, no hidden gotchas.
             </p>
           </motion.div>
         </div>
@@ -119,10 +119,10 @@ const FreeTrialSites = () => (
 
           {/* SEO content */}
           <div className="space-y-5 text-muted-foreground leading-relaxed">
-            <h2 className="font-heading text-2xl font-bold text-foreground">Are These Trials Actually Worth It?</h2>
-            <p>Yes — and here's why. Tour pages are marketing. They show the best 5 scenes, the hottest performers, and hide the fact that half the library might be 480p from 2015. A trial lets you log in and see what you're actually buying: the real library depth, the streaming quality on your device, whether the search works, and how often they actually upload new content.</p>
-            <p>The ASGmax $2.95 trial is the best deal in the space. Three days, 45+ channels, 12,500+ videos. That's enough time to know if it's for you. If it is, switch to the $10.95/mo annual plan — at that price, the trial almost isn't necessary, but it's nice to have the option.</p>
-            <p>For sites without trials, look at the annual price. If it's under $10/mo and the site scores above 4.0, the risk is low enough that you probably don't need a trial anyway.</p>
+            <h2 className="font-heading text-2xl font-bold text-foreground">Are These Twink Porn Trials Actually Worth It?</h2>
+            <p>Yes — and here's why. Tour pages on every gay porn site are pure marketing. They show the best 5 scenes, the hottest performers, and hide the fact that half the library might be 480p from 2015. A trial lets you log in and see what you're actually buying: the real library depth, the streaming quality on your device, whether the search works, and how often they actually upload new content.</p>
+            <p>The ASGmax $2.95 trial is the best deal in the twink porn space. Three days, 45+ channels, 12,500+ videos. That's enough time to know if it's for you. If it is, switch to the $10.95/mo annual plan — at that price, the trial almost isn't necessary, but it's nice to have the option.</p>
+            <p>For gay porn sites without trials, look at the annual price. If it's under $10/mo and the site scores above 4.0, the risk is low enough that you probably don't need a trial anyway.</p>
           </div>
         </div>
       </section>

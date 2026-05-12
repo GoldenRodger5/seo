@@ -130,7 +130,7 @@ const NicheCategoryPage = () => {
                 {matching.length} sites tested · Updated {currentYear}
               </span>
               <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
-                Best {niche.displayName} Sites in {currentYear}
+                Best {niche.displayName} Porn Sites in {currentYear}
               </h1>
               <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
                 {niche.heroTagline}
@@ -143,10 +143,10 @@ const NicheCategoryPage = () => {
         <section className="py-8 border-y border-border">
           <div className="container max-w-3xl prose prose-invert">
             <p className="text-muted-foreground">
-              {niche.description} We've reviewed and scored every site on this page — content libraries, streaming quality, mobile UX, pricing, and update cadence are all scored consistently. Sites are ranked by overall score, with the highest-scored {niche.displayName.toLowerCase()} site at the top.
+              {niche.description} We've reviewed and scored every {niche.displayName.toLowerCase()} porn site on this page — content libraries, streaming quality, mobile UX, pricing, and update cadence are all scored consistently. Sites are ranked by overall score, with the highest-scored {niche.displayName.toLowerCase()} gay porn site at the top.
             </p>
             <p className="text-muted-foreground mt-3">
-              People into {niche.displayName.toLowerCase()} content also tend to browse{" "}
+              People into {niche.displayName.toLowerCase()} porn content also tend to browse{" "}
               {related.map((r, i) => (
                 <span key={r.slug}>
                   <Link to={`/niche/${r.slug}`} className="text-primary hover:underline">

@@ -103,7 +103,7 @@ const ReviewPage = () => {
         <meta name="description" content={(() => {
           const verdict = getVerdict(site.slug);
           const firstSentence = verdict ? verdict.split(/(?<=\.)\s/)[0] : `Honest ${site.name} review based on a paid membership.`;
-          return `${site.name} scored ${site.overall_score}/5 on TwinkVault. ${firstSentence} ${site.price_monthly}/mo — see the full breakdown.`;
+          return `${site.name} scored ${site.overall_score}/5 — twink site reviews you can trust. ${firstSentence} ${site.price_monthly}/mo — see the full breakdown.`;
         })()} />
         <link rel="canonical" href={`https://twinkvault.com/reviews/${site.slug}`} />
         <script type="application/ld+json">

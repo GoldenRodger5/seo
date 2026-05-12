@@ -19,8 +19,8 @@ const BestTwinkSites = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>{`Best Twink Sites ${currentYear} — Top ${sitesCountLabel} Ranked by Experts | TwinkVault`}</title>
-        <meta name="description" content={`The definitive list of the best gay twink sites in ${currentYear}. Staff-tested rankings with real pricing, honest scores, and exclusive deals. Updated monthly.`} />
+        <title>{`Best Twink Porn Sites ${currentYear} — Top ${sitesCountLabel} Ranked & Reviewed | TwinkVault`}</title>
+        <meta name="description" content={`The definitive list of the best twink porn sites in ${currentYear}. Independent rankings of every major gay porn site with real pricing, honest scores, and exclusive deals.`} />
         <link rel="canonical" href="https://twinkvault.com/best-twink-sites" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -50,10 +50,10 @@ const BestTwinkSites = () => (
               <Crown size={12} /> {`Updated ${currentMonthLong} ${currentYear}`}
             </span>
             <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
-              Best Twink Sites {currentYear}
+              Best Twink Porn Sites {currentYear}
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Paid memberships on all {TOTAL_SITES} sites. Tested content, streaming, mobile, and search. Scored them honestly. No site paid to be here.
+              The most comprehensive rankings of twink porn sites available — covering every major gay porn site we've tested. {TOTAL_SITES} sites scored on content quality, value, update frequency, and mobile UX. No site paid to be here.
             </p>
           </motion.div>
         </div>
@@ -69,11 +69,11 @@ const BestTwinkSites = () => (
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <h2 className="font-heading text-lg font-bold">Quick Answer: Best Twink Sites in {currentYear}</h2>
+            <h2 className="font-heading text-lg font-bold">Quick Answer: Best Twink Porn Sites in {currentYear}</h2>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              The best twink site in {currentYear} is <strong className="text-foreground">Helix Studios</strong> (4.8/5) for premium production quality.
+              The best twink porn site in {currentYear} is <strong className="text-foreground">Helix Studios</strong> (4.8/5) for premium production quality — the cinematic end of the gay porn spectrum.
               For best value, <strong className="text-foreground">Next Door Twink</strong> gives access to the 45+ channel ASGmax network for just $10.95/mo annually.
-              For British content, <strong className="text-foreground">Hard Brit Lads</strong> leads the field. Full rankings below.
+              For British twink porn content, <strong className="text-foreground">Hard Brit Lads</strong> leads the field. Full rankings below.
             </p>
           </motion.div>
 
@@ -128,13 +128,13 @@ const BestTwinkSites = () => (
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-heading text-2xl font-bold text-foreground">How We Actually Score These Sites</h2>
-            <p>We don't trust trailers. Every site on this list was tested with a paid membership — we browsed the member area, tested search, streamed on mobile, and checked if the "weekly updates" claim was real. Most review sites just look at the tour page. We log in.</p>
+            <h2 className="font-heading text-2xl font-bold text-foreground">How We Actually Score Twink Porn Sites</h2>
+            <p>We don't trust trailers. Every twink porn site on this list was tested with a paid membership — we browsed the member area, tested search, streamed on mobile, and checked if the "weekly updates" claim was real. Most gay porn site review aggregators just look at the tour page. We log in.</p>
             <p>Scores are based on four things: content quality (are scenes well-lit, well-shot, with performers who seem into it?), value (what do you get per dollar?), update frequency (does the site actually release new content regularly?), and mobile (does it work on your phone without being painful?). Each is scored out of 100. The overall rating is a weighted average.</p>
             <p>No site has paid us to rank higher. We earn affiliate commissions on some links, but the scores are entirely ours. When sites raise prices or stop updating, we drop their scores the same month.</p>
-            <h2 className="font-heading text-2xl font-bold text-foreground">What Actually Separates the Good Sites From the Bad</h2>
-            <p>The difference between a 4.8 and a 3.7 usually comes down to two things: production quality and library depth. Helix Studios at $34.95/month is expensive, but the scenes look like they were shot by people who know what they're doing. Compare that to sites where half the library is 480p footage from 2014 — you feel the gap immediately.</p>
-            <p>For most people, the sweet spot is Next Door Twink at $10.95/month on the annual plan. You get the full ASGmax network — 45+ channels, 12,500+ videos, content ranging from amateur to studio quality. It's not all twink content, but there's enough that you won't run out anytime soon. Southern Strokes at $9.95/month annual is the sleeper pick if you want something cheaper with a more specific focus.</p>
+            <h2 className="font-heading text-2xl font-bold text-foreground">What Separates the Best Twink Porn Sites From the Worst</h2>
+            <p>The difference between a 4.8 and a 3.7 usually comes down to two things: production quality and library depth. Helix Studios at $34.95/month is expensive, but the scenes look like they were shot by people who know what they're doing. Compare that to gay porn sites where half the library is 480p footage from 2014 — you feel the gap immediately.</p>
+            <p>For most people, the sweet spot is Next Door Twink at $10.95/month on the annual plan. You get the full ASGmax network — 45+ channels, 12,500+ videos, twink porn ranging from amateur to studio quality. Southern Strokes at $9.95/month annual is the sleeper pick if you want something cheaper with a more specific focus. Whichever you pick, the rankings above are the honest answer to "which twink porn sites are actually worth paying for."</p>
           </motion.div>
         </div>
       </section>

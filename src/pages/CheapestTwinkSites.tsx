@@ -21,8 +21,8 @@ const CheapestTwinkSites = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>{`Cheapest Gay Twink Sites ${currentYear} — Best Value Subscriptions | TwinkVault`}</title>
-        <meta name="description" content={`The most affordable gay twink sites in ${currentYear} ranked by value. Get quality content without overpaying — best cheap twink site subscriptions.`} />
+        <title>{`Cheapest Twink Porn Sites ${currentYear} — Best Value Subscriptions | TwinkVault`}</title>
+        <meta name="description" content={`The cheapest twink porn sites in ${currentYear} ranked by value. Quality gay porn content at the lowest annual prices — verified subscription costs and honest scoring.`} />
         <link rel="canonical" href="https://twinkvault.com/cheapest-twink-sites" />
       </Helmet>
 
@@ -33,10 +33,10 @@ const CheapestTwinkSites = () => (
               <DollarSign size={12} /> Best Value {currentYear}
             </span>
             <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
-              Cheapest Twink Sites
+              Cheapest Twink Porn Sites
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Every site sorted by annual price, cheapest first. Cheap doesn't mean bad — some of the best-scoring sites are also the most affordable.
+              Every twink porn site we've reviewed, sorted by annual price — cheapest first. Cheap doesn't mean bad: the best-scoring gay porn sites are often also the most affordable, and the worst overpriced. We've separated the two below.
             </p>
           </motion.div>
         </div>
@@ -130,10 +130,10 @@ const CheapestTwinkSites = () => (
           </StaggerContainer>
 
           <div className="space-y-5 text-muted-foreground leading-relaxed">
-            <h2 className="font-heading text-2xl font-bold text-foreground">The Cheapest Way In (Without Getting Burned)</h2>
-            <p>Always go annual. That's the trick. Most sites charge $25-35/month if you pay monthly, but drop to $9-12/month on the annual plan. Helix Studios goes from $34.95 to $11.99 — that's $275 saved in a year. If you know you'll stick around, monthly billing is just throwing money away.</p>
-            <p>If you want sheer volume for the least money, Next Door World at $10.95/month annual is hard to beat. 45+ channels for one price. Even if you only care about 3-4 of those channels, you're paying under $3 per channel. No individual subscription comes close to that math.</p>
-            <p>One thing we won't do: recommend a site just because it's cheap. A site scoring below 3.5/5 is bad value at any price — you'll cancel within a month and waste the money anyway. The real sweet spot is 4.0+ quality at under $11/month: Southern Strokes, Athletic Twinks, and Twinks in Shorts all land there.</p>
+            <h2 className="font-heading text-2xl font-bold text-foreground">The Cheapest Twink Porn Sites — Without Getting Burned</h2>
+            <p>Always go annual. That's the trick. Most twink porn sites charge $25-35/month if you pay monthly, but drop to $9-12/month on the annual plan. Helix Studios goes from $34.95 to $11.99 — that's $275 saved in a year. If you know you'll stick around, monthly billing on any gay porn site is just throwing money away.</p>
+            <p>If you want sheer volume for the least money, Next Door World at $10.95/month annual is hard to beat. 45+ channels for one price — that's the best per-channel math on any gay porn subscription we've found. Even if you only care about 3-4 of those channels, you're paying under $3 per channel.</p>
+            <p>One thing we won't do: recommend a twink porn site just because it's cheap. A site scoring below 3.5/5 is bad value at any price — you'll cancel within a month and waste the money anyway. The real sweet spot is 4.0+ quality at under $11/month: Southern Strokes, Athletic Twinks, and Twinks in Shorts all land there.</p>
             <div className="flex flex-wrap gap-3 pt-4">
               <Link to="/best-deals" className="inline-flex items-center gap-2 text-sm font-medium text-secondary hover:underline">
                 See All Current Deals <ArrowRight size={14} />
