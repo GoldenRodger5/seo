@@ -11,6 +11,7 @@ import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../da
 import { getComparisonBody } from "../data/comparison-content";
 import { isFeaturedComparePair } from "../data/featured-compare-pairs";
 import { generateCompareFaqs } from "../lib/compareFaqs";
+import RelatedReading from "../components/RelatedReading";
 import { PageTransition } from "../components/MotionWrappers";
 import { currentYear } from "../lib/dates";
 import { siteNicheMap } from "@/data/site-niches";
@@ -887,6 +888,9 @@ const ComparePage = () => {
             </div>
           </div>
         </section>
+        {isFeaturedComparePair(slug) && (
+          <RelatedReading sourceType="compare" siteA={siteA} siteB={siteB} slug={slug} />
+        )}
       </PageTransition>
     </Layout>
   );

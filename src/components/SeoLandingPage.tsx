@@ -10,6 +10,7 @@ import LocalisedPrice from "./LocalisedPrice";
 import { SiteData } from "../data/sites";
 import { AlternativesBody } from "../data/alternatives-content";
 import { currentYear } from "../lib/dates";
+import RelatedReading from "./RelatedReading";
 
 export interface SeoLandingPageProps {
   /** URL path, e.g. "/best-bareback-gay-sites" */
@@ -283,6 +284,7 @@ const SeoLandingPage = ({
             </div>
           </div>
         </section>
+        <RelatedReading sourceType="landing" currentPath={path} />
       </PageTransition>
     </Layout>
   );

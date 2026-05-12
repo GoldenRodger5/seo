@@ -29,6 +29,7 @@ import { stripMonthlyUnit } from "@/lib/dealMath";
 import { getSiteImagery } from "@/data/site-imagery";
 import { generateSiteFaqs } from "@/lib/faqGenerator";
 import StickyMobileCTA from "../components/StickyMobileCTA";
+import RelatedReading from "../components/RelatedReading";
 import SimilarSites from "../components/SimilarSites";
 import LocalisedPrice from "../components/LocalisedPrice";
 
@@ -664,6 +665,8 @@ const ReviewPage = () => {
           </aside>
         </div>
       </div>
+
+      <RelatedReading sourceType="review" site={site} />
 
       {/* Mobile sticky CTA — extracted to dedicated component */}
       <StickyMobileCTA site={site} />
