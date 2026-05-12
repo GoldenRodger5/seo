@@ -33,6 +33,13 @@ export interface SeoLandingPageProps {
   /** Optional AI-generated long-form body — renders above the site list
    *  when present (used by alternatives pages to surface daily-engine output). */
   aiBody?: AlternativesBody;
+  /** Optional buyer's guide section — each entry becomes an H2 + paragraphs.
+   *  Renders below the site list, above FAQs. */
+  buyersGuide?: { title: string; paragraphs: string[] }[];
+  /** Optional FAQ section — adds rendered Q&A list AND FAQPage JSON-LD. */
+  faqs?: { q: string; a: string }[];
+  /** Optional price comparison table. Renders before buyer's guide. */
+  showPriceTable?: boolean;
 }
 
 const SeoLandingPage = ({
@@ -46,6 +53,9 @@ const SeoLandingPage = ({
   closing,
   related,
   aiBody,
+  buyersGuide,
+  faqs,
+  showPriceTable,
 }: SeoLandingPageProps) => {
   const fullTitle = `${title} (${currentYear}) | TwinkVault`;
   const url = `https://twinkvault.com${path}`;
@@ -82,6 +92,17 @@ const SeoLandingPage = ({
           <meta property="og:description" content={description} />
           <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
           <script type="application/ld+json">{JSON.stringify(itemList)}</script>
+          {faqs && faqs.length > 0 && (
+            <script type="application/ld+json">{JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: faqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            })}</script>
+          )}
         </Helmet>
 
         <section className="hero-mesh py-16">
@@ -175,6 +196,72 @@ const SeoLandingPage = ({
                 </StaggerChild>
               ))}
             </StaggerContainer>
+
+            {showPriceTable && (
+              <div className="mb-12">
+                <h2 className="font-heading text-2xl font-bold mb-4 heading-gradient inline-block">Price Comparison</h2>
+                <div className="overflow-x-auto rounded-lg glass-card">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="px-4 py-3 text-left font-semibold">Site</th>
+                        <th className="px-4 py-3 text-center font-semibold">Monthly</th>
+                        <th className="px-4 py-3 text-center font-semibold">Annual (per mo)</th>
+                        <th className="px-4 py-3 text-center font-semibold">Total/year</th>
+                        <th className="px-4 py-3 text-center font-semibold">Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sites.map((s) => {
+                        const annualMo = parseFloat(s.price_annual.replace(/[^0-9.]/g, "")) || 0;
+                        const totalYr = (annualMo * 12).toFixed(2);
+                        return (
+                          <tr key={s.id} className="border-b border-border/30">
+                            <td className="px-4 py-3 font-semibold">
+                              <Link to={`/reviews/${s.slug}`} className="hover:text-secondary transition-colors">{s.name}</Link>
+                            </td>
+                            <td className="px-4 py-3 text-center text-muted-foreground">{s.price_monthly}</td>
+                            <td className="px-4 py-3 text-center font-semibold text-emerald-400">{s.price_annual}</td>
+                            <td className="px-4 py-3 text-center text-muted-foreground">${totalYr}</td>
+                            <td className="px-4 py-3 text-center text-secondary">{s.overall_score}/5</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {buyersGuide && buyersGuide.length > 0 && (
+              <article className="space-y-8 mb-12 text-muted-foreground leading-relaxed">
+                {buyersGuide.map((section) => (
+                  <section key={section.title}>
+                    <h2 className="font-heading text-2xl font-bold text-foreground mb-3">{section.title}</h2>
+                    {section.paragraphs.map((p, i) => (
+                      <p key={i} className="mb-3">{p}</p>
+                    ))}
+                  </section>
+                ))}
+              </article>
+            )}
+
+            {faqs && faqs.length > 0 && (
+              <section className="mb-12">
+                <h2 className="font-heading text-2xl font-bold heading-gradient inline-block mb-4">Frequently Asked Questions</h2>
+                <div className="space-y-3">
+                  {faqs.map((f) => (
+                    <details key={f.q} className="glass-card group rounded-lg p-4">
+                      <summary className="cursor-pointer list-none font-semibold flex items-center justify-between text-sm">
+                        {f.q}
+                        <span className="text-primary group-open:rotate-180 transition-transform">▾</span>
+                      </summary>
+                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.a}</p>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {closing && (
               <div className="space-y-4 text-muted-foreground leading-relaxed">

@@ -51,6 +51,9 @@ const BestForBeginners = lazy(() => import("./pages/seo/BestForBeginners"));
 const BestTwink2026 = lazy(() => import("./pages/seo/BestTwink2026"));
 const BestWithDownloads = lazy(() => import("./pages/seo/BestWithDownloads"));
 const BestDaddy = lazy(() => import("./pages/seo/BestDaddy"));
+const BestTwinkPornFreeTrials = lazy(() => import("./pages/seo/BestTwinkPornFreeTrials"));
+const BestCheapGayPorn = lazy(() => import("./pages/seo/BestCheapGayPorn"));
+const BestBarebackTwink = lazy(() => import("./pages/seo/BestBarebackTwink"));
 const BestGayPornSites = lazy(() => import("./pages/seo/BestGayPornSites"));
 const BestSubscription = lazy(() => import("./pages/seo/BestSubscription"));
 const BestTwinkPorn = lazy(() => import("./pages/seo/BestTwinkPorn"));
@@ -162,6 +165,9 @@ const AnimatedRoutes = () => {
         <Route path="/best-gay-twink-sites-2026" element={<BestTwink2026 />} />
         <Route path="/best-gay-sites-with-downloads" element={<BestWithDownloads />} />
         <Route path="/best-daddy-twink-sites" element={<BestDaddy />} />
+        <Route path="/best-twink-porn-sites-with-free-trials" element={<BestTwinkPornFreeTrials />} />
+        <Route path="/best-cheap-gay-porn-sites" element={<BestCheapGayPorn />} />
+        <Route path="/best-bareback-twink-sites" element={<BestBarebackTwink />} />
         <Route path="/best-gay-porn-sites" element={<BestGayPornSites />} />
         <Route path="/best-gay-porn-subscription" element={<BestSubscription />} />
         <Route path="/best-twink-porn-sites" element={<BestTwinkPorn />} />

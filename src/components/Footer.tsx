@@ -95,7 +95,10 @@ const Footer = () => (
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
             <li><Link to="/discount/twinktrade" className={`${footerLink} gold-gradient-text`}>Featured Deal: TwinkTrade — 67% Off</Link></li>
             <li><Link to="/best-gay-sites-under-10" className={footerLink}>Best Sites Under $10</Link></li>
+            <li><Link to="/best-cheap-gay-porn-sites" className={footerLink}>Best Cheap Gay Porn Sites</Link></li>
             <li><Link to="/best-bareback-gay-sites" className={footerLink}>Best Bareback Sites</Link></li>
+            <li><Link to="/best-bareback-twink-sites" className={footerLink}>Best Bareback Twink Sites</Link></li>
+            <li><Link to="/best-twink-porn-sites-with-free-trials" className={footerLink}>Twink Sites with Free Trials</Link></li>
             <li><Link to="/best-amateur-gay-sites" className={footerLink}>Best Amateur Sites</Link></li>
             <li><Link to="/best-premium-gay-sites" className={footerLink}>Best Premium Sites</Link></li>
             <li><Link to="/best-asian-gay-sites" className={footerLink}>Best Asian Sites</Link></li>

@@ -198,16 +198,18 @@ const badgeColor = (badge: string | null) => {
 
 const MORE_LISTS = [
   { to: "/best-gay-porn-sites", label: "Best Gay Porn Sites", desc: "Top 15 across every niche, ranked by overall score." },
+  { to: "/best-cheap-gay-porn-sites", label: "Best Cheap Picks", desc: "Real quality at budget prices — under $10/mo annual, score ≥ 3.7." },
+  { to: "/best-bareback-twink-sites", label: "Best Bareback Twink", desc: "The bareback twink niche specifically — 30 ranked sites." },
+  { to: "/best-twink-porn-sites-with-free-trials", label: "Free Trial Picks", desc: "Sites with genuine or low-cost intro trials." },
   { to: "/best-gay-porn-subscription", label: "Best Subscription", desc: "Ranked by value-for-money. Annual vs monthly broken out." },
   { to: "/gay-porn-sites-ranked", label: "Sites Ranked", desc: "All 62 sites in one sortable table — score on every pillar." },
-  { to: "/best-value-gay-porn-sites", label: "Best Value", desc: "The cheapest cost-per-scene and best value-score picks." },
 ];
 
 const MoreListsSection = () => (
   <section className="py-16">
     <div className="container">
       <h2 className="font-heading text-2xl md:text-3xl font-bold heading-gradient inline-block mb-6">More Lists</h2>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {MORE_LISTS.map((l) => (
           <Link
             key={l.to}
