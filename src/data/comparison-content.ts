@@ -330,5 +330,15 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
   },
 };
 
-export const getComparisonBody = (slug: string): ComparisonBody | undefined =>
-  COMPARISON_CONTENT[slug];
+export const getComparisonBody = (slug: string): ComparisonBody | undefined => {
+  // Tolerant lookup: try the slug as-given first, then try the reverse
+  // ordering. The content engine historically wrote some keys in queue
+  // order (e.g. "nakedsword-vs-men") rather than alphabetical canonical
+  // ("men-vs-nakedsword"), and we don't want those entries to render as
+  // missing content while the data hygiene catches up.
+  const direct = COMPARISON_CONTENT[slug];
+  if (direct) return direct;
+  const parts = slug.split("-vs-");
+  if (parts.length !== 2) return undefined;
+  return COMPARISON_CONTENT[`${parts[1]}-vs-${parts[0]}`];
+};

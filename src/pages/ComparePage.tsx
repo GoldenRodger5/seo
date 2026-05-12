@@ -9,6 +9,8 @@ import ScoreRing from "../components/ScoreRing";
 import StarRating from "../components/StarRating";
 import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
 import { getComparisonBody } from "../data/comparison-content";
+import { isFeaturedComparePair } from "../data/featured-compare-pairs";
+import { generateCompareFaqs } from "../lib/compareFaqs";
 import { PageTransition } from "../components/MotionWrappers";
 import { currentYear } from "../lib/dates";
 import { siteNicheMap } from "@/data/site-niches";
@@ -541,13 +543,20 @@ const ComparePage = () => {
           <script type="application/ld+json">{JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            mainEntity: [
-              { "@type": "Question", name: `Which is better in ${currentYear}, ${siteA.name} or ${siteB.name}?`, acceptedAnswer: { "@type": "Answer", text: `${winner.name} scored higher overall (${winner.overall_score}/5).` } },
-              { "@type": "Question", name: `Which one has the better deal?`, acceptedAnswer: { "@type": "Answer", text: `${budgetPick.name} comes out cheaper on the annual plan at ${budgetPick.price_annual}.` } },
-              { "@type": "Question", name: `Do they offer free trials?`, acceptedAnswer: { "@type": "Answer", text: `Check the linked discount pages for current trial details.` } },
-              { "@type": "Question", name: `Can I subscribe to both?`, acceptedAnswer: { "@type": "Answer", text: `Yes — both bill discreetly and let you cancel anytime.` } },
-            ],
+            mainEntity: generateCompareFaqs(siteA, siteB).map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
           })}</script>
+          {/* Robots: featured pairs get full indexing; non-featured pairs are
+              noindex'd to prevent near-duplicate flagging across the 1,891-
+              pair combinatorial space. follow stays on so the internal
+              links to review/discount pages still pass equity. */}
+          <meta
+            name="robots"
+            content={isFeaturedComparePair(slug) ? "index, follow" : "noindex, follow"}
+          />
         </Helmet>
         <section className="py-16">
           <div className="container max-w-4xl">
@@ -765,24 +774,7 @@ const ComparePage = () => {
                 {siteA.name} vs {siteB.name} — FAQ
               </h2>
               <div className="mt-6 space-y-3">
-                {[
-                  {
-                    q: `Which is better in ${currentYear}, ${siteA.name} or ${siteB.name}?`,
-                    a: `${winner.name} scored higher overall (${winner.overall_score}/5 vs ${(winner.id === siteA.id ? siteB : siteA).overall_score}/5). It edges ahead on ${winner.content_quality >= winner.value_score ? "content quality" : "value"}, though both are tested and reviewed honestly.`,
-                  },
-                  {
-                    q: `Which one has the better deal — ${siteA.name} or ${siteB.name}?`,
-                    a: `${budgetPick.name} comes out cheaper on the annual plan at ${budgetPick.price_annual}. Both also offer monthly billing if you don't want to commit long-term.`,
-                  },
-                  {
-                    q: `Do ${siteA.name} or ${siteB.name} offer free trials?`,
-                    a: `${siteA.has_free_trial ? siteA.name : ""}${siteA.has_free_trial && siteB.has_free_trial ? " and " : ""}${siteB.has_free_trial ? siteB.name : ""}${!siteA.has_free_trial && !siteB.has_free_trial ? "Neither currently offers a true free trial — but both have heavily discounted intro periods. Check the linked discount pages for current pricing." : " offer trial pricing. Check the discount page for current details."}`,
-                  },
-                  {
-                    q: `Can I subscribe to both ${siteA.name} and ${siteB.name}?`,
-                    a: `Yes — and many subscribers do. Both bill discreetly and let you cancel anytime. If you're undecided, start with the higher-scored option (${winner.name}) on the annual plan and add the other later if you want broader coverage.`,
-                  },
-                ].map((item) => (
+                {generateCompareFaqs(siteA, siteB).map((item) => (
                   <details key={item.q} className="glass-card group rounded-lg p-4">
                     <summary className="cursor-pointer list-none font-semibold flex items-center justify-between text-sm">
                       {item.q}

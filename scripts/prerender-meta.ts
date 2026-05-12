@@ -14,6 +14,7 @@ import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { sites, categories } from "../src/data/sites.js";
 import { DEAL_VERIFIED_DATE } from "../src/lib/dates.js";
+import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = resolve(__dirname, "..", "dist");
@@ -171,18 +172,20 @@ for (const slug of Object.keys(NICHE_META)) {
   });
 }
 
-// Compare pages (top 20 most important pairs)
-const topSlugs = SITE_SLUGS.slice(0, 6);
-for (let i = 0; i < topSlugs.length; i++) {
-  for (let j = i + 1; j < topSlugs.length; j++) {
-    const a = topSlugs[i];
-    const b = topSlugs[j];
-    routes.push({
-      path: `/compare/${a}-vs-${b}`,
-      title: `${SITE_NAMES[a]} vs ${SITE_NAMES[b]} ${YEAR} | TwinkVault`,
-      description: `Compare ${SITE_NAMES[a]} vs ${SITE_NAMES[b]} side by side. Scores, pricing, pros and cons.`,
-    });
-  }
+// Compare pages — only the featured pair allowlist gets prerendered with
+// unique titles + descriptions. The other ~1,840 pairs are still routable
+// but render with the default app shell and a noindex,follow robots meta
+// (set in ComparePage.tsx) so they don't trigger near-duplicate flagging.
+const FEATURED_COMPARE_PAIRS = getFeaturedComparePairsList();
+for (const pairSlug of FEATURED_COMPARE_PAIRS) {
+  const [a, b] = pairSlug.split("-vs-");
+  const aName = SITE_NAMES[a] ?? a;
+  const bName = SITE_NAMES[b] ?? b;
+  routes.push({
+    path: `/compare/${pairSlug}`,
+    title: `${aName} vs ${bName} ${YEAR} — Which Is Worth It? | TwinkVault`,
+    description: `${aName} vs ${bName} compared side by side. Scores, pricing, pros and cons — find out which is the better gay porn site subscription in ${YEAR}.`,
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -250,5 +253,5 @@ console.log(`Pre-rendered meta tags for ${count} routes`);
 console.log(`  Reviews: ${SITE_SLUGS.length}`);
 console.log(`  Discounts: ${SITE_SLUGS.length}`);
 console.log(`  Categories: ${CATEGORY_SLUGS.length}`);
-console.log(`  Compare pairs: ${(topSlugs.length * (topSlugs.length - 1)) / 2}`);
-console.log(`  Static pages: ${routes.length - SITE_SLUGS.length * 2 - CATEGORY_SLUGS.length - (topSlugs.length * (topSlugs.length - 1)) / 2}`);
+console.log(`  Compare pairs: ${FEATURED_COMPARE_PAIRS.length}`);
+console.log(`  Static pages: ${routes.length - SITE_SLUGS.length * 2 - CATEGORY_SLUGS.length - FEATURED_COMPARE_PAIRS.length}`);

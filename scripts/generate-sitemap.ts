@@ -2,6 +2,7 @@ import { writeFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { sites, categories } from "../src/data/sites.js";
+import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.js";
 
 // ---------------------------------------------------------------------------
 // Config
@@ -186,8 +187,17 @@ for (const slug of NICHE_SLUGS) {
   );
 }
 
-// Compare pages  /compare/:slugA-vs-:slugB  (66 pairs)
-const pairs = generatePairs(SITE_SLUGS);
+// Compare pages — only featured pairs are included in the sitemap. The
+// other ~1,840 pairs are still reachable through internal links (the
+// /compare picker UI, niche pages, related comparisons on review pages),
+// but we don't actively ask Google to crawl them because they share a
+// near-identical template and risk being classified as duplicates. The
+// featured allowlist is computed at module-eval time from the live
+// scoring algorithm, so this auto-updates as data changes.
+const pairs = getFeaturedComparePairsList().map((slug): [string, string] => {
+  const [a, b] = slug.split("-vs-");
+  return [a, b];
+});
 for (const [a, b] of pairs) {
   urls.push(
     urlEntry({
