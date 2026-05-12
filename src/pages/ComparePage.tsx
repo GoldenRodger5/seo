@@ -520,35 +520,6 @@ const ComparePage = () => {
           <meta property="og:title" content={`${siteA.name} vs ${siteB.name} — TwinkVault`} />
           <meta property="og:description" content={`Compare ${siteA.name} vs ${siteB.name} side by side. Scores, pricing, pros and cons to help you decide.`} />
           <meta property="og:url" content={`https://twinkvault.com/compare/${slug}`} />
-          <script type="application/ld+json">{JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
-              { "@type": "ListItem", position: 2, name: "Compare", item: "https://twinkvault.com/compare" },
-              { "@type": "ListItem", position: 3, name: `${siteA.name} vs ${siteB.name}`, item: `https://twinkvault.com/compare/${slug}` },
-            ],
-          })}</script>
-          <script type="application/ld+json">{JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: `${siteA.name} vs ${siteB.name} — Which Is Worth It in ${currentYear}?`,
-            description: `Side-by-side comparison of ${siteA.name} and ${siteB.name} based on paid memberships and consistent scoring.`,
-            author: { "@type": "Organization", name: "TwinkVault" },
-            publisher: { "@type": "Organization", name: "TwinkVault", logo: { "@type": "ImageObject", url: "https://twinkvault.com/pwa-512.png" } },
-            datePublished: `${currentYear}-01-01`,
-            dateModified: new Date().toISOString().split("T")[0],
-            mainEntityOfPage: `https://twinkvault.com/compare/${slug}`,
-          })}</script>
-          <script type="application/ld+json">{JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: generateCompareFaqs(siteA, siteB).map((f) => ({
-              "@type": "Question",
-              name: f.q,
-              acceptedAnswer: { "@type": "Answer", text: f.a },
-            })),
-          })}</script>
           {/* Robots: featured pairs get full indexing; non-featured pairs are
               noindex'd to prevent near-duplicate flagging across the 1,891-
               pair combinatorial space. follow stays on so the internal
@@ -557,6 +528,42 @@ const ComparePage = () => {
             name="robots"
             content={isFeaturedComparePair(slug) ? "index, follow" : "noindex, follow"}
           />
+          {/* Schema is emitted only for featured pairs. Non-featured pairs
+              are noindex'd, so structured data on them would be wasted bytes
+              that Google won't surface. */}
+          {isFeaturedComparePair(slug) && (
+            <>
+              <script type="application/ld+json">{JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
+                  { "@type": "ListItem", position: 2, name: "Compare", item: "https://twinkvault.com/compare" },
+                  { "@type": "ListItem", position: 3, name: `${siteA.name} vs ${siteB.name}`, item: `https://twinkvault.com/compare/${slug}` },
+                ],
+              })}</script>
+              <script type="application/ld+json">{JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "ItemList",
+                name: `${siteA.name} vs ${siteB.name}`,
+                description: `Side-by-side comparison of ${siteA.name} and ${siteB.name}.`,
+                numberOfItems: 2,
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: siteA.name, url: `https://twinkvault.com/reviews/${siteA.slug}` },
+                  { "@type": "ListItem", position: 2, name: siteB.name, url: `https://twinkvault.com/reviews/${siteB.slug}` },
+                ],
+              })}</script>
+              <script type="application/ld+json">{JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                mainEntity: generateCompareFaqs(siteA, siteB).map((f) => ({
+                  "@type": "Question",
+                  name: f.q,
+                  acceptedAnswer: { "@type": "Answer", text: f.a },
+                })),
+              })}</script>
+            </>
+          )}
         </Helmet>
         <section className="py-16">
           <div className="container max-w-4xl">

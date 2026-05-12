@@ -61,16 +61,22 @@ const NicheCategoryPage = () => {
           })}</script>
           <script type="application/ld+json">{JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "ItemList",
-            name: niche.seoTitle,
+            "@type": "CollectionPage",
+            name: title,
             description: niche.seoDescription,
-            numberOfItems: matching.length,
-            itemListElement: matching.map((site, i) => ({
-              "@type": "ListItem",
-              position: i + 1,
-              name: site.name,
-              url: `https://twinkvault.com/reviews/${site.slug}`,
-            })),
+            url,
+            mainEntity: {
+              "@type": "ItemList",
+              name: niche.seoTitle,
+              description: niche.seoDescription,
+              numberOfItems: matching.length,
+              itemListElement: matching.map((site, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                name: site.name,
+                url: `https://twinkvault.com/reviews/${site.slug}`,
+              })),
+            },
           })}</script>
           <script type="application/ld+json">{JSON.stringify({
             "@context": "https://schema.org",

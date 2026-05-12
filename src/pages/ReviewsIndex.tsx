@@ -33,15 +33,29 @@ const ReviewsIndex = () => {
         <link rel="canonical" href="https://twinkvault.com/reviews" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "ItemList",
-          "name": `Gay Twink Site Reviews ${currentYear}`,
-          "numberOfItems": sites.length,
-          "itemListElement": [...sites].sort((a,b) => a.rank - b.rank).map((site, i) => ({
-            "@type": "ListItem",
-            "position": i + 1,
-            "name": site.name,
-            "url": `https://twinkvault.com/reviews/${site.slug}`
-          }))
+          "@type": "CollectionPage",
+          name: `Twink Site Reviews ${currentYear}`,
+          description: `In-depth twink site reviews — ${TOTAL_SITES} gay porn sites tested and scored.`,
+          url: "https://twinkvault.com/reviews",
+          mainEntity: {
+            "@type": "ItemList",
+            name: `Twink Site Reviews ${currentYear}`,
+            numberOfItems: sites.length,
+            itemListElement: [...sites].sort((a,b) => a.rank - b.rank).map((site, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              name: site.name,
+              url: `https://twinkvault.com/reviews/${site.slug}`,
+            })),
+          },
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
+            { "@type": "ListItem", position: 2, name: "Reviews", item: "https://twinkvault.com/reviews" },
+          ],
         })}</script>
       </Helmet>
 

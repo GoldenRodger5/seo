@@ -480,10 +480,9 @@ const Index = () => (
         "name": "TwinkVault",
         "url": "https://twinkvault.com",
         "logo": "https://twinkvault.com/pwa-512.png",
-        "email": "isaac.m.builds@gmail.com",
         "foundingDate": "2024",
         "description": "Independent gay site review project — paid memberships, transparent scoring, no commission-rigged rankings.",
-        "sameAs": []
+        "sameAs": [],
       })}</script>
     </Helmet>
     <PageTransition>

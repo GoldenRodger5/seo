@@ -25,7 +25,7 @@ const BestTwinkSites = () => (
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "name": "Best Twink Sites {currentYear}",
+          "name": `Best Twink Porn Sites ${currentYear}`,
           "description": "Staff-tested rankings of the best gay twink content sites",
           "numberOfItems": sites.length,
           "itemListElement": sorted.map((site, i) => ({
