@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, Component, ReactNode } from "react";
 import { trackPageView } from "./lib/analytics";
+import { logPageView } from "./lib/tracking";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -57,6 +58,12 @@ const BestBarebackTwink = lazy(() => import("./pages/seo/BestBarebackTwink"));
 const BlogIndex = lazy(() => import("./pages/BlogIndex"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogCategory = lazy(() => import("./pages/BlogCategory"));
+const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
+const AdminCallback = lazy(() => import("./pages/admin/AdminCallback"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const AdminPageDetail = lazy(() => import("./pages/admin/AdminPageDetail"));
+const AdminDestinationDetail = lazy(() => import("./pages/admin/AdminDestinationDetail"));
+const RequireAdmin = lazy(() => import("./components/RequireAdmin"));
 const BestGayPornSites = lazy(() => import("./pages/seo/BestGayPornSites"));
 const BestSubscription = lazy(() => import("./pages/seo/BestSubscription"));
 const BestTwinkPorn = lazy(() => import("./pages/seo/BestTwinkPorn"));
@@ -174,6 +181,11 @@ const AnimatedRoutes = () => {
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/category/:category" element={<BlogCategory />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/callback" element={<AdminCallback />} />
+        <Route path="/admin" element={<RequireAdmin><AdminDashboard /></RequireAdmin>} />
+        <Route path="/admin/page/*" element={<RequireAdmin><AdminPageDetail /></RequireAdmin>} />
+        <Route path="/admin/destination/:slug" element={<RequireAdmin><AdminDestinationDetail /></RequireAdmin>} />
         <Route path="/best-gay-porn-sites" element={<BestGayPornSites />} />
         <Route path="/best-gay-porn-subscription" element={<BestSubscription />} />
         <Route path="/best-twink-porn-sites" element={<BestTwinkPorn />} />
@@ -200,10 +212,13 @@ const AnimatedRoutes = () => {
 const AppShell = () => {
   const location = useLocation();
 
-  // GA4 page-view tracking — fires on route change. Only sends data if the
-  // user accepted cookies AND VITE_GA4_ID is configured (otherwise no-op).
+  // Page-view tracking fires on every route change.
+  // - trackPageView → GA4 (gated on cookie consent + VITE_GA4_ID)
+  // - logPageView → first-party Supabase page_views table (drives /admin)
+  // Both no-op on /admin and /go/* paths internally.
   React.useEffect(() => {
     trackPageView(location.pathname);
+    logPageView(location.pathname);
   }, [location.pathname]);
 
   // Scroll restoration on navigation. Hash links scroll to anchor; otherwise top.

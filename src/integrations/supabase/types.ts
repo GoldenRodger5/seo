@@ -15,21 +15,45 @@ export type Database = {
       clicks: {
         Row: {
           id: string
-          site_slug: string
+          site_slug: string | null
           referrer_page: string | null
           clicked_at: string
+          created_at: string | null
+          source_page: string | null
+          source_type: string | null
+          destination_slug: string | null
+          destination_url: string | null
+          referrer: string | null
+          country: string | null
+          session_id: string | null
         }
         Insert: {
           id?: string
-          site_slug: string
+          site_slug?: string | null
           referrer_page?: string | null
           clicked_at?: string
+          created_at?: string | null
+          source_page?: string | null
+          source_type?: string | null
+          destination_slug?: string | null
+          destination_url?: string | null
+          referrer?: string | null
+          country?: string | null
+          session_id?: string | null
         }
         Update: {
           id?: string
-          site_slug?: string
+          site_slug?: string | null
           referrer_page?: string | null
           clicked_at?: string
+          created_at?: string | null
+          source_page?: string | null
+          source_type?: string | null
+          destination_slug?: string | null
+          destination_url?: string | null
+          referrer?: string | null
+          country?: string | null
+          session_id?: string | null
         }
         Relationships: []
       }
@@ -138,6 +162,54 @@ export type Database = {
           google_ping_success?: boolean | null
           bing_ping_success?: boolean | null
           error_message?: string | null
+        }
+        Relationships: []
+      }
+      page_views: {
+        Row: {
+          id: string
+          created_at: string
+          path: string
+          page_type: string | null
+          referrer: string | null
+          country: string | null
+          session_id: string | null
+        }
+        Insert: {
+          id?: string
+          created_at?: string
+          path: string
+          page_type?: string | null
+          referrer?: string | null
+          country?: string | null
+          session_id?: string | null
+        }
+        Update: {
+          id?: string
+          created_at?: string
+          path?: string
+          page_type?: string | null
+          referrer?: string | null
+          country?: string | null
+          session_id?: string | null
+        }
+        Relationships: []
+      }
+      admin_users: {
+        Row: {
+          id: string
+          email: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          email: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          created_at?: string
         }
         Relationships: []
       }

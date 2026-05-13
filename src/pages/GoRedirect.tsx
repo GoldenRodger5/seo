@@ -3,19 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import { getSiteBySlug } from "../data/sites";
-import { supabase } from "@/integrations/supabase/client";
-
-async function logClick(siteSlug: string, referrer: string) {
-  try {
-    await supabase.from("clicks").insert({
-      site_slug: siteSlug,
-      referrer_page: referrer,
-      clicked_at: new Date().toISOString(),
-    });
-  } catch {
-    // Silently fail — never block the redirect for a tracking error
-  }
-}
 
 const GoRedirect = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -24,9 +11,10 @@ const GoRedirect = () => {
 
   useEffect(() => {
     if (!site) return;
-
-    const referrer = document.referrer || "direct";
-    logClick(site.slug, referrer);
+    // Click logging happens upstream in OutboundLink via lib/tracking.ts —
+    // the user already navigated through /go/:slug from a tracked button,
+    // so a second insert here would double-count. This page is now purely
+    // a redirect waypoint that ensures iOS Safari doesn't block window.open.
     const targetUrl = site.affiliate_url || site.homepage_url;
     const timer = setTimeout(() => {
       window.location.href = targetUrl;

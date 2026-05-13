@@ -1,14 +1,20 @@
 User-agent: *
 Allow: /
 Disallow: /go/
+Disallow: /admin/
+Disallow: /admin
 
 User-agent: Googlebot
 Allow: /
 Disallow: /go/
+Disallow: /admin/
+Disallow: /admin
 
 User-agent: Bingbot
 Allow: /
 Disallow: /go/
+Disallow: /admin/
+Disallow: /admin
 
 Sitemap: https://twinkvault.com/sitemap.xml
 Sitemap: https://twinkvault.com/blog-sitemap.xml
