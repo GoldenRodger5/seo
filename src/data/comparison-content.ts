@@ -387,6 +387,65 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     ],
     "meta_description": "RawHole vs DudesRaw: we compare both zBuckz bareback sites on content, pricing, and niche focus to help you decide where to spend in 2026."
   },
+  "sayuncle-vs-familydick": {
+    "site_a_slug": "sayuncle",
+    "site_b_slug": "familydick",
+    "h1": "Say Uncle vs Family Dick — Which Is Better in 2026?",
+    "intro": "Both sites live under the same roof — Charged Media's Say Uncle network — but they serve noticeably different purposes. Say Uncle is the umbrella membership: one price buys access to the entire catalog, which spans over 55 exclusive series ranging from the religious-taboo kink of Missionary Boys to the power-uniform dynamics of Young Perps. Family Dick, by contrast, is the network's flagship jewel: a tightly focused stepdad/stepson fantasy brand that earned 'Best Niche Studio' at the Str8UpGayPorn Awards and built a devoted following around performers like Dakota Lovell, Myles Landon, and Brody Kayman. If you're deciding where to spend your money, the real question isn't whether one is better in absolute terms — it's whether you want the full buffet or the chef's tasting menu.",
+    "site_a_summary": "Say Uncle is the logical choice for anyone who doesn't want to cap themselves at one fantasy. The network launched in 2020 and now houses over 55 exclusive series, a library of 3,000+ scenes, and a model roster of 1,600+ performers. Billing at roughly $29.95/month or around $16.67/month on an annual plan, it unlocks everything: Family Dick, Brother Crush, Latin Leche, Black Godz, Missionary Boys, Young Perps, Yes Father, and more. Scenes stream and download in resolutions from 360p up to 4K. The update cadence sits at approximately 14 new scenes per week network-wide, which means there's always something fresh regardless of your mood or preferred niche.",
+    "site_b_summary": "Family Dick has been doing the stepfamily fantasy longer and more seriously than almost anyone in gay adult content. The series debuted in 2017, built its visual identity around a home-video-adjacent aesthetic that feels intimate rather than clinical, and has stacked up an estimated 3,400+ scenes over its run. Dakota Lovell became one of the most-searched names in the niche through this brand, with Jax Thirio, Dale Savage, and Brody Kayman each bringing recurring screen presence. Production values are top-tier — 4K capture, consistent lighting, and actual scripted scenarios rather than five-line premise cards. A $1/day trial is frequently available. The trade-off is narrower scope: you're buying deep into one specific scenario archetype.",
+    "comparison_categories": [
+      {
+        "category": "Content Library",
+        "site_a_score": 10,
+        "site_b_score": 7,
+        "site_a_detail": "Say Uncle's library is genuinely enormous — 55+ exclusive series, 3,000+ scenes, and a performer pool north of 1,600 models spanning twinks, age-gap pairings, Latino men, Black performers, religious-fantasy scenarios, and more. The breadth is unmatched in the gay taboo niche. Subscribers who get bored with one series can pivot to something completely different without paying for a second membership.",
+        "site_b_detail": "Family Dick runs deep rather than wide. With roughly 3,400+ scenes accumulated since 2017, it arguably has more content within its specific stepfamily lane than any comparable gay site. The recurring cast structure — Dakota Lovell alone logged 34 episodes across 2020–2024 — creates a genuine sense of continuity and character that pure-volume libraries rarely bother with. The limitation is obvious: if stepdad/stepson dynamics don't hold your interest exclusively, you'll hit a wall."
+      },
+      {
+        "category": "Pricing & Value",
+        "site_a_score": 9,
+        "site_b_score": 7,
+        "site_a_detail": "At approximately $29.95/month or ~$16.67/month billed annually, Say Uncle's per-scene cost is remarkably low given the catalog size. A 12-month membership works out to under a dollar a day and includes unlimited downloads at that tier. The math strongly favors the annual plan — discount coupon codes regularly float around that drop the monthly equivalent further. The main friction point is that downloads are throttled on shorter-term plans.",
+        "site_b_detail": "Family Dick sits at the same billing infrastructure as the broader Say Uncle network, with a $1/day trial frequently advertised as an entry point. Month-to-month sits around $29.95, which is reasonable for a premium niche brand with consistent 4K production. The value calculation changes if you already subscribe to Say Uncle — Family Dick's catalog is included there, making a standalone Family Dick sub redundant. The site makes most sense as a single-niche entry point for someone who doesn't care about the wider network."
+      },
+      {
+        "category": "Site Design & UX",
+        "site_a_score": 7,
+        "site_b_score": 8,
+        "site_a_detail": "The Say Uncle members area is functional and cleanly organized — series browsing, model pages, and a 'My Content' filter all work as expected. The sheer volume of content does create some navigation overhead; finding a specific series among 55+ options takes a few extra clicks, and the search could be more granular. Mobile performance is solid. The unified login via Google sign-in is a nice quality-of-life touch.",
+        "site_b_detail": "Family Dick benefits from its single-brand focus — the interface doesn't need to accommodate 55 categories, so browsing feels more curated. Scene pages load quickly, performer indexes are organized by episode count, and the episode-style presentation reinforces that serialized viewing experience. The site has a consistent visual identity that carries through thumbnails and headers. If you know exactly what you came for, the UX gets out of your way faster than the broader network hub."
+      },
+      {
+        "category": "Update Frequency",
+        "site_a_score": 9,
+        "site_b_score": 7,
+        "site_a_detail": "Network-wide, Say Uncle pushes approximately 14 new scenes per week — well over 35 per month — spread across its full slate of active series. That cadence means even regular daily visitors will find new content. Because updates are distributed across multiple series, no single channel floods; instead, the library grows steadily in every direction simultaneously.",
+        "site_b_detail": "Family Dick updates on a weekly schedule, but as one series within a larger network the per-week drop here is typically 1–3 scenes rather than the full 14 that Say Uncle members see. That's standard for a premium episodic series rather than a volume aggregator. Long-term subscribers do note that the pace has been consistent since 2017 without significant gaps — COVID-era supply was managed by releasing unreleased library content — which counts for something."
+      },
+      {
+        "category": "Niche Focus",
+        "site_a_score": 6,
+        "site_b_score": 10,
+        "site_a_detail": "Say Uncle covers taboo and family-fantasy broadly but isn't exclusively that. Its catalog includes power-dynamic content (Young Perps), Latin-focused content (Latin Leche), and religious fantasy (Missionary Boys, Yes Father) — all excellent, but none of it is pure stepdad/stepson in the Family Dick mold. If your specific kink is the domestic stepfamily dynamic, you're getting it alongside material you may not care about.",
+        "site_b_detail": "Family Dick is the defining gay stepdad/stepson brand. Every scene is built around that specific scenario — the casting, lighting, scripting, and recurring characters all serve the fantasy without dilution. The series has drawn academic attention for how deliberately it constructs its niche identity, and the on-screen chemistry between recurring performers like Dakota Lovell and Jax Thirio is the product of years of scene-building. If this is your fantasy, no other site executes it with the same dedication."
+      }
+    ],
+    "verdict": "The honest answer is that most people should subscribe to Say Uncle and not overthink it. For roughly the same monthly price as a standalone Family Dick membership, you get Family Dick plus 54 other series, a library of 3,000+ scenes, 14 new drops per week, and a performer pool of 1,600+. The value case for the network over any individual channel within it is almost impossible to argue against on pure math. The annual plan — around $16.67/month — makes it one of the best per-scene values in gay adult content, full stop.\n\nThat said, Family Dick earns its reputation as a standalone brand. If you are specifically, exclusively into the stepfamily fantasy and you want the most developed, best-cast, most cinematically committed version of that niche in the gay market, Family Dick delivers something Say Uncle's aggregate browsing experience doesn't replicate: a focused, serialized catalog with real performer continuity. The $1/day trial is a low-risk way to confirm that before committing.\n\nOur recommendation: start with the Say Uncle annual membership. You get Family Dick inside it. Explore the full catalog for a month, and if you find yourself only clicking Family Dick scenes anyway, the standalone sub will feel more spiritually aligned — but financially, it's the same price for less content.",
+    "who_should_choose_a": "Choose Say Uncle if you want the broadest possible catalog across gay taboo subgenres for one competitive monthly price — it's the smarter long-term value play for any serious subscriber.",
+    "who_should_choose_b": "Choose Family Dick standalone if stepdad/stepson fantasy is your one niche, you want a curated series-style experience with strong performer continuity, and the $1/day trial speaks to your risk tolerance.",
+    "faq": [
+      {
+        "question": "If I subscribe to Say Uncle, do I get full access to Family Dick scenes too?",
+        "answer": "Yes. A Say Uncle network membership includes full access to Family Dick's entire catalog alongside all other series on the network — Brother Crush, Missionary Boys, Latin Leche, Young Perps, Black Godz, Yes Father, and more. There is no need to hold a separate Family Dick subscription if you're already a Say Uncle member."
+      },
+      {
+        "question": "Is Family Dick worth paying for separately when Say Uncle costs roughly the same?",
+        "answer": "Only in niche circumstances. The standalone Family Dick sub makes sense if you want the single-brand browsing experience, have zero interest in the rest of the Say Uncle catalog, or want to take advantage of a short-term trial before committing to the full network. For anyone who thinks they might explore beyond one series, the Say Uncle network membership is the objectively better use of the same monthly spend."
+      }
+    ],
+    "meta_description": "Say Uncle vs Family Dick in 2026 — pricing, scene counts, niche focus, and which membership actually delivers better value for gay subscribers."
+  },
 };
 
 export const getComparisonBody = (slug: string): ComparisonBody | undefined => {
