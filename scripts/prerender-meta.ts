@@ -15,6 +15,7 @@ import { fileURLToPath } from "url";
 import { sites, categories } from "../src/data/sites.js";
 import { DEAL_VERIFIED_DATE } from "../src/lib/dates.js";
 import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.js";
+import { BLOG_POSTS, BLOG_CATEGORIES } from "../src/data/blog-posts.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = resolve(__dirname, "..", "dist");
@@ -122,7 +123,26 @@ const routes: RouteMeta[] = [
   { path: "/is-sayuncle-worth-it", title: `Is SayUncle Worth It? (${YEAR} Review) | TwinkVault`, description: `Honest answer to "is SayUncle worth it" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.` },
   { path: "/is-rawhole-worth-it", title: `Is RawHole Worth It? (${YEAR} Review) | TwinkVault`, description: `Honest answer to "is RawHole worth it" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.` },
   { path: "/is-athletic-twinks-worth-it", title: `Is Athletic Twinks Worth It? (${YEAR} Review) | TwinkVault`, description: `Honest answer to "is Athletic Twinks worth it" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.` },
+  { path: "/blog", title: `TwinkVault Blog — Guides, Comparisons & Industry Analysis`, description: `Editorial coverage of gay porn sites — buyer guides, head-to-head comparisons, pricing analysis, and industry trends from the TwinkVault editorial team.` },
 ];
+
+// Blog category pages
+for (const cat of BLOG_CATEGORIES) {
+  routes.push({
+    path: `/blog/category/${cat.slug}`,
+    title: `${cat.label} — TwinkVault Blog`,
+    description: `${cat.description} Browse all ${cat.label.toLowerCase()} articles from TwinkVault Editorial.`,
+  });
+}
+
+// Blog posts
+for (const post of BLOG_POSTS) {
+  routes.push({
+    path: `/blog/${post.slug}`,
+    title: `${post.title} | TwinkVault`,
+    description: post.meta_description,
+  });
+}
 
 // Review pages
 for (const slug of SITE_SLUGS) {

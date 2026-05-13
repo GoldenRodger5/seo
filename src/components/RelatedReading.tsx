@@ -4,6 +4,7 @@ import { sites, type SiteData } from "../data/sites";
 import { siteNicheMap } from "../data/site-niches";
 import { getNiche } from "../data/niches";
 import { getFeaturedComparePairs } from "../data/featured-compare-pairs";
+import { rankComparePairs } from "../lib/compareRanking";
 import { getAnchor } from "../lib/anchorVariations";
 
 /**
@@ -35,9 +36,20 @@ interface LandingProps {
   sourceType: "landing";
   /** The current landing page's URL path (e.g. "/best-bareback-twink-sites"). */
   currentPath: string;
+  /** Optional pre-filtered site slugs on this landing page — used to derive
+   *  4 relevant featured compare pairs. If absent, falls back to top featured
+   *  pairs overall by score. */
+  filteredSiteSlugs?: string[];
 }
 
-type RelatedReadingProps = ReviewProps | CompareProps | LandingProps;
+interface BlogProps {
+  sourceType: "blog";
+  currentSlug: string;
+  relatedSiteSlugs: string[];
+  relatedLandingPages: string[];
+}
+
+type RelatedReadingProps = ReviewProps | CompareProps | LandingProps | BlogProps;
 
 interface LinkOut {
   to: string;
@@ -187,44 +199,90 @@ const RelatedReading = (props: RelatedReadingProps) => {
     );
   }
 
-  // Landing page
-  const { currentPath } = props;
-  const sourceSlug = `landing-${currentPath}`;
-  // Curated cross-landing recommendations to ensure 4 distinct landing-page
-  // links per page, none of them the current page.
-  const allLandings = [
-    "/best-gay-porn-sites",
-    "/best-twink-porn-sites",
-    "/best-bareback-twink-sites",
-    "/best-cheap-gay-porn-sites",
-    "/best-bareback-gay-sites",
-    "/best-amateur-gay-sites",
-    "/best-premium-gay-sites",
-    "/best-asian-gay-sites",
-    "/best-twink-porn-sites-with-free-trials",
-    "/best-gay-porn-subscription",
-    "/best-value-gay-porn-sites",
-    "/best-daddy-twink-sites",
-    "/gay-porn-sites-ranked",
-  ];
-  // Stable rotation: hash the currentPath, pick 4 starting from that offset.
-  let hash = 0;
-  for (let i = 0; i < currentPath.length; i++) hash = (hash * 31 + currentPath.charCodeAt(i)) >>> 0;
-  const filtered = allLandings.filter((p) => p !== currentPath);
-  const offset = hash % filtered.length;
-  const picks: LinkOut[] = [];
-  for (let i = 0; i < 4; i++) {
-    const path = filtered[(offset + i) % filtered.length];
-    picks.push({ to: path, label: getAnchor(path, sourceSlug, path) });
+  if (props.sourceType === "landing") {
+    const { currentPath, filteredSiteSlugs } = props;
+    const sourceSlug = `landing-${currentPath}`;
+    const allLandings = [
+      "/best-gay-porn-sites", "/best-twink-porn-sites", "/best-bareback-twink-sites",
+      "/best-cheap-gay-porn-sites", "/best-bareback-gay-sites", "/best-amateur-gay-sites",
+      "/best-premium-gay-sites", "/best-asian-gay-sites", "/best-twink-porn-sites-with-free-trials",
+      "/best-gay-porn-subscription", "/best-value-gay-porn-sites", "/best-daddy-twink-sites",
+      "/gay-porn-sites-ranked",
+    ];
+    let hash = 0;
+    for (let i = 0; i < currentPath.length; i++) hash = (hash * 31 + currentPath.charCodeAt(i)) >>> 0;
+    const filteredLandings = allLandings.filter((p) => p !== currentPath);
+    const offset = hash % filteredLandings.length;
+    const picks: LinkOut[] = [];
+    for (let i = 0; i < 4; i++) {
+      const path = filteredLandings[(offset + i) % filteredLandings.length];
+      picks.push({ to: path, label: getAnchor(path, sourceSlug, path) });
+    }
+
+    // 4 featured compare pairs relevant to this landing. If filteredSiteSlugs
+    // is provided (the landing page's filtered site list), pick pairs where
+    // BOTH sites are in that list — those are pairs most likely to interest
+    // a reader of this landing page. Otherwise fall back to top featured
+    // pairs overall by score.
+    const compareLinks: LinkOut[] = (() => {
+      const featured = getFeaturedComparePairs();
+      const filterSet = new Set(filteredSiteSlugs ?? []);
+      const candidates: { slug: string; score: number; siteA: string; siteB: string }[] = [];
+      for (const ranked of rankComparePairs()) {
+        if (!featured.has(ranked.slug)) continue;
+        if (filterSet.size > 0) {
+          if (!filterSet.has(ranked.siteA) || !filterSet.has(ranked.siteB)) continue;
+        }
+        candidates.push(ranked);
+        if (candidates.length >= 4) break;
+      }
+      return candidates.map((c) => {
+        const a = sites.find((s) => s.slug === c.siteA);
+        const b = sites.find((s) => s.slug === c.siteB);
+        return {
+          to: `/compare/${c.slug}`,
+          label: a && b ? `${a.name} vs ${b.name}` : `Compare ${c.siteA} vs ${c.siteB}`,
+        };
+      });
+    })();
+
+    return (
+      <section className="border-t border-border/40 mt-8 py-10 bg-card/30">
+        <div className="container max-w-4xl">
+          <h2 className="font-heading text-xl font-bold mb-6 heading-gradient inline-block">Related Reading</h2>
+          <div className="grid gap-6 sm:grid-cols-3">
+            <Section title="More lists worth reading" links={picks} />
+            <Section title="Compare top picks" links={compareLinks} />
+            <Section title="Need help deciding?" links={ASK_AI_LINKS(sourceSlug)} />
+          </div>
+        </div>
+      </section>
+    );
   }
 
+  // Blog post
+  const { currentSlug, relatedSiteSlugs, relatedLandingPages } = props;
+  const sourceSlug = `blog-${currentSlug}`;
+  const landingLinks: LinkOut[] = relatedLandingPages.map((p) => ({
+    to: p,
+    label: getAnchor(p, sourceSlug, p),
+  }));
+  const reviewLinks: LinkOut[] = relatedSiteSlugs.slice(0, 4).map((slug) => {
+    const s = sites.find((x) => x.slug === slug);
+    return { to: `/reviews/${slug}`, label: s?.name ?? slug };
+  });
   return (
     <section className="border-t border-border/40 mt-8 py-10 bg-card/30">
       <div className="container max-w-4xl">
         <h2 className="font-heading text-xl font-bold mb-6 heading-gradient inline-block">Related Reading</h2>
-        <div className="grid gap-6 sm:grid-cols-2">
-          <Section title="More lists worth reading" links={picks} />
-          <Section title="Need help deciding?" links={ASK_AI_LINKS(sourceSlug)} />
+        <div className="grid gap-6 sm:grid-cols-3">
+          <Section title="More from the blog" links={[
+            { to: "/blog", label: "All articles" },
+            { to: `/blog/category/guides`, label: "Guides" },
+            { to: `/blog/category/comparisons`, label: "Comparisons" },
+          ]} />
+          <Section title="Related lists" links={landingLinks} />
+          <Section title="Sites mentioned" links={reviewLinks} />
         </div>
       </div>
     </section>

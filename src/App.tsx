@@ -54,6 +54,9 @@ const BestDaddy = lazy(() => import("./pages/seo/BestDaddy"));
 const BestTwinkPornFreeTrials = lazy(() => import("./pages/seo/BestTwinkPornFreeTrials"));
 const BestCheapGayPorn = lazy(() => import("./pages/seo/BestCheapGayPorn"));
 const BestBarebackTwink = lazy(() => import("./pages/seo/BestBarebackTwink"));
+const BlogIndex = lazy(() => import("./pages/BlogIndex"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const BlogCategory = lazy(() => import("./pages/BlogCategory"));
 const BestGayPornSites = lazy(() => import("./pages/seo/BestGayPornSites"));
 const BestSubscription = lazy(() => import("./pages/seo/BestSubscription"));
 const BestTwinkPorn = lazy(() => import("./pages/seo/BestTwinkPorn"));
@@ -168,6 +171,9 @@ const AnimatedRoutes = () => {
         <Route path="/best-twink-porn-sites-with-free-trials" element={<BestTwinkPornFreeTrials />} />
         <Route path="/best-cheap-gay-porn-sites" element={<BestCheapGayPorn />} />
         <Route path="/best-bareback-twink-sites" element={<BestBarebackTwink />} />
+        <Route path="/blog" element={<BlogIndex />} />
+        <Route path="/blog/category/:category" element={<BlogCategory />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/best-gay-porn-sites" element={<BestGayPornSites />} />
         <Route path="/best-gay-porn-subscription" element={<BestSubscription />} />
         <Route path="/best-twink-porn-sites" element={<BestTwinkPorn />} />

@@ -3,6 +3,7 @@ import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { sites, categories } from "../src/data/sites.js";
 import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.js";
+import { BLOG_POSTS, BLOG_CATEGORIES } from "../src/data/blog-posts.js";
 
 // ---------------------------------------------------------------------------
 // Config
@@ -45,13 +46,14 @@ interface UrlEntry {
   loc: string;
   changefreq: string;
   priority: string;
+  lastmod?: string;
 }
 
-function urlEntry({ loc, changefreq, priority }: UrlEntry): string {
+function urlEntry({ loc, changefreq, priority, lastmod }: UrlEntry): string {
   return [
     "  <url>",
     `    <loc>${BASE_URL}${loc}</loc>`,
-    `    <lastmod>${TODAY}</lastmod>`,
+    `    <lastmod>${lastmod ?? TODAY}</lastmod>`,
     `    <changefreq>${changefreq}</changefreq>`,
     `    <priority>${priority}</priority>`,
     "  </url>",
@@ -122,6 +124,7 @@ const corePages = [
   "/is-sayuncle-worth-it",
   "/is-rawhole-worth-it",
   "/is-athletic-twinks-worth-it",
+  "/blog",
 ];
 for (const page of corePages) {
   urls.push(urlEntry({ loc: page, changefreq: "weekly", priority: "0.9" }));
@@ -237,3 +240,34 @@ console.log(`  Last modified: ${TODAY}`);
 console.log(
   `  Breakdown: 1 homepage + ${corePages.length} core + ${toolPages.length} tools + ${infoPages.length} info + ${legalPages.length} legal + ${SITE_SLUGS.length} reviews + ${SITE_SLUGS.length} discounts + ${CATEGORY_SLUGS.length} categories + ${NICHE_SLUGS.length} niches + ${pairs.length} compare`
 );
+
+// ---------------------------------------------------------------------------
+// Blog sitemap (separate file — Google handles split sitemaps fine when
+// each is referenced from robots.txt)
+// ---------------------------------------------------------------------------
+const blogUrls: string[] = [];
+blogUrls.push(urlEntry({ loc: "/blog", changefreq: "daily", priority: "0.9", lastmod: TODAY }));
+for (const cat of BLOG_CATEGORIES) {
+  blogUrls.push(urlEntry({ loc: `/blog/category/${cat.slug}`, changefreq: "weekly", priority: "0.7", lastmod: TODAY }));
+}
+for (const post of BLOG_POSTS) {
+  blogUrls.push(urlEntry({
+    loc: `/blog/${post.slug}`,
+    changefreq: "monthly",
+    priority: "0.8",
+    lastmod: post.updated_date,
+  }));
+}
+
+const blogSitemap = [
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+  ...blogUrls,
+  "</urlset>",
+  "",
+].join("\n");
+
+const blogOutPath = resolve(__dirname, "..", "public", "blog-sitemap.xml");
+writeFileSync(blogOutPath, blogSitemap, "utf-8");
+console.log(`Blog sitemap: ${blogOutPath}`);
+console.log(`  Blog URLs: ${blogUrls.length} (1 index + ${BLOG_CATEGORIES.length} categories + ${BLOG_POSTS.length} posts)`);

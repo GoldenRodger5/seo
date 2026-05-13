@@ -11,6 +11,7 @@ Allow: /
 Disallow: /go/
 
 Sitemap: https://twinkvault.com/sitemap.xml
+Sitemap: https://twinkvault.com/blog-sitemap.xml
 
 # Crawl-delay for polite crawling (ignored by Google, respected by Bing/others)
 Crawl-delay: 1

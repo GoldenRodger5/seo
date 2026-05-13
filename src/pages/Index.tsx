@@ -13,6 +13,7 @@ import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import VisitSiteButton from "../components/VisitSiteButton";
 import Layout from "../components/Layout";
 import { sites, getVisitUrl, isAffiliated, getTopRatedPromotable, getTopRatedAffiliated, getRecentlyUpdatedPromotable } from "../data/sites";
+import { rankComparePairs } from "../lib/compareRanking";
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { ReactNode } from "react";
 import { currentYear, currentMonthShort } from "../lib/dates";
@@ -204,6 +205,42 @@ const MORE_LISTS = [
   { to: "/best-gay-porn-subscription", label: "Best Subscription", desc: "Ranked by value-for-money. Annual vs monthly broken out." },
   { to: "/gay-porn-sites-ranked", label: "Sites Ranked", desc: "All 62 sites in one sortable table — score on every pillar." },
 ];
+
+// Memoized at module-eval — the ranking is deterministic from sites.ts data.
+const POPULAR_COMPARISONS = rankComparePairs().slice(0, 6).map((r) => {
+  const a = sites.find((s) => s.slug === r.siteA);
+  const b = sites.find((s) => s.slug === r.siteB);
+  return {
+    slug: r.slug,
+    aName: a?.name ?? r.siteA,
+    bName: b?.name ?? r.siteB,
+    winner: (a?.overall_score ?? 0) >= (b?.overall_score ?? 0) ? (a?.name ?? r.siteA) : (b?.name ?? r.siteB),
+  };
+});
+
+const PopularComparisonsSection = () => (
+  <section className="py-16 bg-card/30">
+    <div className="container">
+      <h2 className="font-heading text-2xl md:text-3xl font-bold heading-gradient inline-block mb-2">Popular Comparisons</h2>
+      <p className="text-sm text-muted-foreground mb-6">The most-asked head-to-head questions in gay porn — side-by-side scoring and verdict for each.</p>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {POPULAR_COMPARISONS.map((c) => (
+          <Link key={c.slug} to={`/compare/${c.slug}`} className="glass-card rounded-lg p-5 hover:border-primary/50 transition-colors">
+            <div className="flex items-center justify-between gap-2 text-sm">
+              <span className="font-heading font-semibold truncate">{c.aName}</span>
+              <span className="text-xs text-primary font-bold shrink-0">vs</span>
+              <span className="font-heading font-semibold truncate text-right">{c.bName}</span>
+            </div>
+            <p className="mt-2 text-[11px] text-muted-foreground">Top pick: <span className="text-secondary font-semibold">{c.winner}</span></p>
+            <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-secondary">
+              See full comparison <ArrowRight size={11} />
+            </span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 const MoreListsSection = () => (
   <section className="py-16">
@@ -493,6 +530,7 @@ const Index = () => (
       <NicheBrowser />
       <MoreListsSection />
       <TopPicksSection />
+      <PopularComparisonsSection />
       <QuizBanner />
       <BentoGrid />
       <LatestReviewsSection />
