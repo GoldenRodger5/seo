@@ -35,6 +35,11 @@ function getSessionId(): string {
   }
 }
 
+const INFO_PATHS = new Set([
+  "/about", "/methodology", "/privacy-policy", "/affiliate-disclosure",
+  "/contact", "/terms", "/2257", "/sitemap",
+]);
+
 /** Page-type classifier — used by both click and page-view rows. */
 export function inferPageType(path: string): string {
   if (path === "/" || path === "") return "homepage";
@@ -45,11 +50,24 @@ export function inferPageType(path: string): string {
   if (path.startsWith("/discount/")) return "discount";
   if (path.startsWith("/niche/")) return "niche";
   if (path.startsWith("/category/")) return "category";
-  if (path.startsWith("/best-") || path.startsWith("/cheapest-") || path.startsWith("/free-trial-") || path.startsWith("/gay-porn-") || path.startsWith("/helix-studios-") || path.startsWith("/sean-cody-") || path.startsWith("/nakedsword-") || path.startsWith("/is-")) return "landing";
+  if (
+    path.startsWith("/best-") ||
+    path.startsWith("/cheapest-") ||
+    path.startsWith("/free-trial-") ||
+    path.startsWith("/gay-porn-") ||
+    path.startsWith("/gay-dating-") ||
+    path.startsWith("/helix-studios-") ||
+    path.startsWith("/sean-cody-") ||
+    path.startsWith("/nakedsword-") ||
+    path.startsWith("/is-")
+  ) return "landing";
   if (path.startsWith("/blog/")) return "blog";
   if (path === "/blog") return "blog-index";
   if (path.startsWith("/admin")) return "admin";
   if (path.startsWith("/go/")) return "outbound-redirect";
+  if (path === "/top-sites") return "top-sites";
+  if (path === "/find-my-site" || path === "/ask-ai") return "tool";
+  if (INFO_PATHS.has(path)) return "info";
   return "other";
 }
 
