@@ -2085,3 +2085,24 @@ export function getRecentlyUpdatedPromotable(limit: number, exclude: SiteData[] 
     .sort((a, b) => b.update_frequency - a.update_frequency || b.overall_score - a.overall_score)
     .slice(0, limit);
 }
+
+/**
+ * Single "today's top pick" for the homepage hero direct-CTA block.
+ * Ranks affiliated sites with active deals by deal_discount × overall_score
+ * (rewards both depth of discount and quality of site). Falls back to the
+ * highest-scoring affiliated promotable site if no deals are active.
+ */
+export function getTopDealPick(): SiteData | null {
+  const affiliated = sites.filter(s => isAffiliated(s));
+  if (affiliated.length === 0) return null;
+  const withDeals = affiliated.filter(s => s.deal_discount > 0);
+  if (withDeals.length > 0) {
+    return [...withDeals].sort(
+      (a, b) => (b.deal_discount * b.overall_score) - (a.deal_discount * a.overall_score),
+    )[0];
+  }
+  // Fallback: highest-scoring affiliated promotable site, else highest-scoring affiliated.
+  const promotable = getPromotableSites();
+  const pool = promotable.length > 0 ? promotable : affiliated;
+  return [...pool].sort((a, b) => b.overall_score - a.overall_score)[0];
+}

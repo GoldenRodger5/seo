@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { sites } from "@/data/sites";
 import { FEATURED_NICHE_SLUGS, getNiche } from "@/data/niches";
 import { siteNicheMap } from "@/data/site-niches";
@@ -22,8 +24,12 @@ const nicheBannerMap: Record<string, string> = {
   jock: "/site-banners/athletic-twinks-hero.jpg",
 };
 
+const MIN_SITES_FOR_MAIN_GRID = 3;
+
 const NicheBrowser = () => {
-  const tiles = FEATURED_NICHE_SLUGS.map((slug) => {
+  const [showMore, setShowMore] = useState(false);
+
+  const allTiles = FEATURED_NICHE_SLUGS.map((slug) => {
     const niche = getNiche(slug);
     if (!niche) return null;
     const count = sites.filter((s) =>
@@ -31,6 +37,11 @@ const NicheBrowser = () => {
     ).length;
     return { niche, count };
   }).filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+  // Main grid: ≥3 sites. Sparse (1-2 sites) tucked into an expandable footer
+  // so the homepage doesn't show "1 site" empty-looking tiles.
+  const mainTiles = allTiles.filter((t) => t.count >= MIN_SITES_FOR_MAIN_GRID);
+  const sparseTiles = allTiles.filter((t) => t.count > 0 && t.count < MIN_SITES_FOR_MAIN_GRID);
 
   return (
     <section className="py-16">
@@ -48,8 +59,9 @@ const NicheBrowser = () => {
             Pick a niche. We'll show you every site we've tested in it.
           </p>
         </motion.div>
+
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {tiles.map(({ niche, count }, i) => {
+          {mainTiles.map(({ niche, count }, i) => {
             const banner = nicheBannerMap[niche.slug];
             return (
               <motion.div
@@ -96,6 +108,38 @@ const NicheBrowser = () => {
             );
           })}
         </div>
+
+        {sparseTiles.length > 0 && (
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => setShowMore((v) => !v)}
+              className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
+              aria-expanded={showMore}
+            >
+              {showMore ? "Hide" : "Show"} {sparseTiles.length} more categories
+              <ChevronDown size={12} className={`transition-transform ${showMore ? "rotate-180" : ""}`} />
+            </button>
+            {showMore && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mt-4 flex flex-wrap justify-center gap-2"
+              >
+                {sparseTiles.map(({ niche, count }) => (
+                  <Link
+                    key={niche.slug}
+                    to={`/niche/${niche.slug}`}
+                    onClick={() => trackEvent("niche_click", { niche: niche.slug })}
+                    className="rounded-button border border-border/60 bg-card px-3 py-1.5 text-xs hover:border-primary/40 hover:text-primary transition-colors"
+                  >
+                    {niche.displayName} <span className="text-muted-foreground">({count})</span>
+                  </Link>
+                ))}
+              </motion.div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

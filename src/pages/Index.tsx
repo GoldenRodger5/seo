@@ -12,7 +12,7 @@ import BrandStory from "../components/BrandStory";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import VisitSiteButton from "../components/VisitSiteButton";
 import Layout from "../components/Layout";
-import { sites, getVisitUrl, isAffiliated, getTopRatedPromotable, getTopRatedAffiliated, getRecentlyUpdatedPromotable } from "../data/sites";
+import { sites, getVisitUrl, isAffiliated, getTopRatedPromotable, getTopRatedAffiliated, getRecentlyUpdatedPromotable, getTopDealPick } from "../data/sites";
 import { rankComparePairs } from "../lib/compareRanking";
 import { StaggerContainer, StaggerChild, MotionCard, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { ReactNode } from "react";
@@ -39,10 +39,16 @@ const tickerItems = (() => {
   ].filter((x): x is string => Boolean(x));
 })();
 
+// Computed once at module-eval — deterministic from sites.ts data.
+const TOP_DEAL_PICK = getTopDealPick();
+
 const HeroSection = () => {
   const words = "We Watched So You Don't Have To".split(" ");
   const [tickerIndex, setTickerIndex] = useState(0);
   const locale = detectLocale();
+  const pick = TOP_DEAL_PICK;
+  const pickHasDeal = pick && pick.deal_discount > 0;
+  const pickUrl = pick ? getVisitUrl(pick) : "/top-sites";
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -67,7 +73,7 @@ const HeroSection = () => {
         <div className="orb-delay absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full bg-primary/[0.08] blur-[120px]" />
       </div>
 
-      <div className="container relative text-center py-16">
+      <div className="container relative text-center py-12 md:py-16">
         {/* Animated ticker */}
         <div className="mb-6 flex justify-center">
           <div className="overflow-hidden rounded-button bg-muted/60 px-4 py-1.5 h-7">
@@ -116,16 +122,16 @@ const HeroSection = () => {
           ))}
         </motion.p>
         <motion.p
-          className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg"
+          className="mx-auto mt-5 max-w-xl text-sm text-muted-foreground md:text-base"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
         >
-          Independent rankings of every major twink porn site and gay porn site we've tested. Real scores, verified pricing, monthly updates. We researched every gay porn site and ranked the ones actually worth your money.
+          {sitesCountLabel} sites independently tested. Real scores, verified pricing, monthly updates.
         </motion.p>
         {locale.heroTagline && (
           <motion.p
-            className="mx-auto mt-3 text-xs text-muted-foreground/70"
+            className="mx-auto mt-2 text-xs text-muted-foreground/70"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
@@ -134,54 +140,107 @@ const HeroSection = () => {
             {locale.heroTagline}
           </motion.p>
         )}
+
+        {/* TODAY'S TOP PICK — direct affiliate CTA above the fold */}
+        {pick && (
+          <motion.div
+            className="mx-auto mt-8 max-w-2xl"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <div className="glass-card rounded-lg p-5 border border-primary/30 text-left sm:text-center">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-secondary">
+                ✦ Today's top pick
+              </p>
+              <div className="mt-2 flex flex-col sm:flex-row sm:items-center sm:justify-center sm:gap-3">
+                <h2 className="font-heading text-xl md:text-2xl font-bold leading-tight">
+                  {pick.name}
+                </h2>
+                <span className="mt-1 inline-flex w-fit items-center gap-1 rounded-button gold-gradient px-2 py-0.5 text-[11px] font-bold text-secondary-foreground sm:mt-0">
+                  <Star size={11} className="fill-current" /> {pick.overall_score}/5
+                </span>
+              </div>
+              {pickHasDeal ? (
+                <p className="mt-2 text-sm text-emerald-400 font-semibold">
+                  {pick.deal_discount}% off — just {pick.price_annual.replace(/^\$/, "$")}
+                </p>
+              ) : (
+                <p className="mt-2 text-sm text-muted-foreground">
+                  From {pick.price_from}
+                </p>
+              )}
+              <div className="mt-4 flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
+                {isAffiliated(pick) ? (
+                  <MotionButton>
+                    <OutboundLink
+                      site={pick}
+                      className="cta-btn gold-gradient inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground sm:w-auto"
+                    >
+                      {pickHasDeal ? "Get the Deal" : "Visit Site"} <ArrowRight size={14} />
+                    </OutboundLink>
+                  </MotionButton>
+                ) : (
+                  <MotionButton>
+                    <a
+                      href={pickUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cta-btn gold-gradient inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground sm:w-auto"
+                    >
+                      Visit Site <ArrowRight size={14} />
+                    </a>
+                  </MotionButton>
+                )}
+                <Link
+                  to={`/reviews/${pick.slug}`}
+                  className="inline-flex items-center justify-center gap-1 text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors sm:px-4"
+                >
+                  Read our full review →
+                </Link>
+              </div>
+              <p className="mt-2 text-center text-[10px] text-muted-foreground/70">
+                {isAffiliated(pick) ? "Partner link · " : ""}Updated {currentMonthShort} {currentYear}
+              </p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Secondary CTAs */}
         <motion.div
-          className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.7 }}
         >
-          <MotionButton>
-            <Link
-              to="/top-sites"
-              className="cta-btn gold-gradient inline-flex items-center gap-2 rounded-button px-8 py-3.5 text-sm font-semibold text-secondary-foreground"
-            >
-              See Top Rated Sites <ArrowRight size={16} />
-            </Link>
-          </MotionButton>
-          <MotionButton>
-            <Link
-              to="/reviews"
-              className="inline-flex items-center gap-2 rounded-button border border-primary px-8 py-3.5 text-sm font-semibold text-primary transition-colors hover:bg-primary/10"
-            >
-              Browse All Reviews
-            </Link>
-          </MotionButton>
-        </motion.div>
-        <motion.div
-          className="mt-4 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.75 }}
-        >
+          <Link
+            to="/top-sites"
+            className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors"
+          >
+            See all {sitesCountLabel} sites →
+          </Link>
+          <span className="hidden sm:inline text-muted-foreground/30">·</span>
           <Link
             to="/find-my-site"
             className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors"
           >
-            Not sure where to start? Take the 30-second quiz →
+            Take the 30-second quiz →
           </Link>
         </motion.div>
+
+        {/* Trust bar */}
         <motion.div
-          className="mt-10 flex items-center justify-center gap-2"
+          className="mt-8 flex items-center justify-center gap-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
           <div className="flex gap-0.5">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} size={16} className="fill-secondary text-secondary" />
+              <Star key={i} size={14} className="fill-secondary text-secondary" />
             ))}
           </div>
-          <span className="text-sm text-muted-foreground">{sitesCountLabel} sites tested · Scores updated monthly</span>
+          <span className="text-xs text-muted-foreground">{sitesCountLabel} sites tested · Scores updated monthly</span>
         </motion.div>
       </div>
     </section>
@@ -523,24 +582,29 @@ const Index = () => (
       })}</script>
     </Helmet>
     <PageTransition>
+      {/* Hero with direct affiliate CTA above the fold */}
       <HeroSection />
       <SocialProofStrip />
-      <QuickPicks />
-      <InlineEmailCapture />
-      <NicheBrowser />
-      <MoreListsSection />
+      {/* Direct buying CTAs first */}
       <TopPicksSection />
+      <QuickPicks />
       <PopularComparisonsSection />
-      <QuizBanner />
-      <BentoGrid />
+      <MoreListsSection />
+      {/* Exploration */}
+      <NicheBrowser />
       <LatestReviewsSection />
+      {/* Tools + trust */}
+      <QuizBanner />
       <GayDatingSection />
       <TrustSection />
+      <BentoGrid />
       <section className="py-16">
         <div className="container">
           <BrandStory collapsible />
         </div>
       </section>
+      {/* Email capture last */}
+      <InlineEmailCapture />
     </PageTransition>
   </Layout>
 );
