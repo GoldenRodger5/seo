@@ -60,6 +60,44 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
       }
     ]
   },
+  "sean-cody-alternatives": {
+    "h1": "Best Alternatives To Sean Cody in 2026",
+    "intro": "Sean Cody has been a cornerstone of gay premium porn since 2001 — muscular, all-American guys, exclusive first-timers, and a library deep enough to keep you busy for months. But it's not perfect. Now operating under MindGeek's corporate umbrella, some members feel the casting has gotten blander, the pricing at $29/month for a monthly plan is hard to justify when the novelty wears off, and the performer diversity remains notoriously narrow. Whether you're chasing twinkier energy, a tighter community feel, a better price-to-content ratio, or simply want something that doesn't feel like it was assembled by an algorithm, there are genuinely strong alternatives worth your money. What to look for: consistent update schedules, exclusive or semi-exclusive performers, honest bareback content, and a site that actually knows what it is. These five deliver on at least three of those four.",
+    "alternatives": [
+      {
+        "slug": "helix-studios",
+        "reason": "If Sean Cody is your reference point for production quality but you wish the guys were younger and leaner, Helix Studios is the obvious upgrade. Where Sean Cody leans into the muscled, straight-acting jock archetype, Helix goes full twink — smooth, 18–24, often genuinely playful on camera rather than stiff and posed. The production values are comparable, updates are consistent, and the performer roster turns over regularly enough that return visits feel worthwhile. Helix also has a longer memory for fan-favorite models, bringing them back across multiple scenes rather than treating every performer as disposable. At a 4.8 score, it's the strongest all-around alternative on this list."
+      },
+      {
+        "slug": "next-door-twink",
+        "reason": "Next Door Twink scratches a very specific itch that Sean Cody used to scratch better: the guy-next-door fantasy with a collegiate, amateur-adjacent energy. The performers here aren't bodybuilders — they're the kind of attractive, slim-to-athletic guys you'd actually encounter at a university gym. If your Sean Cody fatigue stems from the increasingly cookie-cutter muscle casting, Next Door Twink's more approachable physique range is a genuine breath of fresh air. Content variety is solid, the site is cleanly organized, and at a 4.6 score it punches well above its price tier."
+      },
+      {
+        "slug": "southern-strokes",
+        "reason": "Southern Strokes carves out a niche that Sean Cody once owned: the fresh-faced, regional-America model who feels genuinely new to the camera. The Southern setting gives the site a distinct personality that MindGeek-era Sean Cody has largely scrubbed away in favor of generic studio gloss. If you miss the early Sean Cody days when the awkward chemistry between first-timers was the whole point, Southern Strokes still delivers that energy. The library is smaller and the production less polished, but the authenticity gap between the two sites has narrowed considerably as Sean Cody has grown more corporate."
+      },
+      {
+        "slug": "athletic-twinks",
+        "reason": "Sean Cody built its reputation on athletic bodies, but it rarely leans into the lean, defined look — it's always trending toward the heavier muscle end. Athletic Twinks, as the name promises, splits the difference: toned without being bulky, young without being barely-legal-adjacent in tone. It's a focused site that knows its audience and doesn't try to be everything to everyone. For members who want the physical aesthetic of Sean Cody's earlier era without the current price tag and corporate feel, Athletic Twinks at a 4.3 score is a smart, targeted spend."
+      },
+      {
+        "slug": "breed-me-raw",
+        "reason": "Sean Cody moved into bareback territory years ago and it remains a selling point, but the scenes can feel clinical — hot bodies going through choreographed motions. Breed Me Raw is rawer in every sense: the edge is real, the energy is less produced, and the site doesn't try to prettify what it is. If bareback content is specifically why you subscribed to Sean Cody and the rest of the package no longer justifies the cost, Breed Me Raw delivers on that single priority more consistently and with more attitude. It's not for everyone, but it knows exactly who it's for."
+      }
+    ],
+    "verdict": "Sean Cody remains a technically impressive site with a deep archive and recognizable brand — but in 2026, 'recognizable' isn't the same as 'essential.' The MindGeek acquisition brought production consistency and took away some of the rawness that made the early site special. Helix Studios is the clear top pick for anyone who wants comparable quality with better twink energy. Next Door Twink and Southern Strokes cover the authenticity angle. Athletic Twinks nails the physique sweet spot. And Breed Me Raw is there when you want the bareback content without the studio sheen. Between them, there's no scenario where Sean Cody is the only option worth paying for.",
+    "meta_description": "Looking for the best Sean Cody alternatives in 2026? We ranked the top 5 gay sites that match or beat it on content, value, and performer quality.",
+    "faq": [
+      {
+        "question": "Is Sean Cody still worth subscribing to in 2026?",
+        "answer": "It depends on what you're after. The archive is genuinely massive and production quality is high, but at $29/month for a rolling subscription, the value proposition has weakened. If you're a new subscriber mining the back catalog, a short-term plan makes sense. Long-term, sites like Helix Studios offer comparable quality with more consistent updates at a better price."
+      },
+      {
+        "question": "Which Sean Cody alternative is best if I want the same muscle-jock aesthetic?",
+        "answer": "Athletic Twinks covers the lean-athletic end of that spectrum well, while Next Door Twink gets closest to the 'handsome regular guy' vibe that Sean Cody built its early reputation on. If you specifically want the bigger, muscled look, Sean Cody itself still leads that niche — but the alternatives above all outperform it on value and personality."
+      }
+    ]
+  },
 };
 
 export const getAlternativesBody = (slug: string): AlternativesBody | undefined =>

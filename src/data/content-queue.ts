@@ -317,7 +317,7 @@ const backlogEntries: SupportingQueueEntry[] = [
   // resolves correctly: e.g. /helix-studios-alternatives → key
   // "helix-studios-alternatives".
   { title: "Best Alternatives to Helix Studios", slug: "helix-studios-alternatives", content_type: "alternatives", target_keyword: "helix studios alternatives", related_sites: ["helix-studios"], priority: 93, status: "published" },
-  { title: "Best Alternatives to Sean Cody", slug: "sean-cody-alternatives", content_type: "alternatives", target_keyword: "sean cody alternatives", related_sites: ["sean-cody"], priority: 92, status: "queued" },
+  { title: "Best Alternatives to Sean Cody", slug: "sean-cody-alternatives", content_type: "alternatives", target_keyword: "sean cody alternatives", related_sites: ["sean-cody"], priority: 92, status: "published" },
   { title: "Best Alternatives to NakedSword", slug: "nakedsword-alternatives", content_type: "alternatives", target_keyword: "nakedsword alternatives", related_sites: ["nakedsword"], priority: 91, status: "queued" },
   { title: "Best Alternatives to Men.com", slug: "men-alternatives", content_type: "alternatives", target_keyword: "men.com alternatives", related_sites: ["men"], priority: 90, status: "queued" },
   { title: "Best Alternatives to PeterFever", slug: "peterfever-alternatives", content_type: "alternatives", target_keyword: "peterfever alternatives", related_sites: ["peterfever"], priority: 89, status: "queued" },
