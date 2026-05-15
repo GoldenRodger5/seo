@@ -17,6 +17,7 @@ import StarRating from "../components/StarRating";
 import VerifiedBadge from "../components/VerifiedBadge";
 import { currentYear, currentMonthLong, lastCheckedDate, DEAL_VERIFIED_DATE } from "../lib/dates";
 import { sites, getSiteBySlug, isAffiliated } from "../data/sites";
+import StickyMobileCTA from "../components/StickyMobileCTA";
 import { siteNicheMap } from "../data/site-niches";
 import { getNiche } from "../data/niches";
 import { getVerdict } from "../data/site-verdicts";
@@ -587,6 +588,7 @@ const DiscountPage = () => {
           </div>
         </section>
       </PageTransition>
+      <StickyMobileCTA site={site} />
     </Layout>
   );
 };

@@ -155,16 +155,22 @@ export interface ClickEvent {
   sourcePage: string;
   destinationSlug: string;
   destinationUrl: string;
+  /**
+   * Optional override for source_type — used by surface-specific CTAs
+   * like the sticky mobile bar to distinguish clicks by UI affordance
+   * rather than just by page path. Defaults to inferPageType(sourcePage).
+   */
+  sourceTypeOverride?: string;
 }
 
 /**
  * Log an affiliate-outbound click. Fire-and-forget — caller proceeds
  * with navigation without awaiting.
  */
-export function logClick({ sourcePage, destinationSlug, destinationUrl }: ClickEvent): void {
+export function logClick({ sourcePage, destinationSlug, destinationUrl, sourceTypeOverride }: ClickEvent): void {
   postRow("clicks", {
     source_page: sourcePage,
-    source_type: inferPageType(sourcePage),
+    source_type: sourceTypeOverride ?? inferPageType(sourcePage),
     destination_slug: destinationSlug,
     destination_url: destinationUrl,
     referrer: typeof document !== "undefined" ? (document.referrer || null) : null,

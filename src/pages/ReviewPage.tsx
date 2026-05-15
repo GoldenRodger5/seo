@@ -33,6 +33,43 @@ import RelatedReading from "../components/RelatedReading";
 import SimilarSites from "../components/SimilarSites";
 import LocalisedPrice from "../components/LocalisedPrice";
 
+/**
+ * Mid-content CTA block — visually distinct from the article body so it
+ * reads as "stop reading, take action" rather than another paragraph.
+ * Used at Score-Breakdown, Pros/Cons, and Pricing-Table seams to keep
+ * the conversion option close to every buyer-intent moment.
+ */
+const InlineReviewCTA = ({ site, message }: { site: ReturnType<typeof getSiteBySlug>; message: string }) => {
+  if (!site || !isAffiliated(site)) return null;
+  const showDeal = site.deal_discount > 0;
+  return (
+    <div className="my-8 rounded-lg border border-secondary/30 bg-gradient-to-br from-secondary/[0.08] to-card/40 p-5 sm:p-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm font-medium leading-relaxed text-foreground">
+          {message}
+        </p>
+        <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:shrink-0">
+          {showDeal && (
+            <Link
+              to={`/discount/${site.slug}`}
+              className="inline-flex items-center justify-center gap-1.5 rounded-button border border-emerald-400/50 bg-emerald-400/10 px-5 py-2.5 text-sm font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors whitespace-nowrap"
+            >
+              Get the Discount <ArrowRight size={13} />
+            </Link>
+          )}
+          <OutboundLink
+            site={site}
+            sourceTypeOverride="mid_review_cta"
+            className="cta-btn gold-gradient inline-flex items-center justify-center gap-1.5 rounded-button px-5 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap"
+          >
+            Visit Site <ArrowRight size={13} />
+          </OutboundLink>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
   const [width, setWidth] = useState(0);
   useEffect(() => {
@@ -267,6 +304,12 @@ const ReviewPage = () => {
               </div>
             </AnimateOnScroll>
 
+            {/* CTA Block A — after Score Breakdown */}
+            <InlineReviewCTA
+              site={site}
+              message={`${site.name} scores ${site.overall_score}/5 overall. ${site.deal_discount > 0 ? `See the current ${site.deal_discount}% off deal.` : "Ready to subscribe?"}`}
+            />
+
             {/* Summary */}
             <AnimateOnScroll className="mt-10">
               <div className="glass-card rounded-lg p-6">
@@ -326,6 +369,12 @@ const ReviewPage = () => {
                 </div>
               </div>
             </AnimateOnScroll>
+
+            {/* CTA Block B — after Pros/Cons */}
+            <InlineReviewCTA
+              site={site}
+              message={`Sound like your kind of site? Skip ahead and check ${site.name}.`}
+            />
 
             {/* Review body */}
             <AnimateOnScroll className="mt-10 space-y-8">
@@ -391,6 +440,12 @@ const ReviewPage = () => {
                     </tbody>
                   </table>
                 </div>
+
+                {/* CTA Block C — after Pricing Table */}
+                <InlineReviewCTA
+                  site={site}
+                  message={`Ready to subscribe? ${site.deal_discount > 0 ? `${site.deal_discount}% off through our link.` : "Annual billing is the best value."}`}
+                />
               </section>
               <section>
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Our Verdict</h2>
@@ -432,40 +487,6 @@ const ReviewPage = () => {
               </div>
 
               <p className="text-xs text-muted-foreground">Last Updated: {currentMonthLong} {currentYear}</p>
-
-              {/* Gay Dating interstitial — two cards */}
-              <div className="grid gap-3 sm:grid-cols-2">
-                <div className="glass-card rounded-lg border border-emerald-500/20 p-4 flex flex-col gap-1.5">
-                  <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Free to Join</span>
-                  <p className="text-sm font-semibold">Meet gay men near you</p>
-                  <p className="text-xs text-muted-foreground">Manfinder is free — create a profile and browse local guys without paying anything.</p>
-                  <a
-                    href={MANFINDER_URL}
-                    target="_blank"
-                    rel="noopener noreferrer sponsored"
-                    onClick={() => trackManfinderClick(window.location.pathname)}
-                    className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 hover:underline"
-                  >
-                    Join Manfinder Free <ArrowRight size={11} />
-                  </a>
-                  <p className="text-[9px] text-muted-foreground/60">Partner link</p>
-                </div>
-                <div className="glass-card rounded-lg border border-border/50 p-4 flex flex-col gap-1.5">
-                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Not ready to subscribe?</span>
-                  <p className="text-sm font-semibold">Browse gay dating sites</p>
-                  <p className="text-xs text-muted-foreground">Compare gay hookup and dating platforms — no membership required.</p>
-                  <a
-                    href={CRAK_URL}
-                    target="_blank"
-                    rel="noopener noreferrer sponsored"
-                    onClick={() => trackCrakClick(window.location.pathname)}
-                    className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
-                  >
-                    Find Local Guys <ArrowRight size={11} />
-                  </a>
-                  <p className="text-[9px] text-muted-foreground/60">Sponsored · Partner link</p>
-                </div>
-              </div>
 
               {/* FAQ Section — site-specific, purchase-intent questions */}
               <section className="mt-8">
@@ -520,6 +541,43 @@ const ReviewPage = () => {
                   </Link>
                 );
               })()}
+            </AnimateOnScroll>
+
+            {/* Cross-promo: dating affiliates — placed AFTER similar-sites so
+                the primary site affiliate gets multiple conversion shots
+                before alt revenue paths are surfaced. Compact two-column
+                row, not full-width cards. */}
+            <AnimateOnScroll className="mt-8">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <a
+                  href={MANFINDER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  onClick={() => trackManfinderClick(window.location.pathname)}
+                  className="flex items-center gap-3 rounded-lg border border-emerald-500/20 bg-card/60 p-3 hover:border-emerald-400/40 transition-colors"
+                >
+                  <span className="text-2xl">💚</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-semibold text-emerald-400">Meet gay men near you</p>
+                    <p className="text-[11px] text-muted-foreground">Free to join · Partner link</p>
+                  </div>
+                  <ArrowRight size={12} className="text-emerald-400 shrink-0" />
+                </a>
+                <a
+                  href={CRAK_URL}
+                  target="_blank"
+                  rel="noopener noreferrer sponsored"
+                  onClick={() => trackCrakClick(window.location.pathname)}
+                  className="flex items-center gap-3 rounded-lg border border-border/50 bg-card/60 p-3 hover:border-primary/40 transition-colors"
+                >
+                  <span className="text-2xl">🔍</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-semibold text-primary">Browse gay dating sites</p>
+                    <p className="text-[11px] text-muted-foreground">Sponsored · Partner link</p>
+                  </div>
+                  <ArrowRight size={12} className="text-primary shrink-0" />
+                </a>
+              </div>
             </AnimateOnScroll>
 
             {/* Compare internal links */}

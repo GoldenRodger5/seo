@@ -9,9 +9,15 @@ interface OutboundLinkProps {
   className?: string;
   children: ReactNode;
   onClick?: () => void;
+  /**
+   * Optional source_type override for the click row — used by
+   * surface-specific CTAs (e.g. "sticky_mobile_cta", "mid_review_cta")
+   * to distinguish clicks by UI affordance, not just page path.
+   */
+  sourceTypeOverride?: string;
 }
 
-const OutboundLink = ({ site, className, children, onClick }: OutboundLinkProps) => {
+const OutboundLink = ({ site, className, children, onClick, sourceTypeOverride }: OutboundLinkProps) => {
   const affiliated = isAffiliated(site);
 
   // Log an impression on mount. Deduped per (session, page, destination)
@@ -35,6 +41,7 @@ const OutboundLink = ({ site, className, children, onClick }: OutboundLinkProps)
       sourcePage,
       destinationSlug: site.slug,
       destinationUrl: site.affiliate_url ?? site.homepage_url,
+      sourceTypeOverride,
     });
     trackOutbound(site.slug, true, sourcePage);
     onClick?.();

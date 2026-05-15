@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import AnimateOnScroll from "../components/AnimateOnScroll";
-import VisitSiteButton from "../components/VisitSiteButton";
+import DualCTAButtons from "../components/DualCTAButtons";
 import LocalisedPrice from "../components/LocalisedPrice";
 import { sites, categories } from "../data/sites";
 import { currentYear, currentMonthLong } from "../lib/dates";
@@ -137,15 +136,23 @@ const ReviewsIndex = () => {
                     <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Reviewed</span>
                     <LocalisedPrice usd={site.price_monthly} className="text-xs text-muted-foreground" />
                   </div>
-                  <div className="mt-4 flex gap-2">
-                    <Link
-                      to={`/reviews/${site.slug}`}
-                      className="flex-1 rounded-button border border-primary px-4 py-2 text-center text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
-                    >
-                      Read Review
-                    </Link>
-                    <VisitSiteButton site={site} className="flex-1" showDisclosure={false} />
-                  </div>
+                  {site.overall_score >= 4.5 ? (
+                    // High-scoring sites: dual buttons — buyers who already trust
+                    // the recommendation shouldn't need to click through to find
+                    // the affiliate link.
+                    <DualCTAButtons site={site} className="mt-4" />
+                  ) : (
+                    // Lower-scoring sites: lead with the review (the trust step
+                    // matters more than the convenience).
+                    <div className="mt-4">
+                      <Link
+                        to={`/reviews/${site.slug}`}
+                        className="block w-full rounded-button border border-primary px-4 py-2 text-center text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
+                      >
+                        Read Review
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </AnimateOnScroll>
             ))}

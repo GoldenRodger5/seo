@@ -11,6 +11,8 @@ import { SiteData } from "../data/sites";
 import { AlternativesBody } from "../data/alternatives-content";
 import { currentYear } from "../lib/dates";
 import RelatedReading from "./RelatedReading";
+import StickyMobileCTA from "./StickyMobileCTA";
+import { isAffiliated } from "../data/sites";
 
 export interface SeoLandingPageProps {
   /** URL path, e.g. "/best-bareback-gay-sites" */
@@ -286,6 +288,13 @@ const SeoLandingPage = ({
         </section>
         <RelatedReading sourceType="landing" currentPath={path} />
       </PageTransition>
+      {(() => {
+        // Top-rated affiliated site from the rendered list — drives the
+        // sticky mobile CTA so landing-page visitors always have a one-tap
+        // path to the best conversion option on the page.
+        const target = sites.find(isAffiliated);
+        return target ? <StickyMobileCTA site={target} /> : null;
+      })()}
     </Layout>
   );
 };

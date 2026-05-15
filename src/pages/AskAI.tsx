@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
 import { Sparkles, Send } from "lucide-react";
 import Layout from "../components/Layout";
 import { PageTransition } from "../components/MotionWrappers";
 import StarRating from "../components/StarRating";
-import VisitSiteButton from "../components/VisitSiteButton";
+import DualCTAButtons from "../components/DualCTAButtons";
 import LocalisedPrice from "../components/LocalisedPrice";
 import { sites } from "../data/sites";
 
@@ -157,10 +156,15 @@ const AskAI = () => {
                   {recs.map((rec, i) => {
                     const site = sites.find(s => s.slug === rec.slug);
                     if (!site) return null;
+                    const isTop = i === 0;
                     return (
                       <motion.div
                         key={rec.slug}
-                        className="glass-card rounded-lg p-5"
+                        className={`glass-card rounded-lg ${
+                          isTop
+                            ? "p-6 border-t-2 border-t-secondary shadow-[0_4px_24px_hsl(48,96%,53%,0.12)]"
+                            : "p-5"
+                        }`}
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
@@ -168,30 +172,22 @@ const AskAI = () => {
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 flex-wrap">
-                              {i === 0 && (
-                                <span className="rounded-button bg-primary/20 px-2 py-0.5 text-[10px] font-semibold text-primary">
-                                  #1 Match
+                              {isTop && (
+                                <span className="rounded-button gold-gradient px-2.5 py-0.5 text-[10px] font-bold text-secondary-foreground uppercase tracking-wide">
+                                  ★ #1 Match
                                 </span>
                               )}
                               <span className="rounded-button bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
                                 {rec.match}
                               </span>
                             </div>
-                            <h3 className="mt-2 font-heading text-lg font-bold">{site.name}</h3>
+                            <h3 className={`mt-2 font-heading font-bold ${isTop ? "text-xl" : "text-lg"}`}>{site.name}</h3>
                             <StarRating score={site.overall_score} size={13} />
                             <p className="mt-2 text-sm text-muted-foreground">{rec.reason}</p>
                             <p className="mt-1 text-xs text-muted-foreground"><LocalisedPrice usd={site.price_monthly} /> · <LocalisedPrice usd={site.price_annual} /> annual</p>
                           </div>
                         </div>
-                        <div className="mt-4 flex gap-3">
-                          <Link
-                            to={`/reviews/${site.slug}`}
-                            className="flex-1 rounded-button border border-primary px-4 py-2 text-center text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
-                          >
-                            Read Review
-                          </Link>
-                          <VisitSiteButton site={site} className="flex-1" showDisclosure={false} />
-                        </div>
+                        <DualCTAButtons site={site} className="mt-4" />
                       </motion.div>
                     );
                   })}

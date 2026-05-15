@@ -10,8 +10,11 @@ import {
   type BlogPost,
   type BlogBlock,
 } from "../data/blog-posts";
-import { sites, getSiteBySlug } from "../data/sites";
+import { sites, getSiteBySlug, isAffiliated } from "../data/sites";
 import StarRating from "../components/StarRating";
+import OutboundLink from "../components/OutboundLink";
+import { getVerdict } from "../data/site-verdicts";
+import { ArrowRight } from "lucide-react";
 
 const BASE_URL = "https://twinkvault.com";
 
@@ -49,6 +52,54 @@ function renderInline(text: string): React.ReactNode[] {
   return parts;
 }
 
+function SiteCtaBlock({ siteSlug, note }: { siteSlug: string; note?: string }) {
+  const site = getSiteBySlug(siteSlug);
+  if (!site) return null;
+  const verdict = note ?? getVerdict(siteSlug) ?? `${site.overall_score}/5-rated · ${site.short_description}`;
+  const oneLineVerdict = verdict.match(/^[^.!?]+[.!?]/)?.[0]?.trim() ?? verdict.trim();
+  return (
+    <div className="my-8 rounded-lg border border-secondary/30 bg-gradient-to-br from-secondary/[0.08] to-card/40 p-5">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-secondary">💡 Our pick</p>
+      <div className="mt-2 flex items-baseline gap-2 flex-wrap">
+        <h3 className="font-heading text-lg font-bold text-foreground">{site.name}</h3>
+        <span className="text-xs text-secondary font-semibold">{site.overall_score}/5</span>
+        {site.deal_discount > 0 && (
+          <span className="rounded-button bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
+            {site.deal_discount}% off
+          </span>
+        )}
+      </div>
+      <p className="mt-2 text-sm text-foreground/85 leading-relaxed">{oneLineVerdict}</p>
+      <div className="mt-4 flex flex-col items-stretch gap-2 sm:flex-row">
+        {isAffiliated(site) ? (
+          <OutboundLink
+            site={site}
+            sourceTypeOverride="blog_inline_cta"
+            className="cta-btn gold-gradient inline-flex items-center justify-center gap-1.5 rounded-button px-5 py-2 text-sm font-semibold text-secondary-foreground"
+          >
+            Visit Site <ArrowRight size={13} />
+          </OutboundLink>
+        ) : (
+          <a
+            href={site.homepage_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-btn gold-gradient inline-flex items-center justify-center gap-1.5 rounded-button px-5 py-2 text-sm font-semibold text-secondary-foreground"
+          >
+            Visit Site <ArrowRight size={13} />
+          </a>
+        )}
+        <Link
+          to={`/reviews/${site.slug}`}
+          className="inline-flex items-center justify-center rounded-button border border-primary/40 px-5 py-2 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
+        >
+          Read Full Review
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 function Block({ block }: { block: BlogBlock }) {
   switch (block.type) {
     case "h2":
@@ -71,6 +122,8 @@ function Block({ block }: { block: BlogBlock }) {
           {renderInline(block.text)}
         </div>
       );
+    case "site-cta":
+      return <SiteCtaBlock siteSlug={block.siteSlug} note={block.note} />;
   }
 }
 

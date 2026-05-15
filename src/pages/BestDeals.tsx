@@ -1,14 +1,14 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useState, useMemo } from "react";
 import OutboundLink from "../components/OutboundLink";
-import { ArrowRight, Filter } from "lucide-react";
+import { ArrowRight, Filter, Star } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import Layout from "../components/Layout";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { sites, isAffiliated } from "../data/sites";
 import type { SiteData } from "../data/sites";
-import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
+import { StaggerContainer, StaggerChild, PageTransition } from "../components/MotionWrappers";
 import { currentYear, lastCheckedDate, DEAL_VERIFIED_DATE } from "../lib/dates";
 import { parseMonthlyPrice, formatTotalAnnual, computeSavings } from "../lib/dealMath";
 import { supabase } from "../integrations/supabase/client";
@@ -16,6 +16,7 @@ import CountdownTimer from "../components/CountdownTimer";
 import VerifiedBadge from "../components/VerifiedBadge";
 import { trackEvent } from "../lib/analytics";
 import LocalisedPrice from "../components/LocalisedPrice";
+import { getVerdict } from "../data/site-verdicts";
 
 type FilterKey = "all" | "trials" | "under10" | "fifty";
 type SortKey = "discount" | "price" | "score";
@@ -82,19 +83,79 @@ const StatusPill = ({ tone, label }: { tone: "destructive" | "secondary" | "ongo
   return <span className={`rounded-button px-2 py-0.5 text-xs font-semibold ${cls}`}>{label}</span>;
 };
 
-const DealCard = ({ site }: { site: SiteData }) => {
+type ElevatedBadge = "editor" | "savings" | "popular" | null;
+
+const BADGE_META: Record<Exclude<ElevatedBadge, null>, { label: string; border: string; bg: string; chip: string }> = {
+  editor: {
+    label: "★ EDITOR'S PICK",
+    border: "border-t-secondary",
+    bg: "from-secondary/[0.06] to-transparent",
+    chip: "gold-gradient text-secondary-foreground",
+  },
+  savings: {
+    label: "💰 BIGGEST SAVINGS",
+    border: "border-t-emerald-500",
+    bg: "from-emerald-500/[0.06] to-transparent",
+    chip: "bg-emerald-500/20 text-emerald-400",
+  },
+  popular: {
+    label: "🔥 MOST POPULAR",
+    border: "border-t-primary",
+    bg: "from-primary/[0.08] to-transparent",
+    chip: "bg-primary/20 text-primary",
+  },
+};
+
+/**
+ * Build a 1–2 sentence editorial note for a deal card. Prefers the
+ * editorial verdict from site-verdicts.ts. Falls back to a computed
+ * line based on price + score so every card has something to say.
+ */
+function dealNote(site: SiteData): string {
+  const v = getVerdict(site.slug);
+  if (v) {
+    const firstSentence = v.match(/^[^.!?]+[.!?]/)?.[0] ?? v;
+    return firstSentence.trim();
+  }
+  const priceFloor = parseMonthlyPrice(site.price_annual);
+  if (site.overall_score >= 4.5 && priceFloor !== null && priceFloor < 10) {
+    return `${site.overall_score}/5-rated premium content under $${priceFloor}/mo on annual.`;
+  }
+  if (site.overall_score >= 4.5) return `${site.overall_score}/5-rated site at ${site.deal_discount}% off — top-tier pick.`;
+  if (priceFloor !== null && priceFloor < 10) return `Solid pick under $${priceFloor}/mo — strong value play.`;
+  return `${site.deal_discount}% off the standard rate.`;
+}
+
+const DealCard = ({ site, elevated }: { site: SiteData; elevated?: ElevatedBadge }) => {
   const status = computeDealStatus(site);
   const annualTotal = formatTotalAnnual(site.price_annual);
   const savings = computeSavings(site.price_monthly, site.price_annual);
+  const note = dealNote(site);
+  const meta = elevated ? BADGE_META[elevated] : null;
 
   return (
     <motion.div
-      className="glass-card rounded-lg p-6 flex flex-col"
+      className={`glass-card rounded-lg p-6 flex flex-col relative overflow-hidden ${
+        meta ? `border-t-2 ${meta.border}` : ""
+      }`}
       whileHover={{ y: -3 }}
     >
-      <div className="flex items-start justify-between gap-3">
+      {meta && (
+        <>
+          <div className={`pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b ${meta.bg}`} />
+          <span className={`relative inline-flex w-fit items-center gap-1 rounded-button px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider mb-2 ${meta.chip}`}>
+            {meta.label}
+          </span>
+        </>
+      )}
+      <div className="relative flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <h2 className="font-heading text-xl font-bold truncate">{site.name}</h2>
+          <div className="flex items-center gap-2 flex-wrap">
+            <h2 className="font-heading text-xl font-bold truncate">{site.name}</h2>
+            <span className="inline-flex items-center gap-0.5 rounded-button bg-muted/60 px-1.5 py-0.5 text-[11px] font-bold text-secondary shrink-0">
+              <Star size={9} className="fill-secondary text-secondary" /> {site.overall_score}
+            </span>
+          </div>
           <div className="mt-1 flex items-center gap-2 flex-wrap">
             {status.countdownTo ? (
               <span className="inline-flex items-center gap-1.5 rounded-button bg-destructive/15 px-2 py-0.5 text-[11px] font-semibold text-destructive">
@@ -116,8 +177,13 @@ const DealCard = ({ site }: { site: SiteData }) => {
         </div>
       </div>
 
+      {/* Editorial note — why we recommend this deal */}
+      <p className="relative mt-3 text-[12px] leading-snug text-foreground/80 italic">
+        “{note}”
+      </p>
+
       {/* Pricing block */}
-      <div className="mt-4 rounded-lg border border-border/40 bg-muted/20 p-3">
+      <div className="relative mt-4 rounded-lg border border-border/40 bg-muted/20 p-3">
         <div className="flex items-baseline gap-2">
           <LocalisedPrice usd={site.price_annual} className="text-2xl font-bold text-emerald-400" />
           <LocalisedPrice usd={site.price_monthly} className="text-xs text-muted-foreground line-through" />
@@ -136,13 +202,19 @@ const DealCard = ({ site }: { site: SiteData }) => {
       <div className="flex-1" />
 
       {/* CTAs */}
-      <div className="mt-4">
+      <div className="relative mt-4">
         <OutboundLink
           site={site}
           className={`cta-btn flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}
         >
           Claim Deal <ArrowRight size={14} />
         </OutboundLink>
+        <Link
+          to={`/reviews/${site.slug}`}
+          className="mt-2 block w-full rounded-button border border-primary/40 px-4 py-2 text-center text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
+        >
+          See Full Review →
+        </Link>
         <div className="mt-2 flex items-center justify-between">
           <p className="text-[10px] text-muted-foreground">
             Opens in new tab{isAffiliated(site) ? " · Affiliate" : ""}
@@ -271,6 +343,30 @@ const BestDeals = () => {
     return result;
   }, [filterKey, sortKey]);
 
+  /**
+   * Compute the three visual-anchor picks across the *unfiltered* deal pool,
+   * so the badges are stable regardless of which filter the user has applied.
+   * Mismatched picks (e.g. an EDITOR'S PICK that's been filtered out) simply
+   * don't render their badge — the card still exists if the filter allows it.
+   */
+  const elevatedMap = useMemo<Record<string, ElevatedBadge>>(() => {
+    const pool = sites.filter((s) => s.deal_discount > 0);
+    if (pool.length === 0) return {};
+    const byScore = [...pool].sort((a, b) => b.overall_score - a.overall_score);
+    const byDiscount = [...pool].sort((a, b) => b.deal_discount - a.deal_discount);
+    const editor = byScore[0]?.slug;
+    const savings = byDiscount.find((s) => s.slug !== editor)?.slug;
+    // "Most popular" — fallback to 2nd-highest score not already taken.
+    // (Real clicks-table-driven version requires a Supabase fetch and
+    // dynamic state. Deferred until first-party click data accumulates.)
+    const popular = byScore.find((s) => s.slug !== editor && s.slug !== savings)?.slug;
+    const map: Record<string, ElevatedBadge> = {};
+    if (editor) map[editor] = "editor";
+    if (savings) map[savings] = "savings";
+    if (popular) map[popular] = "popular";
+    return map;
+  }, []);
+
   return (
     <Layout>
       <PageTransition>
@@ -283,7 +379,7 @@ const BestDeals = () => {
           <meta property="og:url" content="https://twinkvault.com/best-deals" />
         </Helmet>
 
-        <section className="hero-mesh py-14">
+        <section className="hero-mesh pt-10 pb-6">
           <div className="container">
             <Breadcrumbs
               className="mb-6"
@@ -300,36 +396,30 @@ const BestDeals = () => {
               Every Active Twink Site Deal in {currentYear}
             </motion.h1>
             <motion.p
-              className="mx-auto mt-4 max-w-2xl text-muted-foreground"
+              className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              Annual plans, flash sales, and trial offers — verified pricing, total annual cost shown, dead links removed within 24 hours.
+              Annual plans, flash sales, and trial offers — verified pricing, total annual cost shown.
             </motion.p>
-            <div className="mt-3 flex justify-center">
+            <div className="mt-3 flex items-center justify-center gap-2 flex-wrap">
               <VerifiedBadge />
-            </div>
-            <div className="mt-4 flex items-center justify-center gap-2 flex-wrap">
-              <span className="inline-flex items-center gap-2 rounded-button bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-400">
-                Last updated: {lastCheckedDate}
+              <span className="inline-flex items-center gap-2 rounded-button bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-xs font-semibold text-emerald-400">
+                Updated {lastCheckedDate}
               </span>
-              <span className="text-xs text-muted-foreground">·</span>
-              <span className="text-xs text-muted-foreground">Verified weekly</span>
             </div>
           </div>
-        </section>
 
-        {/* Featured Deal callout */}
-        <section className="py-6">
-          <div className="container max-w-4xl">
+          {/* Featured Deal callout — immediately below H1, above filters */}
+          <div className="container max-w-4xl mt-6">
             <Link
               to="/discount/twinktrade"
               className="block glass-card gold-pulse-border rounded-lg p-5 hover:bg-card/80 transition-colors"
             >
               <div className="flex items-center justify-between gap-4 flex-wrap">
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-secondary">Featured Deal</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-secondary">★ Featured Deal</p>
                   <h2 className="mt-1 font-heading text-lg font-bold">TwinkTrade — 67% off, just $9.95/mo on annual</h2>
                   <p className="mt-1 text-xs text-muted-foreground">Active and verified. No promo code — discount applies through our link.</p>
                 </div>
@@ -378,15 +468,8 @@ const BestDeals = () => {
           </div>
         </section>
 
-        {/* Email capture */}
-        <section className="py-6">
-          <div className="container">
-            <DealsEmailCapture />
-          </div>
-        </section>
-
-        {/* Deals grid */}
-        <section className="pb-16">
+        {/* Deals grid — primary content, no email-capture interruption */}
+        <section className="pt-8 pb-16">
           <div className="container">
             {dealSites.length === 0 ? (
               <p className="text-center text-muted-foreground py-12">
@@ -396,11 +479,16 @@ const BestDeals = () => {
               <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {dealSites.map((site) => (
                   <StaggerChild key={site.slug}>
-                    <DealCard site={site} />
+                    <DealCard site={site} elevated={elevatedMap[site.slug] ?? null} />
                   </StaggerChild>
                 ))}
               </StaggerContainer>
             )}
+
+            {/* Email capture demoted to after the grid */}
+            <div className="mt-12">
+              <DealsEmailCapture />
+            </div>
 
             <motion.div
               className="mt-16 glass-card rounded-lg p-8 text-center"

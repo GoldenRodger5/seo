@@ -21,8 +21,20 @@ export interface BlogBlockH3 { type: "h3"; text: string; id: string }
 export interface BlogBlockP { type: "p"; text: string }
 export interface BlogBlockUl { type: "ul"; items: string[] }
 export interface BlogBlockCallout { type: "callout"; text: string }
+/**
+ * Inline affiliate CTA block — rendered as a bordered card with site name,
+ * editorial one-liner, score, deal info, and dual buttons. Used to convert
+ * informed readers at natural mid-article moments rather than leaving the
+ * call-to-action implicit in plain-text site mentions.
+ */
+export interface BlogBlockSiteCta {
+  type: "site-cta";
+  siteSlug: string;
+  /** Optional editorial verdict override. Falls back to site-verdicts.ts. */
+  note?: string;
+}
 
-export type BlogBlock = BlogBlockH2 | BlogBlockH3 | BlogBlockP | BlogBlockUl | BlogBlockCallout;
+export type BlogBlock = BlogBlockH2 | BlogBlockH3 | BlogBlockP | BlogBlockUl | BlogBlockCallout | BlogBlockSiteCta;
 
 export interface BlogPost {
   slug: string;
@@ -73,6 +85,7 @@ const h3 = (text: string, id: string): BlogBlockH3 => ({ type: "h3", text, id })
 const p = (text: string): BlogBlockP => ({ type: "p", text });
 const ul = (items: string[]): BlogBlockUl => ({ type: "ul", items });
 const callout = (text: string): BlogBlockCallout => ({ type: "callout", text });
+const siteCta = (siteSlug: string, note?: string): BlogBlockSiteCta => ({ type: "site-cta", siteSlug, note });
 
 // ---------------------------------------------------------------------------
 // ARTICLES
@@ -99,8 +112,10 @@ export const BLOG_POSTS: BlogPost[] = [
       p("The industry has three rough categories of trial offer. Knowing which one you're signing up for matters more than the trial's headline length."),
       h3("Genuine Free Trials", "genuine-free-trials"),
       p("Actually-free trials are rare. [MaleAccess](/reviews/maleaccess) is the only site in our database offering one in 2026 — seven days of full library access at zero charge, with a card on file that activates billing after the trial expires unless you cancel. Within the gay porn site space generally, free trials this long are unusual; the industry standard tilts toward paid intros instead."),
+      siteCta("maleaccess", "The only genuinely free 7-day trial in our database — full library access, $7.99/mo on annual after."),
       h3("Paid Intro Periods (Most Common)", "paid-intros"),
       p("Most sites that advertise 'trial' actually mean a short period at a heavily discounted rate. The MEN Network charges $1-2 per day for 2-3 days. The ASGmax network ([Next Door Twink](/reviews/next-door-twink) and Next Door World) runs a $2.95 three-day trial that includes the full 45+ channel network with downloads — by some margin the best paid intro available. These aren't free, but they're significantly cheaper than the standard monthly rate and they get you inside the member area."),
+      siteCta("next-door-twink", "$2.95 three-day trial for the full 45-channel ASGmax network — the best paid intro in the industry."),
       h3("Pre-Authorized Trials with Refund Conditions", "pre-auth"),
       p("A smaller number of sites charge a 'refundable' $1-3 deposit that they only return if you cancel through specific steps within a specific window. This isn't fraud — but it's a friction tactic. The deposit usually isn't worth fighting over, but read the trial terms before you commit your card."),
       h2("The Auto-Renewal Problem (And How to Avoid It)", "auto-renewal"),
@@ -166,6 +181,7 @@ export const BLOG_POSTS: BlogPost[] = [
       p("Single-studio sites win when you have a specific aesthetic preference. If you want one specific niche — slim European twinks, athletic jocks, bareback amateur content — a $9.95/month focused site that nails that aesthetic beats a $5/month aggregator where the relevant subset is harder to find. Subscribers who watch consistently within one aesthetic typically prefer the focused site even at the higher per-month cost."),
       h2("When Premium Pricing Is Worth It", "premium-worth"),
       p("Two situations justify paying $11-12/month annual versus $7-10/month annual: production polish matters more to you than volume (Helix Studios over Twinks in Shorts), or you want exclusive performer access that you can't get on the cheaper networks (Sean Cody's 20+ year archive of contracted performers). For most viewers, the cheaper tier delivers comparable value — the $2-4/month premium for the top-tier studios is meaningful only when you care about the specific differentiators."),
+      siteCta("sean-cody", "20+ year archive of contracted performers — the premium pick when exclusive talent matters more than volume."),
       h2("Price Gotchas to Watch For", "gotchas"),
       p("The headline price isn't always the real price. Three patterns to watch for:"),
       ul([
@@ -216,6 +232,7 @@ export const BLOG_POSTS: BlogPost[] = [
       h3("PrEP Adoption and Why the Shift Was Viable", "prep-adoption"),
       p("PrEP adoption among adult-industry performers accelerated rapidly between 2014 and 2017, which is the underlying reason the bareback shift in 2015-2018 was commercially viable rather than a public-health liability. Truvada was FDA-approved for HIV prevention in 2012; by 2015, performer agents and major studios were strongly recommending PrEP for any performer participating in bareback content. By 2018, mandatory PrEP requirements had become standard at most large production houses — not because of voluntary self-regulation but because insurance underwriters and legal counsel required documented prevention protocols for studios to maintain production insurance and avoid civil liability exposure. Without the PrEP infrastructure, the bareback transition wouldn't have happened on the timeline it did."),
       p("Smaller niche sites and amateur-tier operations have looser testing in practice — sometimes just performer self-attestation rather than verified results, sometimes longer test windows, sometimes no documented protocol. If performer testing transparency matters to you, the major networks (ASGmax, Falcon, Aylo's studios including [Sean Cody](/reviews/sean-cody) and [Men.com](/reviews/men), [Helix Studios](/reviews/helix-studios)) all publish or document their compliance protocols, while smaller independent operations frequently don't. Network affiliation is a reasonable proxy signal here when you can't independently verify."),
+      siteCta("bareback-that-hole", "Focused bareback twink studio with documented testing protocols — our top affiliated pick in the category."),
       h2("Top Bareback Sites in 2026", "top-bareback"),
       p("The bareback twink and bareback gay categories are the largest commercial sub-genres in the industry, and several sites have built their entire brand identity around the format. Our top picks for 2026:"),
       h3("Network Bundles (Best Value Bareback Access)", "bareback-networks"),
@@ -285,6 +302,7 @@ export const BLOG_POSTS: BlogPost[] = [
       p("The major billing processors (Epoch, CCBill, Vendo) do basic fraud screening before they'll process payments for a site. A site running through one of these processors has at least passed that screening. Sites using unknown payment gateways may have failed it or never bothered applying — a signal worth weighting."),
       h3("Documented Network Affiliation", "network"),
       p("Legitimate cheap sites are on recognizable networks — ASGmax, ChargedCash, MyGayCash, NakedSword, MEN Network, AdultForce. The network affiliation provides infrastructure stability and a track record. Sites with no listed network and aggressive sub-$10 pricing are either independent operations punching above their weight or operations to be more careful with."),
+      siteCta("twinks-in-shorts", "Hits every quality signal: weekly updates, exclusive performers, transparent pricing, recognizable billing."),
       h2("How TwinkVault Scores Sites", "how-we-score"),
       p("Our scoring methodology uses four pillars, weighted equally:"),
       ul([
@@ -333,11 +351,13 @@ export const BLOG_POSTS: BlogPost[] = [
       h2("How Studio Sites Are Made", "how-studios-work"),
       p("A typical studio gay porn shoot at one of the major networks involves a director, a production crew of 3-6 people, scripted scenarios, multi-camera coverage, professional lighting, and performers under contract. Scenes are shot over half-day to full-day production schedules. Post-production includes color correction, multi-angle editing, music scoring, and quality control before release. The result is content that looks like it was made by people who know production rather than people pointing a camera at performers."),
       p("[Helix Studios](/reviews/helix-studios), [Sean Cody](/reviews/sean-cody), [Men.com](/reviews/men), and [NakedSword](/reviews/nakedsword)'s flagship original productions all operate at this tier. The production differences from amateur content are immediately visible: lighting that flatters performers, camera angles that build scene momentum, editing that prioritizes performer chemistry over rushed positions. You're paying for production craft, not just performer access."),
+      siteCta("sean-cody", "Benchmark for the studio-tier format — multi-decade exclusive roster, scripted scenes, cinematic production."),
       h3("Performer Rosters at Studio Sites", "studio-performers"),
       p("Studio sites maintain exclusive contracts with their performers, which creates two distinct dynamics. First: the catalog is genuinely unique — Sean Cody's 20+ years of contracted performers means content you literally can't find elsewhere. Second: the performer pool is selective — studios cast for the specific aesthetic the brand is built around, which means consistent looks across the catalog. If you've watched a Sean Cody scene, you've seen what the Sean Cody type looks like; you'll see the same aesthetic repeated across thousands of additional scenes."),
       h2("How Amateur Sites Are Made", "how-amateur-works"),
       p("Amateur gay porn site production is deliberately less polished. Setups are simpler — sometimes a single camera, often natural or minimal lighting, less scripting, more reliance on performer chemistry and unscripted dialog. Production crews are smaller (sometimes just one operator). Performers are cast for 'real guy' energy rather than studio-trained presence — they often come from outside the industry and may shoot one or two scenes rather than building a multi-year filmography."),
       p("[Twinks in Shorts](/reviews/twinks-in-shorts), [Athletic Twinks](/reviews/athletic-twinks), and [Southern Strokes](/reviews/southern-strokes) all operate in this register. The amateur framing isn't just budget-driven — it's an aesthetic choice. The same studios could produce more polished content; they specifically don't, because the audience for amateur gay porn wants the authenticity that polish removes. Over-styling a scene that's supposed to feel candid would undercut the entire format."),
+      siteCta("twinks-in-shorts", "Clean example of the amateur-tier format — authentic performances, $9.95/mo annual, no production over-styling."),
       h3("Performer Rosters at Amateur Sites", "amateur-performers"),
       p("Amateur sites typically work with a rotating roster rather than exclusive contracts. The casting bench is broader and the per-performer scene count is lower. The trade-off: you'll see more variety in body types, casting styles, and 'real guy' aesthetics on amateur sites, but you'll have less of a relationship with specific performers across a deep filmography. The strongest amateur sites have core performers who return regularly, which gives partial continuity without the studio-roster structure."),
       h2("Pricing Comparison", "pricing"),
@@ -382,10 +402,13 @@ export const BLOG_POSTS: BlogPost[] = [
       h2("Our Top 10 for 2026", "top-10"),
       h3("1. NakedSword — Best Overall (Score 4.6/5)", "nakedsword"),
       p("[NakedSword](/reviews/nakedsword) at $9.99/month annual aggregates 50,000+ scenes from 300+ studios under a single subscription. The library breadth is unmatched anywhere in gay porn — you get Falcon Studios, Raging Stallion, Hot House, NakedSword Originals, and a long roster of partner labels in one membership. For viewers who want maximum content variety without subscribing to multiple sites, nothing competes. Strong mobile experience, daily updates across the network, and the deepest archive on the internet."),
+      siteCta("nakedsword", "50,000+ scenes from 300+ studios for $9.99/mo annual. The deepest archive in gay porn."),
       h3("2. Helix Studios — Best Premium Twink (Score 4.8/5)", "helix"),
       p("Helix Studios sits at the top of premium twink production. 4,000+ exclusive scenes since 2002, cinematic production quality, an exclusive performer roster, and content available even on Amazon Prime Video. At $11.99/month annual it's the most expensive site in our top 10, but the production polish and roster exclusivity justify the premium for viewers who specifically value twink content at the cinematic end of the spectrum. Not currently affiliated with TwinkVault — we still list it because it earned its score."),
+      siteCta("helix-studios", "Top premium twink production since 2002 — 4,000+ exclusive scenes, cinematic quality."),
       h3("3. Next Door Twink — Best Value Network (Score 4.6/5)", "ndt"),
       p("[Next Door Twink](/reviews/next-door-twink) at $10.95/month annual unlocks the full 45+ channel ASGmax network — 12,500+ videos covering twink, raw, taboo, and crossover content. The per-channel math is the best in the industry: $0.24 per channel if you cared about all of them, comfortably under $3 per channel if you only watched 3-4. Also offers the best paid intro trial in the space at $2.95 for three days of full network access."),
+      siteCta("next-door-twink", "Full 45-channel ASGmax network for $10.95/mo annual — best per-channel value in the industry."),
       h3("4. Men.com — Best Premium Network (Score 4.4/5)", "men"),
       p("[Men.com](/reviews/men) at $8.33/month annual covers 9 sub-sites including TwinkPop, ManRoyale, and Drill My Hole. High-production parody series, award-winning original content, multiple new scenes weekly. The 1080p access has some documented gating issues to verify before subscribing, but the production quality across the network is genuinely top-tier."),
       h3("5. Sean Cody — Best Athletic Casting (Score 4.4/5)", "sean-cody"),

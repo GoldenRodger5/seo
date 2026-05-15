@@ -10,6 +10,7 @@ import StarRating from "../components/StarRating";
 import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
 import { getComparisonBody } from "../data/comparison-content";
 import { isFeaturedComparePair } from "../data/featured-compare-pairs";
+import StickyMobileCTA from "../components/StickyMobileCTA";
 import { generateCompareFaqs } from "../lib/compareFaqs";
 import RelatedReading from "../components/RelatedReading";
 import { PageTransition } from "../components/MotionWrappers";
@@ -892,6 +893,14 @@ const ComparePage = () => {
           <RelatedReading sourceType="compare" siteA={siteA} siteB={siteB} slug={slug} />
         )}
       </PageTransition>
+      {/* Sticky mobile CTA on featured compare pairs only — pick the
+          higher-scoring affiliated site as the conversion target. */}
+      {isFeaturedComparePair(slug) && (() => {
+        const target = [siteA, siteB]
+          .filter((s): s is SiteData => Boolean(s && isAffiliated(s)))
+          .sort((a, b) => b.overall_score - a.overall_score)[0];
+        return target ? <StickyMobileCTA site={target} /> : null;
+      })()}
     </Layout>
   );
 };
