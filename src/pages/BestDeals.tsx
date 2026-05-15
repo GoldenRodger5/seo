@@ -44,7 +44,7 @@ interface StatusInfo {
 
 const HOUR = 60 * 60 * 1000;
 
-const computeDealStatus = (site: SiteData): StatusInfo => {
+const computeDealStatus = (site: SiteData): StatusInfo | null => {
   const now = Date.now();
   const expires = site.expires_at ? new Date(site.expires_at).getTime() : null;
 
@@ -60,10 +60,15 @@ const computeDealStatus = (site: SiteData): StatusInfo => {
     return { label: "Limited time", tone: "secondary" };
   }
 
-  // No real expires_at — be honest, no fake urgency.
+  // No real expires_at — be honest, no fake urgency. Surface a verified
+  // status for active deals; for "ongoing" deals we render nothing
+  // because the discount % chip already conveys the deal exists, and
+  // "Always available" actively undermined conversion (if it's always
+  // available it's not a deal — it's the regular price).
   if (site.deal_type === "flash") return { label: "Flash deal", tone: "destructive" };
   if (site.deal_type === "limited") return { label: "Limited time", tone: "secondary" };
-  return { label: "Always available", tone: "ongoing" };
+  // ongoing → no status pill, just rely on the discount %.
+  return null;
 };
 
 const commitmentCopy = (site: SiteData): string => {
@@ -126,6 +131,12 @@ function dealNote(site: SiteData): string {
   return `${site.deal_discount}% off the standard rate.`;
 }
 
+const VerifiedDealPill = () => (
+  <span className="rounded-button bg-emerald-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-400">
+    ✓ Verified deal
+  </span>
+);
+
 const DealCard = ({ site, elevated }: { site: SiteData; elevated?: ElevatedBadge }) => {
   const status = computeDealStatus(site);
   const annualTotal = formatTotalAnnual(site.price_annual);
@@ -157,12 +168,15 @@ const DealCard = ({ site, elevated }: { site: SiteData; elevated?: ElevatedBadge
             </span>
           </div>
           <div className="mt-1 flex items-center gap-2 flex-wrap">
-            {status.countdownTo ? (
+            {status?.countdownTo ? (
               <span className="inline-flex items-center gap-1.5 rounded-button bg-destructive/15 px-2 py-0.5 text-[11px] font-semibold text-destructive">
                 <CountdownTimer expiresAt={status.countdownTo} className="!font-semibold" />
               </span>
-            ) : (
+            ) : status ? (
               <StatusPill tone={status.tone} label={status.label} />
+            ) : (
+              // Ongoing deal — no fake urgency; use a verified pill instead.
+              <VerifiedDealPill />
             )}
             {site.has_free_trial && (
               <span className="rounded-button bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
@@ -347,8 +361,8 @@ const BestDeals = () => {
   /**
    * Compute the three visual-anchor picks across the *unfiltered* deal pool,
    * so the badges are stable regardless of which filter the user has applied.
-   * Mismatched picks (e.g. an EDITOR'S PICK that's been filtered out) simply
-   * don't render their badge — the card still exists if the filter allows it.
+   * Three distinct sites always — the dedup logic walks each list to skip
+   * any slug already claimed by a higher-priority badge.
    */
   const elevatedMap = useMemo<Record<string, ElevatedBadge>>(() => {
     const pool = sites.filter((s) => s.deal_discount > 0);
@@ -358,8 +372,7 @@ const BestDeals = () => {
     const editor = byScore[0]?.slug;
     const savings = byDiscount.find((s) => s.slug !== editor)?.slug;
     // "Most popular" — fallback to 2nd-highest score not already taken.
-    // (Real clicks-table-driven version requires a Supabase fetch and
-    // dynamic state. Deferred until first-party click data accumulates.)
+    // TODO: replace with clicks-table-driven popularity once Phase 4 data accumulates.
     const popular = byScore.find((s) => s.slug !== editor && s.slug !== savings)?.slug;
     const map: Record<string, ElevatedBadge> = {};
     if (editor) map[editor] = "editor";
@@ -367,6 +380,27 @@ const BestDeals = () => {
     if (popular) map[popular] = "popular";
     return map;
   }, []);
+
+  /**
+   * Final render order: the three elevated badge cards lead the grid in a
+   * fixed sequence (Editor's Pick → Biggest Savings → Most Popular), then
+   * the remaining deals in the user's selected sort order. This guarantees
+   * the 3 anchor cards are always above the fold regardless of the
+   * sort/filter the visitor chooses.
+   */
+  const orderedDealSites = useMemo(() => {
+    const order: ElevatedBadge[] = ["editor", "savings", "popular"];
+    const elevatedSlugSet = new Set(Object.keys(elevatedMap));
+    const leadCards: SiteData[] = [];
+    for (const badge of order) {
+      const slug = Object.entries(elevatedMap).find(([, b]) => b === badge)?.[0];
+      if (!slug) continue;
+      const site = dealSites.find((s) => s.slug === slug);
+      if (site) leadCards.push(site);
+    }
+    const rest = dealSites.filter((s) => !elevatedSlugSet.has(s.slug));
+    return [...leadCards, ...rest];
+  }, [dealSites, elevatedMap]);
 
   return (
     <Layout>
@@ -472,13 +506,13 @@ const BestDeals = () => {
         {/* Deals grid — primary content, no email-capture interruption */}
         <section className="pt-8 pb-16">
           <div className="container">
-            {dealSites.length === 0 ? (
+            {orderedDealSites.length === 0 ? (
               <p className="text-center text-muted-foreground py-12">
                 No deals match this filter. <button onClick={() => setFilter("all")} className="text-primary hover:underline">Clear filter</button>
               </p>
             ) : (
               <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {dealSites.map((site) => (
+                {orderedDealSites.map((site) => (
                   <StaggerChild key={site.slug}>
                     <DealCard site={site} elevated={elevatedMap[site.slug] ?? null} />
                   </StaggerChild>

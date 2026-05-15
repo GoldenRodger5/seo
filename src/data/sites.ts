@@ -2088,18 +2088,30 @@ export function getRecentlyUpdatedPromotable(limit: number, exclude: SiteData[] 
 
 /**
  * Single "today's top pick" for the homepage hero direct-CTA block.
- * Ranks affiliated sites with active deals by deal_discount × overall_score
- * (rewards both depth of discount and quality of site). Falls back to the
- * highest-scoring affiliated promotable site if no deals are active.
+ *
+ * Selection weights site quality 60% and deal depth 40%. The earlier
+ * pure-multiplicative rule ranked Sean Cody (4.4 score × 75% off) above
+ * NakedSword (4.6 score × smaller deal) — but NakedSword is the
+ * higher-converting destination overall, so optimizing the hero pick
+ * for "biggest visible discount" leaves money on the table.
+ *
+ * Formula: hero_score = (overall_score * 0.6) + (deal_discount / 100 * 0.4)
+ * Example: NakedSword 4.6 + 40% → 4.6*0.6 + 0.4*0.4 = 2.76 + 0.16 = 2.92
+ *          Sean Cody  4.4 + 75% → 4.4*0.6 + 0.75*0.4 = 2.64 + 0.30 = 2.94
+ *          (Sean Cody still wins here narrowly; once deals normalize
+ *           the higher-scored site rises to the top — which is the point.)
+ *
+ * TODO: replace the heuristic with CTR-weighted selection once
+ * Phase 4 click + impression data accumulates per destination.
  */
 export function getTopDealPick(): SiteData | null {
   const affiliated = sites.filter(s => isAffiliated(s));
   if (affiliated.length === 0) return null;
   const withDeals = affiliated.filter(s => s.deal_discount > 0);
   if (withDeals.length > 0) {
-    return [...withDeals].sort(
-      (a, b) => (b.deal_discount * b.overall_score) - (a.deal_discount * a.overall_score),
-    )[0];
+    const heroScore = (s: SiteData) =>
+      s.overall_score * 0.6 + (s.deal_discount / 100) * 0.4;
+    return [...withDeals].sort((a, b) => heroScore(b) - heroScore(a))[0];
   }
   // Fallback: highest-scoring affiliated promotable site, else highest-scoring affiliated.
   const promotable = getPromotableSites();

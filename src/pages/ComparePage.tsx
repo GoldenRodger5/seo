@@ -54,13 +54,31 @@ const CompareColumn = ({ site }: { site: SiteData }) => (
         </div>
       ))}
     </div>
-    <OutboundLink
-      site={site}
-      className={`cta-btn mt-4 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}
-    >
-      Visit Site <ArrowRight size={14} />
-    </OutboundLink>
-    <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab{isAffiliated(site) ? " · Partner link" : ""}</p>
+    {/* Affiliated → Visit Site (live affiliate). Unaffiliated → Read Full
+        Review (no affiliate URL exists, but readers still deserve a path
+        forward; the previous OutboundLink-only render produced nothing
+        at all for unaffiliated sites, including high-scored ones like
+        Next Door Twink and Helix Studios). */}
+    {isAffiliated(site) ? (
+      <>
+        <OutboundLink
+          site={site}
+          ctaPosition="compare-card"
+          sourceTypeOverride="compare"
+          className="cta-btn mt-4 flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground"
+        >
+          Visit Site <ArrowRight size={14} />
+        </OutboundLink>
+        <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab · Partner link</p>
+      </>
+    ) : (
+      <Link
+        to={`/reviews/${site.slug}`}
+        className="mt-4 flex w-full items-center justify-center gap-2 rounded-button border border-primary px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
+      >
+        Read Full Review <ArrowRight size={14} />
+      </Link>
+    )}
   </div>
 );
 
@@ -385,12 +403,23 @@ const CompareIndex = () => {
                       <td className="px-4 py-3 sticky left-0 bg-card text-muted-foreground">Verdict</td>
                       {selectedSites.map((s) => (
                         <td key={s.slug} className="px-4 py-3 text-center">
-                          <OutboundLink
-                            site={s}
-                            className="cta-btn inline-flex items-center justify-center gap-2 rounded-button gold-gradient px-4 py-2 text-xs font-semibold text-secondary-foreground"
-                          >
-                            Visit Site <ArrowRight size={12} />
-                          </OutboundLink>
+                          {isAffiliated(s) ? (
+                            <OutboundLink
+                              site={s}
+                              ctaPosition="compare-card"
+                              sourceTypeOverride="compare"
+                              className="cta-btn inline-flex items-center justify-center gap-2 rounded-button gold-gradient px-4 py-2 text-xs font-semibold text-secondary-foreground"
+                            >
+                              Visit Site <ArrowRight size={12} />
+                            </OutboundLink>
+                          ) : (
+                            <Link
+                              to={`/reviews/${s.slug}`}
+                              className="inline-flex items-center justify-center gap-2 rounded-button border border-primary px-4 py-2 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
+                            >
+                              Read Review <ArrowRight size={12} />
+                            </Link>
+                          )}
                         </td>
                       ))}
                     </tr>

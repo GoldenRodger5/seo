@@ -7,7 +7,7 @@ import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
-import VisitSiteButton from "../components/VisitSiteButton";
+import OutboundLink from "../components/OutboundLink";
 import LocalisedPrice from "../components/LocalisedPrice";
 import { sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
@@ -180,12 +180,23 @@ const TopSites = () => {
                         })()}
                       </div>
 
-                      {/* CTA column */}
+                      {/* CTA column — affiliated sites get BOTH buttons regardless
+                          of rank (top-ranked sites are the strongest conversion
+                          paths and shouldn't be hidden behind a review click). */}
                       <div className="flex flex-col items-center gap-3 lg:w-44">
                         <div className="rounded-button border border-border bg-muted/50 px-3 py-1.5">
                           <LocalisedPrice usd={site.price_monthly} className="text-lg font-semibold" />
                         </div>
-                        <VisitSiteButton site={site} className="w-full" />
+                        {isAffiliated(site) && (
+                          <OutboundLink
+                            site={site}
+                            ctaPosition="top-sites-card"
+                            sourceTypeOverride="top-sites"
+                            className="cta-btn gold-gradient inline-flex w-full items-center justify-center gap-2 rounded-button px-4 py-2.5 text-sm font-semibold text-secondary-foreground"
+                          >
+                            Visit Site <ArrowRight size={13} />
+                          </OutboundLink>
+                        )}
                         <Link
                           to={`/reviews/${site.slug}`}
                           className="rounded-button border border-primary px-4 py-2 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors w-full text-center"
