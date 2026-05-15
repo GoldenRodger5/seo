@@ -337,7 +337,12 @@ const BestDeals = () => {
   };
 
   const dealSites = useMemo(() => {
-    let result = sites.filter((s) => s.deal_discount > 0);
+    // Affiliated-only filter: /best-deals is a conversion surface, not a
+    // research surface. Cards for sites without an affiliate_url generate
+    // $0 per click (they redirect to the site's own homepage). When NDT /
+    // NDW / future-affiliated sites land their URLs, they'll automatically
+    // reappear here.
+    let result = sites.filter((s) => s.deal_discount > 0 && isAffiliated(s));
     if (filterKey === "trials") result = result.filter((s) => s.has_free_trial);
     if (filterKey === "under10") {
       result = result.filter((s) => {
@@ -365,7 +370,10 @@ const BestDeals = () => {
    * any slug already claimed by a higher-priority badge.
    */
   const elevatedMap = useMemo<Record<string, ElevatedBadge>>(() => {
-    const pool = sites.filter((s) => s.deal_discount > 0);
+    // Same affiliated-only filter as dealSites — badges must be assigned
+    // from the monetizable pool so the visual anchors of the page are
+    // also revenue anchors.
+    const pool = sites.filter((s) => s.deal_discount > 0 && isAffiliated(s));
     if (pool.length === 0) return {};
     const byScore = [...pool].sort((a, b) => b.overall_score - a.overall_score);
     const byDiscount = [...pool].sort((a, b) => b.deal_discount - a.deal_discount);
