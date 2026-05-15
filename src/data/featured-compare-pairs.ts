@@ -13,6 +13,7 @@
  */
 
 import { rankComparePairs } from "../lib/compareRanking";
+import { getSiteBySlug, isAffiliated } from "../data/sites";
 
 // Threshold-based selection rather than fixed top-N. Now that every site
 // has an AI review body (the +20 review-bonus is universal), the natural
@@ -23,17 +24,21 @@ import { rankComparePairs } from "../lib/compareRanking";
 const SCORE_THRESHOLD = 60;
 
 /**
- * 15 compare pairs that were prerendered from project inception (top-6
- * sites cross-product). Preserved as a safety net so we don't break any
- * existing inbound links or indexed URLs during the consolidation.
+ * 12 compare pairs that were prerendered from project inception (top-6
+ * sites cross-product, minus 3 pairs where both sites are unaffiliated).
+ * Preserved as a safety net so we don't break any existing inbound links
+ * or indexed URLs during the consolidation.
+ *
+ * Removed 2026-05-15:
+ *   - helix-studios-vs-next-door-twink     (both unaffiliated)
+ *   - helix-studios-vs-next-door-world     (both unaffiliated)
+ *   - next-door-twink-vs-next-door-world   (both unaffiliated)
+ * Re-add the ndt-vs-ndw pair when both gain affiliate URLs.
  */
 const LEGACY_PRERENDERED_PAIRS = [
-  "helix-studios-vs-next-door-twink",
-  "helix-studios-vs-next-door-world",
   "helix-studios-vs-twinks-in-shorts",
   "athletic-twinks-vs-helix-studios",
   "helix-studios-vs-southern-strokes",
-  "next-door-twink-vs-next-door-world",
   "next-door-twink-vs-twinks-in-shorts",
   "athletic-twinks-vs-next-door-twink",
   "next-door-twink-vs-southern-strokes",
@@ -45,6 +50,15 @@ const LEGACY_PRERENDERED_PAIRS = [
   "athletic-twinks-vs-southern-strokes",
 ] as const;
 
+/** A featured pair needs at least one affiliated side to be monetizable. */
+function hasAffiliateConversionPath(pairSlug: string): boolean {
+  const m = pairSlug.match(/^(.+)-vs-(.+)$/);
+  if (!m) return false;
+  const a = getSiteBySlug(m[1]);
+  const b = getSiteBySlug(m[2]);
+  return Boolean((a && isAffiliated(a)) || (b && isAffiliated(b)));
+}
+
 let cached: Set<string> | null = null;
 
 /** Returns the canonical featured-pairs Set (memoized). */
@@ -53,7 +67,12 @@ export function getFeaturedComparePairs(): Set<string> {
   const ranked = rankComparePairs()
     .filter((p) => p.score >= SCORE_THRESHOLD)
     .map((p) => p.slug);
-  cached = new Set([...ranked, ...LEGACY_PRERENDERED_PAIRS]);
+  // Defense-in-depth: also drop any dynamic pair where both sides are
+  // unaffiliated, so future scoring shifts can't sneak a zero-revenue
+  // pair back into the featured set.
+  cached = new Set(
+    [...ranked, ...LEGACY_PRERENDERED_PAIRS].filter(hasAffiliateConversionPath),
+  );
   return cached;
 }
 

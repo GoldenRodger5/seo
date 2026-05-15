@@ -267,16 +267,26 @@ const MORE_LISTS = [
 ];
 
 // Memoized at module-eval — the ranking is deterministic from sites.ts data.
-const POPULAR_COMPARISONS = rankComparePairs().slice(0, 6).map((r) => {
-  const a = sites.find((s) => s.slug === r.siteA);
-  const b = sites.find((s) => s.slug === r.siteB);
-  return {
-    slug: r.slug,
-    aName: a?.name ?? r.siteA,
-    bName: b?.name ?? r.siteB,
-    winner: (a?.overall_score ?? 0) >= (b?.overall_score ?? 0) ? (a?.name ?? r.siteA) : (b?.name ?? r.siteB),
-  };
-});
+// Filter to pairs where at least one side is affiliated; both-unaffiliated
+// pairs (e.g. helix-vs-ndt) have no conversion path and shouldn't be
+// surfaced as "popular comparisons" on the homepage.
+const POPULAR_COMPARISONS = rankComparePairs()
+  .filter((r) => {
+    const a = sites.find((s) => s.slug === r.siteA);
+    const b = sites.find((s) => s.slug === r.siteB);
+    return Boolean((a && isAffiliated(a)) || (b && isAffiliated(b)));
+  })
+  .slice(0, 6)
+  .map((r) => {
+    const a = sites.find((s) => s.slug === r.siteA);
+    const b = sites.find((s) => s.slug === r.siteB);
+    return {
+      slug: r.slug,
+      aName: a?.name ?? r.siteA,
+      bName: b?.name ?? r.siteB,
+      winner: (a?.overall_score ?? 0) >= (b?.overall_score ?? 0) ? (a?.name ?? r.siteA) : (b?.name ?? r.siteB),
+    };
+  });
 
 const PopularComparisonsSection = () => (
   <section className="py-16 bg-card/30">
