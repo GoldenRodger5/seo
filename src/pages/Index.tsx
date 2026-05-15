@@ -596,13 +596,23 @@ const Index = () => (
       {/* Hero with direct affiliate CTA above the fold */}
       <HeroSection />
       <SocialProofStrip />
-      {/* Direct buying CTAs first */}
-      <TopPicksSection />
+      {/* Niche-first: visitors who know what they want by category
+          shouldn't have to scroll past 4 recommendation sections.
+          Visitors who want a recommendation still got one in the
+          hero ("Today's Top Pick") and get another in Skip the
+          Reading directly below. */}
+      <NicheBrowser />
+      {/* TopPicksSection ("The Ones Worth Your Money") removed —
+          functionally redundant with QuickPicks ("Skip the Reading")
+          which surfaces the same recommendation intent with better
+          framing and lower decision fatigue (3 mood-segmented picks
+          vs 5 generic cards). The sites that were here still surface
+          in QuickPicks, Latest Reviews, Popular Comparisons, and
+          /top-sites — they're not lost from the site. Component
+          definition retained for potential future re-use. */}
       <QuickPicks />
       <PopularComparisonsSection />
       <MoreListsSection />
-      {/* Exploration */}
-      <NicheBrowser />
       <LatestReviewsSection />
       {/* Tools + trust */}
       <QuizBanner />
