@@ -1,7 +1,7 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowUp, ArrowDown, Download, LogOut, Activity } from "lucide-react";
+import { ArrowUp, ArrowDown, Download, LogOut, Activity, RefreshCw } from "lucide-react";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
   CartesianGrid, Legend, BarChart, Bar, AreaChart, Area,
@@ -10,18 +10,22 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   fetchPageViews,
   fetchClicks,
+  fetchImpressions,
+  fetchVisitorFirstSeen,
   fetchSubscribers,
   fetchAllSubscribers,
   fetchSubscriberCount,
   aggregateDaily,
   aggregateHourly,
   aggregateByPage,
-  aggregateByDestination,
+  aggregateDestinationCTR,
   aggregateEntryPages,
   aggregateReferrers,
   aggregateBySource,
   aggregateByPageType,
+  aggregateByCountry,
   calcSessionQuality,
+  calcVisitorStats,
   subscriberGrowth,
   metricsBetween,
   todayStartMs,
@@ -30,6 +34,14 @@ import {
   type DateRange,
   type PageStats,
 } from "@/lib/adminQueries";
+
+const REFRESH_INTERVAL_MS = 60_000;
+
+// ISO 3166 alpha-2 → flag emoji (used in country table).
+function countryFlag(code: string): string {
+  if (!code || code.length !== 2) return "🌐";
+  return String.fromCodePoint(...[...code.toUpperCase()].map((c) => 0x1F1E6 + c.charCodeAt(0) - 65));
+}
 
 const RANGES: { value: DateRange; label: string }[] = [
   { value: "7d", label: "7 days" },
@@ -116,53 +128,75 @@ function PagesTable({ rows, title, sortKey }: { rows: PageStats[]; title: string
 const AdminDashboard = () => {
   const [range, setRange] = useState<DateRange>("7d");
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
   const [views, setViews] = useState<Awaited<ReturnType<typeof fetchPageViews>>>([]);
   const [clicks, setClicks] = useState<Awaited<ReturnType<typeof fetchClicks>>>([]);
+  const [impressions, setImpressions] = useState<Awaited<ReturnType<typeof fetchImpressions>>>([]);
   const [prevViews, setPrevViews] = useState<typeof views>([]);
   const [prevClicks, setPrevClicks] = useState<typeof clicks>([]);
   const [subs, setSubs] = useState<Awaited<ReturnType<typeof fetchSubscribers>>>([]);
   const [allSubs, setAllSubs] = useState<Awaited<ReturnType<typeof fetchAllSubscribers>>>([]);
   const [subCount, setSubCount] = useState(0);
+  const [firstSeen, setFirstSeen] = useState<Map<string, string>>(new Map());
+  const cancelRef = useRef(false);
 
-  useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-    (async () => {
-      const [v, c, s, asubs, sc] = await Promise.all([
+  const loadData = useCallback(async (isInitial: boolean) => {
+    if (isInitial) setLoading(true); else setRefreshing(true);
+    try {
+      const [v, c, im, fs, s, asubs, sc] = await Promise.all([
         fetchPageViews(range),
         fetchClicks(range),
+        fetchImpressions(range),
+        fetchVisitorFirstSeen(),
         fetchSubscribers(50),
         fetchAllSubscribers(),
         fetchSubscriberCount(),
       ]);
-      if (cancelled) return;
-      setViews(v); setClicks(c); setSubs(s); setAllSubs(asubs); setSubCount(sc);
+      if (cancelRef.current) return;
+      setViews(v); setClicks(c); setImpressions(im); setFirstSeen(fs);
+      setSubs(s); setAllSubs(asubs); setSubCount(sc);
 
-      // Previous-period comparison (same window, shifted back)
       const periodMs = Date.now() - dateRangeStart(range).getTime();
       const prevStart = new Date(Date.now() - 2 * periodMs).toISOString();
       const prevEnd = dateRangeStart(range).toISOString();
       const [pv, pc] = await Promise.all([
-        supabase.from("page_views").select("path, page_type, referrer, session_id, created_at").gte("created_at", prevStart).lt("created_at", prevEnd).limit(100_000),
-        supabase.from("clicks").select("source_page, source_type, destination_slug, destination_url, referrer, session_id, created_at").gte("created_at", prevStart).lt("created_at", prevEnd).limit(100_000),
+        supabase.from("page_views").select("path, page_type, referrer, session_id, visitor_id, country, created_at").gte("created_at", prevStart).lt("created_at", prevEnd).limit(100_000),
+        supabase.from("clicks").select("source_page, source_type, destination_slug, destination_url, referrer, session_id, visitor_id, country, created_at").gte("created_at", prevStart).lt("created_at", prevEnd).limit(100_000),
       ]);
-      if (cancelled) return;
+      if (cancelRef.current) return;
       setPrevViews((pv.data ?? []) as typeof views);
       setPrevClicks((pc.data ?? []) as typeof clicks);
-      setLoading(false);
-    })();
-    return () => { cancelled = true; };
+      setLastRefresh(new Date());
+    } finally {
+      if (!cancelRef.current) {
+        setLoading(false);
+        setRefreshing(false);
+      }
+    }
   }, [range]);
+
+  useEffect(() => {
+    cancelRef.current = false;
+    loadData(true);
+    const intervalId = setInterval(() => loadData(false), REFRESH_INTERVAL_MS);
+    return () => { cancelRef.current = true; clearInterval(intervalId); };
+  }, [loadData]);
 
   const daily = useMemo(() => aggregateDaily(views, clicks, 30), [views, clicks]);
   const hourly = useMemo(() => aggregateHourly(views, clicks, 24), [views, clicks]);
   const byPage = useMemo(() => aggregateByPage(views, clicks), [views, clicks]);
-  const byDest = useMemo(() => aggregateByDestination(clicks), [clicks]);
+  const destCTR = useMemo(() => aggregateDestinationCTR(clicks, impressions), [clicks, impressions]);
   const entryPages = useMemo(() => aggregateEntryPages(views), [views]);
   const referrers = useMemo(() => aggregateReferrers(views, clicks), [views, clicks]);
   const sources = useMemo(() => aggregateBySource(views, clicks), [views, clicks]);
   const byType = useMemo(() => aggregateByPageType(views, clicks), [views, clicks]);
+  const byCountry = useMemo(() => aggregateByCountry(views, clicks), [views, clicks]);
   const sessionQuality = useMemo(() => calcSessionQuality(views), [views]);
+  const visitorStats = useMemo(
+    () => calcVisitorStats(views, firstSeen, dateRangeStart(range).getTime()),
+    [views, firstSeen, range],
+  );
   const subGrowth = useMemo(() => subscriberGrowth(allSubs, 30), [allSubs]);
   const blogPages = useMemo(() => byPage.filter((p) => p.page_type === "blog" || p.page_type === "blog-index"), [byPage]);
 
@@ -205,8 +239,19 @@ const AdminDashboard = () => {
           <div className="flex items-center gap-4">
             <Link to="/admin" className="font-heading text-lg font-bold heading-gradient">TwinkVault Admin</Link>
             <span className="text-xs text-muted-foreground">/ dashboard</span>
+            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] text-muted-foreground">
+              <RefreshCw size={10} className={refreshing ? "animate-spin" : ""} />
+              auto · last {Math.max(1, Math.floor((Date.now() - lastRefresh.getTime()) / 1000))}s
+            </span>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => loadData(false)}
+              disabled={refreshing}
+              className="inline-flex items-center gap-1.5 rounded-button border border-border px-3 py-1.5 text-xs hover:bg-muted/50 disabled:opacity-50"
+            >
+              <RefreshCw size={12} className={refreshing ? "animate-spin" : ""} /> Refresh
+            </button>
             <select
               value={range}
               onChange={(e) => setRange(e.target.value as DateRange)}
@@ -259,10 +304,10 @@ const AdminDashboard = () => {
           </div>
         </section>
 
-        {/* SESSION QUALITY */}
+        {/* SESSION QUALITY + VISITOR MIX */}
         <section>
-          <h2 className="text-xs uppercase tracking-wider text-muted-foreground mb-3">Session quality</h2>
-          <div className="grid gap-4 sm:grid-cols-3">
+          <h2 className="text-xs uppercase tracking-wider text-muted-foreground mb-3">Session quality &amp; visitor mix</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <KpiCard
               label="Unique sessions"
               value={sessionQuality.totalSessions}
@@ -278,6 +323,11 @@ const AdminDashboard = () => {
               value={Number(sessionQuality.bounceRate.toFixed(1))}
               suffix="%"
               hint={`${sessionQuality.bouncedSessions} single-page sessions`}
+            />
+            <KpiCard
+              label="New vs returning"
+              value={`${visitorStats.newVisitors} / ${visitorStats.returningVisitors}`}
+              hint={visitorStats.totalVisitors > 0 ? `${visitorStats.returningPct.toFixed(0)}% returning` : "no visitors yet"}
             />
           </div>
         </section>
@@ -392,29 +442,31 @@ const AdminDashboard = () => {
 
           <div className="glass-card rounded-lg overflow-hidden">
             <div className="px-6 pt-5 pb-2">
-              <h3 className="font-heading text-lg font-semibold">Top destination sites</h3>
-              <p className="text-xs text-muted-foreground mt-0.5">Where your affiliate clicks send people</p>
+              <h3 className="font-heading text-lg font-semibold">Destination CTR (revenue lever)</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">Clicks ÷ impressions — which sites convert when shown</p>
             </div>
-            {byDest.length === 0 ? (
-              <p className="px-6 pb-6 text-sm text-muted-foreground">No clicks yet.</p>
+            {destCTR.length === 0 ? (
+              <p className="px-6 pb-6 text-sm text-muted-foreground">No impressions or clicks yet.</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead className="border-b border-border/40">
                     <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground">
                       <th className="px-6 py-2 font-medium">Site</th>
+                      <th className="px-4 py-2 font-medium text-right">Impressions</th>
                       <th className="px-4 py-2 font-medium text-right">Clicks</th>
-                      <th className="px-6 py-2 font-medium text-right">% of total</th>
+                      <th className="px-6 py-2 font-medium text-right">CTR</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {byDest.slice(0, 15).map((d) => (
+                    {destCTR.slice(0, 15).map((d) => (
                       <tr key={d.slug} className="border-b border-border/20 hover:bg-muted/20">
                         <td className="px-6 py-2.5 font-semibold">
                           <Link to={`/admin/destination/${d.slug}`} className="hover:text-secondary">{d.slug}</Link>
                         </td>
-                        <td className="px-4 py-2.5 text-right">{d.clicks.toLocaleString()}</td>
-                        <td className="px-6 py-2.5 text-right text-secondary">{totalClicks > 0 ? ((d.clicks / totalClicks) * 100).toFixed(1) : "0.0"}%</td>
+                        <td className="px-4 py-2.5 text-right text-muted-foreground">{d.impressions.toLocaleString()}</td>
+                        <td className="px-4 py-2.5 text-right font-semibold">{d.clicks.toLocaleString()}</td>
+                        <td className="px-6 py-2.5 text-right text-secondary">{d.impressions > 0 ? d.ctr.toFixed(2) + "%" : "—"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -524,6 +576,47 @@ const AdminDashboard = () => {
                         </td>
                         <td className="px-4 py-2.5 text-right">{row.views.toLocaleString()}</td>
                         <td className="px-6 py-2.5 text-right font-semibold">{row.clicks.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* GEOGRAPHIC DISTRIBUTION */}
+        <section>
+          <div className="glass-card rounded-lg overflow-hidden">
+            <div className="px-6 pt-5 pb-2">
+              <h3 className="font-heading text-lg font-semibold">Geographic distribution</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">Visitor country (via Vercel edge geolocation)</p>
+            </div>
+            {byCountry.length === 0 || (byCountry.length === 1 && byCountry[0].country === "??") ? (
+              <p className="px-6 pb-6 text-sm text-muted-foreground">
+                {byCountry.length === 0 ? "No data yet." : "Country not yet captured — new visits after this deploy will include country."}
+              </p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="border-b border-border/40">
+                    <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground">
+                      <th className="px-6 py-2 font-medium">Country</th>
+                      <th className="px-4 py-2 font-medium text-right">Views</th>
+                      <th className="px-4 py-2 font-medium text-right">Clicks</th>
+                      <th className="px-6 py-2 font-medium text-right">CTR</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {byCountry.slice(0, 15).map((c) => (
+                      <tr key={c.country} className="border-b border-border/20 hover:bg-muted/20">
+                        <td className="px-6 py-2.5 font-semibold">
+                          <span className="mr-2 text-base">{c.country === "??" ? "🌐" : countryFlag(c.country)}</span>
+                          {c.country === "??" ? "Unknown" : c.country}
+                        </td>
+                        <td className="px-4 py-2.5 text-right">{c.views.toLocaleString()}</td>
+                        <td className="px-4 py-2.5 text-right font-semibold">{c.clicks.toLocaleString()}</td>
+                        <td className="px-6 py-2.5 text-right text-secondary">{c.views > 0 ? c.ctr.toFixed(1) + "%" : "—"}</td>
                       </tr>
                     ))}
                   </tbody>

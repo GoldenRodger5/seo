@@ -28,6 +28,8 @@ export interface PageViewRow {
   page_type: string | null;
   referrer: string | null;
   session_id: string | null;
+  visitor_id: string | null;
+  country: string | null;
   created_at: string;
 }
 
@@ -38,6 +40,18 @@ export interface ClickRow {
   destination_url: string | null;
   referrer: string | null;
   session_id: string | null;
+  visitor_id: string | null;
+  country: string | null;
+  created_at: string;
+}
+
+export interface ImpressionRow {
+  source_page: string | null;
+  source_type: string | null;
+  destination_slug: string | null;
+  session_id: string | null;
+  visitor_id: string | null;
+  country: string | null;
   created_at: string;
 }
 
@@ -53,7 +67,7 @@ export async function fetchPageViews(range: DateRange): Promise<PageViewRow[]> {
   const since = dateRangeStart(range).toISOString();
   const { data, error } = await supabase
     .from("page_views")
-    .select("path, page_type, referrer, session_id, created_at")
+    .select("path, page_type, referrer, session_id, visitor_id, country, created_at")
     .gte("created_at", since)
     .order("created_at", { ascending: false })
     .limit(100_000);
@@ -65,12 +79,45 @@ export async function fetchClicks(range: DateRange): Promise<ClickRow[]> {
   const since = dateRangeStart(range).toISOString();
   const { data, error } = await supabase
     .from("clicks")
-    .select("source_page, source_type, destination_slug, destination_url, referrer, session_id, created_at")
+    .select("source_page, source_type, destination_slug, destination_url, referrer, session_id, visitor_id, country, created_at")
     .gte("created_at", since)
     .order("created_at", { ascending: false })
     .limit(100_000);
   if (error) { console.error("fetchClicks", error); return []; }
   return (data ?? []) as ClickRow[];
+}
+
+export async function fetchImpressions(range: DateRange): Promise<ImpressionRow[]> {
+  const since = dateRangeStart(range).toISOString();
+  const { data, error } = await supabase
+    .from("impressions")
+    .select("source_page, source_type, destination_slug, session_id, visitor_id, country, created_at")
+    .gte("created_at", since)
+    .order("created_at", { ascending: false })
+    .limit(100_000);
+  if (error) { console.error("fetchImpressions", error); return []; }
+  return (data ?? []) as ImpressionRow[];
+}
+
+/**
+ * Fetch the earliest seen timestamp per visitor_id (across all history,
+ * not just the selected range). Used by calcVisitorStats to determine
+ * whether a visitor seen in the current range is new (first-seen falls
+ * inside the range) or returning (first-seen predates the range).
+ */
+export async function fetchVisitorFirstSeen(): Promise<Map<string, string>> {
+  const { data, error } = await supabase
+    .from("page_views")
+    .select("visitor_id, created_at")
+    .order("created_at", { ascending: true })
+    .limit(100_000);
+  if (error) { console.error("fetchVisitorFirstSeen", error); return new Map(); }
+  const map = new Map<string, string>();
+  for (const row of (data ?? []) as { visitor_id: string | null; created_at: string }[]) {
+    if (!row.visitor_id) continue;
+    if (!map.has(row.visitor_id)) map.set(row.visitor_id, row.created_at);
+  }
+  return map;
 }
 
 export async function fetchSubscribers(limit = 50): Promise<SubscriberRow[]> {
@@ -382,6 +429,105 @@ export function subscriberGrowth(subscribers: SubscriberRow[], days = 30): Subsc
     cumulative += n;
     return { date, newSubs: n, cumulative };
   });
+}
+
+// ── Destination CTR (impressions-aware) ──────────────────────────────────
+
+export interface DestinationCTR {
+  slug: string;
+  impressions: number;
+  clicks: number;
+  ctr: number;
+}
+
+/**
+ * Compute clicks / impressions per destination — the canonical conversion
+ * metric for affiliate optimization. Answers "of users who saw this
+ * affiliate, how many clicked through?"
+ */
+export function aggregateDestinationCTR(
+  clicks: ClickRow[],
+  impressions: ImpressionRow[],
+): DestinationCTR[] {
+  const map = new Map<string, DestinationCTR>();
+  for (const i of impressions) {
+    const slug = i.destination_slug ?? "(unknown)";
+    if (!map.has(slug)) map.set(slug, { slug, impressions: 0, clicks: 0, ctr: 0 });
+    map.get(slug)!.impressions++;
+  }
+  for (const c of clicks) {
+    const slug = c.destination_slug ?? "(unknown)";
+    if (!map.has(slug)) map.set(slug, { slug, impressions: 0, clicks: 0, ctr: 0 });
+    map.get(slug)!.clicks++;
+  }
+  for (const row of map.values()) {
+    row.ctr = row.impressions > 0 ? (row.clicks / row.impressions) * 100 : 0;
+  }
+  return [...map.values()].sort((a, b) => b.clicks - a.clicks);
+}
+
+// ── New vs returning visitors ────────────────────────────────────────────
+
+export interface VisitorStats {
+  newVisitors: number;
+  returningVisitors: number;
+  totalVisitors: number;
+  returningPct: number;
+}
+
+/**
+ * Classify visitors seen in `views` as new or returning. A visitor is
+ * "returning" if their first-seen timestamp (across all history, not
+ * just the current range) predates `rangeStartMs`.
+ *
+ * Requires a pre-computed firstSeen map from fetchVisitorFirstSeen().
+ */
+export function calcVisitorStats(
+  views: PageViewRow[],
+  firstSeen: Map<string, string>,
+  rangeStartMs: number,
+): VisitorStats {
+  const seenInRange = new Set<string>();
+  for (const v of views) {
+    if (v.visitor_id) seenInRange.add(v.visitor_id);
+  }
+  let newVisitors = 0;
+  let returningVisitors = 0;
+  for (const vid of seenInRange) {
+    const first = firstSeen.get(vid);
+    if (!first) continue;
+    if (new Date(first).getTime() >= rangeStartMs) newVisitors++;
+    else returningVisitors++;
+  }
+  const total = newVisitors + returningVisitors;
+  return {
+    newVisitors,
+    returningVisitors,
+    totalVisitors: total,
+    returningPct: total > 0 ? (returningVisitors / total) * 100 : 0,
+  };
+}
+
+// ── Country breakdown ────────────────────────────────────────────────────
+
+export interface CountryStats { country: string; views: number; clicks: number; ctr: number }
+
+export function aggregateByCountry(views: PageViewRow[], clicks: ClickRow[]): CountryStats[] {
+  const map = new Map<string, CountryStats>();
+  for (const v of views) {
+    const c = v.country ?? "??";
+    if (!map.has(c)) map.set(c, { country: c, views: 0, clicks: 0, ctr: 0 });
+    map.get(c)!.views++;
+  }
+  for (const c of clicks) {
+    const cc = c.country ?? "??";
+    if (!map.has(cc)) map.set(cc, { country: cc, views: 0, clicks: 0, ctr: 0 });
+    map.get(cc)!.clicks++;
+  }
+  for (const row of map.values()) {
+    row.ctr = row.views > 0 ? (row.clicks / row.views) * 100 : 0;
+  }
+  return [...map.values()].sort((a, b) => b.views - a.views);
 }
 
 // ── Period comparison ────────────────────────────────────────────────────
