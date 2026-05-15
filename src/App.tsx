@@ -63,6 +63,8 @@ const AdminCallback = lazy(() => import("./pages/admin/AdminCallback"));
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
 const AdminPageDetail = lazy(() => import("./pages/admin/AdminPageDetail"));
 const AdminDestinationDetail = lazy(() => import("./pages/admin/AdminDestinationDetail"));
+const AdminJourneys = lazy(() => import("./pages/admin/AdminJourneys"));
+const AdminSEO = lazy(() => import("./pages/admin/AdminSEO"));
 const RequireAdmin = lazy(() => import("./components/RequireAdmin"));
 const BestGayPornSites = lazy(() => import("./pages/seo/BestGayPornSites"));
 const BestSubscription = lazy(() => import("./pages/seo/BestSubscription"));
@@ -186,6 +188,8 @@ const AnimatedRoutes = () => {
         <Route path="/admin" element={<RequireAdmin><AdminDashboard /></RequireAdmin>} />
         <Route path="/admin/page/*" element={<RequireAdmin><AdminPageDetail /></RequireAdmin>} />
         <Route path="/admin/destination/:slug" element={<RequireAdmin><AdminDestinationDetail /></RequireAdmin>} />
+        <Route path="/admin/journeys" element={<RequireAdmin><AdminJourneys /></RequireAdmin>} />
+        <Route path="/admin/seo" element={<RequireAdmin><AdminSEO /></RequireAdmin>} />
         <Route path="/best-gay-porn-sites" element={<BestGayPornSites />} />
         <Route path="/best-gay-porn-subscription" element={<BestSubscription />} />
         <Route path="/best-twink-porn-sites" element={<BestTwinkPorn />} />

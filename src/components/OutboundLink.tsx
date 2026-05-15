@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ReactNode, useEffect } from "react";
 import { SiteData, getVisitUrl, isAffiliated } from "../data/sites";
 import { trackOutbound } from "../lib/analytics";
-import { logClick, logImpression } from "../lib/tracking";
+import { logClick, logImpression, type CtaPosition } from "../lib/tracking";
 
 interface OutboundLinkProps {
   site: SiteData;
@@ -13,11 +13,14 @@ interface OutboundLinkProps {
    * Optional source_type override for the click row — used by
    * surface-specific CTAs (e.g. "sticky_mobile_cta", "mid_review_cta")
    * to distinguish clicks by UI affordance, not just page path.
+   * @deprecated prefer ctaPosition for new code.
    */
   sourceTypeOverride?: string;
+  /** Where on the page this CTA lives — populates clicks.cta_position. */
+  ctaPosition?: CtaPosition;
 }
 
-const OutboundLink = ({ site, className, children, onClick, sourceTypeOverride }: OutboundLinkProps) => {
+const OutboundLink = ({ site, className, children, onClick, sourceTypeOverride, ctaPosition }: OutboundLinkProps) => {
   const affiliated = isAffiliated(site);
 
   // Log an impression on mount. Deduped per (session, page, destination)
@@ -42,6 +45,7 @@ const OutboundLink = ({ site, className, children, onClick, sourceTypeOverride }
       destinationSlug: site.slug,
       destinationUrl: site.affiliate_url ?? site.homepage_url,
       sourceTypeOverride,
+      ctaPosition,
     });
     trackOutbound(site.slug, true, sourcePage);
     onClick?.();

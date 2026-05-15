@@ -75,6 +75,7 @@ function SiteCtaBlock({ siteSlug, note }: { siteSlug: string; note?: string }) {
           <OutboundLink
             site={site}
             sourceTypeOverride="blog_inline_cta"
+            ctaPosition="inline-blog"
             className="cta-btn gold-gradient inline-flex items-center justify-center gap-1.5 rounded-button px-5 py-2 text-sm font-semibold text-secondary-foreground"
           >
             Visit Site <ArrowRight size={13} />

@@ -11,6 +11,7 @@ import {
   fetchPageViews,
   fetchClicks,
   fetchImpressions,
+  fetchEngagement,
   fetchVisitorFirstSeen,
   fetchSubscribers,
   fetchAllSubscribers,
@@ -24,6 +25,10 @@ import {
   aggregateBySource,
   aggregateByPageType,
   aggregateByCountry,
+  aggregateByCtaPosition,
+  aggregateEngagementByPageType,
+  buildAttributionMatrix,
+  findHighScrollLowConversion,
   calcSessionQuality,
   calcVisitorStats,
   subscriberGrowth,
@@ -133,6 +138,7 @@ const AdminDashboard = () => {
   const [views, setViews] = useState<Awaited<ReturnType<typeof fetchPageViews>>>([]);
   const [clicks, setClicks] = useState<Awaited<ReturnType<typeof fetchClicks>>>([]);
   const [impressions, setImpressions] = useState<Awaited<ReturnType<typeof fetchImpressions>>>([]);
+  const [engagement, setEngagement] = useState<Awaited<ReturnType<typeof fetchEngagement>>>([]);
   const [prevViews, setPrevViews] = useState<typeof views>([]);
   const [prevClicks, setPrevClicks] = useState<typeof clicks>([]);
   const [subs, setSubs] = useState<Awaited<ReturnType<typeof fetchSubscribers>>>([]);
@@ -144,17 +150,18 @@ const AdminDashboard = () => {
   const loadData = useCallback(async (isInitial: boolean) => {
     if (isInitial) setLoading(true); else setRefreshing(true);
     try {
-      const [v, c, im, fs, s, asubs, sc] = await Promise.all([
+      const [v, c, im, eng, fs, s, asubs, sc] = await Promise.all([
         fetchPageViews(range),
         fetchClicks(range),
         fetchImpressions(range),
+        fetchEngagement(range),
         fetchVisitorFirstSeen(),
         fetchSubscribers(50),
         fetchAllSubscribers(),
         fetchSubscriberCount(),
       ]);
       if (cancelRef.current) return;
-      setViews(v); setClicks(c); setImpressions(im); setFirstSeen(fs);
+      setViews(v); setClicks(c); setImpressions(im); setEngagement(eng); setFirstSeen(fs);
       setSubs(s); setAllSubs(asubs); setSubCount(sc);
 
       const periodMs = Date.now() - dateRangeStart(range).getTime();
@@ -199,6 +206,10 @@ const AdminDashboard = () => {
   );
   const subGrowth = useMemo(() => subscriberGrowth(allSubs, 30), [allSubs]);
   const blogPages = useMemo(() => byPage.filter((p) => p.page_type === "blog" || p.page_type === "blog-index"), [byPage]);
+  const attribution = useMemo(() => buildAttributionMatrix(clicks, views, 10, 5), [clicks, views]);
+  const byCtaPosition = useMemo(() => aggregateByCtaPosition(clicks), [clicks]);
+  const engagementByType = useMemo(() => aggregateEngagementByPageType(engagement), [engagement]);
+  const brokenCtaPages = useMemo(() => findHighScrollLowConversion(engagement, clicks, 3), [engagement, clicks]);
 
   // Today + last hour snapshots (computed against full window)
   const todayMetrics = useMemo(() => metricsBetween(views, clicks, todayStartMs()), [views, clicks]);
@@ -238,7 +249,11 @@ const AdminDashboard = () => {
         <div className="container max-w-7xl flex items-center justify-between py-4">
           <div className="flex items-center gap-4">
             <Link to="/admin" className="font-heading text-lg font-bold heading-gradient">TwinkVault Admin</Link>
-            <span className="text-xs text-muted-foreground">/ dashboard</span>
+            <nav className="hidden sm:flex items-center gap-3 text-xs">
+              <span className="text-muted-foreground">dashboard</span>
+              <Link to="/admin/journeys" className="text-muted-foreground hover:text-foreground transition-colors">journeys</Link>
+              <Link to="/admin/seo" className="text-muted-foreground hover:text-foreground transition-colors">seo</Link>
+            </nav>
             <span className="hidden sm:inline-flex items-center gap-1 text-[11px] text-muted-foreground">
               <RefreshCw size={10} className={refreshing ? "animate-spin" : ""} />
               auto · last {Math.max(1, Math.floor((Date.now() - lastRefresh.getTime()) / 1000))}s
@@ -585,12 +600,169 @@ const AdminDashboard = () => {
           </div>
         </section>
 
-        {/* GEOGRAPHIC DISTRIBUTION */}
+        {/* CLICK ATTRIBUTION MATRIX */}
         <section>
           <div className="glass-card rounded-lg overflow-hidden">
             <div className="px-6 pt-5 pb-2">
-              <h3 className="font-heading text-lg font-semibold">Geographic distribution</h3>
-              <p className="text-xs text-muted-foreground mt-0.5">Visitor country (via Vercel edge geolocation)</p>
+              <h3 className="font-heading text-lg font-semibold">Click attribution matrix</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">For each top destination, which pages send the most clicks (and at what CTR)</p>
+            </div>
+            {attribution.length === 0 ? (
+              <p className="px-6 pb-6 text-sm text-muted-foreground">No clicks yet.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="border-b border-border/40">
+                    <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground">
+                      <th className="px-6 py-2 font-medium">Destination</th>
+                      <th className="px-4 py-2 font-medium text-right">Total clicks</th>
+                      <th className="px-6 py-2 font-medium">Top source pages</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {attribution.map((row) => (
+                      <tr key={row.slug} className="border-b border-border/20 hover:bg-muted/20">
+                        <td className="px-6 py-2.5 font-semibold align-top">
+                          <Link to={`/admin/destination/${row.slug}`} className="hover:text-secondary">{row.slug}</Link>
+                        </td>
+                        <td className="px-4 py-2.5 text-right align-top">{row.totalClicks}</td>
+                        <td className="px-6 py-2.5">
+                          <ul className="space-y-0.5">
+                            {row.sources.map((s) => (
+                              <li key={s.sourcePage} className="flex items-center gap-3 text-[11px]">
+                                <span className="font-mono truncate max-w-[260px] flex-1">{s.sourcePage}</span>
+                                <span className="text-muted-foreground whitespace-nowrap">{s.clicks} clicks / {s.views} views</span>
+                                <span className="text-secondary font-semibold whitespace-nowrap">{s.ctr.toFixed(1)}%</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* CTA POSITION PERFORMANCE */}
+        <section>
+          <div className="glass-card rounded-lg overflow-hidden">
+            <div className="px-6 pt-5 pb-2">
+              <h3 className="font-heading text-lg font-semibold">CTA position performance</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">Which UI surfaces actually convert</p>
+            </div>
+            {byCtaPosition.length === 0 ? (
+              <p className="px-6 pb-6 text-sm text-muted-foreground">No CTA-position data yet — clicks need to flow through the new ctaPosition prop.</p>
+            ) : (
+              <table className="w-full text-sm">
+                <thead className="border-b border-border/40">
+                  <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground">
+                    <th className="px-6 py-2 font-medium">Position</th>
+                    <th className="px-4 py-2 font-medium text-right">Clicks</th>
+                    <th className="px-6 py-2 font-medium text-right">Distinct destinations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {byCtaPosition.map((row) => (
+                    <tr key={row.position} className="border-b border-border/20 hover:bg-muted/20">
+                      <td className="px-6 py-2.5 font-semibold">{row.position}</td>
+                      <td className="px-4 py-2.5 text-right">{row.clicks.toLocaleString()}</td>
+                      <td className="px-6 py-2.5 text-right text-muted-foreground">{row.destinations}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </section>
+
+        {/* ENGAGEMENT BY PAGE TYPE */}
+        <section className="grid gap-6 lg:grid-cols-2">
+          <div className="glass-card rounded-lg overflow-hidden">
+            <div className="px-6 pt-5 pb-2">
+              <h3 className="font-heading text-lg font-semibold">Engagement by page type</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">Avg scroll depth and time-on-page</p>
+            </div>
+            {engagementByType.length === 0 ? (
+              <p className="px-6 pb-6 text-sm text-muted-foreground">No engagement data yet — fires when visitors scroll or leave a page after the new code deploys.</p>
+            ) : (
+              <table className="w-full text-sm">
+                <thead className="border-b border-border/40">
+                  <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground">
+                    <th className="px-6 py-2 font-medium">Type</th>
+                    <th className="px-4 py-2 font-medium text-right">Rows</th>
+                    <th className="px-4 py-2 font-medium text-right">Avg scroll</th>
+                    <th className="px-4 py-2 font-medium text-right">Avg time</th>
+                    <th className="px-6 py-2 font-medium text-right">% deep</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {engagementByType.map((row) => (
+                    <tr key={row.pageType} className="border-b border-border/20 hover:bg-muted/20">
+                      <td className="px-6 py-2.5 font-semibold">{row.pageType}</td>
+                      <td className="px-4 py-2.5 text-right">{row.rows.toLocaleString()}</td>
+                      <td className="px-4 py-2.5 text-right">{row.avgScrollPct.toFixed(0)}%</td>
+                      <td className="px-4 py-2.5 text-right">{row.avgTimeOnPageSec.toFixed(0)}s</td>
+                      <td className="px-6 py-2.5 text-right text-secondary">{row.pctReached75.toFixed(0)}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+
+          <div className="glass-card rounded-lg overflow-hidden">
+            <div className="px-6 pt-5 pb-2">
+              <h3 className="font-heading text-lg font-semibold">High engagement, no conversion</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">Pages with deep scroll but zero clicks — likely broken or missing CTA</p>
+            </div>
+            {brokenCtaPages.length === 0 ? (
+              <p className="px-6 pb-6 text-sm text-muted-foreground">None surfaced yet — needs ≥3 deep-scroll views with 0 clicks.</p>
+            ) : (
+              <table className="w-full text-sm">
+                <thead className="border-b border-border/40">
+                  <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground">
+                    <th className="px-6 py-2 font-medium">Path</th>
+                    <th className="px-4 py-2 font-medium text-right">Views</th>
+                    <th className="px-6 py-2 font-medium text-right">Scroll</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {brokenCtaPages.slice(0, 10).map((row) => (
+                    <tr key={row.path} className="border-b border-border/20 hover:bg-muted/20">
+                      <td className="px-6 py-2.5 font-mono text-[11px] truncate max-w-[240px]">
+                        <Link to={`/admin/page${encodeURIComponent(row.path)}`} className="hover:text-secondary">{row.path}</Link>
+                      </td>
+                      <td className="px-4 py-2.5 text-right">{row.views}</td>
+                      <td className="px-6 py-2.5 text-right text-destructive">{row.avgScrollPct.toFixed(0)}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </section>
+
+        {/* GEOGRAPHIC DISTRIBUTION */}
+        <section>
+          <div className="glass-card rounded-lg overflow-hidden">
+            <div className="px-6 pt-5 pb-2 flex items-baseline justify-between">
+              <div>
+                <h3 className="font-heading text-lg font-semibold">Geographic distribution</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">Visitor country (via Vercel edge geolocation)</p>
+              </div>
+              {byCountry.length > 0 && (() => {
+                const total = byCountry.reduce((s, c) => s + c.views, 0);
+                const unknown = byCountry.find((c) => c.country === "??")?.views ?? 0;
+                const accounted = total > 0 ? ((total - unknown) / total) * 100 : 0;
+                return (
+                  <span className="text-[11px] text-muted-foreground">
+                    {accounted.toFixed(0)}% accounted for
+                  </span>
+                );
+              })()}
             </div>
             {byCountry.length === 0 || (byCountry.length === 1 && byCountry[0].country === "??") ? (
               <p className="px-6 pb-6 text-sm text-muted-foreground">

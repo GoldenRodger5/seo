@@ -39,7 +39,17 @@ import LocalisedPrice from "../components/LocalisedPrice";
  * Used at Score-Breakdown, Pros/Cons, and Pricing-Table seams to keep
  * the conversion option close to every buyer-intent moment.
  */
-const InlineReviewCTA = ({ site, message }: { site: ReturnType<typeof getSiteBySlug>; message: string }) => {
+import type { CtaPosition } from "../lib/tracking";
+
+const InlineReviewCTA = ({
+  site,
+  message,
+  position,
+}: {
+  site: ReturnType<typeof getSiteBySlug>;
+  message: string;
+  position: CtaPosition;
+}) => {
   if (!site || !isAffiliated(site)) return null;
   const showDeal = site.deal_discount > 0;
   return (
@@ -60,6 +70,7 @@ const InlineReviewCTA = ({ site, message }: { site: ReturnType<typeof getSiteByS
           <OutboundLink
             site={site}
             sourceTypeOverride="mid_review_cta"
+            ctaPosition={position}
             className="cta-btn gold-gradient inline-flex items-center justify-center gap-1.5 rounded-button px-5 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap"
           >
             Visit Site <ArrowRight size={13} />
@@ -287,7 +298,7 @@ const ReviewPage = () => {
                 )}
 
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <VisitSiteButton site={site} label={`Visit ${site.name}`} />
+                  <VisitSiteButton site={site} label={`Visit ${site.name}`} ctaPosition="hero" />
                   <Link
                     to={`/discount/${site.slug}`}
                     className="inline-flex items-center gap-2 rounded-button border border-emerald-400/50 bg-emerald-400/10 px-8 py-3 text-sm font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors"
@@ -307,6 +318,7 @@ const ReviewPage = () => {
             {/* CTA Block A — after Score Breakdown */}
             <InlineReviewCTA
               site={site}
+              position="mid-content-1"
               message={`${site.name} scores ${site.overall_score}/5 overall. ${site.deal_discount > 0 ? `See the current ${site.deal_discount}% off deal.` : "Ready to subscribe?"}`}
             />
 
@@ -373,6 +385,7 @@ const ReviewPage = () => {
             {/* CTA Block B — after Pros/Cons */}
             <InlineReviewCTA
               site={site}
+              position="mid-content-2"
               message={`Sound like your kind of site? Skip ahead and check ${site.name}.`}
             />
 
@@ -444,6 +457,7 @@ const ReviewPage = () => {
                 {/* CTA Block C — after Pricing Table */}
                 <InlineReviewCTA
                   site={site}
+                  position="mid-content-3"
                   message={`Ready to subscribe? ${site.deal_discount > 0 ? `${site.deal_discount}% off through our link.` : "Annual billing is the best value."}`}
                 />
               </section>
@@ -461,7 +475,7 @@ const ReviewPage = () => {
                   <div className="mt-2 flex justify-center">
                     <ScoreRing score={site.overall_score} />
                   </div>
-                  <VisitSiteButton site={site} className="mt-4" />
+                  <VisitSiteButton site={site} className="mt-4" ctaPosition="final" />
                 </div>
               </section>
 
@@ -626,7 +640,7 @@ const ReviewPage = () => {
               <p className="mt-2 text-center text-[11px] text-muted-foreground">
                 or <LocalisedPrice usd={site.price_annual} /> billed annually
               </p>
-              <VisitSiteButton site={site} className="mt-4" />
+              <VisitSiteButton site={site} className="mt-4" ctaPosition="sidebar" />
               {site.deal_discount > 0 && (
                 <Link
                   to={`/discount/${site.slug}`}

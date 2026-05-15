@@ -175,6 +175,7 @@ const HeroSection = () => {
                   <MotionButton>
                     <OutboundLink
                       site={pick}
+                      ctaPosition="today-pick"
                       className="cta-btn gold-gradient inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground sm:w-auto"
                     >
                       {pickHasDeal ? "Get the Deal" : "Visit Site"} <ArrowRight size={14} />
@@ -351,7 +352,7 @@ const TopPicksSection = () => {
                 <StarRating score={site.overall_score} size={14} />
                 <p className="mt-2 flex-1 text-xs text-muted-foreground line-clamp-2">{site.short_description}</p>
                 <span className="mt-1 inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-[10px] text-emerald-400">✓ Reviewed</span>
-                <VisitSiteButton site={site} label="Visit Site" className="mt-3" />
+                <VisitSiteButton site={site} label="Visit Site" className="mt-3" ctaPosition="card" />
                 {(() => {
                   const primary = siteNicheMap[site.slug]?.[0];
                   const niche = primary ? getNiche(primary) : null;
@@ -438,7 +439,7 @@ const LatestReviewsSection = () => {
                     </Link>
                   </MotionButton>
                   <MotionButton className="flex-1">
-                    <OutboundLink site={site} className={`cta-btn block gold-gradient rounded-button px-4 py-2 text-center text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}>
+                    <OutboundLink site={site} ctaPosition="card" className={`cta-btn block gold-gradient rounded-button px-4 py-2 text-center text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}>
                       Visit Site
                     </OutboundLink>
                   </MotionButton>

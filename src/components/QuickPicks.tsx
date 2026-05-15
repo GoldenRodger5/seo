@@ -167,6 +167,7 @@ const QuickPicks = () => {
                   {/* CTA */}
                   <OutboundLink
                     site={pick.site}
+                    ctaPosition="quick-pick"
                     onClick={() => trackEvent("quick_pick_click", { intent: pick.intent, site_slug: pick.site.slug })}
                     className="cta-btn gold-gradient inline-flex w-full items-center justify-center gap-2 rounded-button px-5 py-3 text-sm font-semibold text-secondary-foreground"
                   >

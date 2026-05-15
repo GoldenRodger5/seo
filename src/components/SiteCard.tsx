@@ -102,7 +102,7 @@ const SiteCard = ({
           <div className="flex-1 min-w-0">
             <h3 className="font-heading text-base font-semibold truncate">{site.name}</h3>
             <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{site.short_description}</p>
-            <OutboundLink site={site} className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
+            <OutboundLink site={site} ctaPosition="card" className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
               Visit Site <ArrowRight size={12} />
             </OutboundLink>
           </div>
@@ -208,6 +208,7 @@ const SiteCard = ({
         {/* CTA */}
         <OutboundLink
           site={site}
+          ctaPosition="card"
           className="cta-btn gold-gradient inline-flex w-full items-center justify-center gap-2 rounded-button px-4 py-2.5 text-sm font-semibold text-secondary-foreground"
         >
           Visit Site <ArrowRight size={14} />

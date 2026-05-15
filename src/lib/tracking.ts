@@ -58,10 +58,26 @@ function getVisitorId(): string {
  */
 let countryCache: string | null | undefined = undefined;
 
+/** Read the tv_country cookie set by middleware.ts (Vercel edge). */
+function readCountryCookie(): string | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(/(?:^|;\s*)tv_country=([A-Z]{2})/);
+  return match ? match[1] : null;
+}
+
 async function ensureCountry(): Promise<string | null> {
   if (typeof window === "undefined") return null;
   if (countryCache !== undefined) return countryCache;
-  // Try sessionStorage first (avoids /api/geo round-trip on subsequent pages)
+
+  // 1. Cookie set by Vercel edge middleware — synchronous, no round-trip.
+  const fromCookie = readCountryCookie();
+  if (fromCookie) {
+    countryCache = fromCookie;
+    try { sessionStorage.setItem(COUNTRY_KEY, fromCookie); } catch { /* ignore */ }
+    return countryCache;
+  }
+
+  // 2. sessionStorage cache from a prior page in this session.
   try {
     const stored = sessionStorage.getItem(COUNTRY_KEY);
     if (stored !== null) {
@@ -69,7 +85,9 @@ async function ensureCountry(): Promise<string | null> {
       return countryCache;
     }
   } catch { /* ignore */ }
-  // Fetch from edge endpoint
+
+  // 3. Fall back to /api/geo endpoint (covers dev / Vite previews where
+  // the edge middleware isn't running).
   try {
     const r = await fetch("/api/geo", { cache: "no-store" });
     if (!r.ok) { countryCache = null; return null; }
@@ -102,6 +120,7 @@ export function inferPageType(path: string): string {
   if (path.startsWith("/discount/")) return "discount";
   if (path.startsWith("/niche/")) return "niche";
   if (path.startsWith("/category/")) return "category";
+  if (path === "/best-deals") return "best-deals";
   if (
     path.startsWith("/best-") ||
     path.startsWith("/cheapest-") ||
@@ -122,6 +141,27 @@ export function inferPageType(path: string): string {
   if (INFO_PATHS.has(path)) return "info";
   return "other";
 }
+
+/**
+ * Stable string IDs for CTA positions — passed alongside logClick to
+ * distinguish which UI affordance produced a click without polluting
+ * source_type (which still classifies by URL path). The dashboard
+ * "CTA Position Performance" widget aggregates clicks by this value.
+ */
+export type CtaPosition =
+  | "hero"
+  | "mid-content-1"
+  | "mid-content-2"
+  | "mid-content-3"
+  | "final"
+  | "sticky-mobile"
+  | "sidebar"
+  | "card"
+  | "inline-blog"
+  | "quick-pick"
+  | "destination-detail"
+  | "top-pick-hero"
+  | "today-pick";
 
 /** Internal helper — POST a row to a Supabase REST endpoint. */
 function postRow(table: string, row: Record<string, unknown>): void {
@@ -159,15 +199,24 @@ export interface ClickEvent {
    * Optional override for source_type — used by surface-specific CTAs
    * like the sticky mobile bar to distinguish clicks by UI affordance
    * rather than just by page path. Defaults to inferPageType(sourcePage).
+   * @deprecated prefer ctaPosition; sourceTypeOverride is kept for
+   * backward compat but new code should use ctaPosition instead.
    */
   sourceTypeOverride?: string;
+  /**
+   * Which CTA affordance on the page produced the click — populated
+   * into clicks.cta_position so the dashboard can answer "which
+   * positions actually convert" independently of source_type.
+   */
+  ctaPosition?: CtaPosition;
 }
 
 /**
  * Log an affiliate-outbound click. Fire-and-forget — caller proceeds
  * with navigation without awaiting.
  */
-export function logClick({ sourcePage, destinationSlug, destinationUrl, sourceTypeOverride }: ClickEvent): void {
+export function logClick({ sourcePage, destinationSlug, destinationUrl, sourceTypeOverride, ctaPosition }: ClickEvent): void {
+  if (sourcePage.startsWith("/admin")) return; // defense — never log admin
   postRow("clicks", {
     source_page: sourcePage,
     source_type: sourceTypeOverride ?? inferPageType(sourcePage),
@@ -176,6 +225,7 @@ export function logClick({ sourcePage, destinationSlug, destinationUrl, sourceTy
     referrer: typeof document !== "undefined" ? (document.referrer || null) : null,
     session_id: getSessionId(),
     visitor_id: getVisitorId(),
+    cta_position: ctaPosition ?? null,
     // Legacy columns retained for backward compatibility with the original
     // schema — the /admin dashboard reads the new columns.
     site_slug: destinationSlug,
@@ -254,4 +304,107 @@ export function logPageView(path: string): void {
     session_id: getSessionId(),
     visitor_id: getVisitorId(),
   });
+
+  // Start engagement tracking for this page view.
+  startEngagementTracking(path);
+}
+
+// ── Engagement tracking (scroll depth + time-on-page) ──────────────────────
+
+interface EngagementState {
+  path: string;
+  startedAt: number;
+  maxScrollPct: number;
+  reached25: boolean;
+  reached50: boolean;
+  reached75: boolean;
+  reached100: boolean;
+}
+
+let engagement: EngagementState | null = null;
+let engagementHandlersBound = false;
+
+function calcScrollPct(): number {
+  if (typeof document === "undefined") return 0;
+  const docEl = document.documentElement;
+  const scrollTop = window.scrollY || docEl.scrollTop || 0;
+  const viewport = window.innerHeight || docEl.clientHeight;
+  const totalHeight = Math.max(docEl.scrollHeight, document.body?.scrollHeight ?? 0);
+  if (totalHeight <= viewport) return 100;
+  return Math.min(100, Math.round(((scrollTop + viewport) / totalHeight) * 100));
+}
+
+function flushEngagement(reason: "unload" | "navigate"): void {
+  if (!engagement) return;
+  // Don't log /admin or /go even if somehow tracked
+  if (engagement.path.startsWith("/admin") || engagement.path.startsWith("/go/")) {
+    engagement = null;
+    return;
+  }
+  const elapsed = Date.now() - engagement.startedAt;
+  // Avoid noise rows from <1s page-view spam (route remount, refresh chain)
+  if (elapsed < 1000 && reason === "navigate") {
+    engagement = null;
+    return;
+  }
+  postRow("page_engagement", {
+    session_id: getSessionId(),
+    visitor_id: getVisitorId(),
+    path: engagement.path,
+    page_type: inferPageType(engagement.path),
+    max_scroll_pct: engagement.maxScrollPct,
+    time_on_page_ms: elapsed,
+    reached_25: engagement.reached25,
+    reached_50: engagement.reached50,
+    reached_75: engagement.reached75,
+    reached_100: engagement.reached100,
+  });
+  engagement = null;
+}
+
+function onScroll(): void {
+  if (!engagement) return;
+  const pct = calcScrollPct();
+  if (pct > engagement.maxScrollPct) engagement.maxScrollPct = pct;
+  // Threshold flags — never reset once set, so a deep scroll then scroll-up
+  // still records that the user reached the depth.
+  if (pct >= 25 && !engagement.reached25) engagement.reached25 = true;
+  if (pct >= 50 && !engagement.reached50) engagement.reached50 = true;
+  if (pct >= 75 && !engagement.reached75) engagement.reached75 = true;
+  if (pct >= 100 && !engagement.reached100) engagement.reached100 = true;
+}
+
+function bindEngagementHandlersOnce(): void {
+  if (engagementHandlersBound || typeof window === "undefined") return;
+  engagementHandlersBound = true;
+  // passive: true so we don't block scroll perf. Throttled lightly by the
+  // browser; we don't need every event, just the max we hit.
+  window.addEventListener("scroll", onScroll, { passive: true });
+  // Visibility change covers both tab-switch-away and tab-close on most
+  // browsers, more reliably than beforeunload (which iOS Safari ignores).
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") flushEngagement("unload");
+  });
+  window.addEventListener("pagehide", () => flushEngagement("unload"));
+}
+
+/**
+ * Begin tracking engagement for a freshly-viewed path. Flushes any
+ * in-flight engagement state from a previous page (e.g. SPA navigation).
+ */
+export function startEngagementTracking(path: string): void {
+  if (typeof window === "undefined") return;
+  if (path.startsWith("/admin") || path.startsWith("/go/")) return;
+  // Flush prior page's engagement before resetting state.
+  if (engagement && engagement.path !== path) flushEngagement("navigate");
+  engagement = {
+    path,
+    startedAt: Date.now(),
+    maxScrollPct: calcScrollPct(),
+    reached25: false,
+    reached50: false,
+    reached75: false,
+    reached100: false,
+  };
+  bindEngagementHandlersOnce();
 }

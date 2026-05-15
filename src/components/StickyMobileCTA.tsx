@@ -75,6 +75,7 @@ const StickyMobileCTA = ({ site, revealAfter = 400 }: StickyMobileCTAProps) => {
         <OutboundLink
           site={site}
           sourceTypeOverride="sticky_mobile_cta"
+          ctaPosition="sticky-mobile"
           className="cta-btn flex items-center gap-2 rounded-button gold-gradient px-5 py-2.5 text-sm font-semibold text-secondary-foreground whitespace-nowrap min-h-[44px]"
         >
           {site.deal_discount > 0 ? "Get Deal" : "Visit Site"} <ArrowRight size={14} />

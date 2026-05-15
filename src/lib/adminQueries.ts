@@ -42,6 +42,21 @@ export interface ClickRow {
   session_id: string | null;
   visitor_id: string | null;
   country: string | null;
+  cta_position: string | null;
+  created_at: string;
+}
+
+export interface EngagementRow {
+  session_id: string | null;
+  visitor_id: string | null;
+  path: string;
+  page_type: string | null;
+  max_scroll_pct: number | null;
+  time_on_page_ms: number | null;
+  reached_25: boolean | null;
+  reached_50: boolean | null;
+  reached_75: boolean | null;
+  reached_100: boolean | null;
   created_at: string;
 }
 
@@ -79,12 +94,24 @@ export async function fetchClicks(range: DateRange): Promise<ClickRow[]> {
   const since = dateRangeStart(range).toISOString();
   const { data, error } = await supabase
     .from("clicks")
-    .select("source_page, source_type, destination_slug, destination_url, referrer, session_id, visitor_id, country, created_at")
+    .select("source_page, source_type, destination_slug, destination_url, referrer, session_id, visitor_id, country, cta_position, created_at")
     .gte("created_at", since)
     .order("created_at", { ascending: false })
     .limit(100_000);
   if (error) { console.error("fetchClicks", error); return []; }
   return (data ?? []) as ClickRow[];
+}
+
+export async function fetchEngagement(range: DateRange): Promise<EngagementRow[]> {
+  const since = dateRangeStart(range).toISOString();
+  const { data, error } = await supabase
+    .from("page_engagement")
+    .select("session_id, visitor_id, path, page_type, max_scroll_pct, time_on_page_ms, reached_25, reached_50, reached_75, reached_100, created_at")
+    .gte("created_at", since)
+    .order("created_at", { ascending: false })
+    .limit(100_000);
+  if (error) { console.error("fetchEngagement", error); return []; }
+  return (data ?? []) as EngagementRow[];
 }
 
 export async function fetchImpressions(range: DateRange): Promise<ImpressionRow[]> {
@@ -537,4 +564,279 @@ export function pctChange(current: number, prev: number): { delta: number; pct: 
   const delta = current - prev;
   const pct = prev === 0 ? (current === 0 ? 0 : 100) : (delta / prev) * 100;
   return { delta, pct };
+}
+
+// ── Click attribution matrix ─────────────────────────────────────────────
+
+export interface AttributionRow {
+  slug: string;
+  totalClicks: number;
+  sources: { sourcePage: string; clicks: number; views: number; ctr: number }[];
+}
+
+/**
+ * For each top-clicked destination, compute the source-page breakdown
+ * and CTR from each. Answers "of NakedSword's 6 clicks, where did they
+ * come from?" — the single most actionable widget for placement-of-CTA
+ * decisions.
+ */
+export function buildAttributionMatrix(
+  clicks: ClickRow[],
+  views: PageViewRow[],
+  topN = 10,
+  perDestSourcesN = 5,
+): AttributionRow[] {
+  // Step 1: count clicks per destination
+  const destClicks = new Map<string, ClickRow[]>();
+  for (const c of clicks) {
+    const slug = c.destination_slug ?? "(unknown)";
+    if (!destClicks.has(slug)) destClicks.set(slug, []);
+    destClicks.get(slug)!.push(c);
+  }
+  // Step 2: views per source page (for CTR denominator)
+  const viewsByPath = new Map<string, number>();
+  for (const v of views) viewsByPath.set(v.path, (viewsByPath.get(v.path) ?? 0) + 1);
+  // Step 3: take top N destinations, build source breakdown for each
+  const top = [...destClicks.entries()]
+    .sort((a, b) => b[1].length - a[1].length)
+    .slice(0, topN);
+  return top.map(([slug, rows]) => {
+    const srcCounts = new Map<string, number>();
+    for (const c of rows) {
+      const src = c.source_page ?? "(unknown)";
+      srcCounts.set(src, (srcCounts.get(src) ?? 0) + 1);
+    }
+    const sources = [...srcCounts.entries()]
+      .map(([sourcePage, n]) => {
+        const v = viewsByPath.get(sourcePage) ?? 0;
+        return { sourcePage, clicks: n, views: v, ctr: v > 0 ? (n / v) * 100 : 0 };
+      })
+      .sort((a, b) => b.clicks - a.clicks)
+      .slice(0, perDestSourcesN);
+    return { slug, totalClicks: rows.length, sources };
+  });
+}
+
+// ── CTA Position performance ─────────────────────────────────────────────
+
+export interface CtaPositionStats {
+  position: string;
+  clicks: number;
+  destinations: number;
+}
+
+export function aggregateByCtaPosition(clicks: ClickRow[]): CtaPositionStats[] {
+  const map = new Map<string, { clicks: number; dests: Set<string> }>();
+  for (const c of clicks) {
+    const pos = c.cta_position ?? "(unspecified)";
+    if (!map.has(pos)) map.set(pos, { clicks: 0, dests: new Set() });
+    const entry = map.get(pos)!;
+    entry.clicks++;
+    if (c.destination_slug) entry.dests.add(c.destination_slug);
+  }
+  return [...map.entries()]
+    .map(([position, d]) => ({ position, clicks: d.clicks, destinations: d.dests.size }))
+    .sort((a, b) => b.clicks - a.clicks);
+}
+
+// ── Engagement aggregations ──────────────────────────────────────────────
+
+export interface EngagementByPageType {
+  pageType: string;
+  rows: number;
+  avgScrollPct: number;
+  avgTimeOnPageSec: number;
+  pctReached75: number;
+}
+
+export function aggregateEngagementByPageType(rows: EngagementRow[]): EngagementByPageType[] {
+  const map = new Map<string, EngagementRow[]>();
+  for (const r of rows) {
+    const t = r.page_type ?? "other";
+    if (!map.has(t)) map.set(t, []);
+    map.get(t)!.push(r);
+  }
+  return [...map.entries()]
+    .map(([pageType, arr]) => {
+      const totalScroll = arr.reduce((s, r) => s + (r.max_scroll_pct ?? 0), 0);
+      const totalTime = arr.reduce((s, r) => s + (r.time_on_page_ms ?? 0), 0);
+      const deep = arr.filter((r) => r.reached_75).length;
+      return {
+        pageType,
+        rows: arr.length,
+        avgScrollPct: arr.length > 0 ? totalScroll / arr.length : 0,
+        avgTimeOnPageSec: arr.length > 0 ? totalTime / arr.length / 1000 : 0,
+        pctReached75: arr.length > 0 ? (deep / arr.length) * 100 : 0,
+      };
+    })
+    .sort((a, b) => b.rows - a.rows);
+}
+
+export interface BrokenCtaPage {
+  path: string;
+  views: number;
+  avgScrollPct: number;
+  clicks: number;
+}
+
+/**
+ * "High engagement, no clicks" — pages where readers stayed and scrolled
+ * but didn't convert. Strong signal that the CTA is missing, weak, or
+ * mispositioned.
+ */
+export function findHighScrollLowConversion(
+  engagement: EngagementRow[],
+  clicks: ClickRow[],
+  minViews = 5,
+): BrokenCtaPage[] {
+  const byPath = new Map<string, EngagementRow[]>();
+  for (const r of engagement) {
+    if (!byPath.has(r.path)) byPath.set(r.path, []);
+    byPath.get(r.path)!.push(r);
+  }
+  const clicksByPath = new Map<string, number>();
+  for (const c of clicks) {
+    if (!c.source_page) continue;
+    clicksByPath.set(c.source_page, (clicksByPath.get(c.source_page) ?? 0) + 1);
+  }
+  return [...byPath.entries()]
+    .map(([path, rows]) => {
+      const totalScroll = rows.reduce((s, r) => s + (r.max_scroll_pct ?? 0), 0);
+      return {
+        path,
+        views: rows.length,
+        avgScrollPct: rows.length > 0 ? totalScroll / rows.length : 0,
+        clicks: clicksByPath.get(path) ?? 0,
+      };
+    })
+    .filter((r) => r.views >= minViews && r.avgScrollPct >= 60 && r.clicks === 0)
+    .sort((a, b) => b.views - a.views);
+}
+
+// ── Session journeys ─────────────────────────────────────────────────────
+
+export interface JourneyEvent {
+  type: "view" | "click";
+  path: string;
+  destination?: string;
+  createdAt: string;
+}
+
+export interface SessionJourney {
+  sessionId: string;
+  events: JourneyEvent[];
+  converted: boolean;
+  pages: number;
+  startedAt: string;
+}
+
+/**
+ * Reconstruct per-session event sequences (views interleaved with
+ * clicks). Used by /admin/journeys to surface most-common conversion
+ * paths and bounce patterns.
+ */
+export function reconstructJourneys(views: PageViewRow[], clicks: ClickRow[]): SessionJourney[] {
+  const map = new Map<string, JourneyEvent[]>();
+  for (const v of views) {
+    if (!v.session_id) continue;
+    if (!map.has(v.session_id)) map.set(v.session_id, []);
+    map.get(v.session_id)!.push({ type: "view", path: v.path, createdAt: v.created_at });
+  }
+  for (const c of clicks) {
+    if (!c.session_id) continue;
+    if (!map.has(c.session_id)) map.set(c.session_id, []);
+    map.get(c.session_id)!.push({
+      type: "click",
+      path: c.source_page ?? "(unknown)",
+      destination: c.destination_slug ?? undefined,
+      createdAt: c.created_at,
+    });
+  }
+  return [...map.entries()]
+    .map(([sessionId, events]) => {
+      events.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      const converted = events.some((e) => e.type === "click");
+      const pages = events.filter((e) => e.type === "view").length;
+      return {
+        sessionId,
+        events,
+        converted,
+        pages,
+        startedAt: events[0]?.createdAt ?? new Date().toISOString(),
+      };
+    })
+    .sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime());
+}
+
+export interface PathFrequency { path: string; count: number; converted: number }
+
+/**
+ * Most-common N-step journey signatures. Each journey is a "/" joined
+ * string of the first `steps` views, optionally with the destination
+ * click appended.
+ */
+export function aggregateJourneyPaths(
+  journeys: SessionJourney[],
+  steps = 3,
+  includeClick = true,
+): PathFrequency[] {
+  const map = new Map<string, { count: number; converted: number }>();
+  for (const j of journeys) {
+    const viewSteps = j.events.filter((e) => e.type === "view").slice(0, steps).map((e) => e.path);
+    if (viewSteps.length === 0) continue;
+    let key = viewSteps.join(" → ");
+    if (includeClick && j.converted) {
+      const firstClick = j.events.find((e) => e.type === "click");
+      if (firstClick?.destination) key += ` → 💰 ${firstClick.destination}`;
+    }
+    if (!map.has(key)) map.set(key, { count: 0, converted: 0 });
+    const entry = map.get(key)!;
+    entry.count++;
+    if (j.converted) entry.converted++;
+  }
+  return [...map.entries()]
+    .map(([path, d]) => ({ path, count: d.count, converted: d.converted }))
+    .sort((a, b) => b.count - a.count);
+}
+
+/**
+ * For each top destination, find the most common preceding source path
+ * (the page right before the click). Answers "what's the page that
+ * usually precedes a click to NakedSword?"
+ */
+export interface PreClickPath {
+  destination: string;
+  totalClicks: number;
+  precedingPaths: { path: string; count: number }[];
+}
+
+export function aggregatePreClickPaths(journeys: SessionJourney[], topN = 10): PreClickPath[] {
+  const map = new Map<string, Map<string, number>>();
+  for (const j of journeys) {
+    if (!j.converted) continue;
+    for (let i = 0; i < j.events.length; i++) {
+      const e = j.events[i];
+      if (e.type !== "click" || !e.destination) continue;
+      // Find the view immediately before this click.
+      let preceding: string | null = null;
+      for (let k = i - 1; k >= 0; k--) {
+        if (j.events[k].type === "view") { preceding = j.events[k].path; break; }
+      }
+      if (!preceding) preceding = "(direct landing)";
+      if (!map.has(e.destination)) map.set(e.destination, new Map());
+      const inner = map.get(e.destination)!;
+      inner.set(preceding, (inner.get(preceding) ?? 0) + 1);
+    }
+  }
+  return [...map.entries()]
+    .map(([destination, inner]) => {
+      const paths = [...inner.entries()]
+        .map(([path, count]) => ({ path, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 3);
+      const total = paths.reduce((s, p) => s + p.count, 0);
+      return { destination, totalClicks: total, precedingPaths: paths };
+    })
+    .sort((a, b) => b.totalClicks - a.totalClicks)
+    .slice(0, topN);
 }

@@ -205,6 +205,7 @@ const DealCard = ({ site, elevated }: { site: SiteData; elevated?: ElevatedBadge
       <div className="relative mt-4">
         <OutboundLink
           site={site}
+          ctaPosition="card"
           className={`cta-btn flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}
         >
           Claim Deal <ArrowRight size={14} />
