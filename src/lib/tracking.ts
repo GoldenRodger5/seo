@@ -163,7 +163,9 @@ export type CtaPosition =
   | "top-pick-hero"
   | "today-pick"
   | "top-sites-card"
-  | "compare-card";
+  | "compare-card"
+  | "editor-pick"
+  | "top-10-row";
 
 /** Internal helper — POST a row to a Supabase REST endpoint. */
 function postRow(table: string, row: Record<string, unknown>): void {
