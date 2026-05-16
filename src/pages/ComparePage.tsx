@@ -11,6 +11,7 @@ import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../da
 import { getComparisonBody } from "../data/comparison-content";
 import { isFeaturedComparePair } from "../data/featured-compare-pairs";
 import StickyMobileCTA from "../components/StickyMobileCTA";
+import { displayPillarScore } from "../lib/scoreFormatting";
 import { generateCompareFaqs } from "../lib/compareFaqs";
 import RelatedReading from "../components/RelatedReading";
 import { PageTransition } from "../components/MotionWrappers";
@@ -176,19 +177,20 @@ const CompareIndex = () => {
           <link rel="canonical" href="https://twinkvault.com/compare" />
         </Helmet>
 
-        <section className="hero-mesh py-12">
+        <section className="py-12">
           <div className="container max-w-5xl">
             <Breadcrumbs
               className="mb-6"
               items={[{ label: "Home", to: "/" }, { label: "Compare" }]}
             />
-          </div>
-          <div className="container max-w-5xl text-center">
             <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">
-              Compare Twink Sites
+              Compare gay porn sites side by side
             </h1>
-            <p className="mt-3 text-muted-foreground">
-              Pick 2 to 4 sites. We'll show them side by side — scores, pricing, niches, pros and cons.
+            <p className="mt-4 text-muted-foreground max-w-2xl">
+              Same rubric, same scoring, just two sites at a time. Pick 2–4 below to build your own comparison, or jump to one of the most-asked head-to-heads.
+            </p>
+            <p className="mt-3 text-sm text-muted-foreground/80 max-w-2xl">
+              Most comparisons here exist because they're the questions readers actually ask. Each comparison page shows both sites against the same four pillars and ends with a recommendation for who should pick which.
             </p>
           </div>
         </section>
@@ -463,6 +465,14 @@ const CompareIndex = () => {
                 </Link>
               ))}
             </div>
+
+            <p className="mt-10 text-xs text-muted-foreground">
+              Don't see a comparison you want?{" "}
+              <Link to="/reviews" className="text-secondary hover:underline underline-offset-4">
+                Browse all reviews →
+              </Link>{" "}
+              and pick two to build your own.
+            </p>
           </div>
         </section>
       </PageTransition>
@@ -609,7 +619,9 @@ const ComparePage = () => {
             <h1 className="text-center font-heading text-2xl font-bold md:text-4xl heading-gradient inline-block w-full">
               {siteA.name} vs {siteB.name}
             </h1>
-            <p className="mt-2 text-center text-muted-foreground">Which Is Worth It? ({currentYear})</p>
+            <p className="mt-2 text-center text-muted-foreground">
+              Two sites scored on the same four pillars. Here's how they stack up.
+            </p>
 
             {/* AI-generated body (head-to-head deep dive) — renders above the
                 deterministic template when comparison-content.ts has an entry
@@ -657,6 +669,7 @@ const ComparePage = () => {
             })()}
 
             {/* BLUF Summary */}
+            {/* TODO_VOICE: rewrite this paragraph in first-person methodology voice. Drop "Bottom Line Up Front" framing; the heading itself is enough. Cite specific differences (numbers, niches, networks), not score-as-prose. */}
             <div className="mt-8 glass-card rounded-lg p-6 border-l-4 border-l-secondary">
               <h2 className="font-heading text-lg font-bold text-secondary">Bottom Line Up Front</h2>
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
@@ -670,18 +683,6 @@ const ComparePage = () => {
                         : ` It also happens to be the more affordable option at ${stripMonthlyUnit(winner.price_annual)}/mo on the annual plan.`}
                     </>
                   )}
-              </p>
-            </div>
-
-            {/* Intro section */}
-            <div className="mt-6 text-sm text-muted-foreground leading-relaxed space-y-4">
-              <p>
-                Here's how they compare across content quality, value for money, update frequency, and mobile experience.
-              </p>
-              <p>
-                {siteA.name}: {siteA.overall_score}/5 overall, {siteA.content_quality}/100 content quality, {siteA.price_monthly}.
-                {" "}{siteB.name}: {siteB.overall_score}/5 overall, {siteB.content_quality}/100 content quality, {siteB.price_monthly}.
-                {" "}Numbers don't tell the whole story — read the breakdown below.
               </p>
             </div>
 
@@ -712,17 +713,23 @@ const ComparePage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {criteria.map((c) => (
-                    <tr key={c.key} className="border-b border-border/30">
-                      <td className="px-4 py-3 text-muted-foreground">{c.label}</td>
-                      <td className={`px-4 py-3 text-center font-semibold ${scoreColor(siteA[c.key], c.max)}`}>
-                        {siteA[c.key]}{c.max === 100 ? "/100" : "/5"}
-                      </td>
-                      <td className={`px-4 py-3 text-center font-semibold ${scoreColor(siteB[c.key], c.max)}`}>
-                        {siteB[c.key]}{c.max === 100 ? "/100" : "/5"}
-                      </td>
-                    </tr>
-                  ))}
+                  {criteria.map((c) => {
+                    // Pillar scores (max 100) smoothed to nearest 5 for display.
+                    // Overall (max 5) keeps decimal precision.
+                    const aDisplay = c.max === 100 ? displayPillarScore(siteA[c.key] as number) : siteA[c.key];
+                    const bDisplay = c.max === 100 ? displayPillarScore(siteB[c.key] as number) : siteB[c.key];
+                    return (
+                      <tr key={c.key} className="border-b border-border/30">
+                        <td className="px-4 py-3 text-muted-foreground">{c.label}</td>
+                        <td className={`px-4 py-3 text-center font-semibold ${scoreColor(siteA[c.key], c.max)}`}>
+                          {aDisplay}{c.max === 100 ? "/100" : "/5"}
+                        </td>
+                        <td className={`px-4 py-3 text-center font-semibold ${scoreColor(siteB[c.key], c.max)}`}>
+                          {bDisplay}{c.max === 100 ? "/100" : "/5"}
+                        </td>
+                      </tr>
+                    );
+                  })}
                   <tr className="border-b border-border/30">
                     <td className="px-4 py-3 text-muted-foreground">Price</td>
                     <td className="px-4 py-3 text-center font-semibold">{siteA.price_monthly}</td>
