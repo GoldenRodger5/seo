@@ -37,6 +37,29 @@ export interface SiteData {
   annual_only?: boolean;
   /** Editorial 1–2 sentence verdict shown above the main CTA on the review page. Optional — populated via site-verdicts.ts. */
   verdict?: string;
+  /**
+   * 12-20 word TL;DR shown in the hero callout at the top of /reviews/{slug}.
+   * Pithy framing — what the site IS and who it's FOR in one sentence.
+   * Falls back to short_description if absent.
+   * TODO: write per-site tldr field (12-20 words).
+   */
+  tldr?: string;
+  /**
+   * Review depth signal for the disclosure banner.
+   *  'subscription' = Isaac paid for and tested this site across ≥2 billing cycles
+   *  'research' or undefined = built from publicly available info, scene samples, user reports
+   * Manually flag as 'subscription' as Isaac confirms which ones he's actively tested.
+   * Default when absent: treat as 'research' (the more conservative claim).
+   */
+  review_depth?: "subscription" | "research";
+  /**
+   * Specific use case for "Best for: ..." line on the review page (15-25 words).
+   * Falls back to the existing best_for / categories-derived line if absent.
+   * TODO: write best_for_specific per site as time allows.
+   */
+  best_for_specific?: string;
+  /** Cancellation notes shown below the pricing table. Optional. */
+  cancellation_notes?: string;
 }
 
 /** Returns the correct outbound URL for a site */

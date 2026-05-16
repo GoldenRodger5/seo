@@ -25,13 +25,15 @@ import { getSimilarSites } from "@/lib/similarSites";
 import { getVerdict } from "@/data/site-verdicts";
 import SiteCard from "../components/SiteCard";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { stripMonthlyUnit } from "@/lib/dealMath";
+import { stripMonthlyUnit, parseMonthlyPrice } from "@/lib/dealMath";
 import { getSiteImagery } from "@/data/site-imagery";
 import { generateSiteFaqs } from "@/lib/faqGenerator";
 import StickyMobileCTA from "../components/StickyMobileCTA";
 import RelatedReading from "../components/RelatedReading";
 import SimilarSites from "../components/SimilarSites";
 import LocalisedPrice from "../components/LocalisedPrice";
+import ReviewDisclosureBanner from "../components/ReviewDisclosureBanner";
+import { displayPillarScore } from "../lib/scoreFormatting";
 
 /**
  * Mid-content CTA block — visually distinct from the article body so it
@@ -82,17 +84,21 @@ const InlineReviewCTA = ({
 };
 
 const ScoreBar = ({ label, value }: { label: string; value: number }) => {
+  // Display-only smoothing — underlying score stays precise in sites.ts,
+  // but we render to the nearest 5 to drop the fake-precision tell.
+  // See /methodology "How the overall score is calculated".
+  const displayValue = displayPillarScore(value);
   const [width, setWidth] = useState(0);
   useEffect(() => {
-    const t = setTimeout(() => setWidth(value), 100);
+    const t = setTimeout(() => setWidth(displayValue), 100);
     return () => clearTimeout(t);
-  }, [value]);
+  }, [displayValue]);
 
   return (
     <div>
       <div className="flex items-center justify-between text-sm">
         <span className="text-muted-foreground">{label}</span>
-        <span className="font-semibold">{value}/100</span>
+        <span className="font-semibold">{displayValue}/100</span>
       </div>
       <div className="mt-1 h-2 overflow-hidden rounded-full bg-muted">
         <div
@@ -284,43 +290,43 @@ const ReviewPage = () => {
                     <ScoreBar label="Value for Money" value={site.value_score} />
                     <ScoreBar label="Mobile Experience" value={site.mobile_score} />
                   </div>
+                  <p className="mt-3 text-xs text-muted-foreground/70">
+                    Scores reflect editorial assessment, not absolute measurement.{" "}
+                    <Link to="/methodology" className="text-secondary hover:underline underline-offset-4">See methodology</Link>.
+                  </p>
                 </div>
 
-                {getVerdict(site.slug) && (
-                  <div className="mt-6 rounded-lg border-l-4 border-l-secondary bg-card/60 p-5">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-secondary">
-                      Our Verdict
-                    </span>
-                    <p className="mt-2 text-sm leading-relaxed text-foreground/90">
-                      {getVerdict(site.slug)}
-                    </p>
+                {/* TL;DR callout — top-of-page summary (12-20 word sentence).
+                    Replaces the prior "Our Verdict" mini-callout. The full
+                    editorial verdict still appears in the bottom "Our
+                    Verdict" section as the single source of truth. */}
+                <div className="mt-6 rounded-lg border-l-4 border-l-secondary bg-card/60 p-5">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-secondary">
+                    TL;DR
+                  </p>
+                  <div className="mt-2 flex items-baseline gap-2 flex-wrap">
+                    <strong className="text-base font-bold text-foreground">{site.name}</strong>
+                    <span className="text-sm font-semibold text-secondary tabular-nums">{site.overall_score}/5</span>
                   </div>
-                )}
+                  {/* TODO: write per-site tldr field in sites.ts (12-20 words) */}
+                  <p className="mt-2 text-sm leading-relaxed text-foreground/90">
+                    {site.tldr ?? site.short_description}
+                  </p>
+                </div>
 
                 <div className="mt-6 flex flex-wrap gap-3">
                   <VisitSiteButton site={site} label={`Visit ${site.name}`} ctaPosition="hero" />
-                  <Link
-                    to={`/discount/${site.slug}`}
-                    className="inline-flex items-center gap-2 rounded-button border border-emerald-400/50 bg-emerald-400/10 px-8 py-3 text-sm font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors"
-                  >
-                    {site.deal_discount}% Off Deal <ArrowRight size={14} />
-                  </Link>
-                  <Link
-                    to="/top-sites"
-                    className="inline-flex items-center gap-2 rounded-button border border-primary px-8 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
-                  >
-                    See All Reviews
-                  </Link>
+                  {site.deal_discount > 0 && (
+                    <Link
+                      to={`/discount/${site.slug}`}
+                      className="inline-flex items-center gap-2 rounded-button border border-emerald-400/50 bg-emerald-400/10 px-8 py-3 text-sm font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors"
+                    >
+                      {site.deal_discount}% Off Deal <ArrowRight size={14} />
+                    </Link>
+                  )}
                 </div>
               </div>
             </AnimateOnScroll>
-
-            {/* CTA Block A — after Score Breakdown */}
-            <InlineReviewCTA
-              site={site}
-              position="mid-content-1"
-              message={`${site.name} scores ${site.overall_score}/5 overall. ${site.deal_discount > 0 ? `See the current ${site.deal_discount}% off deal.` : "Ready to subscribe?"}`}
-            />
 
             {/* Summary */}
             <AnimateOnScroll className="mt-10">
@@ -330,7 +336,8 @@ const ReviewPage = () => {
                   <div className="flex-1">
                     <p className="font-medium">{site.short_description}</p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Best for: Fans of {site.categories[0]?.replace(/-/g, " ")} content
+                      {/* TODO: write best_for_specific in sites.ts (15-25 words) per site */}
+                      Best for: {site.best_for_specific ?? `Fans of ${site.categories[0]?.replace(/-/g, " ") ?? "this type of"} content`}
                     </p>
                     {(siteNicheMap[site.slug]?.length ?? 0) > 0 && (
                       <div className="mt-3 flex flex-wrap gap-1.5">
@@ -382,21 +389,12 @@ const ReviewPage = () => {
               </div>
             </AnimateOnScroll>
 
-            {/* CTA Block B — after Pros/Cons */}
-            <InlineReviewCTA
-              site={site}
-              position="mid-content-2"
-              message={`Sound like your kind of site? Skip ahead and check ${site.name}.`}
-            />
-
             {/* Review body */}
             <AnimateOnScroll className="mt-10 space-y-8">
               <section>
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Content Quality</h2>
-                <div className="mt-3 mb-4 flex items-start gap-2 rounded-button border border-emerald-500/30 bg-emerald-500/5 px-4 py-3 text-sm text-emerald-400">
-                  <span className="shrink-0">✓</span>
-                  <span><strong>Editorially Reviewed</strong> — This review is based on publicly available information including pricing, features, and user feedback. Last reviewed: {currentMonthLong} {currentYear}.</span>
-                </div>
+                {/* TODO_VOICE: rewrite this section in first-person methodology voice. Ban words: "actually," "really," "literally," "definitely," "is solid," "carves out," "specific niche." Restate WHY scores are what they are; do not restate the score number itself. */}
+                <ReviewDisclosureBanner site={site} />
                 {aiLoading ? (
                   <div className="mt-4 space-y-3">
                     {[...Array(3)].map((_, i) => (
@@ -415,6 +413,7 @@ const ReviewPage = () => {
               </section>
               <section>
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Site Design & Usability</h2>
+                {/* TODO_VOICE: rewrite this section in first-person methodology voice. Ban words: "actually," "really," "literally," "definitely," "is solid," "carves out," "specific niche." Restate WHY scores are what they are; do not restate the score number itself. */}
                 <p className="mt-3 text-muted-foreground leading-relaxed">
                   {site.mobile_score >= 85
                     ? `The interface is fast and the search actually works — which sounds basic, but plenty of sites in this niche get it wrong. Mobile streaming is smooth with no buffering issues, and switching quality settings is instant. Overall, ${site.name} feels like a site built by people who use it.`
@@ -425,6 +424,7 @@ const ReviewPage = () => {
               </section>
               <section>
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Pricing & Value</h2>
+                {/* TODO_VOICE: rewrite this section in first-person methodology voice. Ban words: "actually," "really," "literally," "definitely," "is solid," "carves out," "specific niche." Restate WHY scores are what they are; do not restate the score number itself. */}
                 <div className="mt-4 overflow-x-auto glass-card rounded-lg">
                   <table className="w-full text-sm">
                     <thead>
@@ -446,7 +446,12 @@ const ReviewPage = () => {
                         <td className="px-4 py-3"><LocalisedPrice usd={site.price_quarterly} /></td>
                       </tr>
                       <tr>
-                        <td className="px-4 py-3">Annual</td>
+                        <td className="px-4 py-3">
+                          Annual
+                          <span className="ml-2 inline-flex items-center rounded-button bg-emerald-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">
+                            Best plan
+                          </span>
+                        </td>
                         <td className="px-4 py-3"><LocalisedPrice usd={stripMonthlyUnit(site.price_annual)} stripUnit />/mo (billed annually)</td>
                         <td className="px-4 py-3"><LocalisedPrice usd={site.price_annual} /></td>
                       </tr>
@@ -454,7 +459,28 @@ const ReviewPage = () => {
                   </table>
                 </div>
 
-                {/* CTA Block C — after Pricing Table */}
+                {/* Dynamic annual-savings sentence — computed at render time
+                    from the two prices. Falls back to a deal mention if the
+                    arithmetic can't be derived (e.g. price strings malformed). */}
+                {(() => {
+                  const monthly = parseMonthlyPrice(site.price_monthly);
+                  const annualPerMonth = parseMonthlyPrice(site.price_annual);
+                  if (monthly !== null && annualPerMonth !== null && monthly > annualPerMonth) {
+                    const yearTotalAnnual = annualPerMonth * 12;
+                    const yearTotalMonthly = monthly * 12;
+                    const saved = yearTotalMonthly - yearTotalAnnual;
+                    return (
+                      <p className="mt-4 text-sm text-muted-foreground">
+                        Annual works out to ${yearTotalAnnual.toFixed(2)} per year — ${saved.toFixed(2)} less than paying monthly.
+                        {site.deal_discount > 0 ? ` Current deal: ${site.deal_discount}% off applies to the annual plan.` : ""}
+                        {site.cancellation_notes ? ` ${site.cancellation_notes}` : ""}
+                      </p>
+                    );
+                  }
+                  return null;
+                })()}
+
+                {/* CTA Block C — after Pricing Table (INSTANCE 2 per spec) */}
                 <InlineReviewCTA
                   site={site}
                   position="mid-content-3"
@@ -463,6 +489,7 @@ const ReviewPage = () => {
               </section>
               <section>
                 <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Our Verdict</h2>
+                {/* TODO_VOICE: rewrite this section in first-person methodology voice. Ban words: "actually," "really," "literally," "definitely," "is solid," "carves out," "specific niche." Restate WHY scores are what they are; do not restate the score number itself. */}
                 <p className="mt-3 text-muted-foreground leading-relaxed">
                   {site.overall_score >= 4.5
                     ? `${site.name} is one of the best in the space — ${site.overall_score}/5 isn't given lightly. ${site.short_description} If you can afford the price, this is the one to get.`
