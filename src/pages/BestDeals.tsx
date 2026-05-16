@@ -1,22 +1,25 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useState, useMemo } from "react";
 import OutboundLink from "../components/OutboundLink";
-import { ArrowRight, Filter, Star } from "lucide-react";
+import { ArrowRight, Filter } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import Layout from "../components/Layout";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { sites, isAffiliated } from "../data/sites";
 import type { SiteData } from "../data/sites";
-import { StaggerContainer, StaggerChild, PageTransition } from "../components/MotionWrappers";
-import { currentYear, lastCheckedDate, DEAL_VERIFIED_DATE } from "../lib/dates";
-import { parseMonthlyPrice, formatTotalAnnual, computeSavings } from "../lib/dealMath";
+import { PageTransition } from "../components/MotionWrappers";
+import { currentYear, currentMonthLong } from "../lib/dates";
+import { parseMonthlyPrice } from "../lib/dealMath";
 import { supabase } from "../integrations/supabase/client";
-import CountdownTimer from "../components/CountdownTimer";
-import VerifiedBadge from "../components/VerifiedBadge";
+import HeroDealCard, { type HeroBadge } from "../components/HeroDealCard";
+import { getVerificationDisplay } from "../lib/dealVerification";
 import { trackEvent } from "../lib/analytics";
 import LocalisedPrice from "../components/LocalisedPrice";
-import { getVerdict } from "../data/site-verdicts";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Filter + sort state machinery (unchanged — pills still apply to the list)
+// ─────────────────────────────────────────────────────────────────────────────
 
 type FilterKey = "all" | "trials" | "under10" | "fifty";
 type SortKey = "discount" | "price" | "score";
@@ -34,217 +37,24 @@ const sortLabels: Record<SortKey, string> = {
   score: "Highest Score",
 };
 
-type StatusTone = "destructive" | "secondary" | "ongoing";
+// ─────────────────────────────────────────────────────────────────────────────
+// Helpers
+// ─────────────────────────────────────────────────────────────────────────────
 
-interface StatusInfo {
-  label: string;
-  tone: StatusTone;
-  countdownTo?: string | null;
+/** Compact category tag derived from the site's metadata. */
+function categoryTag(site: SiteData): string {
+  const c = site.categories;
+  if (c.includes("amateur-twinks")) return "Amateur";
+  if (c.includes("premium-studios") && c.includes("best-value")) return "Network";
+  if (c.includes("premium-studios")) return "Premium";
+  if (c.includes("best-value")) return "Network";
+  const first = c[0] ?? "";
+  return first.replace(/-/g, " ").replace(/\b\w/g, (ch) => ch.toUpperCase()) || "Site";
 }
 
-const HOUR = 60 * 60 * 1000;
-
-const computeDealStatus = (site: SiteData): StatusInfo | null => {
-  const now = Date.now();
-  const expires = site.expires_at ? new Date(site.expires_at).getTime() : null;
-
-  if (expires && Number.isFinite(expires) && expires > now) {
-    const remaining = expires - now;
-    if (remaining < 72 * HOUR) {
-      return { label: "Ends in", tone: "destructive", countdownTo: site.expires_at ?? null };
-    }
-    if (remaining < 7 * 24 * HOUR) {
-      const day = new Date(expires).toLocaleDateString(undefined, { weekday: "long" });
-      return { label: `Ends ${day}`, tone: "destructive" };
-    }
-    return { label: "Limited time", tone: "secondary" };
-  }
-
-  // No real expires_at — be honest, no fake urgency. Surface a verified
-  // status for active deals; for "ongoing" deals we render nothing
-  // because the discount % chip already conveys the deal exists, and
-  // "Always available" actively undermined conversion (if it's always
-  // available it's not a deal — it's the regular price).
-  if (site.deal_type === "flash") return { label: "Flash deal", tone: "destructive" };
-  if (site.deal_type === "limited") return { label: "Limited time", tone: "secondary" };
-  // ongoing → no status pill, just rely on the discount %.
-  return null;
-};
-
-const commitmentCopy = (site: SiteData): string => {
-  if (site.monthly_only) return "Cancel anytime — no annual commitment.";
-  if (site.annual_only) return "Annual subscription required.";
-  if (site.has_free_trial) return "Includes trial period";
-  return "Cancel anytime — see site for billing terms";
-};
-
-const StatusPill = ({ tone, label }: { tone: "destructive" | "secondary" | "ongoing"; label: string }) => {
-  const cls =
-    tone === "destructive"
-      ? "bg-destructive/15 text-destructive"
-      : tone === "secondary"
-      ? "bg-secondary/20 text-secondary"
-      : "bg-emerald-400/10 text-emerald-400";
-  return <span className={`rounded-button px-2 py-0.5 text-xs font-semibold ${cls}`}>{label}</span>;
-};
-
-type ElevatedBadge = "editor" | "savings" | "popular" | null;
-
-const BADGE_META: Record<Exclude<ElevatedBadge, null>, { label: string; border: string; bg: string; chip: string }> = {
-  editor: {
-    label: "★ EDITOR'S PICK",
-    border: "border-t-secondary",
-    bg: "from-secondary/[0.06] to-transparent",
-    chip: "gold-gradient text-secondary-foreground",
-  },
-  savings: {
-    label: "💰 BIGGEST SAVINGS",
-    border: "border-t-emerald-500",
-    bg: "from-emerald-500/[0.06] to-transparent",
-    chip: "bg-emerald-500/20 text-emerald-400",
-  },
-  popular: {
-    label: "🔥 MOST POPULAR",
-    border: "border-t-primary",
-    bg: "from-primary/[0.08] to-transparent",
-    chip: "bg-primary/20 text-primary",
-  },
-};
-
-/**
- * Build a 1–2 sentence editorial note for a deal card. Prefers the
- * editorial verdict from site-verdicts.ts. Falls back to a computed
- * line based on price + score so every card has something to say.
- */
-function dealNote(site: SiteData): string {
-  const v = getVerdict(site.slug);
-  if (v) {
-    const firstSentence = v.match(/^[^.!?]+[.!?]/)?.[0] ?? v;
-    return firstSentence.trim();
-  }
-  const priceFloor = parseMonthlyPrice(site.price_annual);
-  if (site.overall_score >= 4.5 && priceFloor !== null && priceFloor < 10) {
-    return `${site.overall_score}/5-rated premium content under $${priceFloor}/mo on annual.`;
-  }
-  if (site.overall_score >= 4.5) return `${site.overall_score}/5-rated site at ${site.deal_discount}% off — top-tier pick.`;
-  if (priceFloor !== null && priceFloor < 10) return `Solid pick under $${priceFloor}/mo — strong value play.`;
-  return `${site.deal_discount}% off the standard rate.`;
-}
-
-const VerifiedDealPill = () => (
-  <span className="rounded-button bg-emerald-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-400">
-    ✓ Verified deal
-  </span>
-);
-
-const DealCard = ({ site, elevated }: { site: SiteData; elevated?: ElevatedBadge }) => {
-  const status = computeDealStatus(site);
-  const annualTotal = formatTotalAnnual(site.price_annual);
-  const savings = computeSavings(site.price_monthly, site.price_annual);
-  const note = dealNote(site);
-  const meta = elevated ? BADGE_META[elevated] : null;
-
-  return (
-    <motion.div
-      className={`glass-card rounded-lg p-6 flex flex-col relative overflow-hidden ${
-        meta ? `border-t-2 ${meta.border}` : ""
-      }`}
-      whileHover={{ y: -3 }}
-    >
-      {meta && (
-        <>
-          <div className={`pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b ${meta.bg}`} />
-          <span className={`relative inline-flex w-fit items-center gap-1 rounded-button px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider mb-2 ${meta.chip}`}>
-            {meta.label}
-          </span>
-        </>
-      )}
-      <div className="relative flex items-start justify-between gap-3">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h2 className="font-heading text-xl font-bold truncate">{site.name}</h2>
-            <span className="inline-flex items-center gap-0.5 rounded-button bg-muted/60 px-1.5 py-0.5 text-[11px] font-bold text-secondary shrink-0">
-              <Star size={9} className="fill-secondary text-secondary" /> {site.overall_score}
-            </span>
-          </div>
-          <div className="mt-1 flex items-center gap-2 flex-wrap">
-            {status?.countdownTo ? (
-              <span className="inline-flex items-center gap-1.5 rounded-button bg-destructive/15 px-2 py-0.5 text-[11px] font-semibold text-destructive">
-                <CountdownTimer expiresAt={status.countdownTo} className="!font-semibold" />
-              </span>
-            ) : status ? (
-              <StatusPill tone={status.tone} label={status.label} />
-            ) : (
-              // Ongoing deal — no fake urgency; use a verified pill instead.
-              <VerifiedDealPill />
-            )}
-            {site.has_free_trial && (
-              <span className="rounded-button bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
-                Free Trial
-              </span>
-            )}
-          </div>
-          <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{site.deal_text}</p>
-        </div>
-        <div className="rounded-button bg-emerald-400/10 px-2 py-1 text-xs font-bold text-emerald-400 shrink-0">
-          −{site.deal_discount}%
-        </div>
-      </div>
-
-      {/* Editorial note — why we recommend this deal */}
-      <p className="relative mt-3 text-[12px] leading-snug text-foreground/80 italic">
-        “{note}”
-      </p>
-
-      {/* Pricing block */}
-      <div className="relative mt-4 rounded-lg border border-border/40 bg-muted/20 p-3">
-        <div className="flex items-baseline gap-2">
-          <LocalisedPrice usd={site.price_annual} className="text-2xl font-bold text-emerald-400" />
-          <LocalisedPrice usd={site.price_monthly} className="text-xs text-muted-foreground line-through" />
-        </div>
-        {annualTotal && (
-          <p className="mt-1 text-[11px] text-muted-foreground">
-            = {annualTotal} billed annually
-            {savings && savings > 0 && (
-              <span className="ml-2 text-emerald-400 font-semibold">Save ${savings}/year</span>
-            )}
-          </p>
-        )}
-        <p className="mt-1 text-[10px] text-muted-foreground/70">{commitmentCopy(site)}</p>
-      </div>
-
-      <div className="flex-1" />
-
-      {/* CTAs */}
-      <div className="relative mt-4">
-        <OutboundLink
-          site={site}
-          ctaPosition="card"
-          className={`cta-btn flex w-full items-center justify-center gap-2 rounded-button gold-gradient px-6 py-3 text-sm font-semibold text-secondary-foreground ${!isAffiliated(site) ? "opacity-85" : ""}`}
-        >
-          Claim Deal <ArrowRight size={14} />
-        </OutboundLink>
-        <Link
-          to={`/reviews/${site.slug}`}
-          className="mt-2 block w-full rounded-button border border-primary/40 px-4 py-2 text-center text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
-        >
-          See Full Review →
-        </Link>
-        <div className="mt-2 flex items-center justify-between">
-          <p className="text-[10px] text-muted-foreground">
-            Opens in new tab{isAffiliated(site) ? " · Affiliate" : ""}
-          </p>
-          <Link
-            to={`/discount/${site.slug}`}
-            className="text-[10px] font-medium text-secondary hover:underline"
-          >
-            Full discount details →
-          </Link>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
+// ─────────────────────────────────────────────────────────────────────────────
+// DealsEmailCapture (kept as-is from prior sprint)
+// ─────────────────────────────────────────────────────────────────────────────
 
 const DealsEmailCapture = () => {
   const [email, setEmail] = useState("");
@@ -313,6 +123,59 @@ const DealsEmailCapture = () => {
   );
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Compact list-row for the "All active deals" tier
+// ─────────────────────────────────────────────────────────────────────────────
+
+const DealListRow = ({ site }: { site: SiteData }) => {
+  const verification = getVerificationDisplay(site.deal_last_verified);
+  return (
+    <li className="flex flex-wrap items-center gap-x-4 gap-y-2 py-3.5 transition-transform hover:-translate-y-px">
+      {/* Discount badge */}
+      <span className="rounded-button bg-emerald-400/10 px-2 py-1 text-xs font-bold text-emerald-400 tabular-nums shrink-0">
+        −{site.deal_discount}%
+      </span>
+
+      {/* Name + score + tag */}
+      <div className="flex-1 min-w-0">
+        <Link
+          to={`/reviews/${site.slug}`}
+          className="font-medium hover:text-secondary transition-colors truncate block"
+        >
+          {site.name}
+        </Link>
+        <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
+          <LocalisedPrice usd={site.price_annual} className="tabular-nums" />
+          <span className="text-muted-foreground/40">·</span>
+          <span className="text-secondary font-semibold tabular-nums">{site.overall_score}/5</span>
+          <span className="hidden sm:inline text-muted-foreground/40">·</span>
+          <span className="hidden sm:inline">{categoryTag(site)}</span>
+        </div>
+      </div>
+
+      {/* Verification (right-aligned, muted) — only when within 30 days */}
+      {verification.show && (
+        <span className={`hidden md:inline text-[11px] ${verification.caveat ? "text-muted-foreground/60" : "text-muted-foreground"}`}>
+          {verification.text}
+        </span>
+      )}
+
+      <OutboundLink
+        site={site}
+        ctaPosition="card"
+        sourceTypeOverride="best_deals_list_row"
+        className="cta-btn gold-gradient inline-flex items-center rounded-button px-3.5 py-1.5 text-xs font-semibold text-secondary-foreground shrink-0"
+      >
+        Visit Site
+      </OutboundLink>
+    </li>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Main page
+// ─────────────────────────────────────────────────────────────────────────────
+
 const BestDeals = () => {
   const [params, setParams] = useSearchParams();
   const filterKey = ((params.get("filter") as FilterKey) ?? "all") in filterLabels
@@ -336,13 +199,41 @@ const BestDeals = () => {
     setParams(next);
   };
 
-  const dealSites = useMemo(() => {
-    // Affiliated-only filter: /best-deals is a conversion surface, not a
-    // research surface. Cards for sites without an affiliate_url generate
-    // $0 per click (they redirect to the site's own homepage). When NDT /
-    // NDW / future-affiliated sites land their URLs, they'll automatically
-    // reappear here.
-    let result = sites.filter((s) => s.deal_discount > 0 && isAffiliated(s));
+  // Affiliated-only base pool: /best-deals is a conversion surface.
+  // Unaffiliated sites with deals are excluded entirely (they reappear
+  // automatically the moment affiliate_url is set in sites.ts).
+  const affiliatedDeals = useMemo(
+    () => sites.filter((s) => s.deal_discount > 0 && isAffiliated(s)),
+    [],
+  );
+
+  // Three visual-anchor picks. Stable across filter/sort changes so the
+  // hero tier is always the same three sites; the list tier below is
+  // what visitors actually filter and sort.
+  const heroPicks = useMemo<{ site: SiteData; badge: HeroBadge }[]>(() => {
+    if (affiliatedDeals.length === 0) return [];
+    const byScore = [...affiliatedDeals].sort((a, b) => b.overall_score - a.overall_score);
+    const byDiscount = [...affiliatedDeals].sort((a, b) => b.deal_discount - a.deal_discount);
+    const editor = byScore[0]?.slug;
+    const savings = byDiscount.find((s) => s.slug !== editor)?.slug;
+    // "Most popular" — fallback to 2nd-highest score not already taken.
+    // TODO: replace with clicks-table-driven popularity once Phase 4 data accumulates.
+    const popular = byScore.find((s) => s.slug !== editor && s.slug !== savings)?.slug;
+    const picks: { site: SiteData; badge: HeroBadge }[] = [];
+    const findSite = (slug: string | undefined) => slug ? affiliatedDeals.find((s) => s.slug === slug) : undefined;
+    const editorSite = findSite(editor);
+    const savingsSite = findSite(savings);
+    const popularSite = findSite(popular);
+    if (editorSite) picks.push({ site: editorSite, badge: "editor" });
+    if (savingsSite) picks.push({ site: savingsSite, badge: "savings" });
+    if (popularSite) picks.push({ site: popularSite, badge: "popular" });
+    return picks;
+  }, [affiliatedDeals]);
+
+  // List tier: filtered + sorted, EXCLUDING the 3 hero picks (no duplicates).
+  const listDeals = useMemo(() => {
+    const heroSlugs = new Set(heroPicks.map((p) => p.site.slug));
+    let result = affiliatedDeals.filter((s) => !heroSlugs.has(s.slug));
     if (filterKey === "trials") result = result.filter((s) => s.has_free_trial);
     if (filterKey === "under10") {
       result = result.filter((s) => {
@@ -361,122 +252,76 @@ const BestDeals = () => {
     }
     if (sortKey === "score") result.sort((a, b) => b.overall_score - a.overall_score);
     return result;
-  }, [filterKey, sortKey]);
+  }, [affiliatedDeals, heroPicks, filterKey, sortKey]);
 
-  /**
-   * Compute the three visual-anchor picks across the *unfiltered* deal pool,
-   * so the badges are stable regardless of which filter the user has applied.
-   * Three distinct sites always — the dedup logic walks each list to skip
-   * any slug already claimed by a higher-priority badge.
-   */
-  const elevatedMap = useMemo<Record<string, ElevatedBadge>>(() => {
-    // Same affiliated-only filter as dealSites — badges must be assigned
-    // from the monetizable pool so the visual anchors of the page are
-    // also revenue anchors.
-    const pool = sites.filter((s) => s.deal_discount > 0 && isAffiliated(s));
-    if (pool.length === 0) return {};
-    const byScore = [...pool].sort((a, b) => b.overall_score - a.overall_score);
-    const byDiscount = [...pool].sort((a, b) => b.deal_discount - a.deal_discount);
-    const editor = byScore[0]?.slug;
-    const savings = byDiscount.find((s) => s.slug !== editor)?.slug;
-    // "Most popular" — fallback to 2nd-highest score not already taken.
-    // TODO: replace with clicks-table-driven popularity once Phase 4 data accumulates.
-    const popular = byScore.find((s) => s.slug !== editor && s.slug !== savings)?.slug;
-    const map: Record<string, ElevatedBadge> = {};
-    if (editor) map[editor] = "editor";
-    if (savings) map[savings] = "savings";
-    if (popular) map[popular] = "popular";
-    return map;
-  }, []);
-
-  /**
-   * Final render order: the three elevated badge cards lead the grid in a
-   * fixed sequence (Editor's Pick → Biggest Savings → Most Popular), then
-   * the remaining deals in the user's selected sort order. This guarantees
-   * the 3 anchor cards are always above the fold regardless of the
-   * sort/filter the visitor chooses.
-   */
-  const orderedDealSites = useMemo(() => {
-    const order: ElevatedBadge[] = ["editor", "savings", "popular"];
-    const elevatedSlugSet = new Set(Object.keys(elevatedMap));
-    const leadCards: SiteData[] = [];
-    for (const badge of order) {
-      const slug = Object.entries(elevatedMap).find(([, b]) => b === badge)?.[0];
-      if (!slug) continue;
-      const site = dealSites.find((s) => s.slug === slug);
-      if (site) leadCards.push(site);
-    }
-    const rest = dealSites.filter((s) => !elevatedSlugSet.has(s.slug));
-    return [...leadCards, ...rest];
-  }, [dealSites, elevatedMap]);
+  const totalDeals = heroPicks.length + listDeals.length;
+  const title = `Active gay porn deals, ${currentMonthLong} ${currentYear}`;
+  const description = `Checked ${currentMonthLong} ${currentYear}. ${totalDeals} active deals on tested sites. Discounts apply automatically through the visit link — no manual codes needed.`;
 
   return (
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>{`Best Gay Twink Site Deals & Discounts (${DEAL_VERIFIED_DATE}) | TwinkVault`}</title>
-          <meta name="description" content="Save up to 67% on the top-rated twink sites. Verified deals updated monthly. All links tested — no expired discounts, no bait-and-switch pricing." />
+          <title>{`${title} | TwinkVault`}</title>
+          <meta name="description" content={description} />
           <link rel="canonical" href="https://twinkvault.com/best-deals" />
-          <meta property="og:title" content={`Best Gay Twink Site Deals & Discounts (${DEAL_VERIFIED_DATE})`} />
-          <meta property="og:description" content="Save up to 67% on the top-rated twink sites. Verified deals updated monthly. All links tested — no expired discounts, no bait-and-switch pricing." />
+          <meta property="og:title" content={`${title} | TwinkVault`} />
+          <meta property="og:description" content={description} />
           <meta property="og:url" content="https://twinkvault.com/best-deals" />
         </Helmet>
 
-        <section className="hero-mesh pt-10 pb-6">
-          <div className="container">
+        <section className="pt-10 pb-6">
+          <div className="container max-w-5xl">
             <Breadcrumbs
               className="mb-6"
               items={[{ label: "Home", to: "/" }, { label: "Best Deals" }]}
             />
-          </div>
-          <div className="container text-center">
             <motion.h1
               className="font-heading font-bold heading-gradient inline-block"
               style={{ fontSize: "clamp(1.8rem, 5vw, 3.5rem)" }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              Every Active Twink Site Deal in {currentYear}
+              {title}
             </motion.h1>
             <motion.p
-              className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground"
+              className="mt-3 max-w-2xl text-sm text-muted-foreground"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.15 }}
             >
-              Annual plans, flash sales, and trial offers — verified pricing, total annual cost shown.
+              {description}
             </motion.p>
-            <div className="mt-3 flex items-center justify-center gap-2 flex-wrap">
-              <VerifiedBadge />
-              <span className="inline-flex items-center gap-2 rounded-button bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-xs font-semibold text-emerald-400">
-                Updated {lastCheckedDate}
-              </span>
-            </div>
-          </div>
-
-          {/* Featured Deal callout — immediately below H1, above filters */}
-          <div className="container max-w-4xl mt-6">
-            <Link
-              to="/discount/twinktrade"
-              className="block glass-card gold-pulse-border rounded-lg p-5 hover:bg-card/80 transition-colors"
-            >
-              <div className="flex items-center justify-between gap-4 flex-wrap">
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-secondary">★ Featured Deal</p>
-                  <h2 className="mt-1 font-heading text-lg font-bold">TwinkTrade — 67% off, just $9.95/mo on annual</h2>
-                  <p className="mt-1 text-xs text-muted-foreground">Active and verified. No promo code — discount applies through our link.</p>
-                </div>
-                <span className="rounded-button gold-gradient px-4 py-2 text-xs font-semibold text-secondary-foreground whitespace-nowrap">
-                  See Deal →
-                </span>
-              </div>
-            </Link>
+            <p className="mt-2 text-xs text-muted-foreground/70">
+              Sorted by editorial pick first, then by discount size.
+            </p>
           </div>
         </section>
 
-        {/* Filter bar */}
+        {/* Featured deals — hero tier */}
+        {heroPicks.length > 0 && (
+          <section className="border-t border-border/40 pt-10 pb-6">
+            <div className="container max-w-5xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-secondary mb-5">
+                Featured deals
+              </p>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {heroPicks.map(({ site, badge }) => (
+                  <HeroDealCard
+                    key={site.slug}
+                    site={site}
+                    badge={badge}
+                    categoryTag={categoryTag(site)}
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Filter + sort bar */}
         <section className="border-y border-border bg-card/40 sticky top-16 z-20">
-          <div className="container py-3">
+          <div className="container max-w-5xl py-3">
             <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
               <Filter size={14} className="text-muted-foreground shrink-0" />
               {(Object.keys(filterLabels) as FilterKey[]).map((k) => (
@@ -511,42 +356,37 @@ const BestDeals = () => {
           </div>
         </section>
 
-        {/* Deals grid — primary content, no email-capture interruption */}
+        {/* All active deals — compact list tier */}
         <section className="pt-8 pb-16">
-          <div className="container">
-            {orderedDealSites.length === 0 ? (
-              <p className="text-center text-muted-foreground py-12">
-                No deals match this filter. <button onClick={() => setFilter("all")} className="text-primary hover:underline">Clear filter</button>
+          <div className="container max-w-5xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-secondary mb-4">
+              All active deals
+            </p>
+            {listDeals.length === 0 ? (
+              <p className="text-muted-foreground py-8">
+                No deals match this filter.{" "}
+                <button onClick={() => setFilter("all")} className="text-primary hover:underline">
+                  Clear filter
+                </button>
               </p>
             ) : (
-              <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {orderedDealSites.map((site) => (
-                  <StaggerChild key={site.slug}>
-                    <DealCard site={site} elevated={elevatedMap[site.slug] ?? null} />
-                  </StaggerChild>
+              <ul className="divide-y divide-border/60 border-y border-border/60">
+                {listDeals.map((site) => (
+                  <DealListRow key={site.slug} site={site} />
                 ))}
-              </StaggerContainer>
+              </ul>
             )}
 
-            {/* Email capture demoted to after the grid */}
+            <p className="mt-10 text-xs text-muted-foreground">
+              Don't see a deal? Some sites don't run regular promotions — the full review pages always list current pricing.{" "}
+              <Link to="/reviews" className="text-secondary hover:underline underline-offset-4">
+                Browse all reviews →
+              </Link>
+            </p>
+
             <div className="mt-12">
               <DealsEmailCapture />
             </div>
-
-            <motion.div
-              className="mt-16 glass-card rounded-lg p-8 text-center"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Where These Deals Come From</h2>
-              <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-                Most are annual plan discounts built into the site's own pricing — you'd find them yourself if you dug around. We just put them in one place so you can compare. Some are affiliate-exclusive rates we negotiated. Either way, every link is tested before it goes live, and we re-check pricing monthly.
-              </p>
-              <Link to="/top-sites" className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-secondary hover:underline">
-                View Full Site Rankings <ArrowRight size={14} />
-              </Link>
-            </motion.div>
           </div>
         </section>
       </PageTransition>

@@ -60,6 +60,15 @@ export interface SiteData {
   best_for_specific?: string;
   /** Cancellation notes shown below the pricing table. Optional. */
   cancellation_notes?: string;
+  /**
+   * ISO date (YYYY-MM-DD) when Isaac last manually confirmed the deal is live.
+   *  • Within 14 days  → shown as "Verified MMM DD"
+   *  • 15-30 days      → shown with "may have changed" caveat
+   *  • Older than 30 days or missing → not shown
+   * Update monthly: visit each deal link, confirm price, update date.
+   * DO NOT auto-populate. Field stays undefined until manually verified.
+   */
+  deal_last_verified?: string;
 }
 
 /** Returns the correct outbound URL for a site */
