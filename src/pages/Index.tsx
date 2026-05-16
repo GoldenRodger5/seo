@@ -83,21 +83,23 @@ function categoryTag(site: SiteData): string {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const Hero = () => (
-  <section className="py-12 md:py-16">
-    {/* Widened to max-w-4xl + dropped the hero-heading class in favour of an
-        explicit Tailwind size scale that fits the headline on a single line
-        at desktop (≥1280px) and at most two lines on tablet. */}
-    <div className="container max-w-4xl">
+  <section className="py-10 md:py-12">
+    {/* Compressed masthead, not magazine cover. Container widened to
+        max-w-5xl + headline scale reduced (text-4xl ≈ 36px at lg) so
+        "Independent reviews of 62 gay porn sites." fits on ONE line at
+        desktop (≥1280px). Total hero height ≈ 220-260px, leaving room
+        for the niche grid to enter the first viewport. */}
+    <div className="container max-w-5xl">
       <motion.h1
-        className="font-heading font-bold heading-gradient inline-block text-3xl leading-tight md:text-4xl lg:text-5xl"
-        initial={{ opacity: 0, y: 16 }}
+        className="font-heading font-bold heading-gradient inline-block text-2xl leading-tight md:text-3xl lg:text-4xl"
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
         Independent reviews of {sites.length} gay porn sites.
       </motion.h1>
       <motion.p
-        className="mt-4 text-base text-muted-foreground leading-snug md:text-lg"
+        className="mt-3 text-sm text-muted-foreground leading-snug md:text-base"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
@@ -105,7 +107,7 @@ const Hero = () => (
         Every review is built from a paid membership and scored on the same four-pillar rubric. Updated monthly. No paid placements, ever.
       </motion.p>
       <motion.div
-        className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm"
+        className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.2 }}
@@ -265,7 +267,10 @@ const TopTen = () => {
 };
 
 const FeaturedNiches = () => (
-  <section className="border-t border-border/40 py-16 md:py-20">
+  // Tight top padding so the niche cards land in the first viewport
+  // immediately after the compressed hero — image-led content as the
+  // second section per the rebalance spec.
+  <section className="py-8 md:py-10">
     <div className="container max-w-5xl">
       <h2 className="font-heading text-2xl md:text-3xl font-bold">Browse by niche</h2>
 
@@ -459,11 +464,13 @@ const Index = () => {
 
       <PageTransition>
         <Hero />
-        <EditorsPick />
-        {/* Niche grid moved above Top 10 — image-led content reaches the
-            second-to-third viewport instead of the fourth, matching the
-            dominant scan-and-click visitor pattern. */}
+        {/* Browse by niche promoted to the second section — image-led
+            cover cards become the first visual content immediately
+            after the compressed hero. Editorial credibility (Editor's
+            Pick + methodology link in hero) still loads first; the
+            visual product surface follows without scrolling far. */}
         <FeaturedNiches />
+        <EditorsPick />
         <TopTen />
         <LatestReviews />
         <UtilityRow />
