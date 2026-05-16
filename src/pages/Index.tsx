@@ -11,6 +11,7 @@ import StarRating from "../components/StarRating";
 import LocalisedPrice from "../components/LocalisedPrice";
 import { sites, isAffiliated, getTopDealPick, getRecentlyUpdatedPromotable } from "../data/sites";
 import type { SiteData } from "../data/sites";
+import { getSiteImagery } from "../data/site-imagery";
 import { currentYear, currentMonthLong, currentMonthShort } from "../lib/dates";
 import { MANFINDER_URL, trackManfinderClick } from "../lib/crak";
 
@@ -82,26 +83,29 @@ function categoryTag(site: SiteData): string {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const Hero = () => (
-  <section className="py-24 md:py-36">
-    <div className="container max-w-3xl">
+  <section className="py-12 md:py-16">
+    {/* Widened to max-w-4xl + dropped the hero-heading class in favour of an
+        explicit Tailwind size scale that fits the headline on a single line
+        at desktop (≥1280px) and at most two lines on tablet. */}
+    <div className="container max-w-4xl">
       <motion.h1
-        className="hero-heading font-heading font-bold heading-gradient inline-block leading-[1.1]"
-        initial={{ opacity: 0, y: 20 }}
+        className="font-heading font-bold heading-gradient inline-block text-3xl leading-tight md:text-4xl lg:text-5xl"
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
         Independent reviews of {sites.length} gay porn sites.
       </motion.h1>
       <motion.p
-        className="mt-6 text-base text-muted-foreground leading-relaxed md:text-lg"
-        initial={{ opacity: 0, y: 12 }}
+        className="mt-4 text-base text-muted-foreground leading-snug md:text-lg"
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
       >
         Every review is built from a paid membership and scored on the same four-pillar rubric. Updated monthly. No paid placements, ever.
       </motion.p>
       <motion.div
-        className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm"
+        className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.2 }}
@@ -128,7 +132,7 @@ const EditorsPick = () => {
   if (!pick) return null;
   const note = pick.slug === EDITOR_PICK_NOTE_SLUG ? EDITOR_PICK_NOTE : pick.short_description;
   return (
-    <section className="border-t border-border/40 py-16 md:py-20">
+    <section className="border-t border-border/40 py-10 md:py-14">
       <div className="container max-w-3xl">
         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-secondary">
           {currentMonthLong} {currentYear} — Editor's Pick
@@ -177,14 +181,34 @@ const TopTen = () => {
         <p className="mt-2 text-sm text-muted-foreground">Ranked by overall score, updated monthly.</p>
 
         <ul className="mt-8 divide-y divide-border/60 border-y border-border/60">
-          {top10.map((site, i) => (
+          {top10.map((site, i) => {
+            const heroImg = getSiteImagery(site.slug).hero_image_url;
+            return (
             <li
               key={site.slug}
-              className="flex items-center gap-4 py-3.5 transition-transform hover:-translate-y-px"
+              className="flex items-center gap-3 sm:gap-4 py-3.5 transition-transform hover:-translate-y-px"
             >
-              <span className="font-mono text-xs text-muted-foreground tabular-nums w-7 shrink-0">
+              <span className="font-mono text-xs text-muted-foreground tabular-nums w-6 sm:w-7 shrink-0">
                 {String(i + 1).padStart(2, "0")}
               </span>
+              {/* Small square thumbnail — image when available, brand-letter
+                  fallback otherwise. Subtle, list-density (not card-density). */}
+              {heroImg ? (
+                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded overflow-hidden bg-muted/40 shrink-0">
+                  <img
+                    src={heroImg}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                    style={{ objectPosition: "center 20%" }}
+                  />
+                </div>
+              ) : (
+                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded bg-muted shrink-0 flex items-center justify-center font-heading text-sm font-bold text-foreground/40">
+                  {site.name.charAt(0)}
+                </div>
+              )}
               <div className="flex-1 min-w-0">
                 <Link
                   to={`/reviews/${site.slug}`}
@@ -226,7 +250,8 @@ const TopTen = () => {
                 )}
               </div>
             </li>
-          ))}
+            );
+          })}
         </ul>
 
         <div className="mt-6">
@@ -435,8 +460,11 @@ const Index = () => {
       <PageTransition>
         <Hero />
         <EditorsPick />
-        <TopTen />
+        {/* Niche grid moved above Top 10 — image-led content reaches the
+            second-to-third viewport instead of the fourth, matching the
+            dominant scan-and-click visitor pattern. */}
         <FeaturedNiches />
+        <TopTen />
         <LatestReviews />
         <UtilityRow />
         <ManfinderRow />
