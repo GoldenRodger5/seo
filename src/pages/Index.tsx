@@ -6,12 +6,12 @@ import Layout from "../components/Layout";
 import { PageTransition } from "../components/MotionWrappers";
 import OutboundLink from "../components/OutboundLink";
 import InlineEmailCapture from "../components/InlineEmailCapture";
-import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import StarRating from "../components/StarRating";
 import LocalisedPrice from "../components/LocalisedPrice";
 import { sites, isAffiliated, getTopDealPick, getRecentlyUpdatedPromotable } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { getSiteImagery } from "../data/site-imagery";
+import { getHeroThumbnailSites } from "../lib/heroThumbnails";
 import { currentYear, currentMonthLong, currentMonthShort } from "../lib/dates";
 import { parseMonthlyPrice } from "../lib/dealMath";
 import { MANFINDER_URL, trackManfinderClick } from "../lib/crak";
@@ -82,52 +82,100 @@ function categoryTag(site: SiteData): string {
 // Sections
 // ─────────────────────────────────────────────────────────────────────────────
 
-const Hero = () => (
-  <section className="py-10 md:py-12">
-    {/* Compressed masthead, not magazine cover. Container widened to
-        max-w-5xl + headline scale reduced (text-4xl ≈ 36px at lg) so
-        "Independent reviews of 62 gay porn sites." fits on ONE line at
-        desktop (≥1280px). Total hero height ≈ 220-260px, leaving room
-        for the niche grid to enter the first viewport. */}
-    <div className="container max-w-5xl">
-      <motion.h1
-        className="font-heading font-bold heading-gradient inline-block text-2xl leading-tight md:text-3xl lg:text-4xl"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-      >
-        Independent reviews of {sites.length} gay porn sites.
-      </motion.h1>
-      <motion.p
-        className="mt-3 text-sm text-muted-foreground leading-snug md:text-base"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-      >
-        Every review is built from a paid membership and scored on the same four-pillar rubric. Updated monthly. No paid placements, ever.
-      </motion.p>
-      <motion.div
-        className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, delay: 0.2 }}
-      >
-        <Link
-          to="/methodology"
-          className="text-secondary hover:underline underline-offset-4 font-medium"
-        >
-          See how we score →
-        </Link>
-        <Link
-          to="/reviews"
-          className="text-secondary hover:underline underline-offset-4 font-medium"
-        >
-          Browse all {sites.length} sites →
-        </Link>
-      </motion.div>
-    </div>
-  </section>
-);
+const Hero = () => {
+  const thumbnails = getHeroThumbnailSites(6);
+  return (
+    <section className="py-12 md:py-16 lg:py-20">
+      <div className="container max-w-6xl">
+        {/* Desktop: two-column grid (text ~1.2fr / thumbs ~1fr).
+            Tablet/Mobile: stacked, text first then thumb grid. */}
+        <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+
+          {/* Left — text block */}
+          <div className="min-w-0">
+            <motion.h1
+              className="font-heading font-bold heading-gradient inline-block text-3xl leading-tight md:text-4xl lg:text-[2.75rem] xl:text-5xl"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              Independent reviews of {sites.length} gay porn sites.
+            </motion.h1>
+            <motion.p
+              className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base lg:text-lg"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+            >
+              Every review is built from a paid membership and scored on the same four-pillar rubric. Updated monthly. No paid placements, ever.
+            </motion.p>
+            <motion.div
+              className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+            >
+              {/* Primary CTA — same gold-gradient treatment as Top 10
+                  "Visit" buttons. min-h-12 (48px) for mobile thumb-tap. */}
+              <Link
+                to="/reviews"
+                className="cta-btn gold-gradient inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground min-h-[44px] sm:w-auto sm:text-base"
+              >
+                Browse all {sites.length} sites →
+              </Link>
+              <Link
+                to="/methodology"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-button border border-primary bg-transparent px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors min-h-[44px] sm:w-auto sm:text-base"
+              >
+                See how we score
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Right — 6-tile thumbnail contact sheet.
+              Desktop:  2 cols × 3 rows, aspect-ratio 4/5 (portrait)
+              Tablet:   3 cols × 2 rows, aspect-ratio 16/10
+              Mobile:   3 cols × 2 rows, aspect-ratio 1/1 (squares) */}
+          {thumbnails.length > 0 && (
+            <motion.div
+              className="relative grid grid-cols-3 gap-2 lg:grid-cols-2 lg:gap-3"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+            >
+              {thumbnails.map((site) => {
+                const img = getSiteImagery(site.slug);
+                return (
+                  <Link
+                    key={site.slug}
+                    to={`/reviews/${site.slug}`}
+                    // Responsive aspect ratio: square on mobile (dense),
+                    // 16:10 on tablet, 4:5 portrait on desktop (matches
+                    // contact-sheet feel of the 2×3 grid)
+                    className="group block aspect-square overflow-hidden rounded-lg border border-white/10 bg-muted/30 transition-all hover:scale-[1.03] hover:brightness-110 md:aspect-[16/10] lg:aspect-[4/5]"
+                    aria-label={`${site.name} review`}
+                  >
+                    <img
+                      src={img.hero_image_url ?? ""}
+                      alt={img.banner_alt || `${site.name} cover`}
+                      loading="eager"
+                      decoding="async"
+                      className="h-full w-full object-cover"
+                      style={{ objectPosition: "center 25%" }}
+                    />
+                  </Link>
+                );
+              })}
+              {/* Right-edge fade for the desktop 2-col layout — makes the
+                  grid feel like a contact sheet extending off the page. */}
+              <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-12 bg-gradient-to-l from-background to-transparent opacity-60 lg:block" />
+            </motion.div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // EditorsPick standalone component removed — content absorbed into
 // TopTen as a sidecar (desktop) / card-above-list (mobile/tablet).
@@ -157,12 +205,15 @@ const TopTen = () => {
   const pickNote = pick && pick.slug === EDITOR_PICK_NOTE_SLUG ? EDITOR_PICK_NOTE : pick?.short_description;
 
   return (
-    <section className="border-t border-border/40 py-12 md:py-16 lg:py-20">
+    // Bottom padding reduced (lg:pb-12 = 48px desktop, pb-8 = 32px mobile)
+    // so the sidecar height doesn't open up a ~200px dead space before
+    // the Latest reviews H2. Top padding unchanged.
+    <section className="border-t border-border/40 pt-12 pb-8 md:pt-16 md:pb-10 lg:pt-20 lg:pb-12">
       <div className="container max-w-6xl">
         <h2 className="font-heading text-2xl md:text-3xl font-bold">The Top 10</h2>
         <p className="mt-2 text-sm text-muted-foreground">Ranked by overall score, updated monthly.</p>
 
-        <div className="mt-8 flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-10 lg:items-start">
+        <div className="mt-8 flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-6 lg:items-start">
 
           {/* Editor's Pick sidecar — visible above the list on mobile/tablet
               (default order), positioned to the right on desktop via order utilities. */}
@@ -382,7 +433,9 @@ const LatestReviews = () => {
   const latest = getRecentlyUpdatedPromotable(6);
   if (latest.length === 0) return null;
   return (
-    <section className="border-t border-border/40 py-12 md:py-16 lg:py-20">
+    // Top padding matched to Top 10's bottom padding so the gap
+    // between sections lands at ~96px desktop / ~64px mobile total.
+    <section className="border-t border-border/40 pt-8 pb-12 md:pt-10 md:pb-16 lg:pt-12 lg:pb-20">
       <div className="container max-w-6xl">
         <h2 className="font-heading text-2xl md:text-3xl font-bold">Latest reviews</h2>
         <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -394,7 +447,37 @@ const LatestReviews = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <SitePlaceholderImage site={site} className="mb-3" />
+              {/* Fixed 16:10 aspect ratio — source image dimensions vary
+                  across the catalog (some 16:10, some 1:1, some 16:9);
+                  object-cover crops to consistent shape so the 6-card
+                  grid renders uniformly. */}
+              {(() => {
+                const heroImg = getSiteImagery(site.slug).hero_image_url;
+                return (
+                  <div className="mb-3 aspect-[16/10] w-full overflow-hidden rounded-lg bg-muted/40">
+                    {heroImg ? (
+                      <img
+                        src={heroImg}
+                        alt={getSiteImagery(site.slug).banner_alt || `${site.name} cover`}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover"
+                        style={{ objectPosition: "center 25%" }}
+                      />
+                    ) : (
+                      <div
+                        className="flex h-full w-full items-end justify-center p-3 text-center"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, hsl(263, 30%, 15%) 0%, hsl(240, 30%, 10%) 100%)",
+                        }}
+                      >
+                        <span className="text-xs font-medium text-foreground/60">{site.name}</span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
               <h3 className="font-heading text-lg font-semibold">{site.name}</h3>
               <div className="mt-1">
                 <StarRating score={site.overall_score} size={13} />
