@@ -98,6 +98,44 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
       }
     ]
   },
+  "nakedsword-alternatives": {
+    "h1": "Best Alternatives to NakedSword in 2026",
+    "intro": "NakedSword has spent decades as a flagship gay membership site — an aggregator-style platform pulling together content from multiple studios under one roof, with broad genre coverage that spans twinks, muscle guys, bareback, kink, and everything in between. It's genuinely impressive in scale. So why look elsewhere? Pricing sits noticeably higher than most niche sites, running roughly $30–$40 per month at standard rates. Some members have flagged ongoing frustration with billing practices and cancellation friction. And if you're specifically chasing a twink-focused, bareback, or younger-cast experience, much of what NakedSword offers feels scattered — you're browsing a department store when you wanted a boutique. The alternatives below are purpose-built for exactly that. Look for sites with consistent performer types, transparent pricing, and studios that reinvest in original production rather than just licensing third-party content.",
+    "alternatives": [
+      {
+        "slug": "helix-studios",
+        "reason": "Helix Studios is the obvious first stop for anyone who subscribed to NakedSword primarily for its younger-cast, college-boy content. Where NakedSword spreads wide across genres and performer types, Helix is a focused studio operation — every scene features the same smooth, photogenic twink aesthetic, shot in-house with production values that rival anything on the bigger platform. Updates are consistent, the site is clean, and you're not paying for content you'll never click on. For members tired of hunting through a massive mixed catalog to find the scenes that actually match their taste, Helix delivers a curated experience without the noise."
+      },
+      {
+        "slug": "next-door-twink",
+        "reason": "Next Door Twink earns its spot here because it solves NakedSword's biggest weakness for twink-focused members: depth within a niche. Rather than licensing studio content from a dozen different places, NDT builds its own scenes around a recurring roster of young, athletic performers with obvious on-screen chemistry. The pricing is more approachable than NakedSword's standard rate, and the site architecture is easier to navigate — no wading through bear, leather, or daddy content to reach what you actually want. It's a leaner membership that delivers more of what a specific audience is looking for."
+      },
+      {
+        "slug": "southern-strokes",
+        "reason": "If the appeal of NakedSword was finding genuine-feeling scenes with next-door-type guys rather than industry veterans hitting their marks, Southern Strokes fills that gap with a distinct regional flavor. The performers lean young, natural-looking, and unpolished in the best sense — less produced gloss, more authentic heat. It won't replace the sheer volume NakedSword offers, but members who found themselves gravitating toward the amateur-adjacent scenes in that big catalog will feel right at home here. Lower price point and a consistent casting approach make it a smart complement or replacement."
+      },
+      {
+        "slug": "breed-me-raw",
+        "reason": "NakedSword carries bareback content, but it's mixed into a library that covers every other genre too. Breed Me Raw keeps the focus entirely on raw, no-condom scenes — no hedging, no condom-film filler sitting alongside it. For subscribers who were specifically seeking out bareback content within NakedSword's catalog, this is a cleaner, cheaper way to get exactly that. The performer mix skews toward younger guys with the occasional daddy matchup, production quality is solid, and the site doesn't try to be everything to everyone, which is genuinely refreshing at this price tier."
+      },
+      {
+        "slug": "next-door-world",
+        "reason": "Next Door World makes sense for the NakedSword member who valued variety but not necessarily the sprawling studio-aggregator model. It functions as an umbrella network covering multiple Next Door properties — twinks, college guys, amateur setups — giving you genuine range without the bloat of NakedSword's full multi-studio catalog. Pricing is competitive, content updates are reliable, and the overall production level is a step above what you'd expect from a mid-tier network. If NakedSword felt like it was charging premium prices for content you'd only half-use, Next Door World's network structure gives you more of what you want per dollar spent."
+      }
+    ],
+    "verdict": "NakedSword earns its reputation as one of the most comprehensive gay membership sites online, but comprehensive comes with trade-offs: higher pricing, a mixed catalog that demands filtering, and a billing history that's drawn complaints. Every alternative listed here is more focused — and for most guys, focus is exactly what they want. Helix Studios and Next Door Twink are the top picks for a clean twink experience; Breed Me Raw is the call for anyone going specifically for bareback; Southern Strokes delivers character that the big platform can't manufacture; and Next Door World bridges variety and value better than most. Pick the one that matches what you were actually watching on NakedSword.",
+    "meta_description": "Looking to switch from NakedSword? We break down the 5 best alternatives in 2026 — better pricing, tighter niches, and no filler content.",
+    "faq": [
+      {
+        "question": "Is NakedSword worth the price compared to niche gay sites?",
+        "answer": "It depends on how diverse your tastes are. NakedSword's value proposition rests on breadth — access to content from multiple studios across many genres under one subscription. If you regularly browse twinks, muscle guys, kink, and bareback all in the same session, that breadth justifies the cost. But if your viewing habits stay in one lane — say, twinks or bareback specifically — you'll almost certainly get more for less money with a focused niche site. Most of the alternatives listed here run at a lower monthly rate and deliver deeper libraries within their specific niche."
+      },
+      {
+        "question": "What's the main reason members leave NakedSword for alternatives?",
+        "answer": "Pricing and catalog noise are the two most common reasons. At roughly $30–$40 per month at standard rates, NakedSword sits at the higher end of gay membership site pricing. Members who primarily want twink or bareback content often feel like they're paying for a large catalog they only use a fraction of. Billing and cancellation friction has also appeared in user complaints over the years, which pushes some members toward smaller, more straightforward operations where account management is easier to navigate."
+      }
+    ]
+  },
 };
 
 export const getAlternativesBody = (slug: string): AlternativesBody | undefined =>
