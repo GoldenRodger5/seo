@@ -67,9 +67,6 @@ const pillars = [
   },
 ];
 
-const overallFormula =
-  "Overall = (Content × 0.35) + (Value × 0.25) + (Design × 0.20) + (Updates × 0.20), rescaled to a 0–5 score.";
-
 const faqs = [
   { q: "Why these four pillars?", a: "They're the four things I actually care about as a paying subscriber. Content is what you're paying for. Value is whether the price feels fair. Design determines whether you'll keep the subscription. Updates determine whether the site is still alive. Everything else is a sub-factor inside one of these." },
   { q: "Why is content quality weighted highest?", a: "Because if the content's bad, nothing else saves the subscription. A beautifully designed site with a thin, recycled library still isn't worth paying for. Conversely, a great content library forgives a lot of UX sins." },
@@ -124,6 +121,15 @@ const Methodology = () => (
             </div>
           </motion.div>
 
+          <motion.p
+            className="mt-6 text-muted-foreground leading-relaxed"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            Not every review is built the same way. Sites I've subscribed to and tested across at least two billing cycles carry a <strong className="text-foreground">"Tested from a paid subscription"</strong> badge. Others are built from publisher materials, scene samples, and user reports — those carry a <strong className="text-foreground">"Researched"</strong> badge. Both go through the same scoring rubric, but the depth differs. I'm working through the catalog and converting research-based reviews to subscription-based ones as time and budget allow.
+          </motion.p>
+
           <div className="mt-10 space-y-6">
             {pillars.map((p, i) => (
               <motion.div
@@ -151,8 +157,8 @@ const Methodology = () => (
           </div>
 
           <motion.div className="mt-10 glass-card rounded-lg p-6" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">The overall score</h2>
-            <p className="mt-3 text-muted-foreground">{overallFormula}</p>
+            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">How the overall score is calculated</h2>
+            <p className="mt-3 text-muted-foreground">Each pillar is scored 0–10, then multiplied by its weight (Content Quality 35%, Value for Money 25%, Site Design 20%, Update Frequency 20%). The four weighted scores are summed to produce a 0–10 overall score, which is converted to a 5-star display by multiplying by 0.5. Pillar scores shown on review pages are rounded to the nearest 5 for visual clarity — the underlying calculations use the precise scores.</p>
             <p className="mt-3 text-muted-foreground">A site needs to score consistently across all four to land above 4.5/5. A 95 in content can't carry a 60 in updates — the weighting is deliberately balanced so a single strong pillar doesn't whitewash weakness elsewhere.</p>
           </motion.div>
 
@@ -163,6 +169,38 @@ const Methodology = () => (
               <li><strong className="text-foreground">Marketing claims.</strong> "4K HDR" only counts if scenes actually deliver it. "Weekly updates" only counts if the upload calendar actually shows weekly drops.</li>
               <li><strong className="text-foreground">My personal taste.</strong> A niche site I'm not into the content of can still score well if it executes the niche cleanly.</li>
               <li><strong className="text-foreground">Tour-page promises.</strong> Everything is verified inside the member area, on a paid login.</li>
+            </ul>
+          </motion.div>
+
+          <motion.div className="mt-10 glass-card rounded-lg p-6" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Who writes these reviews</h2>
+            <p className="mt-3 text-muted-foreground leading-relaxed">
+              TwinkVault is written and operated by Isaac, an independent reviewer based in the US. No team, no co-writers — every review on this site is the result of one person's time and a paid subscription. Reach me at{" "}
+              <a href="mailto:isaac.m.builds@gmail.com" className="text-secondary hover:underline underline-offset-4">isaac.m.builds@gmail.com</a>{" "}
+              if you spot something I got wrong, want to suggest a site, or work in the industry and want to share context I should know.
+            </p>
+          </motion.div>
+
+          <motion.div className="mt-10 glass-card rounded-lg p-6" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Edge cases</h2>
+            <p className="mt-3 text-muted-foreground">A few things that come up often:</p>
+            <ul className="mt-4 space-y-2 text-muted-foreground list-disc pl-6">
+              <li><strong className="text-foreground">Network sites</strong> (Say Uncle, Buddy Profits, ASGmax, and similar) are scored at the network level when one subscription gives access to all sites in the network. Individual site pages still exist for SEO and discovery, but the score reflects the network value.</li>
+              <li><strong className="text-foreground">Pricing changes</strong> that happen between reviews are noted in the review with a date. The score reflects the price at the time of the most recent review.</li>
+              <li><strong className="text-foreground">Free press subscriptions</strong>, where offered by a studio, are disclosed in the review banner. Most reviews are built from full-price paid subscriptions.</li>
+              <li><strong className="text-foreground">A site that relaunches</strong> with substantially new branding or ownership is treated as a new review. The old review is archived with a redirect to the new one.</li>
+            </ul>
+          </motion.div>
+
+          <motion.div className="mt-10 glass-card rounded-lg p-6" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Changes to this methodology</h2>
+            <p className="mt-3 text-muted-foreground">The rubric is stable but not frozen. Material changes are noted here with the date.</p>
+            <ul className="mt-4 space-y-2 text-muted-foreground list-disc pl-6">
+              {/* CHANGE_LOG: prepend new entries here as material changes ship.
+                  Format: "<Month YYYY>: <what changed>." Keep entries short
+                  and specific — this list is the load-bearing trust signal
+                  for readers comparing current vs prior scoring. */}
+              <li><strong className="text-foreground">May 2026:</strong> Clarified the distinction between subscription-tested and research-based reviews. Added pillar-score display rounding (nearest 5) for visual clarity.</li>
             </ul>
           </motion.div>
 
