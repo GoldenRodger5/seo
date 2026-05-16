@@ -7,7 +7,6 @@ import { PageTransition } from "../components/MotionWrappers";
 import {
   getAllPostsSorted,
   readingTimeMinutes,
-  BLOG_CATEGORIES,
 } from "../data/blog-posts";
 
 const POSTS_PER_PAGE = 12;
@@ -23,8 +22,8 @@ const BlogIndex = () => {
     <Layout>
       <PageTransition>
         <Helmet>
-          <title>TwinkVault Blog — Guides, Comparisons & Industry Analysis</title>
-          <meta name="description" content="Editorial coverage of gay porn sites — buyer guides, head-to-head comparisons, pricing analysis, and industry trends from the TwinkVault editorial team." />
+          <title>Notes &amp; explainers — TwinkVault</title>
+          <meta name="description" content="Longer-form pieces on the industry, individual sites, and how to think about the catalog." />
           <link rel="canonical" href={`${BASE_URL}/blog`} />
           <script type="application/ld+json">{JSON.stringify({
             "@context": "https://schema.org",
@@ -56,23 +55,17 @@ const BlogIndex = () => {
           })}</script>
         </Helmet>
 
-        <section className="hero-mesh py-16">
-          <div className="container max-w-4xl text-center">
-            <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">TwinkVault Blog</h1>
-            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Editorial coverage of gay porn sites — buyer guides, head-to-head comparisons, pricing analysis, and industry trends. Written by the team that reviews every site we score.
+        <section className="py-16">
+          <div className="container max-w-4xl">
+            <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">
+              Notes &amp; explainers
+            </h1>
+            <p className="mt-4 max-w-2xl text-muted-foreground">
+              Longer-form pieces on the industry, individual sites, and how to think about the catalog. {posts.length} articles.
             </p>
-            <nav className="mt-6 flex flex-wrap justify-center gap-2">
-              {BLOG_CATEGORIES.map((c) => (
-                <Link
-                  key={c.slug}
-                  to={`/blog/category/${c.slug}`}
-                  className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {c.label}
-                </Link>
-              ))}
-            </nav>
+            {/* Category nav removed — with under 12 articles the simple grid
+                below is already scannable. Re-add if the catalog grows past
+                a dozen and visitors start filtering. */}
           </div>
         </section>
 

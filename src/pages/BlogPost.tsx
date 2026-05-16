@@ -258,16 +258,22 @@ const BlogPostPage = () => {
               <h1 className="mt-4 font-heading text-3xl md:text-4xl font-bold heading-gradient inline-block leading-tight">
                 {post.h1}
               </h1>
-              <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                {/* Byline always reads "By Isaac" — TwinkVault is a single-
+                    reviewer site per /methodology byline section. If the
+                    author roster ever expands beyond Isaac, render
+                    post.author here instead. */}
+                <span className="font-medium text-foreground/80">By Isaac</span>
+                <span className="text-muted-foreground/40">·</span>
                 <span className="inline-flex items-center gap-1.5">
                   <Calendar size={12} />
-                  Published {new Date(post.published_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                  {new Date(post.published_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
                 </span>
+                <span className="text-muted-foreground/40">·</span>
                 <span className="inline-flex items-center gap-1.5">
                   <Clock size={12} />
                   {readingMin} min read
                 </span>
-                <span>By {post.author}</span>
               </div>
               <p className="mt-4 text-lg text-foreground/85 leading-relaxed">{post.excerpt}</p>
             </header>
@@ -278,6 +284,19 @@ const BlogPostPage = () => {
               {post.body.map((block, i) => (
                 <Block key={i} block={block} />
               ))}
+            </div>
+
+            {/* Single closing CTA — directs readers to /reviews rather
+                than to a specific affiliate. The inline BlogBlockSiteCta
+                blocks within the body already handle per-mention CTAs;
+                this is the catch-all for readers who reach the end. */}
+            <div className="mt-10 border-t border-border/40 pt-8">
+              <Link
+                to="/reviews"
+                className="inline-flex items-center gap-2 text-secondary hover:underline underline-offset-4 font-medium"
+              >
+                Browse all reviews →
+              </Link>
             </div>
 
             <ShareButtons post={post} />
