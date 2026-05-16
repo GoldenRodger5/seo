@@ -13,6 +13,7 @@ import { sites, isAffiliated, getTopDealPick, getRecentlyUpdatedPromotable } fro
 import type { SiteData } from "../data/sites";
 import { getSiteImagery } from "../data/site-imagery";
 import { currentYear, currentMonthLong, currentMonthShort } from "../lib/dates";
+import { parseMonthlyPrice } from "../lib/dealMath";
 import { MANFINDER_URL, trackManfinderClick } from "../lib/crak";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -28,39 +29,38 @@ const EDITOR_PICK_NOTE_SLUG = "nakedsword";
 const EDITOR_PICK_NOTE =
   "NakedSword is the closest thing this category has to a default. The library is the largest I've personally subscribed to — 50,000+ scenes spanning Falcon, Hot House, Raging Stallion, and NakedSword Originals — and new scenes land daily. At $9.99/mo annual with the current 67% off, it undercuts Sean Cody's $7.49 and Men.com's $8.33 on per-scene math by a wider margin than either's headline discount suggests. If you only subscribe to one site, this is the one.";
 
-// EDITOR_NOTE: niche intros + site counts hand-curated. Verify against
-// siteNicheMap once a month and rewrite copy when counts shift materially.
-const FEATURED_NICHES: { slug: string; name: string; siteCount: string; intro: string; image: string }[] = [
-  {
-    slug: "twink",
-    name: "Twink",
-    siteCount: "41 sites",
-    intro: "The core of TwinkVault — premium studios down to amateur networks.",
-    image: "/site-banners/twinks-in-shorts-hero.jpg",
-  },
-  {
-    slug: "bareback",
-    name: "Bareback",
-    siteCount: "47 sites",
-    intro: "The largest category here, all explicitly bareback-focused.",
-    image: "/site-banners/bareback-that-hole-hero.jpg",
-  },
-  {
-    slug: "amateur",
-    name: "Amateur",
-    siteCount: "40 sites",
-    intro: "Real performers, no studio polish. Casting feels found, not cast.",
-    image: "/site-banners/southern-strokes-hero.jpg",
-  },
-];
-
-const OTHER_NICHES = [
-  { slug: "daddy", name: "Daddy" },
-  { slug: "bear", name: "Bear" },
-  { slug: "asian", name: "Asian" },
-  { slug: "college", name: "College" },
-  { slug: "muscle", name: "Muscle" },
-  { slug: "jock", name: "Jock" },
+// EDITOR_NOTE: niche tiles hand-curated. Hooks ≤90 chars. Verify against
+// siteNicheMap once a month and rewrite when site counts shift materially.
+// Cover image is a representative site banner per niche until dedicated
+// niche cover art lands. See docs/missing-niche-images.md.
+const ALL_NICHES: {
+  slug: string;
+  name: string;
+  siteCount: number;
+  image: string;
+  hook: string;
+  badge?: string;
+}[] = [
+  { slug: "twink",    name: "Twink",    siteCount: 41, image: "/site-banners/twinks-in-shorts-hero.jpg",
+    hook: "The core of TwinkVault — premium studios down to amateur networks.",
+    badge: "Most reviewed" },
+  { slug: "bareback", name: "Bareback", siteCount: 47, image: "/site-banners/bareback-that-hole-hero.jpg",
+    hook: "The largest category here, all explicitly bareback-focused.",
+    badge: "Largest" },
+  { slug: "amateur",  name: "Amateur",  siteCount: 40, image: "/site-banners/southern-strokes-hero.jpg",
+    hook: "Real performers, no studio polish. Casting feels found, not cast." },
+  { slug: "muscle",   name: "Muscle",   siteCount: 14, image: "/site-banners/athletic-twinks-hero.jpg",
+    hook: "Built physiques, gym aesthetics. Heavy crossover with premium studios." },
+  { slug: "daddy",    name: "Daddy",    siteCount: 7,  image: "/site-banners/daddy-on-twink-hero.jpg",
+    hook: "Older-younger pairings. Mostly bareback, mostly mature studios." },
+  { slug: "asian",    name: "Asian",    siteCount: 7,  image: "/site-banners/peterfever-hero.jpg",
+    hook: "Asian performers and studios. Limited but growing selection." },
+  { slug: "jock",     name: "Jock",     siteCount: 6,  image: "/site-banners/athletic-twinks-hero.jpg",
+    hook: "Athletic builds, sports themes. Crossover with college and amateur." },
+  { slug: "college",  name: "College",  siteCount: 5,  image: "/site-banners/boys-at-camp-hero.jpg",
+    hook: "Casting that skews 18–22, often dorm-themed or amateur networks." },
+  { slug: "bear",     name: "Bear",     siteCount: 4,  image: "/site-banners/bear-films-hero.jpg",
+    hook: "Heavier, hairier, more masculine. Smaller but distinct catalog." },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -129,206 +129,263 @@ const Hero = () => (
   </section>
 );
 
-const EditorsPick = () => {
-  const pick = getTopDealPick();
-  if (!pick) return null;
-  const note = pick.slug === EDITOR_PICK_NOTE_SLUG ? EDITOR_PICK_NOTE : pick.short_description;
-  return (
-    <section className="border-t border-border/40 py-10 md:py-14">
-      <div className="container max-w-3xl">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-secondary">
-          {currentMonthLong} {currentYear} — Editor's Pick
-        </p>
-        <motion.div
-          className="mt-3 flex items-baseline gap-3 flex-wrap"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="font-heading text-3xl md:text-4xl font-bold">{pick.name}</h2>
-          <span className="rounded-button bg-muted/60 px-2.5 py-0.5 text-sm font-semibold text-secondary tabular-nums">
-            {pick.overall_score}/5
-          </span>
-        </motion.div>
-        <p className="mt-5 text-base text-foreground/85 leading-relaxed">{note}</p>
-        <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
-          <Link
-            to={`/reviews/${pick.slug}`}
-            className="text-secondary hover:underline underline-offset-4 font-medium text-sm"
-          >
-            Read full review →
-          </Link>
-          {isAffiliated(pick) && (
-            <OutboundLink
-              site={pick}
-              ctaPosition="editor-pick"
-              sourceTypeOverride="homepage_editor_pick"
-              className="cta-btn gold-gradient inline-flex items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground"
-            >
-              Visit {pick.name} →
-            </OutboundLink>
-          )}
-        </div>
-      </div>
-    </section>
-  );
-};
+// EditorsPick standalone component removed — content absorbed into
+// TopTen as a sidecar (desktop) / card-above-list (mobile/tablet).
+// EDITOR_PICK_NOTE constants and getTopDealPick() are still used.
 
+/**
+ * Two-column section on desktop: Top 10 list (left) + sticky Editor's
+ * Pick sidecar (right). On mobile/tablet, the sidecar collapses to a
+ * full-width card that renders ABOVE the list (user gets the
+ * recommendation first, then can scan the full ranked list).
+ *
+ * Absorbs the prior standalone Editor's Pick section. The standalone
+ * version is no longer rendered.
+ */
 const TopTen = () => {
   const top10 = [...sites].sort((a, b) => b.overall_score - a.overall_score).slice(0, 10);
+
+  // Badge priority: editors-choice (rank #1) > best-value (lowest
+  // price_monthly among top 10). Only ONE badge per row.
+  // Note: 'recently-tested' is in the spec but sites.ts has no
+  // updatedAt field, so we skip it for now.
+  const top10Monthly: number[] = top10.map((s) => parseMonthlyPrice(s.price_monthly) ?? Infinity);
+  const bestValueIdx = top10Monthly.indexOf(Math.min(...top10Monthly));
+
+  // Editor's Pick — same selection logic as the prior standalone section.
+  const pick = getTopDealPick();
+  const pickNote = pick && pick.slug === EDITOR_PICK_NOTE_SLUG ? EDITOR_PICK_NOTE : pick?.short_description;
+
   return (
-    <section className="border-t border-border/40 py-16 md:py-20">
-      <div className="container max-w-3xl">
+    <section className="border-t border-border/40 py-12 md:py-16 lg:py-20">
+      <div className="container max-w-6xl">
         <h2 className="font-heading text-2xl md:text-3xl font-bold">The Top 10</h2>
         <p className="mt-2 text-sm text-muted-foreground">Ranked by overall score, updated monthly.</p>
 
-        <ul className="mt-8 divide-y divide-border/60 border-y border-border/60">
-          {top10.map((site, i) => {
-            const heroImg = getSiteImagery(site.slug).hero_image_url;
-            return (
-            <li
-              key={site.slug}
-              className="flex items-center gap-3 sm:gap-4 py-3.5 transition-transform hover:-translate-y-px"
-            >
-              <span className="font-mono text-xs text-muted-foreground tabular-nums w-6 sm:w-7 shrink-0">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              {/* Small square thumbnail — image when available, brand-letter
-                  fallback otherwise. Subtle, list-density (not card-density). */}
-              {heroImg ? (
-                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded overflow-hidden bg-muted/40 shrink-0">
-                  <img
-                    src={heroImg}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover"
-                    style={{ objectPosition: "center 20%" }}
-                  />
-                </div>
-              ) : (
-                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded bg-muted shrink-0 flex items-center justify-center font-heading text-sm font-bold text-foreground/40">
-                  {site.name.charAt(0)}
-                </div>
-              )}
-              <div className="flex-1 min-w-0">
-                <Link
-                  to={`/reviews/${site.slug}`}
-                  className="font-medium hover:text-secondary transition-colors truncate block"
-                >
-                  {site.name}
-                </Link>
-                <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground tabular-nums">
-                  <span className="text-secondary font-semibold">{site.overall_score}</span>
-                  <span className="text-muted-foreground/40">·</span>
-                  <LocalisedPrice usd={site.price_annual} />
-                  <span className="hidden sm:inline text-muted-foreground/40">·</span>
-                  <span className="hidden sm:inline">{categoryTag(site)}</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <Link
-                  to={`/reviews/${site.slug}`}
-                  className="hidden sm:inline-flex items-center rounded-button border border-border px-3 py-1 text-xs font-medium text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
-                >
-                  Read
-                </Link>
-                {isAffiliated(site) ? (
-                  <OutboundLink
-                    site={site}
-                    ctaPosition="top-10-row"
-                    sourceTypeOverride="homepage_top_10"
-                    className="cta-btn gold-gradient inline-flex items-center rounded-button px-3.5 py-1 text-xs font-semibold text-secondary-foreground"
-                  >
-                    Visit
-                  </OutboundLink>
-                ) : (
-                  <Link
-                    to={`/reviews/${site.slug}`}
-                    className="sm:hidden inline-flex items-center rounded-button border border-border px-3 py-1 text-xs font-medium text-muted-foreground"
-                  >
-                    Read
-                  </Link>
-                )}
-              </div>
-            </li>
-            );
-          })}
-        </ul>
+        <div className="mt-8 flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-10 lg:items-start">
 
-        <div className="mt-6">
-          <Link to="/reviews" className="text-sm text-secondary hover:underline underline-offset-4 font-medium">
-            See all {sites.length} sites →
-          </Link>
+          {/* Editor's Pick sidecar — visible above the list on mobile/tablet
+              (default order), positioned to the right on desktop via order utilities. */}
+          {pick && (
+            <aside className="order-first lg:order-2 lg:sticky lg:top-24">
+              <div className="rounded-lg border border-secondary/30 bg-card/40 p-5 md:p-7 lg:p-8">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-secondary">
+                  {currentMonthLong} {currentYear} — Editor's Pick
+                </p>
+                <div className="mt-3 flex items-baseline gap-3 flex-wrap">
+                  <h3 className="font-heading text-2xl md:text-3xl font-bold">{pick.name}</h3>
+                  <span className="rounded-button bg-muted/60 px-2.5 py-0.5 text-sm font-semibold text-secondary tabular-nums">
+                    {pick.overall_score}/5
+                  </span>
+                </div>
+                <p className="mt-4 text-sm text-foreground/85 leading-relaxed">{pickNote}</p>
+                <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3">
+                  <Link
+                    to={`/reviews/${pick.slug}`}
+                    className="text-secondary hover:underline underline-offset-4 font-medium text-sm"
+                  >
+                    Read full review →
+                  </Link>
+                  {isAffiliated(pick) && (
+                    <OutboundLink
+                      site={pick}
+                      ctaPosition="editor-pick"
+                      sourceTypeOverride="homepage_editor_pick"
+                      className="cta-btn gold-gradient inline-flex items-center justify-center gap-2 rounded-button px-5 py-2.5 text-sm font-semibold text-secondary-foreground"
+                    >
+                      Visit {pick.name} →
+                    </OutboundLink>
+                  )}
+                </div>
+              </div>
+            </aside>
+          )}
+
+          {/* Top 10 list */}
+          <div className="lg:order-1 min-w-0">
+            <ul className="divide-y divide-border/60 border-y border-border/60">
+              {top10.map((site, i) => {
+                const heroImg = getSiteImagery(site.slug).hero_image_url;
+                const isEditorsChoice = i === 0;
+                const isBestValue = !isEditorsChoice && i === bestValueIdx;
+                return (
+                  <li
+                    key={site.slug}
+                    className="flex items-center gap-3 sm:gap-4 py-3.5 transition-colors hover:bg-muted/15"
+                  >
+                    <span className="font-mono text-xs text-muted-foreground tabular-nums w-7 sm:w-9 shrink-0 text-right">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {/* 48×48px (mobile 40px) banner thumbnail. No letter
+                        placeholder — sites without a banner get a dark
+                        gradient square with their name in small text. */}
+                    {heroImg ? (
+                      <div className="h-10 w-10 sm:h-14 sm:w-14 rounded-md overflow-hidden bg-muted/40 shrink-0">
+                        <img
+                          src={heroImg}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-cover"
+                          style={{ objectPosition: "center 25%" }}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        className="h-10 w-10 sm:h-14 sm:w-14 rounded-md shrink-0 flex items-end justify-center p-1 text-center"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, hsl(263, 30%, 15%) 0%, hsl(240, 30%, 10%) 100%)",
+                        }}
+                      >
+                        <span className="text-[8px] sm:text-[9px] font-medium leading-tight text-foreground/60 line-clamp-2">
+                          {site.name}
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Link
+                          to={`/reviews/${site.slug}`}
+                          className="font-medium hover:text-secondary transition-colors truncate"
+                        >
+                          {site.name}
+                        </Link>
+                        {isEditorsChoice && (
+                          <span className="rounded-button gold-gradient px-1.5 py-0.5 text-[9px] font-bold text-secondary-foreground uppercase tracking-wider whitespace-nowrap">
+                            Editor's Choice
+                          </span>
+                        )}
+                        {isBestValue && (
+                          <span className="rounded-button border border-emerald-500/40 bg-emerald-500/5 px-1.5 py-0.5 text-[9px] font-semibold text-emerald-400 uppercase tracking-wider whitespace-nowrap">
+                            Best Value
+                          </span>
+                        )}
+                      </div>
+                      <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground tabular-nums flex-wrap">
+                        <span className="text-secondary font-semibold">{site.overall_score}</span>
+                        <span className="text-muted-foreground/40">·</span>
+                        <LocalisedPrice usd={site.price_monthly} />
+                        <span className="hidden sm:inline text-muted-foreground/40">·</span>
+                        <span className="hidden sm:inline">{categoryTag(site)}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Link
+                        to={`/reviews/${site.slug}`}
+                        className="hidden sm:inline-flex items-center rounded-button border border-border px-3 py-1 text-xs font-medium text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
+                      >
+                        Read
+                      </Link>
+                      {isAffiliated(site) ? (
+                        <OutboundLink
+                          site={site}
+                          ctaPosition="top-10-row"
+                          sourceTypeOverride="homepage_top_10"
+                          className="cta-btn gold-gradient inline-flex items-center rounded-button px-3.5 py-1 text-xs font-semibold text-secondary-foreground"
+                        >
+                          Visit
+                        </OutboundLink>
+                      ) : (
+                        <Link
+                          to={`/reviews/${site.slug}`}
+                          className="sm:hidden inline-flex items-center rounded-button border border-border px-3 py-1 text-xs font-medium text-muted-foreground"
+                        >
+                          Read
+                        </Link>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="mt-6">
+              <Link to="/reviews" className="text-sm text-secondary hover:underline underline-offset-4 font-medium">
+                See all {sites.length} sites →
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 };
 
+/**
+ * Single 9-tile niche grid. Replaces the prior "3 featured cards +
+ * inline middot list of 6" split — every niche is a first-class
+ * category and gets the same treatment: image, count, name, hook,
+ * optional badge. Per spec: 3×3 desktop, 3×3 tablet, 2-col mobile
+ * (last row contains the lone 9th tile, left-aligned).
+ */
 const FeaturedNiches = () => (
-  // Tight top padding so the niche cards land in the first viewport
-  // immediately after the compressed hero — image-led content as the
-  // second section per the rebalance spec.
-  <section className="py-8 md:py-10">
-    <div className="container max-w-5xl">
+  <section className="py-8 md:py-12 lg:py-14">
+    <div className="container max-w-6xl">
       <h2 className="font-heading text-2xl md:text-3xl font-bold">Browse by niche</h2>
 
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
-        {FEATURED_NICHES.map((n) => (
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-3 lg:gap-6">
+        {ALL_NICHES.map((n) => (
           <Link
             key={n.slug}
             to={`/niche/${n.slug}`}
-            className="group relative block overflow-hidden rounded-lg border border-border/60 transition-colors hover:border-primary/40"
-            style={{ aspectRatio: "4 / 3" }}
+            className="group relative flex flex-col overflow-hidden rounded-lg border border-border/60 bg-card/30 transition-all hover:border-secondary/50 hover:scale-[1.02]"
           >
+            {/* Cover image — 16:10 aspect. If image fails to render
+                (file missing), the dark muted background underneath
+                shows through with the niche name still readable. */}
             <div
-              className="pointer-events-none absolute inset-0 transition-transform duration-500 group-hover:scale-[1.03]"
-              style={{
-                backgroundImage: `url(${n.image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-              aria-hidden
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
-            <div className="relative flex h-full flex-col justify-end p-5">
-              <p className="text-[11px] uppercase tracking-wider text-white/75">{n.siteCount}</p>
-              <h3 className="mt-1 font-heading text-2xl font-bold text-white drop-shadow">{n.name}</h3>
-              <p className="mt-2 text-sm text-white/85 leading-snug">{n.intro}</p>
+              className="relative w-full overflow-hidden bg-muted/40"
+              style={{ aspectRatio: "16 / 10" }}
+            >
+              <img
+                src={n.image}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                style={{ objectPosition: "center 30%" }}
+              />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" />
+            </div>
+
+            <div className="flex flex-1 flex-col p-4 md:p-5">
+              {/* Eyebrow: count + optional badge */}
+              <div className="flex items-center justify-between gap-2">
+                <span className="rounded-button bg-muted/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground tabular-nums">
+                  {n.siteCount} sites
+                </span>
+                {n.badge && (
+                  <span className="hidden sm:inline-flex rounded-button bg-secondary/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-secondary">
+                    {n.badge}
+                  </span>
+                )}
+              </div>
+              <h3 className="mt-2 font-heading text-lg md:text-xl lg:text-2xl font-bold leading-tight">
+                {n.name}
+              </h3>
+              <p className="mt-1.5 text-xs md:text-sm text-muted-foreground leading-snug line-clamp-2">
+                {n.hook}
+              </p>
             </div>
           </Link>
         ))}
       </div>
-
-      <p className="mt-8 text-sm text-muted-foreground">
-        More:{" "}
-        {OTHER_NICHES.map((n, i) => (
-          <span key={n.slug}>
-            <Link
-              to={`/niche/${n.slug}`}
-              className="text-secondary hover:underline underline-offset-4"
-            >
-              {n.name}
-            </Link>
-            {i < OTHER_NICHES.length - 1 && (
-              <span className="mx-2 text-muted-foreground/40">·</span>
-            )}
-          </span>
-        ))}
-      </p>
     </div>
   </section>
 );
 
 const LatestReviews = () => {
-  const latest = getRecentlyUpdatedPromotable(3);
+  // 6 cards now (was 3) — denser grid, more entry points. Selection
+  // remains the freshest promotable sites (highest update_frequency
+  // proxy until sites.ts gains a real updated_at field).
+  const latest = getRecentlyUpdatedPromotable(6);
   if (latest.length === 0) return null;
   return (
-    <section className="border-t border-border/40 py-16 md:py-20">
-      <div className="container max-w-5xl">
+    <section className="border-t border-border/40 py-12 md:py-16 lg:py-20">
+      <div className="container max-w-6xl">
         <h2 className="font-heading text-2xl md:text-3xl font-bold">Latest reviews</h2>
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
+        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {latest.map((site) => (
             <motion.div
               key={site.slug}
@@ -464,13 +521,11 @@ const Index = () => {
 
       <PageTransition>
         <Hero />
-        {/* Browse by niche promoted to the second section — image-led
-            cover cards become the first visual content immediately
-            after the compressed hero. Editorial credibility (Editor's
-            Pick + methodology link in hero) still loads first; the
-            visual product surface follows without scrolling far. */}
+        {/* Browse by niche → full 9-tile grid, first visual content
+            after the hero. The standalone Editor's Pick section is
+            removed — it now lives inside the Top 10 sidecar (desktop)
+            or above the Top 10 list (mobile/tablet). */}
         <FeaturedNiches />
-        <EditorsPick />
         <TopTen />
         <LatestReviews />
         <UtilityRow />
