@@ -65,7 +65,11 @@ const SearchOverlay = ({ open, onClose }: SearchOverlayProps) => {
               aria-label="Search sites and categories"
               className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-lg"
             />
-            <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
+            <button
+              onClick={onClose}
+              className="inline-flex h-11 w-11 items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-muted/50 -mr-2"
+              aria-label="Close search"
+            >
               <X size={20} />
             </button>
           </div>

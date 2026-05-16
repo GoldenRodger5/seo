@@ -100,11 +100,13 @@ const DealsEmailCapture = () => {
         <form onSubmit={submit} className="flex flex-col gap-2 sm:flex-row md:max-w-sm md:flex-1">
           <input
             type="email"
+            inputMode="email"
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
             disabled={status === "submitting" || status === "ok"}
-            className="flex-1 rounded-button bg-muted/30 border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-primary/50"
+            className="flex-1 rounded-button bg-muted/30 border border-border px-4 py-2.5 text-base sm:text-sm focus:outline-none focus:border-primary/50"
           />
           <button
             type="submit"

@@ -74,10 +74,11 @@ const Contact = () => {
                     <input
                       type="text"
                       name="name"
+                      autoComplete="name"
                       value={form.name}
                       onChange={handleChange}
                       placeholder="Your name"
-                      className="w-full rounded-button border border-border bg-muted/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                      className="w-full rounded-button border border-border bg-muted/50 px-4 py-2.5 text-base sm:text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     />
                   </div>
                   <div>
@@ -85,10 +86,12 @@ const Contact = () => {
                     <input
                       type="email"
                       name="email"
+                      inputMode="email"
+                      autoComplete="email"
                       value={form.email}
                       onChange={handleChange}
                       placeholder="your@email.com"
-                      className="w-full rounded-button border border-border bg-muted/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                      className="w-full rounded-button border border-border bg-muted/50 px-4 py-2.5 text-base sm:text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                     />
                   </div>
                 </div>
@@ -99,7 +102,7 @@ const Contact = () => {
                     name="subject"
                     value={form.subject}
                     onChange={handleChange}
-                    className="w-full rounded-button border border-border bg-muted/50 px-4 py-2.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="w-full rounded-button border border-border bg-muted/50 px-4 py-2.5 text-base sm:text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                   >
                     <option value="">Select a subject</option>
                     <option value="General Question">General Question</option>
@@ -118,7 +121,7 @@ const Contact = () => {
                     onChange={handleChange}
                     rows={5}
                     placeholder="Your message..."
-                    className="w-full rounded-button border border-border bg-muted/50 px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
+                    className="w-full rounded-button border border-border bg-muted/50 px-4 py-2.5 text-base sm:text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
                   />
                 </div>
 

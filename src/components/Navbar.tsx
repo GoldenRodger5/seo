@@ -22,6 +22,16 @@ const Navbar = () => {
 
   useEffect(() => { setOpen(false); }, [location]);
 
+  // Lock body scroll when the mobile menu is open so the underlying
+  // page doesn't scroll behind the panel. Cleanup restores on close
+  // and on unmount.
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = open ? "hidden" : prev;
+    return () => { document.body.style.overflow = prev; };
+  }, [open]);
+
   return (
     <>
       <nav className="sticky top-0 z-50 border-b border-border glass-card">
@@ -54,42 +64,50 @@ const Navbar = () => {
             <ThemeToggle />
           </div>
 
-          {/* Mobile toggle */}
-          <div className="flex items-center gap-2 md:hidden">
+          {/* Mobile toggle — 44×44 tap targets meet WCAG 2.5.5 minimum */}
+          <div className="flex items-center gap-1 md:hidden">
             <button
               onClick={() => setSearchOpen(true)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-button text-foreground"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-button text-foreground active:bg-muted/50"
               aria-label="Search"
             >
               <Search size={20} />
             </button>
             <button
               onClick={() => setOpen(!open)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-button text-foreground"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-button text-foreground active:bg-muted/50"
               aria-label="Toggle menu"
+              aria-expanded={open}
             >
               {open ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile menu — panel + tap-outside-to-close backdrop */}
         {open && (
-          <div className="border-t border-border bg-background md:hidden">
-            <div className="container flex flex-col gap-1 py-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.to + link.label}
-                  to={link.to}
-                  onClick={() => setOpen(false)}
-                  className={`nav-link rounded-button px-4 py-3 hover:bg-muted ${
-                    link.gold ? "gold-gradient-text" :
-                    location.pathname === link.to ? "text-secondary" : "text-muted-foreground"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+          <div className="md:hidden">
+            <div
+              className="fixed inset-0 top-16 z-30 bg-background/70 backdrop-blur-sm"
+              onClick={() => setOpen(false)}
+              aria-hidden
+            />
+            <div className="relative z-40 border-t border-border bg-background">
+              <div className="container flex flex-col gap-1 py-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.to + link.label}
+                    to={link.to}
+                    onClick={() => setOpen(false)}
+                    className={`nav-link rounded-button px-4 py-3 hover:bg-muted ${
+                      link.gold ? "gold-gradient-text" :
+                      location.pathname === link.to ? "text-secondary" : "text-muted-foreground"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         )}

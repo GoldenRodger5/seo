@@ -115,12 +115,14 @@ const EmailCapturePopup = () => {
             <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
               <input
                 type="email"
+                inputMode="email"
+                autoComplete="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 autoFocus
-                className="w-full rounded-button border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                className="w-full rounded-button border border-border bg-muted px-4 py-3 text-base sm:text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
               />
               <button
                 type="submit"

@@ -15,8 +15,10 @@ const StickyDealBar = () => {
   };
 
   return (
-    <div className="relative z-50 gold-gradient py-2">
-      <div className="container flex items-center justify-center gap-2 text-xs font-semibold text-secondary-foreground sm:text-sm">
+    <div className="relative z-50 gold-gradient">
+      {/* py-1 on the outer band; the dismiss button below grows the
+          tap area to 44×44 (WCAG min) without inflating the bar height. */}
+      <div className="container flex items-center justify-center gap-2 py-2 pr-12 text-xs font-semibold text-secondary-foreground sm:text-sm">
         <span className="hidden sm:inline">Active Deal: TwinkTrade — 67% off, just $9.95/mo on annual</span>
         <span className="sm:hidden">TwinkTrade — 67% off, $9.95/mo</span>
         <Link
@@ -25,14 +27,14 @@ const StickyDealBar = () => {
         >
           View Deal <ArrowRight size={12} />
         </Link>
-        <button
-          onClick={handleDismiss}
-          className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-0.5 hover:bg-secondary-foreground/10"
-          aria-label="Dismiss"
-        >
-          <X size={14} />
-        </button>
       </div>
+      <button
+        onClick={handleDismiss}
+        className="absolute right-1 top-1/2 -translate-y-1/2 inline-flex h-11 w-11 items-center justify-center rounded text-secondary-foreground/90 hover:bg-secondary-foreground/10 active:bg-secondary-foreground/20"
+        aria-label="Dismiss"
+      >
+        <X size={16} />
+      </button>
     </div>
   );
 };

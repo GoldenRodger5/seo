@@ -275,10 +275,11 @@ const CompareIndex = () => {
             <div className="mt-6 glass-card rounded-lg p-5">
               <input
                 type="search"
+                inputMode="search"
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
                 placeholder="Search sites by name…"
-                className="w-full rounded-button bg-muted/30 border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-primary/50"
+                className="w-full rounded-button bg-muted/30 border border-border px-4 py-2.5 text-base sm:text-sm focus:outline-none focus:border-primary/50"
               />
               <div className="mt-4 grid gap-2 sm:grid-cols-2 md:grid-cols-3">
                 {visibleSites.map((s) => {

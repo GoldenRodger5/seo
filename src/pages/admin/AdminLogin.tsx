@@ -50,12 +50,14 @@ const AdminLogin = () => {
               <span className="text-xs font-semibold text-muted-foreground">Admin email</span>
               <input
                 type="email"
+                inputMode="email"
+                autoComplete="email"
                 required
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="mt-1 w-full rounded-button bg-muted/30 border border-border px-4 py-2.5 text-sm focus:outline-none focus:border-primary/50"
+                className="mt-1 w-full rounded-button bg-muted/30 border border-border px-4 py-2.5 text-base sm:text-sm focus:outline-none focus:border-primary/50"
               />
             </label>
             {error && (

@@ -66,11 +66,13 @@ const InlineEmailCapture = () => {
                 <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-3">
                   <input
                     type="email"
+                    inputMode="email"
+                    autoComplete="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="flex-1 rounded-button border border-border bg-muted px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none sm:max-w-xs"
+                    className="flex-1 rounded-button border border-border bg-muted px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none sm:max-w-xs sm:text-sm"
                   />
                   <button
                     type="submit"

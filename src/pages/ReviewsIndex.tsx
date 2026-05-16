@@ -196,7 +196,7 @@ const ReviewsIndex = () => {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setActiveFilter(null)}
-                className={`rounded-button px-3 py-1.5 text-xs transition-all ${
+                className={`rounded-button px-3 py-2 text-xs transition-all min-h-[36px] ${
                   !activeFilter ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -206,7 +206,7 @@ const ReviewsIndex = () => {
                 <button
                   key={cat.slug}
                   onClick={() => setActiveFilter(cat.slug)}
-                  className={`rounded-button px-3 py-1.5 text-xs transition-all ${
+                  className={`rounded-button px-3 py-2 text-xs transition-all min-h-[36px] ${
                     activeFilter === cat.slug ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground hover:text-foreground"
                   }`}
                 >
@@ -215,7 +215,7 @@ const ReviewsIndex = () => {
               ))}
               <button
                 onClick={() => setActiveFilter(BEST_VALUE_KEY)}
-                className={`rounded-button px-3 py-1.5 text-xs transition-all ${
+                className={`rounded-button px-3 py-2 text-xs transition-all min-h-[36px] ${
                   activeFilter === BEST_VALUE_KEY ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground hover:text-foreground"
                 }`}
               >

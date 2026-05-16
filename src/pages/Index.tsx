@@ -273,7 +273,7 @@ const TopTen = () => {
                     <div className="flex items-center gap-2 shrink-0">
                       <Link
                         to={`/reviews/${site.slug}`}
-                        className="hidden sm:inline-flex items-center rounded-button border border-border px-3 py-1 text-xs font-medium text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
+                        className="hidden sm:inline-flex items-center rounded-button border border-border px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors min-h-[36px]"
                       >
                         Read
                       </Link>
@@ -282,14 +282,14 @@ const TopTen = () => {
                           site={site}
                           ctaPosition="top-10-row"
                           sourceTypeOverride="homepage_top_10"
-                          className="cta-btn gold-gradient inline-flex items-center rounded-button px-3.5 py-1 text-xs font-semibold text-secondary-foreground"
+                          className="cta-btn gold-gradient inline-flex items-center rounded-button px-4 py-2 text-xs font-semibold text-secondary-foreground min-h-[40px] sm:min-h-[36px]"
                         >
                           Visit
                         </OutboundLink>
                       ) : (
                         <Link
                           to={`/reviews/${site.slug}`}
-                          className="sm:hidden inline-flex items-center rounded-button border border-border px-3 py-1 text-xs font-medium text-muted-foreground"
+                          className="sm:hidden inline-flex items-center rounded-button border border-border px-3.5 py-2 text-xs font-medium text-muted-foreground min-h-[40px]"
                         >
                           Read
                         </Link>
@@ -414,7 +414,7 @@ const LatestReviews = () => {
                   <OutboundLink
                     site={site}
                     ctaPosition="card"
-                    className="ml-auto cta-btn gold-gradient inline-flex items-center rounded-button px-3 py-1 text-xs font-semibold text-secondary-foreground"
+                    className="ml-auto cta-btn gold-gradient inline-flex items-center rounded-button px-4 py-2 text-xs font-semibold text-secondary-foreground min-h-[40px] sm:min-h-[36px]"
                   >
                     Visit
                   </OutboundLink>
