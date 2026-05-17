@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import OutboundLink from "../components/OutboundLink";
+import SmartImage from "../components/common/SmartImage";
 import { Check, X as XIcon, ArrowRight, ThumbsUp } from "lucide-react";
 import {
   Accordion,
@@ -251,14 +252,14 @@ const ReviewPage = () => {
               const banner = imagery.hero_image_url;
               if (!banner) return null;
               return (
-                <div className="mb-6 overflow-hidden rounded-lg border border-border/40">
-                  <img
+                <div className="mb-6 rounded-lg border border-border/40 overflow-hidden">
+                  <SmartImage
                     src={banner}
-                    alt={imagery.banner_alt}
-                    loading="eager"
-                    decoding="async"
-                    className="aspect-[21/9] w-full object-cover"
-                    style={{ objectPosition: "center 20%" }}
+                    alt={imagery.banner_alt || `${site.name} banner`}
+                    aspectRatio="16:9"
+                    fallbackLabel={site.name}
+                    priority
+                    objectPosition="center 20%"
                   />
                 </div>
               );

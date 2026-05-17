@@ -2,6 +2,7 @@ import { Flame, DollarSign, Gift, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import OutboundLink from "./OutboundLink";
+import SmartImage from "./common/SmartImage";
 import { getPromotableSites } from "@/data/sites";
 import type { SiteData } from "@/data/sites";
 import ScoreRing from "./ScoreRing";
@@ -114,15 +115,16 @@ const QuickPicks = () => {
               >
                 {heroImg ? (
                   <>
-                    <img
-                      src={heroImg}
-                      alt={imagery.banner_alt}
-                      loading="lazy"
-                      decoding="async"
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      style={{ objectPosition: "center 20%" }}
-                    />
+                    <div className="pointer-events-none absolute inset-0">
+                      <SmartImage
+                        src={heroImg}
+                        alt=""
+                        aspectRatio="3:2"
+                        fallbackLabel={pick.site.name}
+                        className="h-full w-full"
+                        objectPosition="center 20%"
+                      />
+                    </div>
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/85 to-card/30" />
                   </>
                 ) : (

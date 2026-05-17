@@ -10,6 +10,7 @@ import { getBrandPalette } from "@/data/site-brands";
 import { siteNicheMap } from "@/data/site-niches";
 import { getNiche } from "@/data/niches";
 import { getSiteImagery } from "@/data/site-imagery";
+import SmartImage from "./common/SmartImage";
 
 interface SiteCardProps {
   site: SiteData;
@@ -121,33 +122,16 @@ const SiteCard = ({
       className={`relative overflow-hidden rounded-lg border border-border/60 bg-card transition-colors ${palette.accent} group flex flex-col h-full ${className}`}
     >
       {tip}
-      {/* Hero image (when sourced from affiliate creative) — falls back to brand-color bar + watermark */}
-      {heroImg ? (
-        <div
-          className="relative w-full overflow-hidden bg-muted/40"
-          style={{ aspectRatio: "3 / 2" }}
-        >
-          <img
-            src={heroImg}
-            alt={imagery.banner_alt}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-            style={{ objectPosition: "center 20%" }}
-          />
-          <div className={`absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r ${palette.gradient}`} />
-        </div>
-      ) : (
-        <>
-          <div className={`h-2 w-full bg-gradient-to-r ${palette.gradient}`} />
-          <span
-            className={`pointer-events-none absolute -right-6 -bottom-16 select-none font-heading text-[180px] font-black leading-none ${palette.watermark}`}
-            aria-hidden
-          >
-            {watermarkLetter}
-          </span>
-        </>
-      )}
+      <div className="relative">
+        <SmartImage
+          src={heroImg}
+          alt={imagery.banner_alt || `${site.name} preview`}
+          aspectRatio="3:2"
+          fallbackLabel={site.name}
+          className="w-full"
+        />
+        <div className={`absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r ${palette.gradient}`} />
+      </div>
 
       {rankBadge !== null && (
         <span className="absolute top-3 right-3 rounded-button gold-gradient px-2.5 py-1 text-[10px] font-bold text-secondary-foreground z-10">

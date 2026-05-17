@@ -1,0 +1,1057 @@
+{
+  "generated_at": "2026-05-17T22:25:13.043Z",
+  "summary": {
+    "total_images_on_disk": 44,
+    "total_code_references": 68,
+    "unique_referenced_paths": 40,
+    "total_issues": 71
+  },
+  "rows": [
+    {
+      "publicPath": "/pwa-192.png",
+      "bytes": 2851,
+      "width": 192,
+      "height": 192,
+      "aspect": 1,
+      "format": "png",
+      "surface": "PWA icon",
+      "refs": [],
+      "issues": [
+        "UNREFERENCED",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/alternadudes-hero.jpg",
+      "bytes": 264918,
+      "width": 970,
+      "height": 250,
+      "aspect": 3.88,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 22,
+          "imagePath": "/site-banners/alternadudes-hero.jpg",
+          "context": "alternative: \"/site-banners/alternadudes-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 53,
+          "imagePath": "/site-banners/alternadudes-hero.jpg",
+          "context": "\"alternadudes\": { hero_image_url: \"/site-banners/alternadudes-hero.jpg\", thumbnail_url: null, banner_alt: \"AlternaDudes — amateur gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/athletic-twinks-hero.jpg",
+      "bytes": 93754,
+      "width": 900,
+      "height": 150,
+      "aspect": 6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 21,
+          "imagePath": "/site-banners/athletic-twinks-hero.jpg",
+          "context": "muscle: \"/site-banners/athletic-twinks-hero.jpg\","
+        },
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 24,
+          "imagePath": "/site-banners/athletic-twinks-hero.jpg",
+          "context": "jock: \"/site-banners/athletic-twinks-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 40,
+          "imagePath": "/site-banners/athletic-twinks-hero.jpg",
+          "context": "\"athletic-twinks\": { hero_image_url: \"/site-banners/athletic-twinks-hero.jpg\", thumbnail_url: null, banner_alt: \"Athletic Twinks — twink gay porn site banner\" }"
+        },
+        {
+          "file": "src/pages/Index.tsx",
+          "line": 51,
+          "imagePath": "/site-banners/athletic-twinks-hero.jpg",
+          "context": "{ slug: \"muscle\",   name: \"Muscle\",   siteCount: 14, image: \"/site-banners/athletic-twinks-hero.jpg\","
+        },
+        {
+          "file": "src/pages/Index.tsx",
+          "line": 57,
+          "imagePath": "/site-banners/athletic-twinks-hero.jpg",
+          "context": "{ slug: \"jock\",     name: \"Jock\",     siteCount: 6,  image: \"/site-banners/athletic-twinks-hero.jpg\","
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/bareback-cum-pigs-hero.jpg",
+      "bytes": 79012,
+      "width": 984,
+      "height": 170,
+      "aspect": 5.788235294117647,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 87,
+          "imagePath": "/site-banners/bareback-cum-pigs-hero.jpg",
+          "context": "\"barebackcumpigs\": { hero_image_url: \"/site-banners/bareback-cum-pigs-hero.jpg\", thumbnail_url: null, banner_alt: \"Bareback Cum Pigs — bareback gay porn site ba"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/bear-chubs-hero.jpg",
+      "bytes": 73445,
+      "width": 900,
+      "height": 150,
+      "aspect": 6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 88,
+          "imagePath": "/site-banners/bear-chubs-hero.jpg",
+          "context": "\"bearchubs\": { hero_image_url: \"/site-banners/bear-chubs-hero.jpg\", thumbnail_url: null, banner_alt: \"Bear Chubs — bear gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/boyfun-hero.jpg",
+      "bytes": 80531,
+      "width": 980,
+      "height": 170,
+      "aspect": 5.764705882352941,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 93,
+          "imagePath": "/site-banners/boyfun-hero.jpg",
+          "context": "\"boyfun\": { hero_image_url: \"/site-banners/boyfun-hero.jpg\", thumbnail_url: null, banner_alt: \"BoyFun — twink gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/boys-at-camp-hero.jpg",
+      "bytes": 192134,
+      "width": 900,
+      "height": 250,
+      "aspect": 3.6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 17,
+          "imagePath": "/site-banners/boys-at-camp-hero.jpg",
+          "context": "college: \"/site-banners/boys-at-camp-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 78,
+          "imagePath": "/site-banners/boys-at-camp-hero.jpg",
+          "context": "\"boysatcamp\": { hero_image_url: \"/site-banners/boys-at-camp-hero.jpg\", thumbnail_url: null, banner_alt: \"Boys at Camp — twink gay porn site banner\" },"
+        },
+        {
+          "file": "src/pages/Index.tsx",
+          "line": 59,
+          "imagePath": "/site-banners/boys-at-camp-hero.jpg",
+          "context": "{ slug: \"college\",  name: \"College\",  siteCount: 5,  image: \"/site-banners/boys-at-camp-hero.jpg\","
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/brother-crush-hero.jpg",
+      "bytes": 181274,
+      "width": 900,
+      "height": 250,
+      "aspect": 3.6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 75,
+          "imagePath": "/site-banners/brother-crush-hero.jpg",
+          "context": "\"brothercrush\": { hero_image_url: \"/site-banners/brother-crush-hero.jpg\", thumbnail_url: null, banner_alt: \"Brother Crush — twink gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/bully-him-hero.jpg",
+      "bytes": 91399,
+      "width": 970,
+      "height": 90,
+      "aspect": 10.777777777777779,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 83,
+          "imagePath": "/site-banners/bully-him-hero.jpg",
+          "context": "\"bullyhim\": { hero_image_url: \"/site-banners/bully-him-hero.jpg\", thumbnail_url: null, banner_alt: \"Bully Him — twink gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/dad-creep-hero.jpg",
+      "bytes": 153893,
+      "width": 900,
+      "height": 250,
+      "aspect": 3.6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 74,
+          "imagePath": "/site-banners/dad-creep-hero.jpg",
+          "context": "\"dadcreep\": { hero_image_url: \"/site-banners/dad-creep-hero.jpg\", thumbnail_url: null, banner_alt: \"Dad Creep — daddy gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/daddy-on-twink-hero.jpg",
+      "bytes": 84617,
+      "width": 950,
+      "height": 200,
+      "aspect": 4.75,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 13,
+          "imagePath": "/site-banners/daddy-on-twink-hero.jpg",
+          "context": "daddy: \"/site-banners/daddy-on-twink-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 42,
+          "imagePath": "/site-banners/daddy-on-twink-hero.jpg",
+          "context": "\"daddy-on-twink\": { hero_image_url: \"/site-banners/daddy-on-twink-hero.jpg\", thumbnail_url: null, banner_alt: \"Daddy on Twink — daddy gay porn site banner\" },"
+        },
+        {
+          "file": "src/pages/Index.tsx",
+          "line": 53,
+          "imagePath": "/site-banners/daddy-on-twink-hero.jpg",
+          "context": "{ slug: \"daddy\",    name: \"Daddy\",    siteCount: 7,  image: \"/site-banners/daddy-on-twink-hero.jpg\","
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/dirty-boy-video-hero.jpg",
+      "bytes": 54014,
+      "width": 970,
+      "height": 90,
+      "aspect": 10.777777777777779,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 54,
+          "imagePath": "/site-banners/dirty-boy-video-hero.jpg",
+          "context": "\"dirtyboyvideo\": { hero_image_url: \"/site-banners/dirty-boy-video-hero.jpg\", thumbnail_url: null, banner_alt: \"DirtyBoyVideo — amateur gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/family-dick-hero.jpg",
+      "bytes": 188631,
+      "width": 900,
+      "height": 250,
+      "aspect": 3.6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 76,
+          "imagePath": "/site-banners/family-dick-hero.jpg",
+          "context": "\"familydick\": { hero_image_url: \"/site-banners/family-dick-hero.jpg\", thumbnail_url: null, banner_alt: \"Family Dick — daddy gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/gay-asian-network-hero.jpg",
+      "bytes": 88589,
+      "width": 1130,
+      "height": 69,
+      "aspect": 16.3768115942029,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 52,
+          "imagePath": "/site-banners/gay-asian-network-hero.jpg",
+          "context": "\"gayasiannetwork\": { hero_image_url: \"/site-banners/gay-asian-network-hero.jpg\", thumbnail_url: null, banner_alt: \"GayAsianNetwork — asian gay porn site banner\""
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/jawked-hero.gif",
+      "bytes": 79820,
+      "width": 970,
+      "height": 170,
+      "aspect": 5.705882352941177,
+      "format": "gif",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 94,
+          "imagePath": "/site-banners/jawked-hero.gif",
+          "context": "\"jawked\": { hero_image_url: \"/site-banners/jawked-hero.gif\", thumbnail_url: null, banner_alt: \"Jawked — jock gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/latin-leche-hero.jpg",
+      "bytes": 200982,
+      "width": 900,
+      "height": 250,
+      "aspect": 3.6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 16,
+          "imagePath": "/site-banners/latin-leche-hero.jpg",
+          "context": "latin: \"/site-banners/latin-leche-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 81,
+          "imagePath": "/site-banners/latin-leche-hero.jpg",
+          "context": "\"latinleche\": { hero_image_url: \"/site-banners/latin-leche-hero.jpg\", thumbnail_url: null, banner_alt: \"Latin Leche — latin gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/missionary-boys-hero.jpg",
+      "bytes": 171147,
+      "width": 900,
+      "height": 250,
+      "aspect": 3.6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 79,
+          "imagePath": "/site-banners/missionary-boys-hero.jpg",
+          "context": "\"missionaryboys\": { hero_image_url: \"/site-banners/missionary-boys-hero.jpg\", thumbnail_url: null, banner_alt: \"Missionary Boys — twink gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/nakedsword-hero.jpg",
+      "bytes": 1121942,
+      "width": 2000,
+      "height": 800,
+      "aspect": 2.5,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 56,
+          "imagePath": "/site-banners/nakedsword-hero.jpg",
+          "context": "\"nakedsword\": { hero_image_url: \"/site-banners/nakedsword-hero.jpg\", thumbnail_url: null, banner_alt: \"NakedSword — twink gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "HUGE_FILE",
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/real-men-fuck-hero.jpg",
+      "bytes": 148331,
+      "width": 1000,
+      "height": 150,
+      "aspect": 6.666666666666667,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 67,
+          "imagePath": "/site-banners/real-men-fuck-hero.jpg",
+          "context": "\"realmenfuck\": { hero_image_url: \"/site-banners/real-men-fuck-hero.jpg\", thumbnail_url: null, banner_alt: \"Real Men Fuck — amateur gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/say-uncle-hero.jpg",
+      "bytes": 184348,
+      "width": 900,
+      "height": 250,
+      "aspect": 3.6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 77,
+          "imagePath": "/site-banners/say-uncle-hero.jpg",
+          "context": "\"sayuncle\": { hero_image_url: \"/site-banners/say-uncle-hero.jpg\", thumbnail_url: null, banner_alt: \"Say Uncle — daddy gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/sexjapantv-hero.jpg",
+      "bytes": 42792,
+      "width": 1130,
+      "height": 69,
+      "aspect": 16.3768115942029,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 61,
+          "imagePath": "/site-banners/sexjapantv-hero.jpg",
+          "context": "\"sexjapantv\": { hero_image_url: \"/site-banners/sexjapantv-hero.jpg\", thumbnail_url: null, banner_alt: \"SexJapanTV — japanese gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/swingin-balls-hero.jpg",
+      "bytes": 109701,
+      "width": 970,
+      "height": 250,
+      "aspect": 3.88,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 68,
+          "imagePath": "/site-banners/swingin-balls-hero.jpg",
+          "context": "\"swinginballs\": { hero_image_url: \"/site-banners/swingin-balls-hero.jpg\", thumbnail_url: null, banner_alt: \"Swingin Balls — amateur gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/touch-that-boy-hero.jpg",
+      "bytes": 93868,
+      "width": 900,
+      "height": 150,
+      "aspect": 6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 43,
+          "imagePath": "/site-banners/touch-that-boy-hero.jpg",
+          "context": "\"touch-that-boy\": { hero_image_url: \"/site-banners/touch-that-boy-hero.jpg\", thumbnail_url: null, banner_alt: \"Touch That Boy — twink gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/trailer-trash-boys-hero.jpg",
+      "bytes": 810052,
+      "width": 2000,
+      "height": 500,
+      "aspect": 4,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 57,
+          "imagePath": "/site-banners/trailer-trash-boys-hero.jpg",
+          "context": "\"trailertrashboys\": { hero_image_url: \"/site-banners/trailer-trash-boys-hero.jpg\", thumbnail_url: null, banner_alt: \"TrailerTrashBoys — amateur gay porn site ba"
+        }
+      ],
+      "issues": [
+        "HUGE_FILE",
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/twinktrade-hero.jpg",
+      "bytes": 54311,
+      "width": 970,
+      "height": 90,
+      "aspect": 10.777777777777779,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 73,
+          "imagePath": "/site-banners/twinktrade-hero.jpg",
+          "context": "\"twinktrade\": { hero_image_url: \"/site-banners/twinktrade-hero.jpg\", thumbnail_url: null, banner_alt: \"TwinkTrade — twink gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/yes-father-hero.jpg",
+      "bytes": 197019,
+      "width": 900,
+      "height": 250,
+      "aspect": 3.6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 82,
+          "imagePath": "/site-banners/yes-father-hero.jpg",
+          "context": "\"yesfather\": { hero_image_url: \"/site-banners/yes-father-hero.jpg\", thumbnail_url: null, banner_alt: \"Yes Father — daddy gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/yoshi-kawasaki-xxx-hero.jpg",
+      "bytes": 45323,
+      "width": 970,
+      "height": 90,
+      "aspect": 10.777777777777779,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 63,
+          "imagePath": "/site-banners/yoshi-kawasaki-xxx-hero.jpg",
+          "context": "\"yoshikawasakixxx\": { hero_image_url: \"/site-banners/yoshi-kawasaki-xxx-hero.jpg\", thumbnail_url: null, banner_alt: \"Yoshi Kawasaki XXX — japanese gay porn site"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/young-perps-hero.jpg",
+      "bytes": 189759,
+      "width": 900,
+      "height": 250,
+      "aspect": 3.6,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 84,
+          "imagePath": "/site-banners/young-perps-hero.jpg",
+          "context": "\"youngperps\": { hero_image_url: \"/site-banners/young-perps-hero.jpg\", thumbnail_url: null, banner_alt: \"Young Perps — twink gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH",
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/favicon.svg",
+      "bytes": 476,
+      "width": null,
+      "height": null,
+      "aspect": null,
+      "format": "svg",
+      "surface": null,
+      "refs": [],
+      "issues": [
+        "UNREFERENCED"
+      ]
+    },
+    {
+      "publicPath": "/logo.svg",
+      "bytes": 582,
+      "width": null,
+      "height": null,
+      "aspect": null,
+      "format": "svg",
+      "surface": null,
+      "refs": [],
+      "issues": [
+        "UNREFERENCED"
+      ]
+    },
+    {
+      "publicPath": "/placeholder.svg",
+      "bytes": 3253,
+      "width": null,
+      "height": null,
+      "aspect": null,
+      "format": "svg",
+      "surface": null,
+      "refs": [],
+      "issues": [
+        "UNREFERENCED"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/bareback-that-hole-hero.jpg",
+      "bytes": 228009,
+      "width": 1920,
+      "height": 500,
+      "aspect": 3.84,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 12,
+          "imagePath": "/site-banners/bareback-that-hole-hero.jpg",
+          "context": "bareback: \"/site-banners/bareback-that-hole-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 45,
+          "imagePath": "/site-banners/bareback-that-hole-hero.jpg",
+          "context": "\"bareback-that-hole\": { hero_image_url: \"/site-banners/bareback-that-hole-hero.jpg\", thumbnail_url: null, banner_alt: \"Bareback That Hole — bareback gay porn si"
+        },
+        {
+          "file": "src/pages/Index.tsx",
+          "line": 46,
+          "imagePath": "/site-banners/bareback-that-hole-hero.jpg",
+          "context": "{ slug: \"bareback\", name: \"Bareback\", siteCount: 47, image: \"/site-banners/bareback-that-hole-hero.jpg\","
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/bear-films-hero.jpg",
+      "bytes": 289669,
+      "width": 1920,
+      "height": 500,
+      "aspect": 3.84,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 14,
+          "imagePath": "/site-banners/bear-films-hero.jpg",
+          "context": "bear: \"/site-banners/bear-films-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 89,
+          "imagePath": "/site-banners/bear-films-hero.jpg",
+          "context": "\"bearfilms\": { hero_image_url: \"/site-banners/bear-films-hero.jpg\", thumbnail_url: null, banner_alt: \"Bear Films — bear gay porn site banner\" },"
+        },
+        {
+          "file": "src/pages/Index.tsx",
+          "line": 61,
+          "imagePath": "/site-banners/bear-films-hero.jpg",
+          "context": "{ slug: \"bear\",     name: \"Bear\",     siteCount: 4,  image: \"/site-banners/bear-films-hero.jpg\","
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/breed-me-raw-hero.jpg",
+      "bytes": 233222,
+      "width": 1920,
+      "height": 500,
+      "aspect": 3.84,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 44,
+          "imagePath": "/site-banners/breed-me-raw-hero.jpg",
+          "context": "\"breed-me-raw\": { hero_image_url: \"/site-banners/breed-me-raw-hero.jpg\", thumbnail_url: null, banner_alt: \"Breed Me Raw — bareback gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/hairy-and-raw-hero.jpg",
+      "bytes": 288367,
+      "width": 1920,
+      "height": 500,
+      "aspect": 3.84,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 90,
+          "imagePath": "/site-banners/hairy-and-raw-hero.jpg",
+          "context": "\"hairyandraw\": { hero_image_url: \"/site-banners/hairy-and-raw-hero.jpg\", thumbnail_url: null, banner_alt: \"Hairy and Raw — hairy gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/hard-brit-lads-hero.jpg",
+      "bytes": 287451,
+      "width": 1920,
+      "height": 500,
+      "aspect": 3.84,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 19,
+          "imagePath": "/site-banners/hard-brit-lads-hero.jpg",
+          "context": "british: \"/site-banners/hard-brit-lads-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 46,
+          "imagePath": "/site-banners/hard-brit-lads-hero.jpg",
+          "context": "\"hard-brit-lads\": { hero_image_url: \"/site-banners/hard-brit-lads-hero.jpg\", thumbnail_url: null, banner_alt: \"Hard Brit Lads — amateur gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/japanboyz-hero.jpg",
+      "bytes": 288187,
+      "width": 1323,
+      "height": 270,
+      "aspect": 4.9,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 60,
+          "imagePath": "/site-banners/japanboyz-hero.jpg",
+          "context": "\"japanboyz\": { hero_image_url: \"/site-banners/japanboyz-hero.jpg\", thumbnail_url: null, banner_alt: \"Japanboyz — japanese gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/military-dick-hero.jpg",
+      "bytes": 138743,
+      "width": 600,
+      "height": 350,
+      "aspect": 1.7142857142857142,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 18,
+          "imagePath": "/site-banners/military-dick-hero.jpg",
+          "context": "military: \"/site-banners/military-dick-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 80,
+          "imagePath": "/site-banners/military-dick-hero.jpg",
+          "context": "\"militarydick\": { hero_image_url: \"/site-banners/military-dick-hero.jpg\", thumbnail_url: null, banner_alt: \"Military Dick — military gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "LOW_RESOLUTION"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/peterfever-hero.jpg",
+      "bytes": 356042,
+      "width": 1323,
+      "height": 270,
+      "aspect": 4.9,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 15,
+          "imagePath": "/site-banners/peterfever-hero.jpg",
+          "context": "asian: \"/site-banners/peterfever-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 51,
+          "imagePath": "/site-banners/peterfever-hero.jpg",
+          "context": "\"peterfever\": { hero_image_url: \"/site-banners/peterfever-hero.jpg\", thumbnail_url: null, banner_alt: \"PeterFever — asian gay porn site banner\" },"
+        },
+        {
+          "file": "src/pages/Index.tsx",
+          "line": 55,
+          "imagePath": "/site-banners/peterfever-hero.jpg",
+          "context": "{ slug: \"asian\",    name: \"Asian\",    siteCount: 7,  image: \"/site-banners/peterfever-hero.jpg\","
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/rawhole-hero.jpg",
+      "bytes": 263296,
+      "width": 1600,
+      "height": 240,
+      "aspect": 6.666666666666667,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 23,
+          "imagePath": "/site-banners/rawhole-hero.jpg",
+          "context": "\"big-dick\": \"/site-banners/rawhole-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 50,
+          "imagePath": "/site-banners/rawhole-hero.jpg",
+          "context": "\"rawhole\": { hero_image_url: \"/site-banners/rawhole-hero.jpg\", thumbnail_url: null, banner_alt: \"RawHole — bareback gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/southern-strokes-hero.jpg",
+      "bytes": 272942,
+      "width": 1920,
+      "height": 500,
+      "aspect": 3.84,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 20,
+          "imagePath": "/site-banners/southern-strokes-hero.jpg",
+          "context": "amateur: \"/site-banners/southern-strokes-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 41,
+          "imagePath": "/site-banners/southern-strokes-hero.jpg",
+          "context": "\"southern-strokes\": { hero_image_url: \"/site-banners/southern-strokes-hero.jpg\", thumbnail_url: null, banner_alt: \"Southern Strokes — twink gay porn site banner"
+        },
+        {
+          "file": "src/pages/Index.tsx",
+          "line": 49,
+          "imagePath": "/site-banners/southern-strokes-hero.jpg",
+          "context": "{ slug: \"amateur\",  name: \"Amateur\",  siteCount: 40, image: \"/site-banners/southern-strokes-hero.jpg\","
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/squirt-studios-hero.jpg",
+      "bytes": 170043,
+      "width": 2000,
+      "height": 300,
+      "aspect": 6.666666666666667,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 69,
+          "imagePath": "/site-banners/squirt-studios-hero.jpg",
+          "context": "\"squirtstudios\": { hero_image_url: \"/site-banners/squirt-studios-hero.jpg\", thumbnail_url: null, banner_alt: \"Squirt Studios — amateur gay porn site banner\" },"
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/site-banners/twinks-in-shorts-hero.jpg",
+      "bytes": 94680,
+      "width": 1200,
+      "height": 250,
+      "aspect": 4.8,
+      "format": "jpeg",
+      "surface": "Site banner",
+      "refs": [
+        {
+          "file": "src/components/NicheBrowser.tsx",
+          "line": 11,
+          "imagePath": "/site-banners/twinks-in-shorts-hero.jpg",
+          "context": "twink: \"/site-banners/twinks-in-shorts-hero.jpg\","
+        },
+        {
+          "file": "src/data/site-imagery.ts",
+          "line": 39,
+          "imagePath": "/site-banners/twinks-in-shorts-hero.jpg",
+          "context": "\"twinks-in-shorts\": { hero_image_url: \"/site-banners/twinks-in-shorts-hero.jpg\", thumbnail_url: null, banner_alt: \"Twinks in Shorts — twink gay porn site banner"
+        },
+        {
+          "file": "src/pages/Index.tsx",
+          "line": 43,
+          "imagePath": "/site-banners/twinks-in-shorts-hero.jpg",
+          "context": "{ slug: \"twink\",    name: \"Twink\",    siteCount: 41, image: \"/site-banners/twinks-in-shorts-hero.jpg\","
+        }
+      ],
+      "issues": [
+        "DIMENSION_MISMATCH"
+      ]
+    },
+    {
+      "publicPath": "/pwa-512.png",
+      "bytes": 9020,
+      "width": 512,
+      "height": 512,
+      "aspect": 1,
+      "format": "png",
+      "surface": "PWA icon",
+      "refs": [
+        {
+          "file": "src/data/blog-posts.ts",
+          "line": 105,
+          "imagePath": "/pwa-512.png",
+          "context": "featured_image: \"/pwa-512.png\","
+        },
+        {
+          "file": "src/data/blog-posts.ts",
+          "line": 156,
+          "imagePath": "/pwa-512.png",
+          "context": "featured_image: \"/pwa-512.png\","
+        },
+        {
+          "file": "src/data/blog-posts.ts",
+          "line": 211,
+          "imagePath": "/pwa-512.png",
+          "context": "featured_image: \"/pwa-512.png\","
+        },
+        {
+          "file": "src/data/blog-posts.ts",
+          "line": 275,
+          "imagePath": "/pwa-512.png",
+          "context": "featured_image: \"/pwa-512.png\","
+        },
+        {
+          "file": "src/data/blog-posts.ts",
+          "line": 345,
+          "imagePath": "/pwa-512.png",
+          "context": "featured_image: \"/pwa-512.png\","
+        },
+        {
+          "file": "src/data/blog-posts.ts",
+          "line": 396,
+          "imagePath": "/pwa-512.png",
+          "context": "featured_image: \"/pwa-512.png\","
+        }
+      ],
+      "issues": []
+    }
+  ]
+}

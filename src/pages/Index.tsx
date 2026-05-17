@@ -8,6 +8,7 @@ import OutboundLink from "../components/OutboundLink";
 import InlineEmailCapture from "../components/InlineEmailCapture";
 import StarRating from "../components/StarRating";
 import LocalisedPrice from "../components/LocalisedPrice";
+import SmartImage from "../components/common/SmartImage";
 import { sites, isAffiliated, getTopDealPick, getRecentlyUpdatedPromotable } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { getSiteImagery } from "../data/site-imagery";
@@ -231,33 +232,16 @@ const TopTen = () => {
                     <span className="font-mono text-xs text-muted-foreground tabular-nums w-7 sm:w-9 shrink-0 text-right">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    {/* 48×48px (mobile 40px) banner thumbnail. No letter
-                        placeholder — sites without a banner get a dark
-                        gradient square with their name in small text. */}
-                    {heroImg ? (
-                      <div className="h-10 w-10 sm:h-14 sm:w-14 rounded-md overflow-hidden bg-muted/40 shrink-0">
-                        <img
-                          src={heroImg}
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          className="h-full w-full object-cover"
-                          style={{ objectPosition: "center 25%" }}
-                        />
-                      </div>
-                    ) : (
-                      <div
-                        className="h-10 w-10 sm:h-14 sm:w-14 rounded-md shrink-0 flex items-end justify-center p-1 text-center"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, hsl(263, 30%, 15%) 0%, hsl(240, 30%, 10%) 100%)",
-                        }}
-                      >
-                        <span className="text-[8px] sm:text-[9px] font-medium leading-tight text-foreground/60 line-clamp-2">
-                          {site.name}
-                        </span>
-                      </div>
-                    )}
+                    <div className="h-10 w-10 sm:h-14 sm:w-14 shrink-0">
+                      <SmartImage
+                        src={heroImg}
+                        alt=""
+                        aspectRatio="1:1"
+                        fallbackLabel={site.name}
+                        className="rounded-md"
+                        objectPosition="center 25%"
+                      />
+                    </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <Link
@@ -349,17 +333,13 @@ const FeaturedNiches = () => (
             {/* Cover image — 16:10 aspect. If image fails to render
                 (file missing), the dark muted background underneath
                 shows through with the niche name still readable. */}
-            <div
-              className="relative w-full overflow-hidden bg-muted/40"
-              style={{ aspectRatio: "16 / 10" }}
-            >
-              <img
+            <div className="relative w-full">
+              <SmartImage
                 src={n.image}
                 alt=""
-                loading="lazy"
-                decoding="async"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
-                style={{ objectPosition: "center 30%" }}
+                aspectRatio="16:10"
+                fallbackLabel={n.name}
+                objectPosition="center 30%"
               />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" />
             </div>
@@ -415,33 +395,15 @@ const LatestReviews = () => {
                   across the catalog (some 16:10, some 1:1, some 16:9);
                   object-cover crops to consistent shape so the 6-card
                   grid renders uniformly. */}
-              {(() => {
-                const heroImg = getSiteImagery(site.slug).hero_image_url;
-                return (
-                  <div className="mb-3 aspect-[16/10] w-full overflow-hidden rounded-lg bg-muted/40">
-                    {heroImg ? (
-                      <img
-                        src={heroImg}
-                        alt={getSiteImagery(site.slug).banner_alt || `${site.name} cover`}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-cover"
-                        style={{ objectPosition: "center 25%" }}
-                      />
-                    ) : (
-                      <div
-                        className="flex h-full w-full items-end justify-center p-3 text-center"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, hsl(263, 30%, 15%) 0%, hsl(240, 30%, 10%) 100%)",
-                        }}
-                      >
-                        <span className="text-xs font-medium text-foreground/60">{site.name}</span>
-                      </div>
-                    )}
-                  </div>
-                );
-              })()}
+              <SmartImage
+                src={getSiteImagery(site.slug).hero_image_url}
+                alt={getSiteImagery(site.slug).banner_alt || `${site.name} cover`}
+                aspectRatio="16:10"
+                fallbackLabel={site.name}
+                className="mb-3 rounded-lg"
+                objectPosition="center 25%"
+              />
+
               <h3 className="font-heading text-lg font-semibold">{site.name}</h3>
               <div className="mt-1">
                 <StarRating score={site.overall_score} size={13} />

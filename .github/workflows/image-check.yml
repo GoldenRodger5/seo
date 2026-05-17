@@ -1,0 +1,24 @@
+name: Image check
+
+on:
+  pull_request:
+    paths:
+      - "public/site-banners/**"
+      - "public/niche-covers/**"
+      - "public/blog/**"
+      - "scripts/audit-images.ts"
+      - "scripts/process-images.ts"
+      - "scripts/validate-image.ts"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run images:validate
