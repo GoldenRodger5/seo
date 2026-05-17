@@ -136,6 +136,44 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
       }
     ]
   },
+  "men-alternatives": {
+    "h1": "Best Alternatives to Men.com in 2026",
+    "intro": "Men.com has the brand recognition, the studio polish, and a back catalogue that spans nine sub-sites — but a growing stack of billing complaints, an Aylo/MindGeek parent company that members increasingly distrust, and a paywall structure that hides premium content behind a second subscription have sent a lot of guys looking for the exit. If you signed up expecting one flat monthly fee and instead found yourself navigating upsell prompts every time you logged in, you're not alone. What to look for in an alternative: transparent flat-rate pricing, a clear niche or performer type so you know exactly what you're getting, ethical billing practices with easy self-serve cancellation, and regular new content that actually feels fresh rather than factory-assembled. The five picks below each fill a specific gap that Men.com either ignores or handles poorly.",
+    "alternatives": [
+      {
+        "slug": "helix-studios",
+        "reason": "If Men.com's hypermasculine, heavily produced aesthetic leaves you cold and you'd rather watch performers who actually look like they're enjoying themselves, Helix Studios is the obvious first call. Founded in 2002 and still independently operated out of Las Vegas, Helix has spent two decades building a devoted following around 18–21-year-old twink performers shot with genuine cinematic care — award-winning director Alex Roman's work is a consistent highlight. The subscription model is straightforward and transparent, a stark contrast to Men.com's layered upsells. Content drops regularly, including bareback scene compilations and solo sessions, and the performer roster rotates in exciting newcomers alongside established fan favorites. For anyone who left Men.com frustrated by its corporate feel, Helix is the antidote."
+      },
+      {
+        "slug": "next-door-twink",
+        "reason": "Next Door Twink sits in a sweet spot that Men.com used to occupy before its content drifted toward heavily scripted, high-concept productions that feel more like budget TV than porn. NDT keeps things grounded: the casting skews toward fresh-faced, approachable guys rather than gym-carved archetypes, the scenarios are believable, and the site is part of the broader Next Door network, which means you're getting a well-resourced operation without the MindGeek baggage. Billing is clean, cancellation is self-serve, and the update frequency is solid. If you were on Men.com primarily for its younger performer content and kept running into its confusing paywall tiers, Next Door Twink is a leaner, more honest alternative."
+      },
+      {
+        "slug": "southern-strokes",
+        "reason": "Southern Strokes carves out a distinct niche that Men.com never seriously pursued: sun-soaked, Southern-American twinks and college-aged guys with a distinctly regional warmth that larger studios can't replicate. The production values are more intimate than Men.com's polished set-piece style, which works in its favor — scenes feel personal rather than corporate. If Men.com's endless sub-site sprawl felt overwhelming and you'd rather commit to one focused library with a consistent cast aesthetic, Southern Strokes delivers exactly that. The pricing is straightforward, the performer type is well-defined, and there's none of the opaque trial-into-upsell nonsense that dogs Men.com's checkout flow."
+      },
+      {
+        "slug": "next-door-world",
+        "reason": "For members who valued Men.com's broader range of content — not just twinks but fit guys across a wider age and body spectrum — Next Door World is the natural upgrade. It's the flagship of the Next Door network, pulling together content from multiple sub-sites with one membership, which is exactly what Men.com promises but regularly fails to deliver cleanly. The production quality is high, the performer variety is genuine, and critically, the member experience is handled with far more respect: no hidden add-ons, no phantom charges, no dead live-chat queues. We'd recommend it to anyone who found Men.com's network concept appealing but whose trust in the billing side was eroded by repeated complaints."
+      },
+      {
+        "slug": "daddy-on-twink",
+        "reason": "Men.com has dipped into age-gap content over the years across its various sub-sites, but it's always felt incidental rather than intentional — a sub-genre tacked onto a larger, unfocused catalogue. Daddy on Twink is built entirely around that specific dynamic, which means the casting, pacing, and scene construction all serve the fantasy without compromise. If that's what kept you subscribing to Men.com through all its billing drama, you'll find Daddy on Twink a more satisfying single-destination option. The site is niche enough to feel curated rather than algorithmic, and it doesn't require you to wade through irrelevant content or mysterious membership tiers to access what you actually came for."
+      }
+    ],
+    "verdict": "Men.com's biggest problem in 2026 isn't the content — even its critics admit the scenes are well-shot and frequently updated. The problem is that paying for it has become an exercise in frustration: deceptive trial structures, additional paywalls behind a supposed full-access membership, and customer support that members describe as functionally non-existent. Any of the five alternatives above treats your money with more respect. Helix Studios is the strongest all-around replacement for most Men.com subscribers; Next Door World is the best fit if you want a wide-ranging network without the corporate hostility. Start there, and don't look back.",
+    "meta_description": "Fed up with Men.com's billing traps and hidden paywalls? We pick the 5 best alternatives in 2026 — better value, cleaner billing, hotter content.",
+    "faq": [
+      {
+        "question": "Why do so many people want to leave Men.com?",
+        "answer": "The content itself gets relatively few complaints — the core issue is Men.com's billing and cancellation experience. Verified user reviews describe a 2-day trial that locks most content behind an additional paywall, automatic renewals that are difficult to stop without contacting support directly, and a customer service setup that members frequently find unresponsive. Some users also report that even a standard full-access membership doesn't include 1080p streaming or downloads without a further fee. The alternatives listed above all offer clearer, more honest membership structures."
+      },
+      {
+        "question": "Which Men.com alternative is best if I specifically want twink content?",
+        "answer": "Helix Studios is the strongest pick for dedicated twink content. It has focused on 18–21-year-old performers since 2002, operates with a clean subscription model, and produces material with noticeably higher cinematographic care than most studios in the niche. Next Door Twink is a close second — slightly broader in its casting but with a larger network infrastructure behind it and an equally transparent billing setup. Either is a significant upgrade over navigating Men.com's tiered paywall structure."
+      }
+    ]
+  },
 };
 
 export const getAlternativesBody = (slug: string): AlternativesBody | undefined =>
