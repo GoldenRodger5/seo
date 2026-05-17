@@ -11,7 +11,6 @@ import LocalisedPrice from "../components/LocalisedPrice";
 import { sites, isAffiliated, getTopDealPick, getRecentlyUpdatedPromotable } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { getSiteImagery } from "../data/site-imagery";
-import { getHeroThumbnailSites } from "../lib/heroThumbnails";
 import { currentYear, currentMonthLong, currentMonthShort } from "../lib/dates";
 import { parseMonthlyPrice } from "../lib/dealMath";
 import { MANFINDER_URL, trackManfinderClick } from "../lib/crak";
@@ -82,100 +81,65 @@ function categoryTag(site: SiteData): string {
 // Sections
 // ─────────────────────────────────────────────────────────────────────────────
 
-const Hero = () => {
-  const thumbnails = getHeroThumbnailSites(6);
-  return (
-    <section className="py-12 md:py-16 lg:py-20">
-      <div className="container max-w-6xl">
-        {/* Desktop: two-column grid (text ~1.2fr / thumbs ~1fr).
-            Tablet/Mobile: stacked, text first then thumb grid. */}
-        <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+const Hero = () => (
+  // Short full-width text hero. The text IS the hero — no thumbnail
+  // contact-sheet on the right (deleted from prior sprint; tile sizes
+  // were too small to deliver the "here's what we have" payoff). The
+  // niche grid below now serves as the visual hook, sitting close
+  // (32px gap) so it reads as a continuous experience.
+  //
+  // pb-8 (32px) is intentionally tight so the niche grid follows
+  // visually — the niche grid's own py-8 lg:py-14 takes care of its
+  // own breathing room.
+  // Hero pb is intentionally 0 — the niche grid's own py-8 produces the
+  // 32px gap to the next section. Don't add bottom padding here, you'll
+  // double-pad and the gap balloons to 64px.
+  <section className="pt-12 pb-0 md:pt-18 lg:pt-24 lg:min-h-[60vh] flex items-center">
+    <div className="container max-w-6xl w-full">
+      <motion.h1
+        className="font-heading font-bold heading-gradient inline-block text-3xl leading-tight md:text-4xl lg:text-5xl xl:text-6xl"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        Independent reviews of {sites.length} gay porn sites.
+      </motion.h1>
 
-          {/* Left — text block */}
-          <div className="min-w-0">
-            <motion.h1
-              className="font-heading font-bold heading-gradient inline-block text-3xl leading-tight md:text-4xl lg:text-[2.75rem] xl:text-5xl"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              Independent reviews of {sites.length} gay porn sites.
-            </motion.h1>
-            <motion.p
-              className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base lg:text-lg"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-            >
-              Every review is built from a paid membership and scored on the same four-pillar rubric. Updated monthly. No paid placements, ever.
-            </motion.p>
-            <motion.div
-              className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-            >
-              {/* Primary CTA — same gold-gradient treatment as Top 10
-                  "Visit" buttons. min-h-12 (48px) for mobile thumb-tap. */}
-              <Link
-                to="/reviews"
-                className="cta-btn gold-gradient inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground min-h-[44px] sm:w-auto sm:text-base"
-              >
-                Browse all {sites.length} sites →
-              </Link>
-              <Link
-                to="/methodology"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-button border border-primary bg-transparent px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors min-h-[44px] sm:w-auto sm:text-base"
-              >
-                See how we score
-              </Link>
-            </motion.div>
-          </div>
+      {/* max-w-2xl (≈672px) keeps the paragraph readable — wider
+          would stretch into uncomfortably long line-length territory. */}
+      <motion.p
+        className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground md:mt-8 md:text-base lg:text-lg"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        Every review is built from a paid membership and scored on the same four-pillar rubric. Updated monthly. No paid placements, ever.
+      </motion.p>
 
-          {/* Right — 6-tile thumbnail contact sheet.
-              Desktop:  2 cols × 3 rows, aspect-ratio 4/5 (portrait)
-              Tablet:   3 cols × 2 rows, aspect-ratio 16/10
-              Mobile:   3 cols × 2 rows, aspect-ratio 1/1 (squares) */}
-          {thumbnails.length > 0 && (
-            <motion.div
-              className="relative grid grid-cols-3 gap-2 lg:grid-cols-2 lg:gap-3"
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-            >
-              {thumbnails.map((site) => {
-                const img = getSiteImagery(site.slug);
-                return (
-                  <Link
-                    key={site.slug}
-                    to={`/reviews/${site.slug}`}
-                    // Responsive aspect ratio: square on mobile (dense),
-                    // 16:10 on tablet, 4:5 portrait on desktop (matches
-                    // contact-sheet feel of the 2×3 grid)
-                    className="group block aspect-square overflow-hidden rounded-lg border border-white/10 bg-muted/30 transition-all hover:scale-[1.03] hover:brightness-110 md:aspect-[16/10] lg:aspect-[4/5]"
-                    aria-label={`${site.name} review`}
-                  >
-                    <img
-                      src={img.hero_image_url ?? ""}
-                      alt={img.banner_alt || `${site.name} cover`}
-                      loading="eager"
-                      decoding="async"
-                      className="h-full w-full object-cover"
-                      style={{ objectPosition: "center 25%" }}
-                    />
-                  </Link>
-                );
-              })}
-              {/* Right-edge fade for the desktop 2-col layout — makes the
-                  grid feel like a contact sheet extending off the page. */}
-              <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-12 bg-gradient-to-l from-background to-transparent opacity-60 lg:block" />
-            </motion.div>
-          )}
-        </div>
-      </div>
-    </section>
-  );
-};
+      <motion.div
+        className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center md:mt-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+      >
+        {/* Same gold treatment as Top 10 Visit buttons. min-h-[44px]
+            meets WCAG 2.5.5 touch-target minimum. */}
+        <Link
+          to="/reviews"
+          className="cta-btn gold-gradient inline-flex w-full items-center justify-center gap-2 rounded-button px-6 py-3 text-sm font-semibold text-secondary-foreground min-h-[44px] sm:w-auto sm:text-base"
+        >
+          Browse all {sites.length} sites →
+        </Link>
+        <Link
+          to="/methodology"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-button border border-primary bg-transparent px-6 py-3 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors min-h-[44px] sm:w-auto sm:text-base"
+        >
+          See how we score
+        </Link>
+      </motion.div>
+    </div>
+  </section>
+);
 
 // EditorsPick standalone component removed — content absorbed into
 // TopTen as a sidecar (desktop) / card-above-list (mobile/tablet).
