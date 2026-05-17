@@ -9,6 +9,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { sites, isAffiliated } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { PageTransition } from "../components/MotionWrappers";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import { currentYear, currentMonthLong } from "../lib/dates";
 import { parseMonthlyPrice } from "../lib/dealMath";
 import { supabase } from "../integrations/supabase/client";
@@ -357,6 +358,8 @@ const BestDeals = () => {
             </div>
           </div>
         </section>
+
+        <FeaturedDealBanner placement="best-deals" />
 
         {/* All active deals — compact list tier */}
         <section className="pt-8 pb-16">

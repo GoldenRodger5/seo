@@ -8,6 +8,8 @@ import AnimateOnScroll from "../components/AnimateOnScroll";
 import OutboundLink from "../components/OutboundLink";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import LocalisedPrice from "../components/LocalisedPrice";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
+import { Fragment } from "react";
 import { sites, categories, isAffiliated, getSiteBySlug } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { siteNicheMap } from "../data/site-niches";
@@ -226,10 +228,16 @@ const ReviewsIndex = () => {
 
           {/* Grid */}
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((site) => {
+            {filtered.map((site, idx) => {
               const niche = primaryNicheLabel(site);
               return (
-                <AnimateOnScroll key={site.id}>
+                <Fragment key={site.id}>
+                  {idx === 6 && (
+                    <div className="col-span-full sm:col-span-2 lg:col-span-3">
+                      <FeaturedDealBanner placement="reviews-index" className="my-2" />
+                    </div>
+                  )}
+                <AnimateOnScroll>
                   <div className="card-glow glass-card flex flex-col rounded-lg overflow-hidden h-full">
                     <SitePlaceholderImage site={site} />
                     <div className="flex flex-col flex-1 p-5">
@@ -283,6 +291,7 @@ const ReviewsIndex = () => {
                     </div>
                   </div>
                 </AnimateOnScroll>
+                </Fragment>
               );
             })}
           </div>

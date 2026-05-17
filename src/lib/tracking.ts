@@ -165,7 +165,8 @@ export type CtaPosition =
   | "top-sites-card"
   | "compare-card"
   | "editor-pick"
-  | "top-10-row";
+  | "top-10-row"
+  | "featured-banner";
 
 /** Internal helper — POST a row to a Supabase REST endpoint. */
 function postRow(table: string, row: Record<string, unknown>): void {

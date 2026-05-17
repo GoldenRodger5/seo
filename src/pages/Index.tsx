@@ -9,6 +9,7 @@ import InlineEmailCapture from "../components/InlineEmailCapture";
 import StarRating from "../components/StarRating";
 import LocalisedPrice from "../components/LocalisedPrice";
 import SmartImage from "../components/common/SmartImage";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import { sites, isAffiliated, getTopDealPick, getRecentlyUpdatedPromotable } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { getSiteImagery } from "../data/site-imagery";
@@ -536,6 +537,7 @@ const Index = () => {
             or above the Top 10 list (mobile/tablet). */}
         <FeaturedNiches />
         <TopTen />
+        <FeaturedDealBanner placement="homepage" />
         <LatestReviews />
         <UtilityRow />
         <ManfinderRow />

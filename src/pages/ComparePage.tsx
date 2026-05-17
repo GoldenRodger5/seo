@@ -15,6 +15,7 @@ import { displayPillarScore } from "../lib/scoreFormatting";
 import { generateCompareFaqs } from "../lib/compareFaqs";
 import RelatedReading from "../components/RelatedReading";
 import { PageTransition } from "../components/MotionWrappers";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import { currentYear } from "../lib/dates";
 import { siteNicheMap } from "@/data/site-niches";
 import { getNiche } from "@/data/niches";
@@ -433,6 +434,8 @@ const CompareIndex = () => {
           </section>
         )}
 
+        <FeaturedDealBanner placement="compare" />
+
         {/* Featured pairs */}
         <section className="py-12 border-t border-border">
           <div className="container max-w-5xl">
@@ -757,6 +760,11 @@ const ComparePage = () => {
                 </tbody>
               </table>
             </div>
+
+            <FeaturedDealBanner
+              placement="compare"
+              context={{ compareSlugs: [siteA.slug, siteB.slug] }}
+            />
 
             {/* Verdict with CTAs */}
             <div className="mt-10 glass-card rounded-lg p-8">

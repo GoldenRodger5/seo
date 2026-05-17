@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Layout from "../components/Layout";
 import { PageTransition, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import SiteCard from "../components/SiteCard";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { sites } from "../data/sites";
@@ -165,6 +166,8 @@ const NicheCategoryPage = () => {
             </p>
           </div>
         </section>
+
+        <FeaturedDealBanner placement="niche-category" context={{ nicheSlug: niche.slug }} />
 
         {/* Site grid */}
         <section className="py-12">
