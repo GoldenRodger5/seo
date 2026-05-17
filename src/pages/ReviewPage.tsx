@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import OutboundLink from "../components/OutboundLink";
 import SmartImage from "../components/common/SmartImage";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import { Check, X as XIcon, ArrowRight, ThumbsUp } from "lucide-react";
 import {
   Accordion,
@@ -529,6 +530,12 @@ const ReviewPage = () => {
               </div>
 
               <p className="text-xs text-muted-foreground">Last Updated: {currentMonthLong} {currentYear}</p>
+
+              <FeaturedDealBanner
+                placement="review-page"
+                context={{ siteSlug: site.slug }}
+                className="!my-8 !px-0"
+              />
 
               {/* FAQ Section — site-specific, purchase-intent questions */}
               <section className="mt-8">

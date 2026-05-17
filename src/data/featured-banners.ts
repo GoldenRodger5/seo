@@ -91,10 +91,18 @@ export const placeableBanners = featuredBanners.filter((b) => b.aspectClass !== 
  * so different surfaces don't repeat the same banner on the same day.
  */
 export function pickBanner(opts: {
-  placement: "homepage" | "reviews-index" | "best-deals" | "niche-category" | "compare";
+  placement: "homepage" | "reviews-index" | "best-deals" | "niche-category" | "compare" | "review-page";
   nicheSlug?: string;
   compareSlugs?: [string, string];
+  siteSlug?: string;
 }): FeaturedBanner | null {
+  // Review page: pin to the site's own banner if one exists.
+  if (opts.placement === "review-page" && opts.siteSlug) {
+    const ownBanner = getBannerForSite(opts.siteSlug);
+    if (ownBanner) return ownBanner;
+    return null; // no banner for this site → render nothing on the review page
+  }
+
   let pool = placeableBanners;
 
   // Niche-aware selection
@@ -118,7 +126,7 @@ export function pickBanner(opts: {
 
   // Deterministic daily seed × placement
   const day = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
-  const placementSeed = ["homepage", "reviews-index", "best-deals", "niche-category", "compare"].indexOf(opts.placement);
+  const placementSeed = ["homepage", "reviews-index", "best-deals", "niche-category", "compare", "review-page"].indexOf(opts.placement);
   const idx = (day + placementSeed * 7) % top.length;
   return top[idx];
 }
@@ -127,4 +135,9 @@ export function pickBanner(opts: {
 export function getBannerAffiliateUrl(banner: FeaturedBanner): string | null {
   const site = getSiteBySlug(banner.siteSlug);
   return site?.affiliate_url ?? null;
+}
+
+/** Find the featured banner for a specific site slug, if one exists. */
+export function getBannerForSite(siteSlug: string): FeaturedBanner | null {
+  return featuredBanners.find((b) => b.siteSlug === siteSlug) ?? null;
 }

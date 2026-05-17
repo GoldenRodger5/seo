@@ -6,10 +6,11 @@ import { getSiteBySlug, getVisitUrl, isAffiliated } from "../../data/sites";
 import { logClick, logImpression } from "../../lib/tracking";
 
 interface FeaturedDealBannerProps {
-  placement: "homepage" | "reviews-index" | "best-deals" | "niche-category" | "compare";
+  placement: "homepage" | "reviews-index" | "best-deals" | "niche-category" | "compare" | "review-page";
   context?: {
     nicheSlug?: string;
     compareSlugs?: [string, string];
+    siteSlug?: string;
   };
   className?: string;
 }
@@ -34,8 +35,13 @@ const FeaturedDealBanner = ({ placement, context, className = "" }: FeaturedDeal
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setBanner(pickBanner({ placement, nicheSlug: context?.nicheSlug, compareSlugs: context?.compareSlugs }));
-  }, [placement, context?.nicheSlug, context?.compareSlugs]);
+    setBanner(pickBanner({
+      placement,
+      nicheSlug: context?.nicheSlug,
+      compareSlugs: context?.compareSlugs,
+      siteSlug: context?.siteSlug,
+    }));
+  }, [placement, context?.nicheSlug, context?.compareSlugs, context?.siteSlug]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

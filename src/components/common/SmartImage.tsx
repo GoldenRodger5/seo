@@ -16,6 +16,13 @@ interface SmartImageProps {
    *  that need to honor the source's actual ratio). */
   customAspect?: string;
   /**
+   * Explicit @2x source. When set, emits a srcset so retina displays
+   * fetch the higher-density file. NEVER auto-derive — most sources in
+   * this codebase don't have @2x variants on disk and the auto-derived
+   * URL 404s, which fires onError and shows the fallback.
+   */
+  src2x?: string | null;
+  /**
    * fit mode for the inner <img>. Cards default to "cover" (crop to box);
    * banner-wide uses "contain" so the designed composition is preserved.
    */
@@ -42,6 +49,7 @@ const SmartImage = ({
   objectPosition = "center 20%",
   customAspect,
   fit,
+  src2x,
 }: SmartImageProps) => {
   const objectFit = fit ?? (aspectRatio === "banner-wide" ? "contain" : "cover");
   const containerBg = aspectRatio === "banner-wide" ? "bg-[hsl(240_15%_6%)]" : "bg-muted/30";
@@ -49,10 +57,6 @@ const SmartImage = ({
   const [loaded, setLoaded] = useState(false);
 
   const showFallback = !src || errored;
-
-  const retina = src && /\.(jpe?g|png|webp)$/i.test(src)
-    ? src.replace(/(\.[a-z]+)$/i, "@2x$1")
-    : undefined;
 
   return (
     <div
@@ -62,7 +66,7 @@ const SmartImage = ({
       {!showFallback && (
         <img
           src={src!}
-          srcSet={retina ? `${src} 1x, ${retina} 2x` : undefined}
+          srcSet={src2x ? `${src} 1x, ${src2x} 2x` : undefined}
           sizes={sizes}
           alt={alt}
           loading={priority ? "eager" : "lazy"}
