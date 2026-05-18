@@ -761,11 +761,6 @@ const ComparePage = () => {
               </table>
             </div>
 
-            <FeaturedDealBanner
-              placement="compare"
-              context={{ compareSlugs: [siteA.slug, siteB.slug] }}
-            />
-
             {/* Verdict with CTAs */}
             <div className="mt-10 glass-card rounded-lg p-8">
               <h2 className="text-center font-heading text-2xl font-bold heading-gradient inline-block w-full">Our Verdict</h2>
@@ -821,6 +816,11 @@ const ComparePage = () => {
                 );
               })()}
             </div>
+
+            <FeaturedDealBanner
+              placement="compare"
+              context={{ compareSlugs: [siteA.slug, siteB.slug] }}
+            />
 
             {/* FAQ */}
             <div className="mt-10">

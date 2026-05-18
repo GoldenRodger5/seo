@@ -234,7 +234,7 @@ const ReviewsIndex = () => {
                 <Fragment key={site.id}>
                   {idx === 6 && (
                     <div className="col-span-full sm:col-span-2 lg:col-span-3">
-                      <FeaturedDealBanner placement="reviews-index" className="my-2" />
+                      <FeaturedDealBanner placement="reviews-index" className="!my-6 lg:!my-8 !px-0" />
                     </div>
                   )}
                 <AnimateOnScroll>

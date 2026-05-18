@@ -7,6 +7,7 @@ import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import LocalisedPrice from "../components/LocalisedPrice";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import { categories, getSitesByCategory } from "../data/sites";
 import { currentYear } from "../lib/dates";
 
@@ -137,6 +138,8 @@ const CategoryPage = () => {
           {sorted.length === 0 && (
             <p className="mt-10 text-center text-muted-foreground">No sites found in this category yet.</p>
           )}
+
+          <FeaturedDealBanner placement="niche-category" context={{ nicheSlug: slug }} />
 
           {/* Related */}
           <AnimateOnScroll className="mt-16">

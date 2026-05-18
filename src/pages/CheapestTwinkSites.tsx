@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { DollarSign, Check, ArrowRight } from "lucide-react";
 import Layout from "../components/Layout";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../components/MotionWrappers";
 import StarRating from "../components/StarRating";
 import VisitSiteButton from "../components/VisitSiteButton";
@@ -128,6 +129,8 @@ const CheapestTwinkSites = () => (
               </StaggerChild>
             ))}
           </StaggerContainer>
+
+          <FeaturedDealBanner placement="niche-category" context={{ nicheSlug: "twink" }} />
 
           <div className="space-y-5 text-muted-foreground leading-relaxed">
             <h2 className="font-heading text-2xl font-bold text-foreground">The Cheapest Twink Porn Sites — Without Getting Burned</h2>

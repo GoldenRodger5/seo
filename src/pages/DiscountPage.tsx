@@ -13,6 +13,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import LocalisedPrice from "../components/LocalisedPrice";
 import { PageTransition, MotionCard, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
 import VisitSiteButton from "../components/VisitSiteButton";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import StarRating from "../components/StarRating";
 import VerifiedBadge from "../components/VerifiedBadge";
 import { currentYear, currentMonthLong, lastCheckedDate, DEAL_VERIFIED_DATE } from "../lib/dates";
@@ -295,6 +296,8 @@ const DiscountPage = () => {
             </MotionCard>
           </div>
         </section>
+
+        <FeaturedDealBanner placement="review-page" context={{ siteSlug: site.slug }} />
 
         {/* Pricing Table */}
         <section className="py-12">

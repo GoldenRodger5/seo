@@ -8,6 +8,7 @@ import LocalisedPrice from "../components/LocalisedPrice";
 import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../components/MotionWrappers";
 import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { sites } from "../data/sites";
 import { currentYear, currentMonthLong } from "../lib/dates";
@@ -120,6 +121,8 @@ const BestTwinkSites = () => (
               </StaggerChild>
             ))}
           </StaggerContainer>
+
+          <FeaturedDealBanner placement="niche-category" context={{ nicheSlug: "twink" }} />
 
           {/* SEO content block */}
           <motion.div

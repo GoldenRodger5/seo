@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Gift, Check, ArrowRight } from "lucide-react";
 import Layout from "../components/Layout";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import { PageTransition, StaggerContainer, StaggerChild, MotionCard } from "../components/MotionWrappers";
 import StarRating from "../components/StarRating";
 import VisitSiteButton from "../components/VisitSiteButton";
@@ -92,6 +93,8 @@ const FreeTrialSites = () => (
               </StaggerChild>
             ))}
           </StaggerContainer>
+
+          <FeaturedDealBanner placement="best-deals" />
 
           <h2 className="font-heading text-2xl font-bold mb-2 heading-gradient inline-block">Top Rated (No Trial)</h2>
           <p className="mb-6 text-sm text-muted-foreground">These don't offer trials but consistently rank as our top overall picks.</p>

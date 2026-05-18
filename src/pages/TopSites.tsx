@@ -8,6 +8,7 @@ import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import OutboundLink from "../components/OutboundLink";
+import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import LocalisedPrice from "../components/LocalisedPrice";
 import { sites, getVisitUrl, isAffiliated } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
@@ -209,6 +210,8 @@ const TopSites = () => {
                 </StaggerChild>
               ))}
             </StaggerContainer>
+
+            <FeaturedDealBanner placement="homepage" />
 
             {/* Comparison Table */}
             <motion.div
