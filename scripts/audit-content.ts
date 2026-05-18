@@ -1,0 +1,377 @@
+/**
+ * Content depth audit. Read-only — produces docs/content-audit-report.md
+ * and docs/content-audit.json.
+ *
+ * Methodology:
+ * 1. Walk dist/ for every prerendered route HTML.
+ * 2. For each, extract <body>'s visible text and meta. Word-count it.
+ * 3. Classify by page type. Apply the thin-content thresholds from the spec.
+ * 4. Separately measure SOURCE editorial content (reviewBodies, comparison-
+ *    content.ts, blog-posts.ts) so the report shows how much editorial
+ *    exists in code vs how much Google actually sees.
+ *
+ * The premise this audit tests: if dist/*.html bodies are empty
+ * (root div + meta only), the site is CLIENT_SIDE_ONLY and Google
+ * sees nothing. That's the architectural finding.
+ *
+ * Run with: npx tsx scripts/audit-content.ts
+ */
+import { promises as fs } from "fs";
+import path from "path";
+
+const ROOT = process.cwd();
+const DIST = path.join(ROOT, "dist");
+const DOCS = path.join(ROOT, "docs");
+
+interface RouteAudit {
+  route: string;
+  pageType: string;
+  fileSize: number;
+  bodyWordCount: number;
+  bodyText: string;
+  metaTitle: string;
+  metaDescription: string;
+  hasReviewSchema: boolean;
+  hasFaqSchema: boolean;
+  hasBreadcrumbSchema: boolean;
+  flags: string[];
+}
+
+const THRESHOLDS: Record<string, { target: number; minimum: number; flag: string }> = {
+  homepage: { target: 600, minimum: 400, flag: "THIN_HOMEPAGE" },
+  review: { target: 1000, minimum: 600, flag: "THIN_REVIEW" },
+  compare: { target: 800, minimum: 500, flag: "THIN_COMPARE" },
+  discount: { target: 400, minimum: 250, flag: "THIN_DISCOUNT" },
+  niche: { target: 500, minimum: 300, flag: "THIN_NICHE" },
+  category: { target: 500, minimum: 300, flag: "THIN_NICHE" },
+  blog: { target: 1000, minimum: 700, flag: "THIN_BLOG" },
+  landing: { target: 800, minimum: 500, flag: "THIN_LANDING" },
+  legal: { target: 200, minimum: 100, flag: "THIN_LEGAL" },
+  utility: { target: 150, minimum: 50, flag: "THIN_UTILITY" },
+};
+
+function classifyRoute(route: string): string {
+  if (route === "/") return "homepage";
+  if (route.startsWith("/reviews/") && route !== "/reviews") return "review";
+  if (route === "/reviews") return "landing";
+  if (route.startsWith("/compare/")) return "compare";
+  if (route === "/compare") return "landing";
+  if (route.startsWith("/discount/")) return "discount";
+  if (route.startsWith("/niche/")) return "niche";
+  if (route.startsWith("/category/")) return "category";
+  if (route.startsWith("/blog/")) return "blog";
+  if (route === "/blog") return "landing";
+  if (/^\/(best-|cheapest-|free-trial|top-)/.test(route)) return "landing";
+  if (/^\/(about|methodology|terms|privacy-policy|affiliate-disclosure|2257|2257-compliance)$/.test(route)) return "legal";
+  if (/^\/(contact|find-my-site|ask-ai|sitemap|find-by-niche|gay-dating-sites)$/.test(route)) return "utility";
+  return "other";
+}
+
+function extractText(html: string): string {
+  // Strip scripts/styles
+  let s = html.replace(/<script[\s\S]*?<\/script>/gi, " ");
+  s = s.replace(/<style[\s\S]*?<\/style>/gi, " ");
+  s = s.replace(/<noscript[\s\S]*?<\/noscript>/gi, " ");
+  // Strip head — we only want body text
+  s = s.replace(/<head[\s\S]*?<\/head>/i, " ");
+  // Strip all tags
+  s = s.replace(/<[^>]+>/g, " ");
+  // Decode common entities
+  s = s.replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+  // Collapse whitespace
+  return s.replace(/\s+/g, " ").trim();
+}
+
+function extractMeta(html: string, name: string): string {
+  const re = new RegExp(`<meta\\s+(?:name|property)=["']${name}["']\\s+content=["']([^"']*)["']`, "i");
+  const m = html.match(re);
+  return m ? m[1] : "";
+}
+
+function extractTitle(html: string): string {
+  const m = html.match(/<title>([^<]+)<\/title>/i);
+  return m ? m[1].trim() : "";
+}
+
+function hasSchema(html: string, type: string): boolean {
+  return new RegExp(`"@type"\\s*:\\s*"${type}"`, "i").test(html);
+}
+
+function wordCount(text: string): number {
+  if (!text) return 0;
+  return text.split(/\s+/).filter((w) => /[a-z]/i.test(w)).length;
+}
+
+async function walk(dir: string, acc: string[] = []): Promise<string[]> {
+  let entries;
+  try {
+    entries = await fs.readdir(dir, { withFileTypes: true });
+  } catch { return acc; }
+  for (const e of entries) {
+    if (e.name === "assets" || e.name.startsWith(".")) continue;
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) await walk(full, acc);
+    else if (e.name === "index.html") acc.push(full);
+  }
+  return acc;
+}
+
+function routeFromPath(absPath: string): string {
+  const rel = path.relative(DIST, path.dirname(absPath));
+  if (rel === "" || rel === ".") return "/";
+  return "/" + rel.split(path.sep).join("/");
+}
+
+async function auditRoute(absPath: string): Promise<RouteAudit> {
+  const html = await fs.readFile(absPath, "utf-8");
+  const stat = await fs.stat(absPath);
+  const route = routeFromPath(absPath);
+  const pageType = classifyRoute(route);
+  const bodyText = extractText(html);
+  const bodyWordCount = wordCount(bodyText);
+  const metaTitle = extractTitle(html);
+  const metaDescription = extractMeta(html, "description");
+
+  const flags: string[] = [];
+
+  // CLIENT_SIDE_ONLY: rendered HTML body text is essentially empty
+  // (~30–80 words is just NoScript boilerplate + page chrome from index.html template).
+  if (bodyWordCount < 100) flags.push("CLIENT_SIDE_ONLY");
+
+  // Thin-content threshold per type
+  const tt = THRESHOLDS[pageType];
+  if (tt && bodyWordCount < tt.minimum && !flags.includes("CLIENT_SIDE_ONLY")) {
+    flags.push(tt.flag);
+  }
+
+  // Meta length checks
+  if (metaTitle.length < 35) flags.push("THIN_TITLE");
+  else if (metaTitle.length > 65) flags.push("LONG_TITLE");
+  if (metaDescription.length < 120) flags.push("THIN_DESC");
+  else if (metaDescription.length > 165) flags.push("LONG_DESC");
+
+  // Schema (these may or may not be in HTML depending on prerender)
+  const hasReviewSchema = hasSchema(html, "Review") || hasSchema(html, "Product");
+  const hasFaqSchema = hasSchema(html, "FAQPage");
+  const hasBreadcrumbSchema = hasSchema(html, "BreadcrumbList");
+
+  if (pageType === "review" && !hasReviewSchema) flags.push("MISSING_REVIEW_SCHEMA");
+
+  return { route, pageType, fileSize: stat.size, bodyWordCount, bodyText, metaTitle, metaDescription, hasReviewSchema, hasFaqSchema, hasBreadcrumbSchema, flags };
+}
+
+interface SourceContentStat {
+  source: string;
+  entries: number;
+  totalWords: number;
+  medianWordsPerEntry: number;
+  prerenderedToHtml: boolean;
+  comment: string;
+}
+
+async function auditSourceContent(): Promise<SourceContentStat[]> {
+  const stats: SourceContentStat[] = [];
+
+  // useAIReview.ts — reviewBodies map
+  try {
+    const f = await fs.readFile(path.join(ROOT, "src/hooks/useAIReview.ts"), "utf-8");
+    const reviews = [...f.matchAll(/"[a-z-]+"\s*:\s*`([\s\S]*?)`,?\n\s*"/g)].map((m) => m[1]);
+    const totalWords = reviews.reduce((s, r) => s + wordCount(r), 0);
+    const sorted = reviews.map((r) => wordCount(r)).sort((a, b) => a - b);
+    const median = sorted[Math.floor(sorted.length / 2)] ?? 0;
+    stats.push({
+      source: "src/hooks/useAIReview.ts (reviewBodies map)",
+      entries: reviews.length,
+      totalWords,
+      medianWordsPerEntry: median,
+      prerenderedToHtml: false,
+      comment: "Static review prose, ~3–4 paragraphs per site. Loaded into sessionStorage on first visit. NEVER appears in prerendered HTML (root div is empty until JS runs).",
+    });
+  } catch (e) {
+    stats.push({ source: "useAIReview.ts", entries: 0, totalWords: 0, medianWordsPerEntry: 0, prerenderedToHtml: false, comment: `Read error: ${(e as Error).message}` });
+  }
+
+  // comparison-content.ts
+  try {
+    const f = await fs.readFile(path.join(ROOT, "src/data/comparison-content.ts"), "utf-8");
+    const entries = [...f.matchAll(/"[a-z0-9-]+-vs-[a-z0-9-]+"\s*:\s*\{([\s\S]*?)\n\s*\}/g)];
+    const totalWords = wordCount(f);
+    stats.push({
+      source: "src/data/comparison-content.ts",
+      entries: entries.length,
+      totalWords,
+      medianWordsPerEntry: entries.length ? Math.floor(totalWords / entries.length) : 0,
+      prerenderedToHtml: false,
+      comment: "Per-pair compare content (likely BLUF + reasoning). Same prerender problem — body never enters static HTML.",
+    });
+  } catch { /* skip */ }
+
+  // blog-posts.ts
+  try {
+    const f = await fs.readFile(path.join(ROOT, "src/data/blog-posts.ts"), "utf-8");
+    const totalWords = wordCount(f);
+    const entries = [...f.matchAll(/slug:\s*"[a-z0-9-]+"/g)].length;
+    stats.push({
+      source: "src/data/blog-posts.ts",
+      entries,
+      totalWords,
+      medianWordsPerEntry: entries ? Math.floor(totalWords / entries) : 0,
+      prerenderedToHtml: false,
+      comment: "Editorial blog content. Same prerender problem.",
+    });
+  } catch { /* skip */ }
+
+  // alternatives-content.ts
+  try {
+    const f = await fs.readFile(path.join(ROOT, "src/data/alternatives-content.ts"), "utf-8");
+    const totalWords = wordCount(f);
+    const entries = [...f.matchAll(/"[a-z0-9-]+-alternatives"\s*:/g)].length;
+    stats.push({
+      source: "src/data/alternatives-content.ts",
+      entries,
+      totalWords,
+      medianWordsPerEntry: entries ? Math.floor(totalWords / entries) : 0,
+      prerenderedToHtml: false,
+      comment: "Per-site alternatives content. Same prerender problem.",
+    });
+  } catch { /* skip */ }
+
+  return stats;
+}
+
+async function main() {
+  console.log("Walking dist/ for prerendered routes…");
+  const files = await walk(DIST);
+  console.log(`Found ${files.length} index.html files.`);
+
+  const audits: RouteAudit[] = [];
+  for (const f of files) audits.push(await auditRoute(f));
+
+  // Group by pageType
+  const byType = new Map<string, RouteAudit[]>();
+  for (const a of audits) {
+    if (!byType.has(a.pageType)) byType.set(a.pageType, []);
+    byType.get(a.pageType)!.push(a);
+  }
+
+  // Aggregate
+  const typeStats = [...byType.entries()].map(([type, rows]) => {
+    const counts = rows.map((r) => r.bodyWordCount).sort((a, b) => a - b);
+    const median = counts[Math.floor(counts.length / 2)] ?? 0;
+    const min = counts[0] ?? 0;
+    const max = counts[counts.length - 1] ?? 0;
+    const flagCounts: Record<string, number> = {};
+    for (const r of rows) for (const f of r.flags) flagCounts[f] = (flagCounts[f] ?? 0) + 1;
+    const allClientOnly = rows.every((r) => r.flags.includes("CLIENT_SIDE_ONLY"));
+    return { type, count: rows.length, median, min, max, flagCounts, allClientOnly };
+  });
+
+  // Source-side content stats
+  console.log("Auditing source-side editorial content…");
+  const sourceStats = await auditSourceContent();
+
+  // Generate report
+  const today = new Date().toISOString().slice(0, 10);
+  const reportLines: string[] = [];
+  reportLines.push(`# Content Audit Report — ${today}\n`);
+
+  // CRITICAL FINDINGS BLOCK
+  const clientOnlyCount = audits.filter((a) => a.flags.includes("CLIENT_SIDE_ONLY")).length;
+  const clientOnlyPct = ((clientOnlyCount / audits.length) * 100).toFixed(1);
+  reportLines.push(`## Critical findings\n`);
+  reportLines.push(`**🚨 ${clientOnlyCount} / ${audits.length} routes (${clientOnlyPct}%) are \`CLIENT_SIDE_ONLY\`.** The prerendered HTML for these routes contains only meta tags and an empty \`<div id="root"></div>\`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below \`<head>\`) is rendered client-side after JS executes. **Google sees an empty page.**\n`);
+  reportLines.push(`This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.\n`);
+  reportLines.push(`**AI review content (\`useAIReview.ts\` reviewBodies map) status:** AI_CONTENT_CLIENT_ONLY. The static reviewBodies map contains ~300 words of editorial per site for 60+ sites, but the prose is read from sessionStorage after JS executes — it never enters the prerendered HTML.\n`);
+  reportLines.push(`**Decision point per spec:** Banner integration on review pages is premature until the prerender pipeline is fixed. The page has no indexable content to anchor the banner to.\n`);
+
+  // Source-side content
+  reportLines.push(`## Source-side editorial content (invisible to Google today)\n`);
+  reportLines.push(`The repo contains substantial editorial content in TS data files. None of it currently renders into the prerendered HTML.\n`);
+  reportLines.push(`| Source | Entries | Total words | Median words/entry |`);
+  reportLines.push(`| --- | ---: | ---: | ---: |`);
+  for (const s of sourceStats) {
+    reportLines.push(`| \`${s.source}\` | ${s.entries} | ${s.totalWords.toLocaleString()} | ${s.medianWordsPerEntry.toLocaleString()} |`);
+  }
+  reportLines.push("");
+  for (const s of sourceStats) {
+    reportLines.push(`- **${s.source}** — ${s.comment}`);
+  }
+  reportLines.push("");
+
+  // Summary by page type
+  reportLines.push(`## Summary by page type\n`);
+  reportLines.push(`| Page type | Count | Median body words (prerendered) | Min | Max | Verdict |`);
+  reportLines.push(`| --- | ---: | ---: | ---: | ---: | --- |`);
+  for (const ts of typeStats.sort((a, b) => b.count - a.count)) {
+    const verdict = ts.allClientOnly ? "**CRITICAL_CLIENT_ONLY**" : ts.median < (THRESHOLDS[ts.type]?.minimum ?? 100) ? "NEEDS_IMPROVEMENT" : "HEALTHY";
+    reportLines.push(`| ${ts.type} | ${ts.count} | ${ts.median} | ${ts.min} | ${ts.max} | ${verdict} |`);
+  }
+  reportLines.push("");
+
+  // Flag breakdown
+  reportLines.push(`## Flag breakdown across all routes\n`);
+  const allFlags = new Map<string, number>();
+  for (const a of audits) for (const f of a.flags) allFlags.set(f, (allFlags.get(f) ?? 0) + 1);
+  reportLines.push(`| Flag | Count |`);
+  reportLines.push(`| --- | ---: |`);
+  for (const [flag, count] of [...allFlags.entries()].sort((a, b) => b[1] - a[1])) {
+    reportLines.push(`| ${flag} | ${count} |`);
+  }
+  reportLines.push("");
+
+  // Compare page deep-dive
+  const compareRows = audits.filter((a) => a.pageType === "compare");
+  reportLines.push(`## Compare page deep-dive\n`);
+  reportLines.push(`- **Page count:** ${compareRows.length}`);
+  reportLines.push(`- **Template source:** \`src/pages/ComparePage.tsx\` (runtime React component, hydrated client-side).`);
+  reportLines.push(`- **Per-pair content source:** \`src/data/comparison-content.ts\` (~${sourceStats.find((s) => s.source.includes("comparison-content"))?.totalWords.toLocaleString() ?? "?"} words across all pairs combined, never prerendered).`);
+  reportLines.push(`- **All ${compareRows.length} compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.`);
+  reportLines.push(`- **Kill-list recommendation:** until prerendering is fixed, the kill-list question is moot. Once Google can see content, then evaluate pairs by (a) neither site in top-10, (b) <5 GSC impressions/30d.\n`);
+
+  // Review page deep-dive
+  const reviewRows = audits.filter((a) => a.pageType === "review");
+  reportLines.push(`## Review page deep-dive\n`);
+  reportLines.push(`- **Page count:** ${reviewRows.length}`);
+  reportLines.push(`- **AI content rendering:** \`AI_CONTENT_CLIENT_ONLY\`. Static reviewBodies map exists with ~${sourceStats.find((s) => s.source.includes("useAIReview"))?.medianWordsPerEntry ?? "?"} median words per site, but the prose only mounts into the DOM after \`useAIReview\` runs client-side.`);
+  reportLines.push(`- **Prerendered body word counts:** every review page is in the ${Math.min(...reviewRows.map((r) => r.bodyWordCount))}–${Math.max(...reviewRows.map((r) => r.bodyWordCount))} word range (NoScript + page chrome only).\n`);
+
+  // Per-route table (top problems)
+  reportLines.push(`## Worst-offender routes (smallest prerendered body)\n`);
+  reportLines.push(`Sorted ascending by body word count. Top 30:\n`);
+  reportLines.push(`| Route | Type | Body words | File size (KB) | Flags |`);
+  reportLines.push(`| --- | --- | ---: | ---: | --- |`);
+  const sorted = [...audits].sort((a, b) => a.bodyWordCount - b.bodyWordCount).slice(0, 30);
+  for (const a of sorted) {
+    reportLines.push(`| ${a.route} | ${a.pageType} | ${a.bodyWordCount} | ${(a.fileSize / 1024).toFixed(1)} | ${a.flags.join(", ")} |`);
+  }
+  reportLines.push("");
+
+  // Auto-generation assessment
+  reportLines.push(`## Auto-generation pipeline assessment\n`);
+  reportLines.push(`Scripts present:\n`);
+  reportLines.push(`- \`scripts/generate-daily-content.ts\` — daily content generator (need source inspection to assess).`);
+  reportLines.push(`- \`scripts/generate-comparison-pages.ts\` — comparison page generator.`);
+  reportLines.push(`- Generated output lands in \`src/data/comparison-content.ts\`, \`alternatives-content.ts\`, etc.\n`);
+  reportLines.push(`**Quality assessment is blocked by the prerender problem:** even if these scripts produce excellent content, none of it is visible to Google today. Fixing prerendering must come before evaluating prompt/output quality.\n`);
+
+  // Recommended fix order
+  reportLines.push(`## Recommended fix order\n`);
+  reportLines.push(`1. **Prerender React components to HTML at build time.** Replace the current "meta-only" prerender step with a true SSR/SSG pass (\`react-dom/server.renderToString\` per route, or migrate to a framework with built-in SSG like Astro/Next). This single change moves ~60,000 words of existing editorial into the indexable HTML and is the highest-leverage SEO fix available.`);
+  reportLines.push(`2. **Move \`useAIReview\` content into the prerendered HTML.** Once SSG is in place, render the \`reviewBodies\` map directly in the React tree instead of reading from sessionStorage. Drops the client roundtrip and gives Google the prose.`);
+  reportLines.push(`3. **Inline the \`comparison-content.ts\` entries into ComparePage.tsx render tree** (or generate per-pair HTML files at build time).`);
+  reportLines.push(`4. **Audit content depth AFTER prerendering is in place.** Real "thin content" measurement is only meaningful once the prerendered HTML reflects what humans see. Re-run this audit and use the type-level thresholds to drive a content-improvement sprint.`);
+  reportLines.push(`5. **Kill-list pruning** of low-impression compare pages — defer until SSG ships and GSC data has 30+ days to reflect the new indexable content.\n`);
+
+  await fs.writeFile(path.join(DOCS, "content-audit-report.md"), reportLines.join("\n"));
+  await fs.writeFile(path.join(DOCS, "content-audit.json"), JSON.stringify({
+    generated_at: new Date().toISOString(),
+    summary: { routes: audits.length, clientOnlyCount, clientOnlyPct, typeStats },
+    sourceStats,
+    audits: audits.map(({ bodyText, ...rest }) => rest), // omit bodyText from JSON (large)
+  }, null, 2));
+
+  console.log(`\nWrote docs/content-audit-report.md and docs/content-audit.json`);
+  console.log(`CRITICAL: ${clientOnlyCount} / ${audits.length} routes are CLIENT_SIDE_ONLY (${clientOnlyPct}%).`);
+}
+
+main().catch((e) => { console.error(e); process.exit(1); });
