@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
 import { SiteData } from "../data/sites";
-
-const CACHE_KEY = (slug: string) => `tv_ai_review_${slug}`;
 
 // Pre-written reviews to avoid exposing API keys client-side.
 // To update: regenerate offline and paste here.
@@ -193,34 +190,13 @@ export const reviewBodies: Record<string, string> = {
     `Aussies Do It fills a gap that US and European studios almost entirely ignore: gay content with genuine Australian character. The performers are Australian, the locations often reflect it — outdoor settings, natural light, and a laid-back energy that you genuinely can't fake with American or British talent doing accents. Content quality at 80/100 reflects good HD production that leans into the natural-light aesthetic rather than fighting it with studio lighting setups that would undercut the brand's whole point.\n\nMobile at 78/100 is solid. The player streams reliably, pages load well, and navigation is clean. Updates at 74/100 are steady for a geographically-constrained casting pool — the site grows the library at a realistic pace rather than overpromising and flooding the catalog with filler. Part of the zBuckz network, the infrastructure is dependable and streaming quality is consistent.\n\nAt $29.95 monthly or $9.95 annually, value at 82/100 is fair for what is genuinely a unique geographic niche. If Australian performers and the aesthetics that come with them are part of what you're after, this is the only serious dedicated option available. The annual price is low enough that it works well as a complementary subscription alongside a broader network membership. For viewers who don't have a strong preference for geography, the larger network sites offer more total content — but none of them offer this.`,
 };
 
+/**
+ * Returns the static review body synchronously so it lands in the
+ * server-rendered HTML at build time (visible to crawlers). Previously
+ * gated behind sessionStorage + setTimeout, which kept Google from
+ * seeing the prose.
+ */
 export function useAIReview(site: SiteData) {
-  const [content, setContent] = useState<string>("");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    // Check sessionStorage cache first
-    const cached = sessionStorage.getItem(CACHE_KEY(site.slug));
-    if (cached) {
-      setContent(cached);
-      return;
-    }
-
-    // Use pre-written review
-    const review = reviewBodies[site.slug];
-    if (review) {
-      setLoading(true);
-      // Small delay to avoid layout flash
-      const timer = setTimeout(() => {
-        sessionStorage.setItem(CACHE_KEY(site.slug), review);
-        setContent(review);
-        setLoading(false);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-
-    // Fallback to site description
-    setContent(site.description);
-  }, [site.slug, site.description]);
-
-  return { content, loading };
+  const content = reviewBodies[site.slug] ?? site.description;
+  return { content, loading: false };
 }

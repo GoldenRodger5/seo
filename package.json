@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "sitemap": "npx tsx scripts/generate-sitemap.ts",
-    "build": "npx tsx scripts/generate-sitemap.ts && vite build && npx tsx scripts/prerender-meta.ts",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-server",
+    "build:prerender": "npx tsx scripts/prerender-app.ts",
+    "build": "npx tsx scripts/generate-sitemap.ts && npm run build:client && npm run build:ssr && npm run build:prerender",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",

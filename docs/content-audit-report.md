@@ -1,8 +1,8 @@
-# Content Audit Report — 2026-05-18
+# Content Audit Report — 2026-05-19
 
 ## Critical findings
 
-**🚨 401 / 401 routes (100.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 401 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -19,7 +19,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | `src/hooks/useAIReview.ts (reviewBodies map)` | 31 | 9,098 | 275 |
 | `src/data/comparison-content.ts` | 7 | 9,971 | 1,424 |
 | `src/data/blog-posts.ts` | 10 | 8,418 | 841 |
-| `src/data/alternatives-content.ts` | 4 | 3,856 | 964 |
+| `src/data/alternatives-content.ts` | 5 | 4,713 | 942 |
 
 - **src/hooks/useAIReview.ts (reviewBodies map)** — Static review prose, ~3–4 paragraphs per site. Loaded into sessionStorage on first visit. NEVER appears in prerendered HTML (root div is empty until JS runs).
 - **src/data/comparison-content.ts** — Per-pair compare content (likely BLUF + reasoning). Same prerender problem — body never enters static HTML.
@@ -30,27 +30,28 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Page type | Count | Median body words (prerendered) | Min | Max | Verdict |
 | --- | ---: | ---: | ---: | ---: | --- |
-| compare | 188 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
-| discount | 62 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
-| review | 62 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
-| landing | 24 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
-| niche | 21 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
-| other | 16 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
-| blog | 10 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
-| legal | 6 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
-| category | 6 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
-| utility | 5 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
-| homepage | 1 | 0 | 0 | 0 | **CRITICAL_CLIENT_ONLY** |
+| compare | 188 | 628 | 557 | 1957 | HEALTHY |
+| discount | 62 | 763 | 698 | 813 | HEALTHY |
+| review | 62 | 1086 | 887 | 1309 | HEALTHY |
+| landing | 24 | 1167 | 413 | 4240 | HEALTHY |
+| niche | 21 | 640 | 486 | 2073 | HEALTHY |
+| other | 16 | 445 | 380 | 882 | HEALTHY |
+| blog | 10 | 1499 | 226 | 1826 | HEALTHY |
+| legal | 6 | 759 | 358 | 1003 | HEALTHY |
+| category | 6 | 1112 | 389 | 1917 | HEALTHY |
+| utility | 5 | 273 | 231 | 9709 | HEALTHY |
+| homepage | 1 | 702 | 702 | 702 | HEALTHY |
 
 ## Flag breakdown across all routes
 
 | Flag | Count |
 | --- | ---: |
-| CLIENT_SIDE_ONLY | 401 |
-| THIN_DESC | 120 |
+| THIN_DESC | 121 |
 | LONG_TITLE | 114 |
 | MISSING_REVIEW_SCHEMA | 62 |
 | THIN_TITLE | 10 |
+| THIN_BLOG | 4 |
+| THIN_LANDING | 1 |
 
 ## Compare page deep-dive
 
@@ -64,7 +65,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 - **Page count:** 62
 - **AI content rendering:** `AI_CONTENT_CLIENT_ONLY`. Static reviewBodies map exists with ~275 median words per site, but the prose only mounts into the DOM after `useAIReview` runs client-side.
-- **Prerendered body word counts:** every review page is in the 0–0 word range (NoScript + page chrome only).
+- **Prerendered body word counts:** every review page is in the 887–1309 word range (NoScript + page chrome only).
 
 ## Worst-offender routes (smallest prerendered body)
 
@@ -72,36 +73,36 @@ Sorted ascending by body word count. Top 30:
 
 | Route | Type | Body words | File size (KB) | Flags |
 | --- | --- | ---: | ---: | --- |
-| /2257 | legal | 0 | 3.4 | CLIENT_SIDE_ONLY, THIN_DESC |
-| /about | legal | 0 | 3.5 | CLIENT_SIDE_ONLY, THIN_TITLE, THIN_DESC |
-| /affiliate-disclosure | legal | 0 | 3.4 | CLIENT_SIDE_ONLY, THIN_TITLE, THIN_DESC |
-| /ask-ai | utility | 0 | 3.5 | CLIENT_SIDE_ONLY, THIN_DESC |
-| /best-amateur-gay-sites | landing | 0 | 3.7 | CLIENT_SIDE_ONLY, THIN_DESC |
-| /best-asian-gay-sites | landing | 0 | 3.6 | CLIENT_SIDE_ONLY, THIN_DESC |
-| /best-bareback-gay-sites | landing | 0 | 3.6 | CLIENT_SIDE_ONLY, THIN_DESC |
-| /best-bareback-twink-sites | landing | 0 | 3.8 | CLIENT_SIDE_ONLY |
-| /best-cheap-gay-porn-sites | landing | 0 | 3.8 | CLIENT_SIDE_ONLY |
-| /best-daddy-twink-sites | landing | 0 | 3.7 | CLIENT_SIDE_ONLY |
-| /best-deals | landing | 0 | 3.6 | CLIENT_SIDE_ONLY, THIN_DESC |
-| /best-gay-porn-sites | landing | 0 | 3.7 | CLIENT_SIDE_ONLY |
-| /best-gay-porn-subscription | landing | 0 | 3.8 | CLIENT_SIDE_ONLY |
-| /best-gay-sites-for-beginners | landing | 0 | 3.7 | CLIENT_SIDE_ONLY |
-| /best-gay-sites-under-10 | landing | 0 | 3.7 | CLIENT_SIDE_ONLY |
-| /best-gay-sites-with-downloads | landing | 0 | 3.6 | CLIENT_SIDE_ONLY, THIN_DESC |
-| /best-gay-twink-sites-2026 | landing | 0 | 3.6 | CLIENT_SIDE_ONLY, THIN_DESC |
-| /best-premium-gay-sites | landing | 0 | 3.7 | CLIENT_SIDE_ONLY |
-| /best-twink-porn-sites | landing | 0 | 3.7 | CLIENT_SIDE_ONLY |
-| /best-twink-porn-sites-with-free-trials | landing | 0 | 3.8 | CLIENT_SIDE_ONLY |
-| /best-twink-sites | landing | 0 | 3.6 | CLIENT_SIDE_ONLY, THIN_DESC |
-| /best-value-gay-porn-sites | landing | 0 | 3.8 | CLIENT_SIDE_ONLY |
-| /blog/bareback-vs-condom-gay-porn | blog | 0 | 3.8 | CLIENT_SIDE_ONLY, LONG_TITLE |
-| /blog/best-gay-porn-sites-2026-top-10 | blog | 0 | 3.9 | CLIENT_SIDE_ONLY, LONG_TITLE |
-| /blog/category/comparisons | blog | 0 | 3.5 | CLIENT_SIDE_ONLY, THIN_TITLE, THIN_DESC |
-| /blog/category/guides | blog | 0 | 3.5 | CLIENT_SIDE_ONLY, THIN_TITLE, THIN_DESC |
-| /blog/category/industry | blog | 0 | 3.6 | CLIENT_SIDE_ONLY, THIN_TITLE, THIN_DESC |
-| /blog/category/money | blog | 0 | 3.6 | CLIENT_SIDE_ONLY, THIN_TITLE, THIN_DESC |
-| /blog/gay-porn-free-trials-explained | blog | 0 | 3.9 | CLIENT_SIDE_ONLY, LONG_TITLE, THIN_DESC |
-| /blog/how-much-to-pay-for-gay-porn-subscription | blog | 0 | 3.9 | CLIENT_SIDE_ONLY, LONG_TITLE, THIN_DESC |
+| /blog/category/industry | blog | 226 | 17.9 | THIN_BLOG, THIN_TITLE, THIN_DESC |
+| /find-my-site | utility | 231 | 18.3 | THIN_DESC |
+| /contact | utility | 254 | 20.6 | THIN_TITLE, THIN_DESC |
+| /blog/category/money | blog | 270 | 19.8 | THIN_BLOG, THIN_TITLE, THIN_DESC |
+| /ask-ai | utility | 273 | 21.3 | THIN_DESC |
+| /blog/category/comparisons | blog | 301 | 21.4 | THIN_BLOG, THIN_TITLE, THIN_DESC |
+| /2257 | legal | 358 | 18.5 | THIN_DESC |
+| /affiliate-disclosure | legal | 366 | 18.5 | THIN_TITLE, THIN_DESC |
+| /blog/category/guides | blog | 367 | 23.2 | THIN_BLOG, THIN_TITLE, THIN_DESC |
+| /is-athletic-twinks-worth-it | other | 380 | 31.0 | THIN_DESC |
+| /is-twinks-in-shorts-worth-it | other | 384 | 31.1 | THIN_DESC |
+| /category/free-trials | category | 389 | 38.5 | THIN_DESC |
+| /is-nakedsword-worth-it | other | 389 | 31.4 | THIN_DESC |
+| /is-southern-strokes-worth-it | other | 390 | 31.1 | THIN_DESC |
+| /is-rawhole-worth-it | other | 393 | 31.4 | THIN_DESC |
+| /is-peterfever-worth-it | other | 395 | 31.4 | THIN_DESC |
+| /compare | landing | 413 | 31.2 | THIN_LANDING, THIN_DESC |
+| /is-sayuncle-worth-it | other | 422 | 31.5 | THIN_DESC |
+| /is-men-worth-it | other | 438 | 31.8 | THIN_DESC |
+| /is-sean-cody-worth-it | other | 445 | 31.9 | THIN_DESC |
+| /is-helix-studios-worth-it | other | 470 | 32.6 | THIN_DESC |
+| /niche/military | niche | 486 | 28.6 |  |
+| /niche/latin | niche | 495 | 28.5 |  |
+| /niche/big-dick | niche | 508 | 28.5 |  |
+| /blog | landing | 512 | 29.2 |  |
+| /niche/uncut | niche | 529 | 32.1 | THIN_DESC |
+| /niche/solo | niche | 530 | 32.3 | THIN_DESC |
+| /gay-porn-sites-ranked | other | 531 | 113.5 | LONG_TITLE, THIN_DESC |
+| /category/mobile-friendly | category | 550 | 62.5 | THIN_DESC |
+| /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 46.9 |  |
 
 ## Auto-generation pipeline assessment
 

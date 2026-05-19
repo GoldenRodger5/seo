@@ -1,17 +1,50 @@
 /**
- * Build-time meta tag pre-renderer.
+ * Build-time React tree prerenderer.
  *
- * Generates HTML files for each route with the correct <title>, <meta>,
- * <link canonical>, and OG tags baked into the initial response.
- * This means search engine crawlers see proper meta tags in the raw HTML
- * without waiting for React/Helmet to execute.
+ * Replaces the prior prerender-meta.ts (which only injected meta tags).
+ * This script renders every route's React tree to HTML at build time via
+ * dist-server/entry-server.js, splices the rendered body into the
+ * index.html template, and writes per-route index.html files.
  *
- * Runs AFTER `vite build` — it reads dist/index.html, clones it per route,
- * injects route-specific meta, and writes to dist/{route}/index.html.
+ * Pipeline:
+ *   vite build              -> dist/                (SPA bundle)
+ *   vite build --ssr ...    -> dist-server/         (SSR entry)
+ *   npx tsx prerender-app   -> dist/<route>/        (per-route HTML with body)
+ *
+ * Run with: npx tsx scripts/prerender-app.ts
  */
+// SSR-safe DOM via jsdom. Some bundled libs probe window/document at
+// module-init time, before the React render runs. jsdom gives them a
+// complete DOM so we don't have to patch each missing API piecemeal.
+import { JSDOM } from "jsdom";
+{
+  const dom = new JSDOM("<!doctype html><html><head></head><body></body></html>", {
+    url: "https://twinkvault.com/",
+    pretendToBeVisual: true,
+  });
+  const g = globalThis as Record<string, unknown>;
+  const define = (key: string, value: unknown) => {
+    try { g[key] = value; } catch { /* read-only on this Node */ }
+    try {
+      Object.defineProperty(globalThis, key, { value, configurable: true, writable: true });
+    } catch { /* ignore */ }
+  };
+  define("window", dom.window);
+  define("document", dom.window.document);
+  define("navigator", dom.window.navigator);
+  define("localStorage", dom.window.localStorage);
+  define("sessionStorage", dom.window.sessionStorage);
+  define("HTMLElement", dom.window.HTMLElement);
+  define("Element", dom.window.Element);
+  define("Node", dom.window.Node);
+  define("getComputedStyle", dom.window.getComputedStyle.bind(dom.window));
+  define("requestAnimationFrame", (cb: FrameRequestCallback) => setTimeout(() => cb(0), 0) as unknown as number);
+  define("cancelAnimationFrame", (id: number) => clearTimeout(id));
+}
+
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 import { sites, categories } from "../src/data/sites.js";
 import { DEAL_VERIFIED_DATE } from "../src/lib/dates.js";
 import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.js";
@@ -19,31 +52,20 @@ import { BLOG_POSTS, BLOG_CATEGORIES } from "../src/data/blog-posts.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = resolve(__dirname, "..", "dist");
+const SERVER_DIST = resolve(__dirname, "..", "dist-server");
 const BASE_URL = "https://twinkvault.com";
+const YEAR = new Date().getFullYear();
 
-// Read the built index.html as a template
-const template = readFileSync(resolve(DIST, "index.html"), "utf-8");
-
-// ---------------------------------------------------------------------------
-// Route definitions with SEO meta
-// ---------------------------------------------------------------------------
 interface RouteMeta {
   path: string;
   title: string;
   description: string;
 }
 
-// Single source of truth — sites.ts drives both the slug list and display names.
 const SITE_SLUGS = sites.map((s) => s.slug);
-
-const SITE_NAMES: Record<string, string> = Object.fromEntries(
-  sites.map((s) => [s.slug, s.name])
-);
-
+const SITE_NAMES: Record<string, string> = Object.fromEntries(sites.map((s) => [s.slug, s.name]));
 const CATEGORY_SLUGS = categories.map((c) => c.slug);
-const CATEGORY_NAMES: Record<string, string> = Object.fromEntries(
-  categories.map((c) => [c.slug, c.name])
-);
+const CATEGORY_NAMES: Record<string, string> = Object.fromEntries(categories.map((c) => [c.slug, c.name]));
 
 const NICHE_META: Record<string, { displayName: string; seoTitle: string; seoDescription: string }> = {
   "twink": { displayName: "Twink", seoTitle: "Best Twink Sites — Ranked & Reviewed", seoDescription: "Every twink site we've tested, ranked by content quality, pricing, and updates. Slim, smooth performers from studio-polished to genuinely amateur." },
@@ -69,10 +91,11 @@ const NICHE_META: Record<string, { displayName: string; seoTitle: string; seoDes
   "solo": { displayName: "Solo", seoTitle: "Best Solo Male Gay Sites — Ranked & Reviewed", seoDescription: "Solo male gay sites ranked. Single-performer JO, cam, and self-shot content scored on quality and catalog depth." },
 };
 
-const YEAR = new Date().getFullYear();
-
-// Static pages
+// ---------------------------------------------------------------------------
+// Build the route list (same logic as the prior prerender-meta.ts)
+// ---------------------------------------------------------------------------
 const routes: RouteMeta[] = [
+  { path: "/", title: `TwinkVault — Best Gay Twink Sites ${YEAR} Ranked & Reviewed`, description: `Honest reviews of the best gay twink sites, ranked by quality and value. Real scores, real pricing, updated ${YEAR}.` },
   { path: "/top-sites", title: `Top Gay Twink Sites ${YEAR} — Ranked & Reviewed | TwinkVault`, description: "Our ranked list of the best gay twink sites. Real scores, real pricing, updated monthly." },
   { path: "/reviews", title: `All Twink Site Reviews ${YEAR} | TwinkVault`, description: "Browse every twink site review on TwinkVault. Honest scores, pricing breakdowns, and pros/cons." },
   { path: "/best-deals", title: `Best Gay Twink Site Deals & Discounts ${YEAR} | TwinkVault`, description: "The best current gay twink site deals and discounts. Verified offers updated weekly." },
@@ -126,155 +149,113 @@ const routes: RouteMeta[] = [
   { path: "/blog", title: `TwinkVault Blog — Guides, Comparisons & Industry Analysis`, description: `Editorial coverage of gay porn sites — buyer guides, head-to-head comparisons, pricing analysis, and industry trends from the TwinkVault editorial team.` },
 ];
 
-// Blog category pages
 for (const cat of BLOG_CATEGORIES) {
-  routes.push({
-    path: `/blog/category/${cat.slug}`,
-    title: `${cat.label} — TwinkVault Blog`,
-    description: `${cat.description} Browse all ${cat.label.toLowerCase()} articles from TwinkVault Editorial.`,
-  });
+  routes.push({ path: `/blog/category/${cat.slug}`, title: `${cat.label} — TwinkVault Blog`, description: `${cat.description} Browse all ${cat.label.toLowerCase()} articles from TwinkVault Editorial.` });
 }
-
-// Blog posts
 for (const post of BLOG_POSTS) {
-  routes.push({
-    path: `/blog/${post.slug}`,
-    title: `${post.title} | TwinkVault`,
-    description: post.meta_description,
-  });
+  routes.push({ path: `/blog/${post.slug}`, title: `${post.title} | TwinkVault`, description: post.meta_description });
 }
-
-// Review pages
 for (const slug of SITE_SLUGS) {
-  const name = SITE_NAMES[slug];
-  routes.push({
-    path: `/reviews/${slug}`,
-    title: `${name} Review ${YEAR} — Is It Worth It? | TwinkVault`,
-    description: `Honest ${name} review with real scores, pricing breakdown, and pros/cons. Updated ${YEAR}.`,
-  });
+  routes.push({ path: `/reviews/${slug}`, title: `${SITE_NAMES[slug]} Review ${YEAR} — Is It Worth It? | TwinkVault`, description: `Honest ${SITE_NAMES[slug]} review with real scores, pricing breakdown, and pros/cons. Updated ${YEAR}.` });
 }
-
-// Discount pages — title template optimized for "{site} discount" buyer
-// queries. Uses actual deal_discount %, price_annual, and DEAL_VERIFIED_DATE
-// from sites.ts so each page gets a compelling, accurate snippet rather
-// than a generic placeholder. Sites without an active deal fall back to a
-// less promotional format (no false percentages).
 for (const site of sites) {
-  const name = site.name;
   const pct = site.deal_discount;
-  const price = site.price_annual;
   const hasDeal = pct > 0;
   routes.push({
     path: `/discount/${site.slug}`,
-    title: hasDeal
-      ? `${name} Discount Code: ${pct}% Off (Verified ${DEAL_VERIFIED_DATE}) — Save Now`
-      : `${name} Discount Code (${YEAR}) — Best Verified Price`,
-    description: hasDeal
-      ? `Get ${name} for just ${price} with our verified ${pct}% discount. Lowest price guaranteed — deal confirmed ${DEAL_VERIFIED_DATE}. Click to activate instantly.`
-      : `Looking for a ${name} discount code? Get the lowest verified price on ${name} membership. Updated ${DEAL_VERIFIED_DATE}.`,
+    title: hasDeal ? `${site.name} Discount Code: ${pct}% Off (Verified ${DEAL_VERIFIED_DATE}) — Save Now` : `${site.name} Discount Code (${YEAR}) — Best Verified Price`,
+    description: hasDeal ? `Get ${site.name} for just ${site.price_annual} with our verified ${pct}% discount. Lowest price guaranteed — deal confirmed ${DEAL_VERIFIED_DATE}. Click to activate instantly.` : `Looking for a ${site.name} discount code? Get the lowest verified price on ${site.name} membership. Updated ${DEAL_VERIFIED_DATE}.`,
   });
 }
-
-// Category pages
 for (const slug of CATEGORY_SLUGS) {
-  const name = CATEGORY_NAMES[slug];
-  routes.push({
-    path: `/category/${slug}`,
-    title: `${name} Twink Sites ${YEAR} | TwinkVault`,
-    description: `The best ${name.toLowerCase()} twink sites ranked and reviewed for ${YEAR}.`,
-  });
+  routes.push({ path: `/category/${slug}`, title: `${CATEGORY_NAMES[slug]} Twink Sites ${YEAR} | TwinkVault`, description: `The best ${CATEGORY_NAMES[slug].toLowerCase()} twink sites ranked and reviewed for ${YEAR}.` });
 }
-
-// Niche pages
 for (const slug of Object.keys(NICHE_META)) {
   const meta = NICHE_META[slug];
-  routes.push({
-    path: `/niche/${slug}`,
-    title: `${meta.seoTitle} ${YEAR} | TwinkVault`,
-    description: meta.seoDescription,
-  });
+  routes.push({ path: `/niche/${slug}`, title: `${meta.seoTitle} ${YEAR} | TwinkVault`, description: meta.seoDescription });
 }
-
-// Compare pages — only the featured pair allowlist gets prerendered with
-// unique titles + descriptions. The other ~1,840 pairs are still routable
-// but render with the default app shell and a noindex,follow robots meta
-// (set in ComparePage.tsx) so they don't trigger near-duplicate flagging.
-const FEATURED_COMPARE_PAIRS = getFeaturedComparePairsList();
-for (const pairSlug of FEATURED_COMPARE_PAIRS) {
+for (const pairSlug of getFeaturedComparePairsList()) {
   const [a, b] = pairSlug.split("-vs-");
   const aName = SITE_NAMES[a] ?? a;
   const bName = SITE_NAMES[b] ?? b;
-  routes.push({
-    path: `/compare/${pairSlug}`,
-    title: `${aName} vs ${bName} ${YEAR} — Which Is Worth It? | TwinkVault`,
-    description: `${aName} vs ${bName} compared side by side. Scores, pricing, pros and cons — find out which is the better gay porn site subscription in ${YEAR}.`,
-  });
+  routes.push({ path: `/compare/${pairSlug}`, title: `${aName} vs ${bName} ${YEAR} — Which Is Worth It? | TwinkVault`, description: `${aName} vs ${bName} compared side by side. Scores, pricing, pros and cons — find out which is the better gay porn site subscription in ${YEAR}.` });
 }
 
 // ---------------------------------------------------------------------------
-// Generate HTML files
+// Inject meta + body into the template
 // ---------------------------------------------------------------------------
-function injectMeta(html: string, route: RouteMeta): string {
+function injectMeta(html: string, route: RouteMeta, helmetHtml: string): string {
   const url = `${BASE_URL}${route.path}`;
 
-  // Replace <title>
-  html = html.replace(
-    /<title>[^<]*<\/title>/,
-    `<title>${route.title}</title>`
-  );
+  html = html.replace(/<title>[^<]*<\/title>/, `<title>${route.title}</title>`);
+  html = html.replace(/<meta name="description" content="[^"]*" \/>/, `<meta name="description" content="${route.description}" />`);
+  html = html.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${url}" />`);
+  html = html.replace(/<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${url}" />`);
+  html = html.replace(/<meta property="og:title" content="[^"]*" \/>/, `<meta property="og:title" content="${route.title}" />`);
+  html = html.replace(/<meta property="og:description" content="[^"]*" \/>/, `<meta property="og:description" content="${route.description}" />`);
+  html = html.replace(/<meta name="twitter:title" content="[^"]*" \/>/, `<meta name="twitter:title" content="${route.title}" />`);
+  html = html.replace(/<meta name="twitter:description" content="[^"]*" \/>/, `<meta name="twitter:description" content="${route.description}" />`);
 
-  // Replace meta description
-  html = html.replace(
-    /<meta name="description" content="[^"]*" \/>/,
-    `<meta name="description" content="${route.description}" />`
-  );
-
-  // Replace canonical
-  html = html.replace(
-    /<link rel="canonical" href="[^"]*" \/>/,
-    `<link rel="canonical" href="${url}" />`
-  );
-
-  // Replace OG tags
-  html = html.replace(
-    /<meta property="og:url" content="[^"]*" \/>/,
-    `<meta property="og:url" content="${url}" />`
-  );
-  html = html.replace(
-    /<meta property="og:title" content="[^"]*" \/>/,
-    `<meta property="og:title" content="${route.title}" />`
-  );
-  html = html.replace(
-    /<meta property="og:description" content="[^"]*" \/>/,
-    `<meta property="og:description" content="${route.description}" />`
-  );
-
-  // Replace Twitter tags
-  html = html.replace(
-    /<meta name="twitter:title" content="[^"]*" \/>/,
-    `<meta name="twitter:title" content="${route.title}" />`
-  );
-  html = html.replace(
-    /<meta name="twitter:description" content="[^"]*" \/>/,
-    `<meta name="twitter:description" content="${route.description}" />`
-  );
+  // Append helmet output (schema scripts, JSON-LD, etc.) just before </head>
+  if (helmetHtml) {
+    html = html.replace("</head>", `${helmetHtml}\n  </head>`);
+  }
 
   return html;
 }
 
-let count = 0;
-for (const route of routes) {
-  const html = injectMeta(template, route);
-  // e.g. /reviews/helix-studios → dist/reviews/helix-studios/index.html
-  const dir = resolve(DIST, route.path.slice(1)); // remove leading /
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(resolve(dir, "index.html"), html, "utf-8");
-  count++;
+function injectBody(html: string, body: string): string {
+  return html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
 }
 
-console.log(`Pre-rendered meta tags for ${count} routes`);
-console.log(`  Reviews: ${SITE_SLUGS.length}`);
-console.log(`  Discounts: ${SITE_SLUGS.length}`);
-console.log(`  Categories: ${CATEGORY_SLUGS.length}`);
-console.log(`  Compare pairs: ${FEATURED_COMPARE_PAIRS.length}`);
-console.log(`  Static pages: ${routes.length - SITE_SLUGS.length * 2 - CATEGORY_SLUGS.length - FEATURED_COMPARE_PAIRS.length}`);
+async function main() {
+  const templatePath = resolve(DIST, "index.html");
+  const template = readFileSync(templatePath, "utf-8");
+
+  // Dynamically import the compiled SSR entry
+  const entryPath = pathToFileURL(resolve(SERVER_DIST, "entry-server.js")).href;
+  const { render } = await import(entryPath) as { render: (url: string) => { html: string; helmet: any } };
+
+  let written = 0;
+  let failed = 0;
+  for (const route of routes) {
+    try {
+      const { html: body, helmet } = render(route.path);
+      const helmetHtml = helmet
+        ? [helmet.script?.toString(), helmet.link?.toString()].filter(Boolean).join("\n")
+        : "";
+      let out = injectMeta(template, route, helmetHtml);
+      out = injectBody(out, body);
+
+      const dir = resolve(DIST, route.path.replace(/^\//, ""));
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(resolve(dir, "index.html"), out);
+      written++;
+    } catch (e) {
+      failed++;
+      console.error(`✗ ${route.path}: ${(e as Error).message}`);
+    }
+  }
+
+  // Also write the homepage to dist/index.html (overwriting the SPA shell)
+  const homeRoute = routes.find((r) => r.path === "/");
+  if (homeRoute) {
+    try {
+      const { html: body, helmet } = render("/");
+      const helmetHtml = helmet ? [helmet.script?.toString(), helmet.link?.toString()].filter(Boolean).join("\n") : "";
+      let out = injectMeta(template, homeRoute, helmetHtml);
+      out = injectBody(out, body);
+      writeFileSync(templatePath, out);
+    } catch (e) {
+      console.error(`✗ /: ${(e as Error).message}`);
+    }
+  }
+
+  console.log(`\n✓ Prerendered ${written} routes${failed > 0 ? `, ${failed} failed` : ""}.`);
+  if (failed > 0) process.exit(1);
+  // jsdom + bundled libs leave timers/animations queued; force-exit so
+  // the build pipeline doesn't hang after all writes complete.
+  process.exit(0);
+}
+
+main().catch((e) => { console.error(e); process.exit(1); });

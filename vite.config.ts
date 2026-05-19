@@ -5,7 +5,39 @@ import path from "path";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode, isSsrBuild }) => ({
+  ssr: {
+    // Bundle these packages into the SSR build so import-resolution works
+    // at Node runtime (esm-only or CommonJS-incompatible).
+    noExternal: [
+      "react-router-dom",
+      "react-helmet-async",
+      "framer-motion",
+      "@tanstack/react-query",
+      /^@radix-ui\//,
+      "lucide-react",
+      "embla-carousel-react",
+      "react-day-picker",
+      "input-otp",
+      "cmdk",
+      "vaul",
+      "sonner",
+      "next-themes",
+      "react-resizable-panels",
+      "recharts",
+    ],
+  },
+  build: isSsrBuild
+    ? {
+        // SSR build outputs to dist-server with ESM format so the
+        // prerender script can dynamically import it.
+        ssr: true,
+        rollupOptions: {
+          input: "src/entry-server.tsx",
+          output: { format: "esm", entryFileNames: "[name].js" },
+        },
+      }
+    : undefined,
   server: {
     host: "::",
     port: 8080,
@@ -15,7 +47,9 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    VitePWA({
+    // PWA generator pulls in workbox at build time which breaks the
+    // --ssr build. Only register it for the client build.
+    !isSsrBuild && VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "pwa-192.png", "pwa-512.png"],
       manifest: {
