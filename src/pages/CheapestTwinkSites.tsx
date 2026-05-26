@@ -12,7 +12,7 @@ import { sites } from "../data/sites";
 import { currentYear } from "../lib/dates";
 
 // Sort by annual price ascending
-const byPrice = [...sites].sort((a, b) => {
+const byPrice = [...sites].filter((s) => s.editorial_status !== "pending-review").sort((a, b) => {
   const aPrice = parseFloat(a.price_annual.replace(/[^0-9.]/g, ""));
   const bPrice = parseFloat(b.price_annual.replace(/[^0-9.]/g, ""));
   return aPrice - bPrice;

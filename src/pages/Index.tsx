@@ -10,7 +10,7 @@ import StarRating from "../components/StarRating";
 import LocalisedPrice from "../components/LocalisedPrice";
 import SmartImage from "../components/common/SmartImage";
 import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
-import { sites, isAffiliated, getTopDealPick, getRecentlyUpdatedPromotable } from "../data/sites";
+import { sites, isAffiliated, isPendingReview, getTopDealPick, getRecentlyUpdatedPromotable } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { getSiteImagery } from "../data/site-imagery";
 import { currentYear, currentMonthLong, currentMonthShort } from "../lib/dates";
@@ -157,7 +157,7 @@ const Hero = () => (
  * version is no longer rendered.
  */
 const TopTen = () => {
-  const top10 = [...sites].sort((a, b) => b.overall_score - a.overall_score).slice(0, 10);
+  const top10 = [...sites].filter((s) => !isPendingReview(s)).sort((a, b) => b.overall_score - a.overall_score).slice(0, 10);
 
   // Badge priority: editors-choice (rank #1) > best-value (lowest
   // price_monthly among top 10). Only ONE badge per row.

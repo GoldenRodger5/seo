@@ -61,6 +61,20 @@ export interface SiteData {
   /** Cancellation notes shown below the pricing table. Optional. */
   cancellation_notes?: string;
   /**
+   * Editorial status. Defaults to "reviewed" (the existing 60+ sites all
+   * had reviews written before this field was added).
+   *
+   * Sites flagged "pending-review" appear in the data layer so affiliate
+   * URLs can be tracked, but they're excluded from ranked surfaces
+   * (Top 10, "Top rated", "Most recent") and their review pages show a
+   * "Full review in development" placeholder instead of editorial prose.
+   * The Visit Site button still renders and is functional.
+   *
+   * Tied to live affiliate signups where coverage hasn't been written yet
+   * (e.g. new AEC brands added before Isaac has subscribed and tested).
+   */
+  editorial_status?: "reviewed" | "pending-review";
+  /**
    * ISO date (YYYY-MM-DD) when Isaac last manually confirmed the deal is live.
    *  • Within 14 days  → shown as "Verified MMM DD"
    *  • 15-30 days      → shown with "may have changed" caveat
@@ -81,6 +95,16 @@ export function isAffiliated(site: SiteData): boolean {
   return site.affiliate_url !== null;
 }
 
+/** Sites awaiting editorial coverage — excluded from ranked surfaces. */
+export function isPendingReview(site: SiteData): boolean {
+  return site.editorial_status === "pending-review";
+}
+
+/** Affiliate-link deep linking pattern for AdultEmpireCash brands:
+ *  any URL on the brand's domain can be appended with `?partner_ID={ID}`.
+ *  Example: https://www.helixstudios.com/1785290/some-scene-page.html?partner_ID=65521192
+ *  Not used yet — documented for future scene-level linking. */
+
 export const sites: SiteData[] = [
   {
     id: "1",
@@ -97,7 +121,7 @@ export const sites: SiteData[] = [
     price_monthly: "$34.95/mo",
     price_quarterly: "$24.95/mo",
     price_annual: "$11.99/mo",
-    affiliate_url: null,
+    affiliate_url: "https://www.helixstudios.com/?partner_ID=65521192",
     homepage_url: "https://www.helixstudios.com",
     categories: ["premium-studios", "hd-quality", "mobile-friendly"],
     pros: ["4,000+ exclusive scenes since 2002", "Cinematic production quality", "Exclusive performer roster", "Expanded to Latin America & Europe", "Available on Amazon Prime"],
@@ -2067,6 +2091,72 @@ export const sites: SiteData[] = [
     deal_discount: 47,
     deal_type: "ongoing",
   },
+
+  // ── AdultEmpireCash brands awaiting coverage ────────────────────────────
+  // Affiliate links live so clicks can be tracked; editorial review pending.
+  // These do NOT appear in ranked surfaces (Top 10, etc.) until reviewed.
+  {
+    id: "63",
+    name: "TLA Gay Unlimited",
+    slug: "tla-gay-unlimited",
+    short_description: "Streaming subscription with thousands of gay adult films across studios. Coverage in development.",
+    description: "TLA Gay Unlimited is the adult streaming arm of TLA Entertainment Group, a long-established LGBTQ+ film distributor founded in 1981 (originally Theater of Living Arts in Philadelphia). The Unlimited subscription provides streaming access to thousands of gay adult films across many studios — closer in nature to a broad streaming aggregator than to any single-studio site. A full review with pricing, library depth, and quality scoring is in development.",
+    overall_score: 0,
+    content_quality: 0,
+    value_score: 0,
+    update_frequency: 0,
+    mobile_score: 0,
+    price_from: "TBD",
+    price_monthly: "TBD",
+    price_quarterly: "TBD",
+    price_annual: "TBD",
+    affiliate_url: "https://www.tlagay.com/unlimited?partner_ID=55760691",
+    homepage_url: "https://www.tlagay.com/unlimited",
+    categories: [],
+    pros: [],
+    cons: [],
+    rank: 999,
+    badge: "Pending Review",
+    is_featured: false,
+    has_free_trial: false,
+    has_hd: true,
+    best_for: "Pending editorial review",
+    deal_text: "",
+    deal_discount: 0,
+    deal_type: "ongoing",
+    editorial_status: "pending-review",
+  },
+  {
+    id: "64",
+    name: "VisionX Flix",
+    slug: "visionx-flix",
+    short_description: "Boutique streaming option within the Adult Empire family. Coverage in development.",
+    description: "VisionX Flix is a streaming brand within the Adult Empire / AdultEmpireCash family. Public information about the catalog, performer roster, and update cadence is limited; a full editorial review with pricing, library breadth, and quality scoring is in development.",
+    overall_score: 0,
+    content_quality: 0,
+    value_score: 0,
+    update_frequency: 0,
+    mobile_score: 0,
+    price_from: "TBD",
+    price_monthly: "TBD",
+    price_quarterly: "TBD",
+    price_annual: "TBD",
+    affiliate_url: "https://www.visionxflix.com/?partner_ID=45202227",
+    homepage_url: "https://www.visionxflix.com",
+    categories: [],
+    pros: [],
+    cons: [],
+    rank: 999,
+    badge: "Pending Review",
+    is_featured: false,
+    has_free_trial: false,
+    has_hd: true,
+    best_for: "Pending editorial review",
+    deal_text: "",
+    deal_discount: 0,
+    deal_type: "ongoing",
+    editorial_status: "pending-review",
+  },
 ];
 
 export const categories = [
@@ -2087,14 +2177,14 @@ export function getSitesByCategory(categorySlug: string): SiteData[] {
 }
 
 export function getFeaturedSites(): SiteData[] {
-  return sites.filter(s => s.is_featured).sort((a, b) => a.rank - b.rank);
+  return sites.filter(s => s.is_featured && !isPendingReview(s)).sort((a, b) => a.rank - b.rank);
 }
 
 const hasHeroBanner = (s: SiteData): boolean =>
   Boolean(getSiteImagery(s.slug).hero_image_url);
 
 export function getPromotableSites(): SiteData[] {
-  return sites.filter(s => isAffiliated(s) && hasHeroBanner(s));
+  return sites.filter(s => isAffiliated(s) && hasHeroBanner(s) && !isPendingReview(s));
 }
 
 export function getTopRatedPromotable(limit: number): SiteData[] {
@@ -2105,7 +2195,7 @@ export function getTopRatedPromotable(limit: number): SiteData[] {
 
 /** Top-rated affiliated sites regardless of banner — for the Top 5 card section. */
 export function getTopRatedAffiliated(limit: number): SiteData[] {
-  return [...sites.filter(s => isAffiliated(s))]
+  return [...sites.filter(s => isAffiliated(s) && !isPendingReview(s))]
     .sort((a, b) => b.overall_score - a.overall_score || b.update_frequency - a.update_frequency)
     .slice(0, limit);
 }
@@ -2137,7 +2227,7 @@ export function getRecentlyUpdatedPromotable(limit: number, exclude: SiteData[] 
  * Phase 4 click + impression data accumulates per destination.
  */
 export function getTopDealPick(): SiteData | null {
-  const affiliated = sites.filter(s => isAffiliated(s));
+  const affiliated = sites.filter(s => isAffiliated(s) && !isPendingReview(s));
   if (affiliated.length === 0) return null;
   const withDeals = affiliated.filter(s => s.deal_discount > 0);
   if (withDeals.length > 0) {

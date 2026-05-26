@@ -10,7 +10,7 @@ import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import LocalisedPrice from "../components/LocalisedPrice";
 import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import { Fragment } from "react";
-import { sites, categories, isAffiliated, getSiteBySlug } from "../data/sites";
+import { sites, categories, isAffiliated, isPendingReview, getSiteBySlug } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { siteNicheMap } from "../data/site-niches";
 import { getNiche } from "../data/niches";
@@ -246,13 +246,21 @@ const ReviewsIndex = () => {
                           <Check size={14} className="text-emerald-400 shrink-0 translate-y-px" aria-label="Reviewed" />
                           <span className="truncate">{site.name}</span>
                         </h2>
-                        <span className="text-base font-semibold text-secondary tabular-nums shrink-0">
-                          {site.overall_score}/5
-                        </span>
+                        {isPendingReview(site) ? (
+                          <span className="rounded-button bg-muted/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground shrink-0">
+                            Pending Review
+                          </span>
+                        ) : (
+                          <span className="text-base font-semibold text-secondary tabular-nums shrink-0">
+                            {site.overall_score}/5
+                          </span>
+                        )}
                       </div>
-                      <div className="mt-1">
-                        <StarRating score={site.overall_score} size={13} />
-                      </div>
+                      {!isPendingReview(site) && (
+                        <div className="mt-1">
+                          <StarRating score={site.overall_score} size={13} />
+                        </div>
+                      )}
                       {niche && (
                         <div className="mt-3">
                           <span className="rounded-button bg-muted px-2 py-0.5 text-[10px] uppercase tracking-wider text-muted-foreground">
@@ -263,7 +271,11 @@ const ReviewsIndex = () => {
                       {/* TODO: trim description manually to <= 15 words in sites.ts over time */}
                       <p className="mt-3 flex-1 text-sm text-muted-foreground line-clamp-2">{site.short_description}</p>
                       <div className="mt-3 flex items-center justify-between flex-wrap gap-2">
-                        <LocalisedPrice usd={site.price_monthly} className="text-xs text-foreground/80" />
+                        {isPendingReview(site) ? (
+                          <span className="text-xs text-muted-foreground/70">Pricing TBD</span>
+                        ) : (
+                          <LocalisedPrice usd={site.price_monthly} className="text-xs text-foreground/80" />
+                        )}
                         {site.deal_discount > 0 && (
                           <span className="rounded-button bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-400 tabular-nums">
                             −{site.deal_discount}% deal

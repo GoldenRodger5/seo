@@ -10,7 +10,7 @@ import SitePlaceholderImage from "../components/SitePlaceholderImage";
 import OutboundLink from "../components/OutboundLink";
 import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import LocalisedPrice from "../components/LocalisedPrice";
-import { sites, getVisitUrl, isAffiliated } from "../data/sites";
+import { sites, getVisitUrl, isAffiliated, isPendingReview } from "../data/sites";
 import { StaggerContainer, StaggerChild, MotionButton, PageTransition } from "../components/MotionWrappers";
 import { currentYear, currentMonthLong } from "../lib/dates";
 import { sitesCountLabel, TOTAL_SITES } from "../lib/siteStats";
@@ -39,9 +39,12 @@ const badgeStyle = (badge: string | null) => {
 const TopSites = () => {
   const [active, setActive] = useState("All");
 
+  // Pending-review sites are excluded from any ranked list — they have no
+  // score yet. They surface only on /reviews and their own review page.
+  const rankable = sites.filter((s) => !isPendingReview(s));
   const filtered = active === "All"
-    ? sites
-    : sites.filter((s) => s.categories.includes(filterMap[active]!));
+    ? rankable
+    : rankable.filter((s) => s.categories.includes(filterMap[active]!));
 
   return (
     <Layout>

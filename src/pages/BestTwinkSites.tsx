@@ -10,11 +10,11 @@ import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import VisitSiteButton from "../components/VisitSiteButton";
-import { sites } from "../data/sites";
+import { sites, isPendingReview } from "../data/sites";
 import { currentYear, currentMonthLong } from "../lib/dates";
 import { sitesCountLabel, TOTAL_SITES } from "../lib/siteStats";
 
-const sorted = [...sites].sort((a, b) => a.rank - b.rank);
+const sorted = [...sites].filter((s) => !isPendingReview(s)).sort((a, b) => a.rank - b.rank);
 
 const BestTwinkSites = () => (
   <Layout>

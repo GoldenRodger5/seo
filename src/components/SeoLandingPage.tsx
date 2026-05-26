@@ -12,7 +12,7 @@ import { AlternativesBody } from "../data/alternatives-content";
 import { currentYear } from "../lib/dates";
 import RelatedReading from "./RelatedReading";
 import StickyMobileCTA from "./StickyMobileCTA";
-import { isAffiliated } from "../data/sites";
+import { isAffiliated, isPendingReview } from "../data/sites";
 
 export interface SeoLandingPageProps {
   /** URL path, e.g. "/best-bareback-gay-sites" */
@@ -52,7 +52,7 @@ const SeoLandingPage = ({
   h1,
   badge,
   intro,
-  sites,
+  sites: sitesProp,
   closing,
   related,
   aiBody,
@@ -60,6 +60,9 @@ const SeoLandingPage = ({
   faqs,
   showPriceTable,
 }: SeoLandingPageProps) => {
+  // Defense: ranked landing pages must never include pending-review sites
+  // (no editorial coverage yet). Callers may forget to filter — gate here.
+  const sites = sitesProp.filter((s) => !isPendingReview(s));
   const fullTitle = `${title} (${currentYear}) | TwinkVault`;
   const url = `https://twinkvault.com${path}`;
   const breadcrumb = {

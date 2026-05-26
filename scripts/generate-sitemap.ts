@@ -153,20 +153,31 @@ for (const page of legalPages) {
   urls.push(urlEntry({ loc: page, changefreq: "yearly", priority: "0.3" }));
 }
 
-// Review pages  /reviews/:slug
+// Review pages  /reviews/:slug — pending-review sites get a low priority
+// (0.3) so they're discoverable but not prioritized for crawl until coverage
+// is written.
+const PENDING_REVIEW_SLUGS = new Set(
+  sites.filter((s) => s.editorial_status === "pending-review").map((s) => s.slug)
+);
 for (const slug of SITE_SLUGS) {
+  const pending = PENDING_REVIEW_SLUGS.has(slug);
   urls.push(
-    urlEntry({ loc: `/reviews/${slug}`, changefreq: "weekly", priority: "0.8" })
+    urlEntry({
+      loc: `/reviews/${slug}`,
+      changefreq: pending ? "monthly" : "weekly",
+      priority: pending ? "0.3" : "0.8",
+    })
   );
 }
 
-// Discount pages  /discount/:slug
+// Discount pages  /discount/:slug — same downgrade for pending-review.
 for (const slug of SITE_SLUGS) {
+  const pending = PENDING_REVIEW_SLUGS.has(slug);
   urls.push(
     urlEntry({
       loc: `/discount/${slug}`,
-      changefreq: "weekly",
-      priority: "0.8",
+      changefreq: pending ? "monthly" : "weekly",
+      priority: pending ? "0.3" : "0.8",
     })
   );
 }

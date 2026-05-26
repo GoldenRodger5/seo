@@ -128,6 +128,8 @@ function runAudit(): AuditResult[] {
   const issues: AuditResult[] = [];
 
   // 1. Reviews missing affiliate URLs (no commission attribution).
+  // Pending-review sites are exempted from review-body/comparison checks
+  // below since editorial coverage isn't expected to exist yet.
   for (const s of sites) {
     if (!s.affiliate_url) {
       issues.push({
@@ -151,6 +153,7 @@ function runAudit(): AuditResult[] {
   // ReviewsIndex auto-iterates `sites`, so all reviews are linked at least once.
   // We check whether each review has comparison/discount/category coverage.
   for (const s of sites) {
+    if (s.editorial_status === "pending-review") continue;
     const inComparisons = supportingQueue.filter(
       (q) => q.content_type === "comparison" && q.related_sites.includes(s.slug)
     ).length;
@@ -188,8 +191,11 @@ function runAudit(): AuditResult[] {
   }
 
   // 6. Reviews missing AI body (falls back to short site.description).
+  // Pending-review sites are expected to have no body — their review page
+  // renders a "Full review in development" placeholder instead.
   const reviewsSrc = readFileSync(REVIEWS_FILE, "utf-8");
   for (const s of sites) {
+    if (s.editorial_status === "pending-review") continue;
     if (!reviewsSrc.includes(`"${s.slug}":`)) {
       issues.push({
         category: "missing-review-body",

@@ -54,7 +54,7 @@ const SitesRanked = () => {
       }
       return asc ? cmp : -cmp;
     };
-    return [...sites].sort(compare);
+    return [...sites].filter((s) => s.editorial_status !== "pending-review").sort(compare);
   }, [sortKey, asc]);
 
   const toggleSort = (key: SortKey) => {

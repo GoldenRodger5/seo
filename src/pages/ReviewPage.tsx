@@ -17,7 +17,7 @@ import ScoreRing from "../components/ScoreRing";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import CommunityRating from "../components/CommunityRating";
 import VisitSiteButton from "../components/VisitSiteButton";
-import { getSiteBySlug, sites, getVisitUrl, isAffiliated } from "../data/sites";
+import { getSiteBySlug, sites, getVisitUrl, isAffiliated, isPendingReview } from "../data/sites";
 import { useAIReview, reviewBodies } from "../hooks/useAIReview";
 import { currentYear, currentMonthShort, currentMonthLong } from "../lib/dates";
 import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
@@ -402,6 +402,13 @@ const ReviewPage = () => {
                     {[...Array(3)].map((_, i) => (
                       <div key={i} className="h-4 animate-pulse rounded bg-muted" style={{ width: `${85 - i * 10}%` }} />
                     ))}
+                  </div>
+                ) : isPendingReview(site) ? (
+                  <div className="mt-3 rounded-lg border border-border/60 bg-muted/30 p-5">
+                    <p className="text-sm font-semibold text-foreground">Full review in development</p>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                      {site.name} was recently added to our affiliate roster. A full review with content quality, value, update frequency, and mobile scoring is in progress. Until then, the Visit Site button above takes you direct to the brand if you want to evaluate it yourself.
+                    </p>
                   </div>
                 ) : aiContent ? (
                   <div className="mt-3 space-y-4 text-muted-foreground leading-relaxed">
