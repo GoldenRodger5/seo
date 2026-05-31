@@ -212,6 +212,44 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
       }
     ]
   },
+  "twinks-in-shorts-alternatives": {
+    "h1": "Best Alternatives to Twinks in Shorts in 2026",
+    "intro": "Twinks in Shorts built its name on a very specific visual hook — slight, young-looking guys in athletic shorts, with a massage and seduction angle that kept things intimate and low-key. It's charming for what it is, but the site's update schedule has slowed to a crawl and the overall production ceiling is limited. If you joined hoping for variety in scenarios, bodies, or sex acts, you probably noticed the formula getting repetitive fast. Guys looking for more polish, higher video quality, bigger libraries, or a broader range of twink archetypes have every reason to shop around. The sites below each scratch a slightly different itch — some go harder on production value, others on performer diversity, some on sheer volume. Here's where your money actually works harder.",
+    "alternatives": [
+      {
+        "slug": "helix-studios",
+        "reason": "Helix Studios is the obvious first stop for anyone outgrowing a niche twink site. The library runs deep — hundreds of HD and 4K scenes — and the performers genuinely look the part without feeling interchangeable. Where Twinks in Shorts leans heavily on a single scenario type, Helix mixes duo scenes, group content, and longer narrative-driven episodes. Production quality is a clear step up: proper lighting, tight editing, and a roster that rotates in fresh faces regularly. If the intimacy of Twinks in Shorts appealed to you, Helix delivers that same boy-next-door softness but with far more ambition behind the camera and a lot more to binge."
+      },
+      {
+        "slug": "next-door-twink",
+        "reason": "Next Door Twink is probably the closest one-to-one swap for Twinks in Shorts fans. Both trade on the same core fantasy — lean, attractive guys who look like they wandered in from a college dorm — but Next Door Twink executes it with a bigger budget, more consistent updates, and a deeper back catalog. The scenarios feel fresh rather than recycled, and the performers tend to have more screen presence. If your main frustration with Twinks in Shorts is stagnation, Next Door Twink's steady content pipeline alone makes it worth the switch."
+      },
+      {
+        "slug": "athletic-twinks",
+        "reason": "For subscribers who specifically loved the sporty, shorts-wearing aesthetic of Twinks in Shorts, Athletic Twinks is the most direct niche match. The site doubles down on lean, fit, athletic bodies — swimmers, runners, gym-goers — with a focus on that V-taper physique rather than twink waifs. It's a narrower niche than Helix or Next Door Twink, but that focus is its strength. If the 'shorts' part of Twinks in Shorts was doing a lot of work for you aesthetically, Athletic Twinks delivers that same visual language with more consistency and a cleaner site experience."
+      },
+      {
+        "slug": "southern-strokes",
+        "reason": "Southern Strokes offers something Twinks in Shorts never quite managed: a strong sense of place and personality. The Southern-boy aesthetic — wholesome-looking guys with a bit of country charm — gives the content a distinct flavor that fans of low-key, intimate twink content tend to respond to. The pacing is similarly relaxed, but the production has more warmth to it. If you liked that Twinks in Shorts never felt slick or corporate, Southern Strokes preserves that indie intimacy while actually maintaining a more reliable update schedule."
+      },
+      {
+        "slug": "touch-that-boy",
+        "reason": "If the massage-and-seduction angle of Twinks in Shorts was the main draw, Touch That Boy is almost tailor-made for you. The site specializes in exactly that slow-burn, hands-on setup — tactile, teasing content where the physical exploration is the point. The performer types skew young and slim, aligning closely with the Twinks in Shorts demographic, but the scenarios feel less repetitive and the camera work is more intentional. It's a natural upgrade for anyone who loved the concept of Twinks in Shorts but felt the execution was underdelivering."
+      }
+    ],
+    "verdict": "Twinks in Shorts scratches a genuinely appealing niche, but its limitations become obvious the moment you compare it to what else is out there. For most readers, Helix Studios is the straightforward upgrade — more of everything, done better. If the sporty aesthetic was the pull, Athletic Twinks holds that lane more confidently. And if it was really about the slow, intimate setup rather than the shorts themselves, Touch That Boy is the smarter spend. Any of these five will give you more for your money than renewing a Twinks in Shorts membership in 2026.",
+    "meta_description": "Looking beyond Twinks in Shorts? We picked the 5 best gay sites that deliver more content, better production, and fresher faces in 2026.",
+    "faq": [
+      {
+        "question": "Is Twinks in Shorts still updating in 2026?",
+        "answer": "Based on our research, Twinks in Shorts has shown very limited update activity in recent years, with social media largely dormant since around 2020. The site appears to be maintained as a static archive rather than an actively updated membership. If regular new content is important to you — and it should be at these price points — any of the alternatives listed above will serve you significantly better on that front."
+      },
+      {
+        "question": "Which alternative is best if I specifically liked the massage/seduction setup on Twinks in Shorts?",
+        "answer": "Touch That Boy is your closest match. It's built around exactly that slow-burn, tactile premise — hands-on scenarios with slim, young-looking performers — but executed with more production care and updated far more consistently. Next Door Twink also incorporates seduction-style setups within a broader content mix, so it's worth considering if you want variety beyond just one scenario type."
+      }
+    ]
+  },
 };
 
 export const getAlternativesBody = (slug: string): AlternativesBody | undefined =>

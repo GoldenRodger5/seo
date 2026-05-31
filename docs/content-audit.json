@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-05-31T19:52:05.300Z",
+  "generated_at": "2026-05-31T20:07:27.445Z",
   "summary": {
-    "routes": 409,
+    "routes": 410,
     "clientOnlyCount": 0,
     "clientOnlyPct": "0.0",
     "typeStats": [
@@ -54,7 +54,7 @@
       },
       {
         "type": "other",
-        "count": 18,
+        "count": 19,
         "median": 445,
         "min": 380,
         "max": 900,
@@ -137,9 +137,9 @@
     },
     {
       "source": "src/data/alternatives-content.ts",
-      "entries": 5,
-      "totalWords": 4713,
-      "medianWordsPerEntry": 942,
+      "entries": 6,
+      "totalWords": 5592,
+      "medianWordsPerEntry": 932,
       "prerenderedToHtml": false,
       "comment": "Per-site alternatives content. Same prerender problem."
     }
@@ -200,6 +200,18 @@
       "bodyWordCount": 747,
       "metaTitle": "PeterFever Alternatives (2026) | TwinkVault",
       "metaDescription": "The best alternatives to PeterFever — ranked by overlap on content style, pricing, library depth, and update frequency. Honest reviews, updated for 2026.",
+      "hasReviewSchema": false,
+      "hasFaqSchema": false,
+      "hasBreadcrumbSchema": true,
+      "flags": []
+    },
+    {
+      "route": "/alternatives/twinks-in-shorts",
+      "pageType": "other",
+      "fileSize": 58222,
+      "bodyWordCount": 727,
+      "metaTitle": "Twinks in Shorts Alternatives (2026) | TwinkVault",
+      "metaDescription": "The best alternatives to Twinks in Shorts — ranked by overlap on content style, pricing, library depth, and update frequency. Honest reviews, updated for 2026.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": true,
