@@ -505,29 +505,31 @@ const Index = () => {
           content={`Independent reviews of ${sites.length} gay porn sites. Every review built from a paid membership, scored on the same four-pillar rubric, updated monthly.`}
         />
         <link rel="canonical" href="https://twinkvault.com" />
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "name": "TwinkVault",
-          "url": "https://twinkvault.com",
-          "description": "Independent rankings and reviews of gay porn sites.",
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": { "@type": "EntryPoint", "urlTemplate": "https://twinkvault.com/reviews?q={search_term_string}" },
-            "query-input": "required name=search_term_string",
-          },
-        })}</script>
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "TwinkVault",
-          "url": "https://twinkvault.com",
-          "logo": "https://twinkvault.com/pwa-512.png",
-          "foundingDate": "2024",
-          "description": "Independent gay site review project — paid memberships, transparent scoring, no commission-rigged rankings.",
-          "sameAs": [],
-        })}</script>
       </Helmet>
+
+      {/* JSON-LD in body (Helmet drops <script> server-side). */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "TwinkVault",
+        "url": "https://twinkvault.com",
+        "description": "Independent rankings and reviews of gay porn sites.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": { "@type": "EntryPoint", "urlTemplate": "https://twinkvault.com/reviews?q={search_term_string}" },
+          "query-input": "required name=search_term_string",
+        },
+      }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "TwinkVault",
+        "url": "https://twinkvault.com",
+        "logo": "https://twinkvault.com/pwa-512.png",
+        "foundingDate": "2024",
+        "description": "Independent gay site review project — paid memberships, transparent scoring, no commission-rigged rankings.",
+        "sameAs": [],
+      }) }} />
 
       <PageTransition>
         <Hero />

@@ -27,7 +27,8 @@ const BlogCategoryPage = () => {
           <title>{`${meta.label} — TwinkVault Blog`}</title>
           <meta name="description" content={`${meta.description} Browse all ${meta.label.toLowerCase()} articles from TwinkVault Editorial.`} />
           <link rel="canonical" href={`${BASE_URL}/blog/category/${cat}`} />
-          <script type="application/ld+json">{JSON.stringify({
+        </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             name: `${meta.label} — TwinkVault Blog`,
@@ -43,8 +44,8 @@ const BlogCategoryPage = () => {
                 name: p.title,
               })),
             },
-          })}</script>
-          <script type="application/ld+json">{JSON.stringify({
+          }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
@@ -52,8 +53,7 @@ const BlogCategoryPage = () => {
               { "@type": "ListItem", position: 2, name: "Blog", item: `${BASE_URL}/blog` },
               { "@type": "ListItem", position: 3, name: meta.label, item: `${BASE_URL}/blog/category/${cat}` },
             ],
-          })}</script>
-        </Helmet>
+          }) }} />
 
         <section className="hero-mesh py-12">
           <div className="container max-w-4xl text-center">

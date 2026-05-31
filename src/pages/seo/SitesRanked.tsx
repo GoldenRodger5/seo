@@ -86,8 +86,8 @@ const SitesRanked = () => {
           <meta property="og:url" content={url} />
           <meta property="og:title" content={fullTitle} />
           <meta property="og:description" content={description} />
-          <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
         </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
 
         <section className="hero-mesh py-12">
           <div className="container max-w-5xl text-center">

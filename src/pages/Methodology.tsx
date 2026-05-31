@@ -82,15 +82,16 @@ const Methodology = () => (
         <title>Review Methodology — How TwinkVault Scores Sites | TwinkVault</title>
         <meta name="description" content={`How TwinkVault scores ${sites.length} gay membership sites: four weighted pillars, transparent checks, monthly re-verification.`} />
         <link rel="canonical" href="https://twinkvault.com/methodology" />
-        <script type="application/ld+json">{JSON.stringify({
+      </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://twinkvault.com/" },
             { "@type": "ListItem", "position": 2, "name": "Methodology", "item": "https://twinkvault.com/methodology" },
           ],
-        })}</script>
-        <script type="application/ld+json">{JSON.stringify({
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "FAQPage",
           "mainEntity": faqs.map((f) => ({
@@ -98,8 +99,7 @@ const Methodology = () => (
             "name": f.q,
             "acceptedAnswer": { "@type": "Answer", "text": f.a },
           })),
-        })}</script>
-      </Helmet>
+        }) }} />
 
       <section className="py-16">
         <div className="container max-w-3xl">

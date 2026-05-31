@@ -25,7 +25,8 @@ const BlogIndex = () => {
           <title>Notes &amp; explainers — TwinkVault</title>
           <meta name="description" content="Longer-form pieces on the industry, individual sites, and how to think about the catalog." />
           <link rel="canonical" href={`${BASE_URL}/blog`} />
-          <script type="application/ld+json">{JSON.stringify({
+        </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Blog",
             name: "TwinkVault Blog",
@@ -44,16 +45,15 @@ const BlogIndex = () => {
               datePublished: p.published_date,
               author: { "@type": "Organization", name: p.author },
             })),
-          })}</script>
-          <script type="application/ld+json">{JSON.stringify({
+          }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
               { "@type": "ListItem", position: 2, name: "Blog", item: `${BASE_URL}/blog` },
             ],
-          })}</script>
-        </Helmet>
+          }) }} />
 
         <section className="py-16">
           <div className="container max-w-4xl">

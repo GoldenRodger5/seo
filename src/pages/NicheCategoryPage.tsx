@@ -51,7 +51,8 @@ const NicheCategoryPage = () => {
           <meta property="og:url" content={url} />
           <meta name="twitter:title" content={title} />
           <meta name="twitter:description" content={niche.seoDescription} />
-          <script type="application/ld+json">{JSON.stringify({
+        </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
@@ -59,8 +60,8 @@ const NicheCategoryPage = () => {
               { "@type": "ListItem", position: 2, name: "Niches", item: "https://twinkvault.com/reviews" },
               { "@type": "ListItem", position: 3, name: niche.displayName, item: url },
             ],
-          })}</script>
-          <script type="application/ld+json">{JSON.stringify({
+          }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             name: title,
@@ -78,8 +79,8 @@ const NicheCategoryPage = () => {
                 url: `https://twinkvault.com/reviews/${site.slug}`,
               })),
             },
-          })}</script>
-          <script type="application/ld+json">{JSON.stringify({
+          }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
             mainEntity: [
@@ -116,8 +117,7 @@ const NicheCategoryPage = () => {
                 },
               },
             ],
-          })}</script>
-        </Helmet>
+          }) }} />
 
         {/* Hero */}
         <section className="hero-mesh py-16">

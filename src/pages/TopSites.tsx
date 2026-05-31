@@ -54,6 +54,32 @@ const TopSites = () => {
           <meta name="description" content="Every major twink site ranked by content quality, value, update frequency and mobile experience. Paid memberships tested, honest scores — no sponsored rankings." />
           <link rel="canonical" href="https://twinkvault.com/top-sites" />
         </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
+            { "@type": "ListItem", position: 2, name: "Top Sites", item: "https://twinkvault.com/top-sites" },
+          ],
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: `${TOTAL_SITES} Best Gay Twink Sites Ranked`,
+          description: `The top-ranked twink sites — scored on content quality, value, update frequency, and mobile experience after a paid membership.`,
+          url: "https://twinkvault.com/top-sites",
+          mainEntity: {
+            "@type": "ItemList",
+            name: "Top Gay Twink Sites",
+            numberOfItems: filtered.length,
+            itemListElement: filtered.slice(0, 30).map((s, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              name: s.name,
+              url: `https://twinkvault.com/reviews/${s.slug}`,
+            })),
+          },
+        }) }} />
 
         <section className="py-16">
           <div className="container">

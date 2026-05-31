@@ -43,7 +43,8 @@ const CategoryPage = () => {
         <title>{`Best ${category.name} Sites ${currentYear} — Ranked | TwinkVault`}</title>
         <meta name="description" content={`The best ${category.name.toLowerCase()} twink content sites, ranked by quality and value. Staff-tested reviews with real pricing.`} />
         <link rel="canonical" href={`https://twinkvault.com/category/${slug}`} />
-        <script type="application/ld+json">{JSON.stringify({
+      </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
           "name": `Best ${category.name} Sites {currentYear}`,
@@ -54,8 +55,7 @@ const CategoryPage = () => {
             "name": site.name,
             "url": `https://twinkvault.com/reviews/${site.slug}`
           }))
-        })}</script>
-      </Helmet>
+        }) }} />
 
       <section className="py-16">
         <div className="container">

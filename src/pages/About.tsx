@@ -33,7 +33,8 @@ const About = () => (
         <title>About TwinkVault — Independent Gay Site Reviews</title>
         <meta name="description" content={`TwinkVault is an independent gay site review project, founded ${FOUNDED_YEAR}. Currently ${sites.length} reviewed sites — scored from real, paid memberships.`} />
         <link rel="canonical" href="https://twinkvault.com/about" />
-        <script type="application/ld+json">{JSON.stringify({
+      </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "AboutPage",
           "name": "About TwinkVault",
@@ -46,8 +47,8 @@ const About = () => (
             "email": CONTACT_EMAIL,
             "description": `Independent gay site review project, currently covering ${sites.length} membership sites with first-hand testing.`,
           },
-        })}</script>
-        <script type="application/ld+json">{JSON.stringify({
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "FAQPage",
           "mainEntity": faqs.map((f) => ({
@@ -55,8 +56,7 @@ const About = () => (
             "name": f.q,
             "acceptedAnswer": { "@type": "Answer", "text": f.a },
           })),
-        })}</script>
-      </Helmet>
+        }) }} />
 
       <section className="py-16">
         <div className="container max-w-3xl">

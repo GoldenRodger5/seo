@@ -135,7 +135,8 @@ const ReviewsIndex = () => {
         <title>{`All reviews — ${TOTAL_SITES} gay porn sites scored | TwinkVault`}</title>
         <meta name="description" content={`${TOTAL_SITES} gay porn sites reviewed. Every site tested with a paid membership. Same four-pillar rubric, updated monthly.`} />
         <link rel="canonical" href="https://twinkvault.com/reviews" />
-        <script type="application/ld+json">{JSON.stringify({
+      </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: `All Reviews ${currentYear}`,
@@ -152,16 +153,15 @@ const ReviewsIndex = () => {
               url: `https://twinkvault.com/reviews/${site.slug}`,
             })),
           },
-        })}</script>
-        <script type="application/ld+json">{JSON.stringify({
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
             { "@type": "ListItem", position: 2, name: "Reviews", item: "https://twinkvault.com/reviews" },
           ],
-        })}</script>
-      </Helmet>
+        }) }} />
 
       <section className="py-16">
         <div className="container max-w-6xl">

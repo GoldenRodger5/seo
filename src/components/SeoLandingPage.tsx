@@ -96,20 +96,25 @@ const SeoLandingPage = ({
           <meta property="og:url" content={url} />
           <meta property="og:title" content={fullTitle} />
           <meta property="og:description" content={description} />
-          <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
-          <script type="application/ld+json">{JSON.stringify(itemList)}</script>
-          {faqs && faqs.length > 0 && (
-            <script type="application/ld+json">{JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: faqs.map((f) => ({
-                "@type": "Question",
-                name: f.q,
-                acceptedAnswer: { "@type": "Answer", text: f.a },
-              })),
-            })}</script>
-          )}
         </Helmet>
+
+        {/* JSON-LD in the body via dangerouslySetInnerHTML — react-helmet-async
+            drops <script type="application/ld+json"> on the server. Without
+            this, every SEO landing page (best-*, alternatives) ships zero
+            structured data. */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
+        {faqs && faqs.length > 0 && (
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }) }} />
+        )}
 
         <section className="hero-mesh py-16">
           <div className="container max-w-4xl text-center">

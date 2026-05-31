@@ -69,35 +69,35 @@ Sorted ascending by body word count. Top 30:
 
 | Route | Type | Body words | File size (KB) | Flags |
 | --- | --- | ---: | ---: | --- |
-| /blog/category/industry | landing | 226 | 18.1 | THIN_LANDING |
+| /blog/category/industry | landing | 226 | 18.8 | THIN_LANDING |
 | /find-my-site | utility | 231 | 18.5 |  |
 | /contact | utility | 254 | 20.9 |  |
-| /blog/category/money | landing | 270 | 20.0 | THIN_LANDING |
+| /blog/category/money | landing | 270 | 20.9 | THIN_LANDING |
 | /ask-ai | utility | 273 | 21.5 |  |
-| /blog/category/comparisons | landing | 290 | 21.5 | THIN_LANDING |
-| /blog/category/guides | landing | 355 | 23.3 | THIN_LANDING |
+| /blog/category/comparisons | landing | 290 | 22.5 | THIN_LANDING |
+| /blog/category/guides | landing | 355 | 24.5 | THIN_LANDING |
 | /2257 | legal | 358 | 18.8 |  |
 | /affiliate-disclosure | legal | 366 | 18.8 |  |
-| /is-athletic-twinks-worth-it | other | 380 | 31.1 |  |
-| /is-twinks-in-shorts-worth-it | other | 384 | 31.2 |  |
-| /category/free-trials | category | 389 | 38.8 |  |
-| /is-nakedsword-worth-it | other | 389 | 31.5 |  |
-| /is-southern-strokes-worth-it | other | 390 | 31.2 |  |
-| /is-rawhole-worth-it | other | 393 | 31.4 |  |
-| /is-peterfever-worth-it | other | 395 | 31.5 |  |
-| /is-helix-studios-worth-it | other | 400 | 31.7 |  |
+| /is-athletic-twinks-worth-it | other | 380 | 31.5 |  |
+| /is-twinks-in-shorts-worth-it | other | 384 | 31.5 |  |
+| /category/free-trials | category | 389 | 39.4 |  |
+| /is-nakedsword-worth-it | other | 389 | 31.8 |  |
+| /is-southern-strokes-worth-it | other | 390 | 31.5 |  |
+| /is-rawhole-worth-it | other | 393 | 31.8 |  |
+| /is-peterfever-worth-it | other | 395 | 31.8 |  |
+| /is-helix-studios-worth-it | other | 400 | 32.1 |  |
 | /compare | landing | 413 | 31.4 | THIN_LANDING |
-| /is-sayuncle-worth-it | other | 422 | 31.6 |  |
-| /is-men-worth-it | other | 438 | 31.9 |  |
-| /is-sean-cody-worth-it | other | 445 | 32.0 |  |
-| /niche/military | niche | 486 | 28.6 |  |
-| /blog | landing | 489 | 29.1 | THIN_LANDING |
-| /niche/latin | niche | 495 | 28.5 |  |
-| /niche/big-dick | niche | 508 | 28.6 |  |
-| /niche/uncut | niche | 529 | 32.2 |  |
-| /niche/solo | niche | 530 | 32.5 |  |
-| /gay-porn-sites-ranked | other | 531 | 115.9 |  |
-| /category/mobile-friendly | category | 552 | 63.4 |  |
+| /is-sayuncle-worth-it | other | 422 | 31.9 |  |
+| /is-men-worth-it | other | 438 | 32.2 |  |
+| /is-sean-cody-worth-it | other | 445 | 32.3 |  |
+| /niche/military | niche | 486 | 31.0 |  |
+| /blog | landing | 489 | 31.3 | THIN_LANDING |
+| /niche/latin | niche | 495 | 30.9 |  |
+| /niche/big-dick | niche | 508 | 30.9 |  |
+| /niche/uncut | niche | 529 | 34.7 |  |
+| /niche/solo | niche | 530 | 35.0 |  |
+| /gay-porn-sites-ranked | other | 531 | 116.3 |  |
+| /category/mobile-friendly | category | 552 | 64.6 |  |
 | /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 50.9 |  |
 
 ## Auto-generation pipeline assessment

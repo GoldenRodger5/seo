@@ -212,7 +212,8 @@ const BlogPostPage = () => {
           <meta property="article:modified_time" content={post.updated_date} />
           <meta property="article:author" content={post.author} />
           <meta property="article:section" content={post.category} />
-          <script type="application/ld+json">{JSON.stringify({
+        </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
             headline: post.title,
@@ -229,8 +230,8 @@ const BlogPostPage = () => {
             },
             mainEntityOfPage: url,
             articleSection: post.category,
-          })}</script>
-          <script type="application/ld+json">{JSON.stringify({
+          }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
@@ -238,8 +239,7 @@ const BlogPostPage = () => {
               { "@type": "ListItem", position: 2, name: "Blog", item: BASE_URL + "/blog" },
               { "@type": "ListItem", position: 3, name: post.title, item: url },
             ],
-          })}</script>
-        </Helmet>
+          }) }} />
 
         <article className="py-12">
           <div className="container max-w-3xl">

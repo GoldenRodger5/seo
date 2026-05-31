@@ -18,15 +18,15 @@ const GayDatingSites = () => (
       <meta property="og:title" content={`Best Gay Dating Sites ${currentYear} — Find Men Near You | TwinkVault`} />
       <meta property="og:description" content={`Find the best gay dating and hookup sites in ${currentYear}. Meet gay men near you — compare options and connect.`} />
       <meta property="og:url" content="https://twinkvault.com/gay-dating-sites" />
-      <script type="application/ld+json">{JSON.stringify({
+    </Helmet>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
           { "@type": "ListItem", position: 2, name: "Gay Dating Sites", item: "https://twinkvault.com/gay-dating-sites" },
         ]
-      })}</script>
-    </Helmet>
+      }) }} />
 
     <PageTransition>
       {/* Hero */}
