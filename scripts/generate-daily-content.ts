@@ -668,7 +668,7 @@ function appendReviewBody(slug: string, generated: Record<string, unknown>) {
   log.info(`Appended review body for ${slug}`);
 }
 
-// Removed addSlugToScripts() — generate-sitemap.ts and prerender-meta.ts
+// Removed addSlugToScripts() — generate-sitemap.ts and prerender-app.ts
 // now derive SITE_SLUGS / SITE_NAMES from src/data/sites.ts via
 // `sites.map(s => s.slug)`, so any new site appended to sites.ts is
 // automatically picked up by both scripts on the next build. The old
@@ -810,10 +810,12 @@ function runBuild(): { passed: boolean; commitHash: string } {
   try {
     log.info("Regenerating sitemap...");
     execSync("npx tsx scripts/generate-sitemap.ts", { cwd: ROOT, stdio: "inherit" });
-    log.info("Running vite build...");
+    log.info("Running vite build (client)...");
     execSync("npx vite build", { cwd: ROOT, stdio: "inherit" });
-    log.info("Running prerender-meta...");
-    execSync("npx tsx scripts/prerender-meta.ts", { cwd: ROOT, stdio: "inherit" });
+    log.info("Running vite build (ssr)...");
+    execSync("npx vite build --ssr src/entry-server.tsx --outDir dist-server", { cwd: ROOT, stdio: "inherit" });
+    log.info("Running prerender-app (renders React tree into per-route HTML)...");
+    execSync("npx tsx scripts/prerender-app.ts", { cwd: ROOT, stdio: "inherit" });
     return { passed: true, commitHash: "" };
   } catch (e) {
     log.err(`Build failed: ${(e as Error).message}`);
