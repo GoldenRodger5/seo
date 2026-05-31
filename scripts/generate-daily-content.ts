@@ -1025,12 +1025,11 @@ async function main() {
   const contentType: ContentTypeKey = target.kind === "review" ? "review" : (target.entry as SupportingQueueEntry).content_type;
   log.info(`Target: ${contentType} → ${target.entry.slug}`);
 
-  // ── Generation ─────────────────────────────────────────────────────────
-  let generated: Record<string, unknown>;
-  try {
+  // Helper to do one full generation attempt with the payload below.
+  const attemptGeneration = async (extraHint?: string): Promise<Record<string, unknown>> => {
     if (target.kind === "review") {
       const entry = target.entry as ReviewQueueEntry;
-      generated = await generate({
+      return generate({
         contentType,
         payload: {
           name: entry.name,
@@ -1039,32 +1038,53 @@ async function main() {
           niche: entry.niche,
           affiliate_network: entry.affiliate_network,
           existing_slugs: sites.map((s) => s.slug),
+          retry_hint: extraHint,
         },
       });
-    } else {
-      const entry = target.entry as SupportingQueueEntry;
-      const enriched = enrichSupportingPayload(entry);
-      generated = await generate({ contentType, payload: enriched });
     }
-  } catch (e) {
-    // Exit 0 (not 1) so the GitHub Actions workflow shows a clean status.
-    // A single-day generation failure is a routine blip — the next scheduled
-    // run will pick the same item back up. A red X on the workflow page
-    // creates noise out of proportion to the actual problem.
-    log.warn(`Generation failed — skipping today's run: ${(e as Error).message}`);
-    process.exit(0);
-  }
+    const entry = target.entry as SupportingQueueEntry;
+    const enriched = enrichSupportingPayload(entry);
+    if (extraHint) enriched.retry_hint = extraHint;
+    return generate({ contentType, payload: enriched });
+  };
 
-  // ── Quality gates ──────────────────────────────────────────────────────
-  let gate = qualityGate(generated, contentType);
-
-  // Retry path: if the only failure is meta length, request a targeted rewrite.
-  if (!gate.ok && gate.errors.length === 1 && gate.errors[0].includes("meta_description length")) {
-    const repaired = await repairMeta(generated, target);
-    if (repaired) {
-      generated.meta_description = repaired;
-      gate = qualityGate(generated, contentType);
+  // ── Generation with up to 2 retries on quality-gate failure ────────────
+  // Single-day failures used to silently waste the slot. Now: 2 retry
+  // attempts when the gate complains about content shape, each with the
+  // failure errors fed back to the model as a "fix these specific issues"
+  // hint. The repair-meta single-shot still wraps the first attempt.
+  let generated: Record<string, unknown> = {};
+  let gate = { ok: false, errors: ["initial"] as string[] };
+  const MAX_ATTEMPTS = 3;
+  let lastErr = "";
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    try {
+      const hint = attempt === 1 ? undefined :
+        `Previous attempt failed these checks — fix them while keeping everything else: ${lastErr}`;
+      log.info(attempt === 1 ? "Generating…" : `Retry ${attempt - 1}/${MAX_ATTEMPTS - 1} with failure hint…`);
+      generated = await attemptGeneration(hint);
+    } catch (e) {
+      // Anthropic-side failure (timeout, rate limit, network). Exit 0 so the
+      // GitHub Action stays green; tomorrow's run picks up the same queue
+      // entry. A red X on the workflow page over-signals a transient hiccup.
+      log.warn(`Generation failed — skipping today's run: ${(e as Error).message}`);
+      process.exit(0);
     }
+
+    gate = qualityGate(generated, contentType);
+
+    // Targeted meta-only repair (cheaper than a full regeneration).
+    if (!gate.ok && gate.errors.length === 1 && gate.errors[0].includes("meta_description length")) {
+      const repaired = await repairMeta(generated, target);
+      if (repaired) {
+        generated.meta_description = repaired;
+        gate = qualityGate(generated, contentType);
+      }
+    }
+
+    if (gate.ok) break;
+    lastErr = gate.errors.join("; ");
+    log.warn(`Attempt ${attempt} failed gate: ${lastErr}`);
   }
 
   // Distinguish cosmetic gate failures (meta length within 20 chars of the
@@ -1117,7 +1137,30 @@ async function main() {
     return;
   }
 
-  // ── Apply: write files ─────────────────────────────────────────────────
+  // ── Apply: write files (with rollback on subsequent build failure) ────
+  //
+  // Previously the order was: persist → mark-published → build → commit.
+  // If the build failed, the queue had already been flipped to "published"
+  // and the data file held uncommitted edits — the entry was effectively
+  // lost (next run wouldn't reattempt it because it looked published).
+  // Now we snapshot the touched files, persist, build, and if the build
+  // fails we restore those files before exiting so the next run can retry
+  // the same queue entry cleanly.
+  const FILES_TO_SNAPSHOT = [
+    QUEUE_FILE,
+    REVIEWS_FILE,
+    SITES_FILE,
+    COMPARISON_CONTENT_FILE,
+    ALTERNATIVES_CONTENT_FILE,
+    ISWORTHIT_CONTENT_FILE,
+    GUIDE_CONTENT_FILE,
+    resolve(ROOT, "docs/content-lastmod.json"),
+  ];
+  const snapshots = new Map<string, string>();
+  for (const f of FILES_TO_SNAPSHOT) {
+    try { snapshots.set(f, readFileSync(f, "utf-8")); } catch { /* file may not exist on fresh runs */ }
+  }
+
   let imageUrl: string | null = null;
   if (target.kind === "review") {
     const entry = target.entry as ReviewQueueEntry;
@@ -1127,10 +1170,6 @@ async function main() {
     markQueuePublished(entry.slug, "review");
   } else {
     const entry = target.entry as SupportingQueueEntry;
-    // Persist generated body to the per-type data file (comparison /
-    // alternatives / isworthit / guide). Frontend route components read
-    // from these files and fall back to the generic template when no
-    // entry exists.
     persistSupportingContent(entry, generated);
     markQueuePublished(entry.slug, "supporting");
   }
@@ -1138,7 +1177,11 @@ async function main() {
   // ── Build ─────────────────────────────────────────────────────────────
   const build = runBuild();
   if (!build.passed) {
-    log.err("Build failed — aborting before commit.");
+    log.err("Build failed — rolling back data-file edits so tomorrow's run can retry.");
+    for (const [f, content] of snapshots) {
+      try { writeFileSync(f, content, "utf-8"); log.info(`  restored ${f.split("/").pop()}`); }
+      catch (e) { log.warn(`  failed to restore ${f}: ${(e as Error).message}`); }
+    }
     await logToSupabase(buildLogRow({ generated, target, contentType, imageUrl, build, commitHash: "", googleOk: false, bingOk: false, error: "build failed" }));
     process.exit(1);
   }
