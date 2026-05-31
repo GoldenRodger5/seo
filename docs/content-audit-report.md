@@ -80,7 +80,7 @@ Sorted ascending by body word count. Top 30:
 | /affiliate-disclosure | legal | 366 | 18.8 |  |
 | /is-athletic-twinks-worth-it | other | 380 | 31.5 |  |
 | /is-twinks-in-shorts-worth-it | other | 384 | 31.5 |  |
-| /category/free-trials | category | 389 | 39.4 |  |
+| /category/free-trials | category | 389 | 40.0 |  |
 | /is-nakedsword-worth-it | other | 389 | 31.8 |  |
 | /is-southern-strokes-worth-it | other | 390 | 31.5 |  |
 | /is-rawhole-worth-it | other | 393 | 31.8 |  |
@@ -97,7 +97,7 @@ Sorted ascending by body word count. Top 30:
 | /niche/uncut | niche | 529 | 34.7 |  |
 | /niche/solo | niche | 530 | 35.0 |  |
 | /gay-porn-sites-ranked | other | 531 | 116.3 |  |
-| /category/mobile-friendly | category | 552 | 64.6 |  |
+| /category/mobile-friendly | category | 552 | 65.2 |  |
 | /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 50.9 |  |
 
 ## Auto-generation pipeline assessment

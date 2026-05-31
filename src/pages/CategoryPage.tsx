@@ -46,15 +46,30 @@ const CategoryPage = () => {
       </Helmet>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "ItemList",
-          "name": `Best ${category.name} Sites {currentYear}`,
-          "numberOfItems": sorted.length,
-          "itemListElement": sorted.map((site, i) => ({
-            "@type": "ListItem",
-            "position": i + 1,
-            "name": site.name,
-            "url": `https://twinkvault.com/reviews/${site.slug}`
-          }))
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
+            { "@type": "ListItem", position: 2, name: "Categories", item: "https://twinkvault.com/top-sites" },
+            { "@type": "ListItem", position: 3, name: category.name, item: `https://twinkvault.com/category/${slug}` },
+          ],
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: `Best ${category.name} Sites ${currentYear}`,
+          description: category.description,
+          url: `https://twinkvault.com/category/${slug}`,
+          mainEntity: {
+            "@type": "ItemList",
+            name: `Best ${category.name} Sites ${currentYear}`,
+            numberOfItems: sorted.length,
+            itemListElement: sorted.map((site, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              name: site.name,
+              url: `https://twinkvault.com/reviews/${site.slug}`,
+            })),
+          },
         }) }} />
 
       <section className="py-16">

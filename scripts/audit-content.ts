@@ -115,6 +115,29 @@ function hasSchema(html: string, type: string): boolean {
   return new RegExp(`"@type"\\s*:\\s*"${type}"`, "i").test(html);
 }
 
+/**
+ * Extract and parse every <script type="application/ld+json"> block.
+ * Returns the number of valid blocks and a list of parse errors so the
+ * audit can flag INVALID_JSON_LD on any page that ships broken schema.
+ */
+function validateJsonLd(html: string): { valid: number; errors: string[] } {
+  const errors: string[] = [];
+  let valid = 0;
+  const re = /<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    const raw = m[1].trim();
+    if (!raw) { errors.push("empty"); continue; }
+    try {
+      JSON.parse(raw);
+      valid++;
+    } catch (e) {
+      errors.push((e as Error).message.slice(0, 80));
+    }
+  }
+  return { valid, errors };
+}
+
 function wordCount(text: string): number {
   if (!text) return 0;
   return text.split(/\s+/).filter((w) => /[a-z]/i.test(w)).length;
@@ -173,12 +196,38 @@ async function auditRoute(absPath: string): Promise<RouteAudit> {
   if (metaDescription.length < 120) flags.push("THIN_DESC");
   else if (metaDescription.length > 165) flags.push("LONG_DESC");
 
-  // Schema (these may or may not be in HTML depending on prerender)
+  // Schema audit — pages should have type-appropriate JSON-LD. After the
+  // codemod that moved schemas out of <Helmet>, this becomes a strict gate.
   const hasReviewSchema = hasSchema(html, "Review") || hasSchema(html, "Product");
   const hasFaqSchema = hasSchema(html, "FAQPage");
   const hasBreadcrumbSchema = hasSchema(html, "BreadcrumbList");
+  const hasItemListSchema = hasSchema(html, "ItemList");
+  const hasArticleSchema = hasSchema(html, "Article") || hasSchema(html, "BlogPosting");
+  const hasWebsiteSchema = hasSchema(html, "WebSite") || hasSchema(html, "Organization");
+  const hasCollectionSchema = hasSchema(html, "CollectionPage");
 
   if (pageType === "review" && !hasReviewSchema) flags.push("MISSING_REVIEW_SCHEMA");
+  // Compare pages emit Product × 2 + Review × 2 + ItemList + FAQ; require
+  // Product as the proxy because BreadcrumbList alone isn't enough.
+  if (pageType === "compare" && route !== "/compare" && !hasReviewSchema) flags.push("MISSING_COMPARE_SCHEMA");
+  // Blog posts need Article schema for Top Stories eligibility.
+  if (pageType === "blog" && !hasArticleSchema) flags.push("MISSING_ARTICLE_SCHEMA");
+  // Niche, category, landing, and the reviews/compare index pages should
+  // emit ItemList or CollectionPage so Google understands they're list pages.
+  if (["niche", "category"].includes(pageType) && !hasItemListSchema && !hasCollectionSchema) {
+    flags.push("MISSING_LIST_SCHEMA");
+  }
+  // Homepage gets WebSite/Organization for sitelinks and brand surfacing.
+  if (pageType === "homepage" && !hasWebsiteSchema) flags.push("MISSING_HOMEPAGE_SCHEMA");
+  // Every meaningful page should have BreadcrumbList for navigational
+  // snippets. Skip utility / legal / GoRedirect-style routes.
+  const breadcrumbRequired = ["review", "compare", "discount", "niche", "category", "blog"].includes(pageType);
+  if (breadcrumbRequired && route !== "/compare" && !hasBreadcrumbSchema) flags.push("MISSING_BREADCRUMB_SCHEMA");
+
+  // JSON-LD parse validity — broken JSON in any block makes Google ignore
+  // ALL structured data on the page, not just the broken one. Catch early.
+  const jsonLd = validateJsonLd(html);
+  if (jsonLd.errors.length > 0) flags.push("INVALID_JSON_LD");
 
   return { route, pageType, fileSize: stat.size, bodyWordCount, bodyText, metaTitle, metaDescription, hasReviewSchema, hasFaqSchema, hasBreadcrumbSchema, flags };
 }
@@ -406,11 +455,17 @@ async function main() {
     const HARD_FAIL = new Set([
       "CLIENT_SIDE_ONLY",
       "MISSING_REVIEW_SCHEMA",
+      "MISSING_COMPARE_SCHEMA",
+      "MISSING_ARTICLE_SCHEMA",
+      "MISSING_LIST_SCHEMA",
+      "MISSING_HOMEPAGE_SCHEMA",
+      "MISSING_BREADCRUMB_SCHEMA",
       "THIN_REVIEW",
       "THIN_COMPARE",
       "THIN_HOMEPAGE",
       "THIN_DESC",
       "LONG_TITLE",
+      "INVALID_JSON_LD",
     ]);
     const failures = audits.filter((a) => a.flags.some((f) => HARD_FAIL.has(f)));
     if (failures.length > 0) {
