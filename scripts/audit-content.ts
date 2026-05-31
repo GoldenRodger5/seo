@@ -59,6 +59,9 @@ function classifyRoute(route: string): string {
   if (route.startsWith("/discount/")) return "discount";
   if (route.startsWith("/niche/")) return "niche";
   if (route.startsWith("/category/")) return "category";
+  // /blog/category/* is a listing page (cards of posts), not a blog post.
+  // Classifying it as blog applied the 700-word minimum to a card grid.
+  if (route.startsWith("/blog/category/")) return "landing";
   if (route.startsWith("/blog/")) return "blog";
   if (route === "/blog") return "landing";
   if (/^\/(best-|cheapest-|free-trial|top-)/.test(route)) return "landing";
@@ -82,23 +85,30 @@ function extractText(html: string): string {
   return s.replace(/\s+/g, " ").trim();
 }
 
+function decodeAttr(s: string): string {
+  return s
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
 function extractMeta(html: string, name: string): string {
   // Match double-quoted content only — that's what react-helmet-async and
   // our prerender template emit. Earlier regex ended capture at the first
-  // single-quote, which mis-counted descriptions containing apostrophes
-  // (e.g. "what you're looking for" reported length 20 instead of 165).
+  // single-quote, which mis-counted descriptions containing apostrophes.
   const re = new RegExp(`<meta\\s+(?:name|property)="${name}"\\s+content="([^"]*)"`, "i");
   const m = html.match(re);
-  if (m) return m[1];
-  // Fallback: single-quoted name attr if a tag uses that style.
+  if (m) return decodeAttr(m[1]);
   const re2 = new RegExp(`<meta\\s+(?:name|property)='${name}'\\s+content="([^"]*)"`, "i");
   const m2 = html.match(re2);
-  return m2 ? m2[1] : "";
+  return m2 ? decodeAttr(m2[1]) : "";
 }
 
 function extractTitle(html: string): string {
   const m = html.match(/<title>([^<]+)<\/title>/i);
-  return m ? m[1].trim() : "";
+  return m ? decodeAttr(m[1].trim()) : "";
 }
 
 function hasSchema(html: string, type: string): boolean {
@@ -385,6 +395,35 @@ async function main() {
 
   console.log(`\nWrote docs/content-audit-report.md and docs/content-audit.json`);
   console.log(`CRITICAL: ${clientOnlyCount} / ${audits.length} routes are CLIENT_SIDE_ONLY (${clientOnlyPct}%).`);
+
+  // Strict-mode build gate. Run via `npx tsx scripts/audit-content.ts --strict`
+  // (or set AUDIT_STRICT=1) to fail the process if any flag is set.
+  // Used by CI / pre-deploy to keep meta hygiene from regressing.
+  const strict = process.argv.includes("--strict") || process.env.AUDIT_STRICT === "1";
+  if (strict) {
+    // Flags that always fail strict mode. THIN_TITLE and LONG_DESC are
+    // soft: Google doesn't penalize on either, just truncates/auto-rewrites.
+    const HARD_FAIL = new Set([
+      "CLIENT_SIDE_ONLY",
+      "MISSING_REVIEW_SCHEMA",
+      "THIN_REVIEW",
+      "THIN_COMPARE",
+      "THIN_HOMEPAGE",
+      "THIN_DESC",
+      "LONG_TITLE",
+    ]);
+    const failures = audits.filter((a) => a.flags.some((f) => HARD_FAIL.has(f)));
+    if (failures.length > 0) {
+      console.error(`\n✗ Strict audit FAILED: ${failures.length} route(s) have hard-fail flags.`);
+      failures.slice(0, 20).forEach((a) => {
+        const hard = a.flags.filter((f) => HARD_FAIL.has(f));
+        console.error(`   ${a.route} → ${hard.join(", ")}`);
+      });
+      if (failures.length > 20) console.error(`   …and ${failures.length - 20} more`);
+      process.exit(1);
+    }
+    console.log(`✓ Strict audit passed: no hard-fail flags.`);
+  }
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

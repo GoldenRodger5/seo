@@ -846,6 +846,11 @@ function runBuild(): { passed: boolean; commitHash: string } {
     execSync("npx vite build --ssr src/entry-server.tsx --outDir dist-server", { cwd: ROOT, stdio: "inherit" });
     log.info("Running prerender-app (renders React tree into per-route HTML)...");
     execSync("npx tsx scripts/prerender-app.ts", { cwd: ROOT, stdio: "inherit" });
+    // SEO hygiene gate — fails the build if any hard-fail flag (thin or
+    // long title/desc, missing schema, client-side-only render) is on any
+    // route. Keeps daily auto-content from regressing the SEO baseline.
+    log.info("Running audit-content (strict)...");
+    execSync("npx tsx scripts/audit-content.ts --strict", { cwd: ROOT, stdio: "inherit" });
     return { passed: true, commitHash: "" };
   } catch (e) {
     log.err(`Build failed: ${(e as Error).message}`);

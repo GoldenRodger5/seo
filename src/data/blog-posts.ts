@@ -95,7 +95,7 @@ export const BLOG_POSTS: BlogPost[] = [
   // ─── Article 1 ─────────────────────────────────────────────────────────
   {
     slug: "gay-porn-free-trials-explained",
-    title: "Are Gay Porn Site Free Trials Actually Free? What to Know Before You Sign Up",
+    title: "Are Gay Porn Site Free Trials Actually Free?",
     meta_description: "Most 'free trial' gay porn sites aren't actually free. Here's how trial offers really work, what they include, and which sites have trials worth using in 2026.",
     h1: "Are Gay Porn Site Free Trials Actually Free?",
     published_date: "2026-05-12",
@@ -201,7 +201,7 @@ export const BLOG_POSTS: BlogPost[] = [
   // ─── Article 3 ─────────────────────────────────────────────────────────
   {
     slug: "bareback-vs-condom-gay-porn",
-    title: "Bareback vs Condom Gay Porn: What's the Difference and Which Sites Do Each Best?",
+    title: "Bareback vs Condom Gay Porn: Differences & Best Sites",
     meta_description: "The bareback vs condom shift in gay porn since the mid-2010s, performer testing practices, and the top sites for each format in 2026.",
     h1: "Bareback vs Condom Gay Porn: What's the Difference and Which Sites Do Each Best?",
     published_date: "2026-05-12",
@@ -335,7 +335,7 @@ export const BLOG_POSTS: BlogPost[] = [
   // ─── Article 5 ─────────────────────────────────────────────────────────
   {
     slug: "studio-vs-amateur-gay-porn",
-    title: "Studio Sites vs Amateur Sites: Which Type of Gay Porn Is Right for You?",
+    title: "Studio Sites vs Amateur Gay Porn: Which Is Right?",
     meta_description: "Studio gay porn sites vs amateur sites — the production differences, performer roster contrasts, pricing, and which format fits which kind of viewer.",
     h1: "Studio Sites vs Amateur Sites: Which Type of Gay Porn Is Right for You?",
     published_date: "2026-05-12",
@@ -386,7 +386,7 @@ export const BLOG_POSTS: BlogPost[] = [
   // ─── Article 6 ─────────────────────────────────────────────────────────
   {
     slug: "best-gay-porn-sites-2026-top-10",
-    title: "The Best Gay Porn Sites of 2026: Our Top 10 Picks Across Every Category",
+    title: "Best Gay Porn Sites 2026: Top 10 Across Categories",
     meta_description: "The 10 best gay porn sites of 2026 ranked across every category. Verified pricing, real scores, paid memberships only — no commission-rigged rankings.",
     h1: "The Best Gay Porn Sites of 2026: Our Top 10 Picks Across Every Category",
     published_date: "2026-05-12",

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-31T18:51:48.232Z",
+  "generated_at": "2026-05-31T19:04:15.771Z",
   "summary": {
     "routes": 409,
     "clientOnlyCount": 0,
@@ -20,9 +20,7 @@
         "median": 759,
         "min": 698,
         "max": 813,
-        "flagCounts": {
-          "THIN_DESC": 10
-        },
+        "flagCounts": {},
         "allClientOnly": false
       },
       {
@@ -36,14 +34,12 @@
       },
       {
         "type": "landing",
-        "count": 24,
-        "median": 1167,
-        "min": 413,
+        "count": 28,
+        "median": 960,
+        "min": 226,
         "max": 4242,
         "flagCounts": {
-          "LONG_DESC": 1,
-          "THIN_LANDING": 1,
-          "THIN_DESC": 3
+          "THIN_LANDING": 6
         },
         "allClientOnly": false
       },
@@ -53,10 +49,7 @@
         "median": 642,
         "min": 486,
         "max": 2073,
-        "flagCounts": {
-          "THIN_DESC": 8,
-          "LONG_TITLE": 1
-        },
+        "flagCounts": {},
         "allClientOnly": false
       },
       {
@@ -65,24 +58,7 @@
         "median": 445,
         "min": 380,
         "max": 900,
-        "flagCounts": {
-          "LONG_TITLE": 2,
-          "THIN_DESC": 13
-        },
-        "allClientOnly": false
-      },
-      {
-        "type": "blog",
-        "count": 10,
-        "median": 1499,
-        "min": 226,
-        "max": 1826,
-        "flagCounts": {
-          "LONG_TITLE": 4,
-          "THIN_BLOG": 4,
-          "THIN_TITLE": 3,
-          "LONG_DESC": 3
-        },
+        "flagCounts": {},
         "allClientOnly": false
       },
       {
@@ -92,9 +68,17 @@
         "min": 358,
         "max": 1003,
         "flagCounts": {
-          "THIN_TITLE": 3,
-          "THIN_DESC": 3
+          "THIN_TITLE": 2
         },
+        "allClientOnly": false
+      },
+      {
+        "type": "blog",
+        "count": 6,
+        "median": 1673,
+        "min": 1480,
+        "max": 1826,
+        "flagCounts": {},
         "allClientOnly": false
       },
       {
@@ -112,10 +96,7 @@
         "median": 273,
         "min": 231,
         "max": 10399,
-        "flagCounts": {
-          "THIN_TITLE": 2,
-          "THIN_DESC": 4
-        },
+        "flagCounts": {},
         "allClientOnly": false
       },
       {
@@ -124,9 +105,7 @@
         "median": 649,
         "min": 649,
         "max": 649,
-        "flagCounts": {
-          "THIN_DESC": 1
-        },
+        "flagCounts": {},
         "allClientOnly": false
       }
     ]
@@ -151,8 +130,8 @@
     {
       "source": "src/data/blog-posts.ts",
       "entries": 10,
-      "totalWords": 8418,
-      "medianWordsPerEntry": 841,
+      "totalWords": 8395,
+      "medianWordsPerEntry": 839,
       "prerenderedToHtml": false,
       "comment": "Editorial blog content. Same prerender problem."
     },
@@ -181,16 +160,14 @@
     {
       "route": "/about",
       "pageType": "legal",
-      "fileSize": 32611,
+      "fileSize": 32677,
       "bodyWordCount": 759,
-      "metaTitle": "About TwinkVault — Who We Are",
+      "metaTitle": "About TwinkVault — Who Reviews These Gay Porn Sites",
       "metaDescription": "TwinkVault is an independent gay porn site review platform. Honest paid-membership reviews, real pricing, no commission-rigged rankings. Meet the team behind it.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_TITLE"
-      ]
+      "flags": []
     },
     {
       "route": "/affiliate-disclosure",
@@ -243,16 +220,14 @@
     {
       "route": "/best-amateur-gay-sites",
       "pageType": "landing",
-      "fileSize": 247389,
+      "fileSize": 247338,
       "bodyWordCount": 1648,
       "metaTitle": "Best Amateur Gay Porn Sites (2026) | TwinkVault",
-      "metaDescription": "Real performers, authentic chemistry, no studio gloss. The best amateur gay porn sites of 2026 ranked by quality, value, and update cadence — paid membership reviews.",
+      "metaDescription": "Real performers, authentic chemistry. The best amateur gay porn sites of 2026 ranked by quality, value, and update cadence — paid membership reviews.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "LONG_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/best-asian-gay-sites",
@@ -281,7 +256,7 @@
     {
       "route": "/best-bareback-twink-sites",
       "pageType": "landing",
-      "fileSize": 220011,
+      "fileSize": 220023,
       "bodyWordCount": 2606,
       "metaTitle": "Best Bareback Twink Sites 2026 — Ranked & Reviewed | TwinkVault",
       "metaDescription": "The best bareback twink porn sites in 2026, ranked by content quality, performer roster, and update frequency. Every site tested on the same methodology.",
@@ -317,7 +292,7 @@
     {
       "route": "/best-deals",
       "pageType": "landing",
-      "fileSize": 82272,
+      "fileSize": 82284,
       "bodyWordCount": 675,
       "metaTitle": "Best Gay Twink Site Deals & Discounts 2026 | TwinkVault",
       "metaDescription": "The best current gay twink site deals and discounts for 2026. Verified offers updated weekly with annual savings, free trial info, and verdict on each.",
@@ -329,7 +304,7 @@
     {
       "route": "/best-gay-porn-sites",
       "pageType": "landing",
-      "fileSize": 116582,
+      "fileSize": 116594,
       "bodyWordCount": 960,
       "metaTitle": "Best Gay Porn Sites in 2026 — Ranked & Reviewed | TwinkVault",
       "metaDescription": "The 15 best gay porn sites of 2026, ranked by content quality, value, update frequency, and mobile experience. Paid memberships only.",
@@ -461,106 +436,94 @@
     {
       "route": "/blog/bareback-vs-condom-gay-porn",
       "pageType": "blog",
-      "fileSize": 66837,
+      "fileSize": 66684,
       "bodyWordCount": 1826,
-      "metaTitle": "Bareback vs Condom Gay Porn: What's the Difference and Which Sites Do Each Best?",
+      "metaTitle": "Bareback vs Condom Gay Porn: Differences & Best Sites",
       "metaDescription": "The bareback vs condom shift in gay porn since the mid-2010s, performer testing practices, and the top sites for each format in 2026.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "LONG_TITLE"
-      ]
+      "flags": []
     },
     {
       "route": "/blog/best-gay-porn-sites-2026-top-10",
       "pageType": "blog",
-      "fileSize": 71774,
+      "fileSize": 71649,
       "bodyWordCount": 1771,
-      "metaTitle": "The Best Gay Porn Sites of 2026: Our Top 10 Picks Across Every Category",
+      "metaTitle": "Best Gay Porn Sites 2026: Top 10 Across Categories",
       "metaDescription": "The 10 best gay porn sites of 2026 ranked across every category. Verified pricing, real scores, paid memberships only — no commission-rigged rankings.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "LONG_TITLE"
-      ]
+      "flags": []
     },
     {
       "route": "/blog/category/comparisons",
-      "pageType": "blog",
-      "fileSize": 22111,
-      "bodyWordCount": 301,
-      "metaTitle": "Comparisons — TwinkVault Blog",
-      "metaDescription": "Head-to-head and category roundups. Browse all comparisons articles from TwinkVault Editorial — guides, comparisons, pricing analysis, and industry coverage.",
+      "pageType": "landing",
+      "fileSize": 22038,
+      "bodyWordCount": 290,
+      "metaTitle": "Comparisons — Gay Porn Site Articles | TwinkVault Blog",
+      "metaDescription": "Head-to-head and category roundups. Every comparisons article on TwinkVault — analysis, comparisons, and editorial coverage.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
       "flags": [
-        "THIN_BLOG",
-        "THIN_TITLE"
+        "THIN_LANDING"
       ]
     },
     {
       "route": "/blog/category/guides",
-      "pageType": "blog",
-      "fileSize": 23935,
-      "bodyWordCount": 367,
-      "metaTitle": "Guides — TwinkVault Blog",
-      "metaDescription": "How-to articles, primers, and decision frameworks. Browse all guides articles from TwinkVault Editorial — guides, comparisons, pricing analysis, and industry coverage.",
+      "pageType": "landing",
+      "fileSize": 23857,
+      "bodyWordCount": 355,
+      "metaTitle": "Guides — Gay Porn Site Articles | TwinkVault Blog",
+      "metaDescription": "How-to articles, primers, and decision frameworks. Every guides article on TwinkVault — analysis, comparisons, and editorial coverage.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
       "flags": [
-        "THIN_BLOG",
-        "THIN_TITLE",
-        "LONG_DESC"
+        "THIN_LANDING"
       ]
     },
     {
       "route": "/blog/category/industry",
-      "pageType": "blog",
-      "fileSize": 18574,
+      "pageType": "landing",
+      "fileSize": 18550,
       "bodyWordCount": 226,
-      "metaTitle": "Industry — TwinkVault Blog",
-      "metaDescription": "Production trends, studio shifts, and analysis. Browse all industry articles from TwinkVault Editorial — guides, comparisons, pricing analysis, and industry coverage.",
+      "metaTitle": "Industry — Gay Porn Site Articles | TwinkVault Blog",
+      "metaDescription": "Production trends, studio shifts, and analysis. Every industry article on TwinkVault — analysis, comparisons, and editorial coverage.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
       "flags": [
-        "THIN_BLOG",
-        "THIN_TITLE",
-        "LONG_DESC"
+        "THIN_LANDING"
       ]
     },
     {
       "route": "/blog/category/money",
-      "pageType": "blog",
+      "pageType": "landing",
       "fileSize": 20430,
       "bodyWordCount": 270,
-      "metaTitle": "Pricing & Value — TwinkVault Blog",
-      "metaDescription": "What gay porn sites actually cost and what's worth paying for. Browse all pricing & value articles from TwinkVault Editorial — guides, comparisons, pricing analysis, and industry coverage.",
+      "metaTitle": "Pricing & Value — Gay Porn Site Articles | TwinkVault Blog",
+      "metaDescription": "What gay porn sites actually cost and what's worth paying for. Every pricing & value article on TwinkVault — analysis, comparisons, and editorial coverage.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
       "flags": [
-        "THIN_BLOG",
-        "LONG_DESC"
+        "THIN_LANDING"
       ]
     },
     {
       "route": "/blog/gay-porn-free-trials-explained",
       "pageType": "blog",
-      "fileSize": 59256,
+      "fileSize": 59107,
       "bodyWordCount": 1480,
-      "metaTitle": "Are Gay Porn Site Free Trials Actually Free? What to Know Before You Sign Up",
+      "metaTitle": "Are Gay Porn Site Free Trials Actually Free? | TwinkVault",
       "metaDescription": "Most 'free trial' gay porn sites aren't actually free. Here's how trial offers really work, what they include, and which sites have trials worth using in 2026.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "LONG_TITLE"
-      ]
+      "flags": []
     },
     {
       "route": "/blog/how-much-to-pay-for-gay-porn-subscription",
@@ -577,14 +540,16 @@
     {
       "route": "/blog",
       "pageType": "landing",
-      "fileSize": 29912,
-      "bodyWordCount": 512,
+      "fileSize": 29821,
+      "bodyWordCount": 489,
       "metaTitle": "TwinkVault Blog — Guides, Comparisons & Industry Analysis",
       "metaDescription": "Editorial coverage of gay porn sites — buyer guides, head-to-head comparisons, pricing analysis, and industry trends from the TwinkVault editorial team.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": []
+      "flags": [
+        "THIN_LANDING"
+      ]
     },
     {
       "route": "/blog/spot-quality-twink-porn-site",
@@ -601,16 +566,14 @@
     {
       "route": "/blog/studio-vs-amateur-gay-porn",
       "pageType": "blog",
-      "fileSize": 65626,
+      "fileSize": 65496,
       "bodyWordCount": 1673,
-      "metaTitle": "Studio Sites vs Amateur Sites: Which Type of Gay Porn Is Right for You?",
+      "metaTitle": "Studio Sites vs Amateur Gay Porn: Which Is Right?",
       "metaDescription": "Studio gay porn sites vs amateur sites — the production differences, performer roster contrasts, pricing, and which format fits which kind of viewer.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "LONG_TITLE"
-      ]
+      "flags": []
     },
     {
       "route": "/category/amateur-twinks",
@@ -2199,16 +2162,15 @@
     {
       "route": "/compare",
       "pageType": "landing",
-      "fileSize": 31928,
+      "fileSize": 32135,
       "bodyWordCount": 413,
       "metaTitle": "Compare Twink Sites — Side by Side | TwinkVault",
-      "metaDescription": "Compare the best twink content sites side by side. See scores, prices, and features at a glance.",
+      "metaDescription": "Compare the best twink content sites of 2026 side by side. See scores, prices, library size, and features at a glance — pick any two sites for a full head-to-head.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": true,
       "flags": [
-        "THIN_LANDING",
-        "THIN_DESC"
+        "THIN_LANDING"
       ]
     },
     {
@@ -2994,25 +2956,22 @@
     {
       "route": "/contact",
       "pageType": "utility",
-      "fileSize": 21144,
+      "fileSize": 21447,
       "bodyWordCount": 254,
-      "metaTitle": "Contact TwinkVault",
-      "metaDescription": "Get in touch with the TwinkVault team. Questions, corrections, or partnership inquiries.",
+      "metaTitle": "Contact TwinkVault — Questions & Corrections",
+      "metaDescription": "Get in touch with the TwinkVault team. Editorial questions, score corrections, fact-check feedback, partnership inquiries, and DMCA requests all routed here.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_TITLE",
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/alternadudes",
       "pageType": "discount",
-      "fileSize": 60025,
+      "fileSize": 60115,
       "bodyWordCount": 731,
       "metaTitle": "AlternaDudes: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get AlternaDudes for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get AlternaDudes for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3021,10 +2980,10 @@
     {
       "route": "/discount/athletic-twinks",
       "pageType": "discount",
-      "fileSize": 60104,
+      "fileSize": 60194,
       "bodyWordCount": 747,
       "metaTitle": "Athletic Twinks: 40% Off (2026) | TwinkVault",
-      "metaDescription": "Get Athletic Twinks for $9.95/mo with our verified 40% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Athletic Twinks for $9.95/mo with our verified 40% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3033,10 +2992,10 @@
     {
       "route": "/discount/aussiesdoit",
       "pageType": "discount",
-      "fileSize": 60074,
+      "fileSize": 60164,
       "bodyWordCount": 786,
       "metaTitle": "Aussies Do It: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Aussies Do It for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Aussies Do It for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3045,10 +3004,10 @@
     {
       "route": "/discount/bareback-that-hole",
       "pageType": "discount",
-      "fileSize": 59993,
+      "fileSize": 60083,
       "bodyWordCount": 766,
       "metaTitle": "Bareback That Hole: 45% Off (2026) | TwinkVault",
-      "metaDescription": "Get Bareback That Hole for $9.95/mo with our verified 45% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Bareback That Hole for $9.95/mo with our verified 45% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3057,10 +3016,10 @@
     {
       "route": "/discount/barebackcumpigs",
       "pageType": "discount",
-      "fileSize": 60293,
+      "fileSize": 60383,
       "bodyWordCount": 787,
       "metaTitle": "Bareback Cum Pigs: 50% Off (2026) | TwinkVault",
-      "metaDescription": "Get Bareback Cum Pigs for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Bareback Cum Pigs for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3069,10 +3028,10 @@
     {
       "route": "/discount/barebackrtxxx",
       "pageType": "discount",
-      "fileSize": 60144,
+      "fileSize": 60234,
       "bodyWordCount": 781,
       "metaTitle": "Bareback RT XXX: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Bareback RT XXX for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Bareback RT XXX for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3081,10 +3040,10 @@
     {
       "route": "/discount/bearchubs",
       "pageType": "discount",
-      "fileSize": 59959,
+      "fileSize": 60049,
       "bodyWordCount": 768,
       "metaTitle": "Bear Chubs: 50% Off (2026) | TwinkVault",
-      "metaDescription": "Get Bear Chubs for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Bear Chubs for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3093,10 +3052,10 @@
     {
       "route": "/discount/bearfilms",
       "pageType": "discount",
-      "fileSize": 59968,
+      "fileSize": 60058,
       "bodyWordCount": 771,
       "metaTitle": "Bear Films: 50% Off (2026) | TwinkVault",
-      "metaDescription": "Get Bear Films for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Bear Films for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3105,38 +3064,34 @@
     {
       "route": "/discount/biempire",
       "pageType": "discount",
-      "fileSize": 60055,
+      "fileSize": 60145,
       "bodyWordCount": 765,
       "metaTitle": "BiEmpire: 63% Off (2026) | TwinkVault",
-      "metaDescription": "Get BiEmpire for $7.49/mo with our verified 63% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get BiEmpire for $7.49/mo with our verified 63% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/bigstr",
       "pageType": "discount",
-      "fileSize": 59657,
+      "fileSize": 59747,
       "bodyWordCount": 749,
       "metaTitle": "BigStr: 25% Off (2026) | TwinkVault",
-      "metaDescription": "Get BigStr for $7.47/mo with our verified 25% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get BigStr for $7.47/mo with our verified 25% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/black-male-me",
       "pageType": "discount",
-      "fileSize": 60333,
+      "fileSize": 60423,
       "bodyWordCount": 813,
       "metaTitle": "Black Male Me: 72% Off (2026) | TwinkVault",
-      "metaDescription": "Get Black Male Me for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Black Male Me for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3145,24 +3100,22 @@
     {
       "route": "/discount/boyfun",
       "pageType": "discount",
-      "fileSize": 59808,
+      "fileSize": 59898,
       "bodyWordCount": 743,
       "metaTitle": "BoyFun: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get BoyFun for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get BoyFun for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/boysatcamp",
       "pageType": "discount",
-      "fileSize": 60009,
+      "fileSize": 60099,
       "bodyWordCount": 782,
       "metaTitle": "Boys at Camp: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Boys at Camp for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Boys at Camp for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3171,10 +3124,10 @@
     {
       "route": "/discount/breed-me-raw",
       "pageType": "discount",
-      "fileSize": 59964,
+      "fileSize": 60054,
       "bodyWordCount": 779,
       "metaTitle": "Breed Me Raw: 40% Off (2026) | TwinkVault",
-      "metaDescription": "Get Breed Me Raw for $9.95/mo with our verified 40% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Breed Me Raw for $9.95/mo with our verified 40% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3183,10 +3136,10 @@
     {
       "route": "/discount/brothercrush",
       "pageType": "discount",
-      "fileSize": 60056,
+      "fileSize": 60146,
       "bodyWordCount": 752,
       "metaTitle": "Brother Crush: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Brother Crush for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Brother Crush for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3195,10 +3148,10 @@
     {
       "route": "/discount/bullyhim",
       "pageType": "discount",
-      "fileSize": 59869,
+      "fileSize": 59959,
       "bodyWordCount": 751,
       "metaTitle": "Bully Him: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Bully Him for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Bully Him for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3207,10 +3160,10 @@
     {
       "route": "/discount/cumpigmen",
       "pageType": "discount",
-      "fileSize": 59966,
+      "fileSize": 60056,
       "bodyWordCount": 781,
       "metaTitle": "Cum Pig Men: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Cum Pig Men for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Cum Pig Men for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3219,10 +3172,10 @@
     {
       "route": "/discount/dadcreep",
       "pageType": "discount",
-      "fileSize": 59873,
+      "fileSize": 59963,
       "bodyWordCount": 759,
       "metaTitle": "Dad Creep: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Dad Creep for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Dad Creep for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3231,10 +3184,10 @@
     {
       "route": "/discount/daddy-on-twink",
       "pageType": "discount",
-      "fileSize": 59834,
+      "fileSize": 59924,
       "bodyWordCount": 771,
       "metaTitle": "Daddy on Twink: 45% Off (2026) | TwinkVault",
-      "metaDescription": "Get Daddy on Twink for $9.95/mo with our verified 45% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Daddy on Twink for $9.95/mo with our verified 45% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3243,10 +3196,10 @@
     {
       "route": "/discount/dirtyboyvideo",
       "pageType": "discount",
-      "fileSize": 60063,
+      "fileSize": 60153,
       "bodyWordCount": 730,
       "metaTitle": "DirtyBoyVideo: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get DirtyBoyVideo for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get DirtyBoyVideo for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3255,24 +3208,22 @@
     {
       "route": "/discount/dudesraw",
       "pageType": "discount",
-      "fileSize": 59840,
+      "fileSize": 59930,
       "bodyWordCount": 731,
       "metaTitle": "DudesRaw: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get DudesRaw for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get DudesRaw for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/familydick",
       "pageType": "discount",
-      "fileSize": 59945,
+      "fileSize": 60035,
       "bodyWordCount": 758,
       "metaTitle": "Family Dick: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Family Dick for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Family Dick for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3281,10 +3232,10 @@
     {
       "route": "/discount/gayasiannetwork",
       "pageType": "discount",
-      "fileSize": 60244,
+      "fileSize": 60334,
       "bodyWordCount": 743,
       "metaTitle": "GayAsianNetwork: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get GayAsianNetwork for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get GayAsianNetwork for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3293,24 +3244,22 @@
     {
       "route": "/discount/gaywire",
       "pageType": "discount",
-      "fileSize": 60051,
+      "fileSize": 60141,
       "bodyWordCount": 785,
       "metaTitle": "Gay Wire: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Gay Wire for $9.99/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Gay Wire for $9.99/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/guy-selector",
       "pageType": "discount",
-      "fileSize": 59976,
+      "fileSize": 60066,
       "bodyWordCount": 770,
       "metaTitle": "Guy Selector: 60% Off (2026) | TwinkVault",
-      "metaDescription": "Get Guy Selector for $7.99/mo with our verified 60% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Guy Selector for $7.99/mo with our verified 60% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3319,10 +3268,10 @@
     {
       "route": "/discount/hairyandraw",
       "pageType": "discount",
-      "fileSize": 60065,
+      "fileSize": 60155,
       "bodyWordCount": 792,
       "metaTitle": "Hairy and Raw: 50% Off (2026) | TwinkVault",
-      "metaDescription": "Get Hairy and Raw for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Hairy and Raw for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3331,10 +3280,10 @@
     {
       "route": "/discount/hard-brit-lads",
       "pageType": "discount",
-      "fileSize": 60031,
+      "fileSize": 60121,
       "bodyWordCount": 771,
       "metaTitle": "Hard Brit Lads: 40% Off (2026) | TwinkVault",
-      "metaDescription": "Get Hard Brit Lads for $9.95/mo with our verified 40% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Hard Brit Lads for $9.95/mo with our verified 40% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3343,10 +3292,10 @@
     {
       "route": "/discount/helix-studios",
       "pageType": "discount",
-      "fileSize": 60074,
+      "fileSize": 60164,
       "bodyWordCount": 749,
       "metaTitle": "Helix Studios: 66% Off (2026) | TwinkVault",
-      "metaDescription": "Get Helix Studios for $11.99/mo with our verified 66% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Helix Studios for $11.99/mo with our verified 66% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3355,10 +3304,10 @@
     {
       "route": "/discount/hiroyaxxx",
       "pageType": "discount",
-      "fileSize": 59883,
+      "fileSize": 59973,
       "bodyWordCount": 733,
       "metaTitle": "HiroyaXXX: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get HiroyaXXX for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get HiroyaXXX for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3367,10 +3316,10 @@
     {
       "route": "/discount/icon-male",
       "pageType": "discount",
-      "fileSize": 60107,
+      "fileSize": 60197,
       "bodyWordCount": 789,
       "metaTitle": "Icon Male: 72% Off (2026) | TwinkVault",
-      "metaDescription": "Get Icon Male for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Icon Male for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3379,10 +3328,10 @@
     {
       "route": "/discount/japanboyz",
       "pageType": "discount",
-      "fileSize": 59880,
+      "fileSize": 59970,
       "bodyWordCount": 734,
       "metaTitle": "Japanboyz: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Japanboyz for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Japanboyz for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3391,24 +3340,22 @@
     {
       "route": "/discount/jawked",
       "pageType": "discount",
-      "fileSize": 59751,
+      "fileSize": 59841,
       "bodyWordCount": 738,
       "metaTitle": "Jawked: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Jawked for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Jawked for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/latinleche",
       "pageType": "discount",
-      "fileSize": 60002,
+      "fileSize": 60092,
       "bodyWordCount": 758,
       "metaTitle": "Latin Leche: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Latin Leche for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Latin Leche for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3417,10 +3364,10 @@
     {
       "route": "/discount/maleaccess",
       "pageType": "discount",
-      "fileSize": 60174,
+      "fileSize": 60264,
       "bodyWordCount": 784,
       "metaTitle": "MaleAccess: 47% Off (2026) | TwinkVault",
-      "metaDescription": "Get MaleAccess for $7.99/mo with our verified 47% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get MaleAccess for $7.99/mo with our verified 47% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3429,24 +3376,22 @@
     {
       "route": "/discount/men",
       "pageType": "discount",
-      "fileSize": 60060,
+      "fileSize": 60150,
       "bodyWordCount": 768,
       "metaTitle": "Men.com: 72% Off (2026) | TwinkVault",
-      "metaDescription": "Get Men.com for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Men.com for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/militarydick",
       "pageType": "discount",
-      "fileSize": 60072,
+      "fileSize": 60162,
       "bodyWordCount": 756,
       "metaTitle": "Military Dick: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Military Dick for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Military Dick for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3455,10 +3400,10 @@
     {
       "route": "/discount/missionaryboys",
       "pageType": "discount",
-      "fileSize": 60219,
+      "fileSize": 60309,
       "bodyWordCount": 763,
       "metaTitle": "Missionary Boys: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Missionary Boys for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Missionary Boys for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3467,10 +3412,10 @@
     {
       "route": "/discount/nakedsword",
       "pageType": "discount",
-      "fileSize": 59920,
+      "fileSize": 60010,
       "bodyWordCount": 727,
       "metaTitle": "NakedSword: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get NakedSword for $9.99/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get NakedSword for $9.99/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3479,10 +3424,10 @@
     {
       "route": "/discount/next-door-twink",
       "pageType": "discount",
-      "fileSize": 58846,
+      "fileSize": 58936,
       "bodyWordCount": 768,
       "metaTitle": "Next Door Twink: 56% Off (2026) | TwinkVault",
-      "metaDescription": "Get Next Door Twink for $10.95/mo with our verified 56% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Next Door Twink for $10.95/mo with our verified 56% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3491,10 +3436,10 @@
     {
       "route": "/discount/next-door-world",
       "pageType": "discount",
-      "fileSize": 58845,
+      "fileSize": 58935,
       "bodyWordCount": 768,
       "metaTitle": "Next Door World: 56% Off (2026) | TwinkVault",
-      "metaDescription": "Get Next Door World for $10.95/mo with our verified 56% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Next Door World for $10.95/mo with our verified 56% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3503,10 +3448,10 @@
     {
       "route": "/discount/noirmale",
       "pageType": "discount",
-      "fileSize": 60131,
+      "fileSize": 60221,
       "bodyWordCount": 764,
       "metaTitle": "NoirMale: 60% Off (2026) | TwinkVault",
-      "metaDescription": "Get NoirMale for $11.99/mo with our verified 60% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get NoirMale for $11.99/mo with our verified 60% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3515,10 +3460,10 @@
     {
       "route": "/discount/peterfever",
       "pageType": "discount",
-      "fileSize": 60021,
+      "fileSize": 60111,
       "bodyWordCount": 749,
       "metaTitle": "PeterFever: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get PeterFever for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get PeterFever for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3527,10 +3472,10 @@
     {
       "route": "/discount/prideflame",
       "pageType": "discount",
-      "fileSize": 58247,
+      "fileSize": 58337,
       "bodyWordCount": 698,
       "metaTitle": "Prideflame: 35% Off (2026) | TwinkVault",
-      "metaDescription": "Get Prideflame for $9.95/mo with our verified 35% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Prideflame for $9.95/mo with our verified 35% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3539,24 +3484,22 @@
     {
       "route": "/discount/rawhole",
       "pageType": "discount",
-      "fileSize": 59834,
+      "fileSize": 59924,
       "bodyWordCount": 738,
       "metaTitle": "RawHole: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get RawHole for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get RawHole for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/reality-dudes",
       "pageType": "discount",
-      "fileSize": 60389,
+      "fileSize": 60479,
       "bodyWordCount": 793,
       "metaTitle": "Reality Dudes: 72% Off (2026) | TwinkVault",
-      "metaDescription": "Get Reality Dudes for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Reality Dudes for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3565,10 +3508,10 @@
     {
       "route": "/discount/realmenfuck",
       "pageType": "discount",
-      "fileSize": 60021,
+      "fileSize": 60111,
       "bodyWordCount": 772,
       "metaTitle": "Real Men Fuck: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Real Men Fuck for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Real Men Fuck for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3577,10 +3520,10 @@
     {
       "route": "/discount/sayuncle",
       "pageType": "discount",
-      "fileSize": 59981,
+      "fileSize": 60071,
       "bodyWordCount": 784,
       "metaTitle": "Say Uncle: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Say Uncle for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Say Uncle for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3589,10 +3532,10 @@
     {
       "route": "/discount/sean-cody",
       "pageType": "discount",
-      "fileSize": 60106,
+      "fileSize": 60196,
       "bodyWordCount": 789,
       "metaTitle": "Sean Cody: 75% Off (2026) | TwinkVault",
-      "metaDescription": "Get Sean Cody for $7.49/mo with our verified 75% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Sean Cody for $7.49/mo with our verified 75% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3601,10 +3544,10 @@
     {
       "route": "/discount/sexjapantv",
       "pageType": "discount",
-      "fileSize": 59911,
+      "fileSize": 60001,
       "bodyWordCount": 732,
       "metaTitle": "SexJapanTV: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get SexJapanTV for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get SexJapanTV for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3613,10 +3556,10 @@
     {
       "route": "/discount/southern-strokes",
       "pageType": "discount",
-      "fileSize": 60132,
+      "fileSize": 60222,
       "bodyWordCount": 749,
       "metaTitle": "Southern Strokes: 55% Off (2026) | TwinkVault",
-      "metaDescription": "Get Southern Strokes for $9.95/mo with our verified 55% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Southern Strokes for $9.95/mo with our verified 55% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3625,10 +3568,10 @@
     {
       "route": "/discount/spicevidsgay",
       "pageType": "discount",
-      "fileSize": 60254,
+      "fileSize": 60344,
       "bodyWordCount": 763,
       "metaTitle": "SpiceVidsGay: 45% Off (2026) | TwinkVault",
-      "metaDescription": "Get SpiceVidsGay for $5.49/mo with our verified 45% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get SpiceVidsGay for $5.49/mo with our verified 45% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3637,10 +3580,10 @@
     {
       "route": "/discount/squirtstudios",
       "pageType": "discount",
-      "fileSize": 60077,
+      "fileSize": 60167,
       "bodyWordCount": 750,
       "metaTitle": "Squirt Studios: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Squirt Studios for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Squirt Studios for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3649,10 +3592,10 @@
     {
       "route": "/discount/swinginballs",
       "pageType": "discount",
-      "fileSize": 60034,
+      "fileSize": 60124,
       "bodyWordCount": 754,
       "metaTitle": "Swingin Balls: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Swingin Balls for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Swingin Balls for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3661,10 +3604,10 @@
     {
       "route": "/discount/tla-gay-unlimited",
       "pageType": "discount",
-      "fileSize": 58602,
+      "fileSize": 58674,
       "bodyWordCount": 729,
       "metaTitle": "TLA Gay Unlimited Discount Code 2026 | TwinkVault",
-      "metaDescription": "Looking for a TLA Gay Unlimited discount code? Get the lowest verified TLA Gay Unlimited membership price. Updated May 2026 — read pricing.",
+      "metaDescription": "Looking for a TLA Gay Unlimited discount code? Get the lowest verified TLA Gay Unlimited membership price. Updated May 2026 — read pricing tiers and value verdict.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3673,10 +3616,10 @@
     {
       "route": "/discount/touch-that-boy",
       "pageType": "discount",
-      "fileSize": 59831,
+      "fileSize": 59921,
       "bodyWordCount": 773,
       "metaTitle": "Touch That Boy: 35% Off (2026) | TwinkVault",
-      "metaDescription": "Get Touch That Boy for $9.95/mo with our verified 35% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Touch That Boy for $9.95/mo with our verified 35% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3685,10 +3628,10 @@
     {
       "route": "/discount/trailertrashboys",
       "pageType": "discount",
-      "fileSize": 60236,
+      "fileSize": 60326,
       "bodyWordCount": 728,
       "metaTitle": "TrailerTrashBoys: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get TrailerTrashBoys for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get TrailerTrashBoys for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3697,24 +3640,22 @@
     {
       "route": "/discount/twinkpop",
       "pageType": "discount",
-      "fileSize": 59988,
+      "fileSize": 60078,
       "bodyWordCount": 753,
       "metaTitle": "Twinkpop: 72% Off (2026) | TwinkVault",
-      "metaDescription": "Get Twinkpop for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Twinkpop for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/twinks-in-shorts",
       "pageType": "discount",
-      "fileSize": 60301,
+      "fileSize": 60391,
       "bodyWordCount": 767,
       "metaTitle": "Twinks in Shorts: 50% Off (2026) | TwinkVault",
-      "metaDescription": "Get Twinks in Shorts for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Twinks in Shorts for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3723,10 +3664,10 @@
     {
       "route": "/discount/twinktrade",
       "pageType": "discount",
-      "fileSize": 59925,
+      "fileSize": 60015,
       "bodyWordCount": 729,
       "metaTitle": "TwinkTrade: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get TwinkTrade for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get TwinkTrade for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3735,10 +3676,10 @@
     {
       "route": "/discount/visionx-flix",
       "pageType": "discount",
-      "fileSize": 58327,
+      "fileSize": 58399,
       "bodyWordCount": 701,
       "metaTitle": "VisionX Flix Discount Code 2026 | TwinkVault",
-      "metaDescription": "Looking for a VisionX Flix discount code? Get the lowest verified VisionX Flix membership price. Updated May 2026 — read pricing.",
+      "metaDescription": "Looking for a VisionX Flix discount code? Get the lowest verified VisionX Flix membership price. Updated May 2026 — read pricing tiers and value verdict.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3747,24 +3688,22 @@
     {
       "route": "/discount/wuboyz",
       "pageType": "discount",
-      "fileSize": 59706,
+      "fileSize": 59796,
       "bodyWordCount": 730,
       "metaTitle": "WuBoyz: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get WuBoyz for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get WuBoyz for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/discount/yesfather",
       "pageType": "discount",
-      "fileSize": 59920,
+      "fileSize": 60010,
       "bodyWordCount": 759,
       "metaTitle": "Yes Father: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Yes Father for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Yes Father for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3773,10 +3712,10 @@
     {
       "route": "/discount/yoshikawasakixxx",
       "pageType": "discount",
-      "fileSize": 60365,
+      "fileSize": 60455,
       "bodyWordCount": 800,
       "metaTitle": "Yoshi Kawasaki XXX: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Yoshi Kawasaki XXX for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Yoshi Kawasaki XXX for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3785,10 +3724,10 @@
     {
       "route": "/discount/youngperps",
       "pageType": "discount",
-      "fileSize": 59955,
+      "fileSize": 60045,
       "bodyWordCount": 753,
       "metaTitle": "Young Perps: 67% Off (2026) | TwinkVault",
-      "metaDescription": "Get Young Perps for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest price.",
+      "metaDescription": "Get Young Perps for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
       "hasReviewSchema": false,
       "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
@@ -3797,16 +3736,14 @@
     {
       "route": "/find-my-site",
       "pageType": "utility",
-      "fileSize": 18751,
+      "fileSize": 18985,
       "bodyWordCount": 231,
       "metaTitle": "Find Your Perfect Twink Site — Quiz | TwinkVault",
-      "metaDescription": "Take our 30-second quiz and we'll recommend the best twink content site for you.",
+      "metaDescription": "Take our 30-second quiz — niche, budget, must-haves — and we'll recommend the best twink content site for you. Based on real scores from paid memberships.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/free-trial-twink-sites",
@@ -3823,45 +3760,38 @@
     {
       "route": "/gay-dating-sites",
       "pageType": "utility",
-      "fileSize": 27223,
+      "fileSize": 27346,
       "bodyWordCount": 643,
       "metaTitle": "Best Gay Dating Sites 2026 — Find Men Near You | TwinkVault",
-      "metaDescription": "Find the best gay dating and hookup sites in 2026. Meet gay men near you — compare options, read reviews, and connect.",
+      "metaDescription": "The best gay dating and hookup sites in 2026. Compare options and read honest reviews — broken out by serious dating, casual hookups, and travel-friendly apps.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/gay-porn-site-reviews",
       "pageType": "other",
-      "fileSize": 694656,
+      "fileSize": 694695,
       "bodyWordCount": 888,
-      "metaTitle": "Gay Porn Site Reviews — 62 Sites Tested & Scored (2026) | TwinkVault",
-      "metaDescription": "Honest reviews of 62 gay porn sites — paid memberships only, scored on content quality, value, updates, and mobile UX. Browse by niche.",
+      "metaTitle": "Gay Porn Site Reviews — 62 Sites Scored | TwinkVault",
+      "metaDescription": "Honest reviews of 62 gay porn sites in 2026 — paid memberships only, scored on content quality, value, updates, and mobile UX. Browse the catalog by niche or score.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "LONG_TITLE"
-      ]
+      "flags": []
     },
     {
       "route": "/gay-porn-sites-ranked",
       "pageType": "other",
-      "fileSize": 118650,
+      "fileSize": 118731,
       "bodyWordCount": 531,
-      "metaTitle": "Gay Porn Sites Ranked — 62 Sites Scored on 4 Criteria (2026) | TwinkVault",
-      "metaDescription": "All 62 gay porn sites in our database in one sortable table — content quality, value, updates, mobile, and price.",
+      "metaTitle": "Gay Porn Sites Ranked (2026) — Sortable Table | TwinkVault",
+      "metaDescription": "All 62 gay porn sites in our database in one sortable table — content quality, value, updates, mobile, and price comparable at a glance. Refreshed monthly.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "LONG_TITLE",
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/gay-porn-sites-with-free-trial",
@@ -3890,189 +3820,163 @@
     {
       "route": "/",
       "pageType": "homepage",
-      "fileSize": 86088,
+      "fileSize": 86196,
       "bodyWordCount": 649,
       "metaTitle": "TwinkVault — Best Gay Twink Sites 2026 Ranked & Reviewed",
-      "metaDescription": "Honest reviews of the best gay twink sites, ranked by quality and value. Real scores, real pricing, updated 2026.",
+      "metaDescription": "Honest reviews of the best gay twink sites — ranked by content quality, value, updates, and mobile UX. Real scores, real pricing, updated 2026.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/is-athletic-twinks-worth-it",
       "pageType": "other",
-      "fileSize": 31850,
+      "fileSize": 31880,
       "bodyWordCount": 380,
       "metaTitle": "Is Athletic Twinks Worth It? (2026 Review) | TwinkVault",
-      "metaDescription": "Honest answer to ",
+      "metaDescription": "Honest answer to \"is Athletic Twinks worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/is-helix-studios-worth-it",
       "pageType": "other",
-      "fileSize": 32478,
+      "fileSize": 32508,
       "bodyWordCount": 400,
       "metaTitle": "Is Helix Studios Worth It? (2026 Review) | TwinkVault",
-      "metaDescription": "Honest answer to ",
+      "metaDescription": "Honest answer to \"is Helix Studios worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/is-men-worth-it",
       "pageType": "other",
-      "fileSize": 32670,
+      "fileSize": 32700,
       "bodyWordCount": 438,
       "metaTitle": "Is Men.com Worth It? (2026 Review) | TwinkVault",
-      "metaDescription": "Honest answer to ",
+      "metaDescription": "Honest answer to \"is Men.com worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/is-nakedsword-worth-it",
       "pageType": "other",
-      "fileSize": 32255,
+      "fileSize": 32285,
       "bodyWordCount": 389,
       "metaTitle": "Is NakedSword Worth It? (2026 Review) | TwinkVault",
-      "metaDescription": "Honest answer to ",
+      "metaDescription": "Honest answer to \"is NakedSword worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/is-peterfever-worth-it",
       "pageType": "other",
-      "fileSize": 32237,
+      "fileSize": 32267,
       "bodyWordCount": 395,
       "metaTitle": "Is PeterFever Worth It? (2026 Review) | TwinkVault",
-      "metaDescription": "Honest answer to ",
+      "metaDescription": "Honest answer to \"is PeterFever worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/is-rawhole-worth-it",
       "pageType": "other",
-      "fileSize": 32174,
+      "fileSize": 32204,
       "bodyWordCount": 393,
       "metaTitle": "Is RawHole Worth It? (2026 Review) | TwinkVault",
-      "metaDescription": "Honest answer to ",
+      "metaDescription": "Honest answer to \"is RawHole worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/is-sayuncle-worth-it",
       "pageType": "other",
-      "fileSize": 32289,
+      "fileSize": 32319,
       "bodyWordCount": 422,
       "metaTitle": "Is SayUncle Worth It? (2026 Review) | TwinkVault",
-      "metaDescription": "Honest answer to ",
+      "metaDescription": "Honest answer to \"is SayUncle worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/is-sean-cody-worth-it",
       "pageType": "other",
-      "fileSize": 32707,
+      "fileSize": 32737,
       "bodyWordCount": 445,
       "metaTitle": "Is Sean Cody Worth It? (2026 Review) | TwinkVault",
-      "metaDescription": "Honest answer to ",
+      "metaDescription": "Honest answer to \"is Sean Cody worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/is-southern-strokes-worth-it",
       "pageType": "other",
-      "fileSize": 31921,
+      "fileSize": 31951,
       "bodyWordCount": 390,
       "metaTitle": "Is Southern Strokes Worth It? (2026 Review) | TwinkVault",
-      "metaDescription": "Honest answer to ",
+      "metaDescription": "Honest answer to \"is Southern Strokes worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/is-twinks-in-shorts-worth-it",
       "pageType": "other",
-      "fileSize": 31883,
+      "fileSize": 31913,
       "bodyWordCount": 384,
       "metaTitle": "Is Twinks in Shorts Worth It? (2026 Review) | TwinkVault",
-      "metaDescription": "Honest answer to ",
+      "metaDescription": "Honest answer to \"is Twinks in Shorts worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/methodology",
       "pageType": "legal",
-      "fileSize": 34439,
+      "fileSize": 34550,
       "bodyWordCount": 1003,
       "metaTitle": "Review Methodology — How TwinkVault Scores Sites | TwinkVault",
-      "metaDescription": "How TwinkVault scores gay membership sites: four weighted pillars, transparent checks, monthly re-verification.",
+      "metaDescription": "How TwinkVault scores gay membership sites — four weighted pillars (content, value, updates, mobile), transparent checks, monthly re-verification.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/nakedsword-alternatives",
       "pageType": "other",
-      "fileSize": 57690,
+      "fileSize": 57837,
       "bodyWordCount": 783,
       "metaTitle": "NakedSword Alternatives (2026) | TwinkVault",
-      "metaDescription": "The 5 best alternatives to NakedSword — large-library multi-studio gay platforms ranked by content depth and value.",
+      "metaDescription": "The 5 best alternatives to NakedSword — large-library multi-studio gay platforms ranked by content depth, library size, pricing, and feature parity with NakedSword.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/niche/amateur",
       "pageType": "niche",
-      "fileSize": 180036,
+      "fileSize": 180048,
       "bodyWordCount": 1828,
       "metaTitle": "Best Amateur Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "The best amateur gay sites ranked. Real performers, authentic chemistry, no studio gloss — scored on quality and value across networks.",
@@ -4084,7 +3988,7 @@
     {
       "route": "/niche/asian",
       "pageType": "niche",
-      "fileSize": 53150,
+      "fileSize": 53162,
       "bodyWordCount": 705,
       "metaTitle": "Best Asian Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "The best Asian gay content sites ranked by quality and authenticity. Japanese, Thai, Chinese, and pan-Asian networks scored.",
@@ -4108,7 +4012,7 @@
     {
       "route": "/niche/bear",
       "pageType": "niche",
-      "fileSize": 41264,
+      "fileSize": 41276,
       "bodyWordCount": 613,
       "metaTitle": "Best Bear Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "The best gay bear content sites ranked. Hairy, mature, and cub performers from dedicated bear studios — scored on catalog depth and value.",
@@ -4120,7 +4024,7 @@
     {
       "route": "/niche/big-dick",
       "pageType": "niche",
-      "fileSize": 29240,
+      "fileSize": 29252,
       "bodyWordCount": 508,
       "metaTitle": "Best Big Dick Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "Big dick gay sites ranked by performer quality and content depth. Hung-focused content scored across studios and amateur networks.",
@@ -4132,7 +4036,7 @@
     {
       "route": "/niche/college",
       "pageType": "niche",
-      "fileSize": 43913,
+      "fileSize": 43925,
       "bodyWordCount": 642,
       "metaTitle": "Best College Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "College gay sites ranked by authenticity and content quality. Frat, dorm, and amateur college-age performers scored across networks.",
@@ -4144,7 +4048,7 @@
     {
       "route": "/niche/daddy",
       "pageType": "niche",
-      "fileSize": 53534,
+      "fileSize": 53546,
       "bodyWordCount": 709,
       "metaTitle": "Best Daddy Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "Daddy/son gay sites ranked by content quality and authentic chemistry. Mature-on-younger niche covered across studios and networks.",
@@ -4156,35 +4060,31 @@
     {
       "route": "/niche/fetish",
       "pageType": "niche",
-      "fileSize": 44482,
+      "fileSize": 44623,
       "bodyWordCount": 632,
       "metaTitle": "Best Fetish Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
-      "metaDescription": "Fetish gay sites ranked by depth across kink, leather, gear, and adjacent niches. Quality and authenticity scored.",
+      "metaDescription": "Fetish gay sites ranked by depth across kink, leather, gear, BDSM, and adjacent niches. Quality, authenticity, and update cadence scored across the category.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/niche/group",
       "pageType": "niche",
-      "fileSize": 63803,
+      "fileSize": 63929,
       "bodyWordCount": 804,
       "metaTitle": "Best Group Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
-      "metaDescription": "Gay sites with strong group, threesome, and orgy content ranked. Catalog depth and quality scored across networks.",
+      "metaDescription": "Gay sites with strong group, threesome, and orgy content ranked. Catalog depth, scene length, and production quality scored across studios and networks.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/niche/hairy",
       "pageType": "niche",
-      "fileSize": 41176,
+      "fileSize": 41188,
       "bodyWordCount": 605,
       "metaTitle": "Best Hairy Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "Hairy gay sites ranked. Body-hair-focused performers across bear, daddy, and amateur networks scored on quality and depth.",
@@ -4196,21 +4096,19 @@
     {
       "route": "/niche/interracial",
       "pageType": "niche",
-      "fileSize": 39855,
+      "fileSize": 40008,
       "bodyWordCount": 604,
       "metaTitle": "Best Interracial Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
-      "metaDescription": "Interracial gay sites ranked by performer diversity and content quality. Cross-ethnic networks scored honestly.",
+      "metaDescription": "Interracial gay sites ranked by performer diversity and content quality. Cross-ethnic networks scored honestly on catalog depth, production values, and value.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/niche/japanese",
       "pageType": "niche",
-      "fileSize": 41022,
+      "fileSize": 41034,
       "bodyWordCount": 601,
       "metaTitle": "Best Japanese Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "Japanese gay sites and JAV-style networks ranked. Authentic Japanese performers and content scored on quality and depth.",
@@ -4222,7 +4120,7 @@
     {
       "route": "/niche/jock",
       "pageType": "niche",
-      "fileSize": 48826,
+      "fileSize": 48838,
       "bodyWordCount": 657,
       "metaTitle": "Best Jock Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "Jock and athletic gay sites ranked by content quality. Locker room, gym, and athletic-aesthetic performers scored honestly.",
@@ -4234,7 +4132,7 @@
     {
       "route": "/niche/latin",
       "pageType": "niche",
-      "fileSize": 29222,
+      "fileSize": 29234,
       "bodyWordCount": 495,
       "metaTitle": "Best Latin Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "Latin gay sites ranked by content quality and authentic Latino performers. Brazilian, Colombian, Mexican, and pan-Latin networks scored honestly.",
@@ -4246,7 +4144,7 @@
     {
       "route": "/niche/military",
       "pageType": "niche",
-      "fileSize": 29274,
+      "fileSize": 29286,
       "bodyWordCount": 486,
       "metaTitle": "Best Military Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "Military-themed gay sites ranked. Uniformed performers, recruit roleplay, and ex-military content scored on quality and authenticity.",
@@ -4258,64 +4156,55 @@
     {
       "route": "/niche/muscle",
       "pageType": "niche",
-      "fileSize": 79088,
+      "fileSize": 79217,
       "bodyWordCount": 950,
       "metaTitle": "Best Muscle Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
-      "metaDescription": "Muscle gay sites ranked. Bodybuilder-aesthetic performers and gym-focused content scored on catalog depth and quality.",
+      "metaDescription": "Muscle gay sites ranked by content quality. Bodybuilder-aesthetic performers and gym-focused content scored on catalog depth, updates, and production polish.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/niche/smooth",
       "pageType": "niche",
-      "fileSize": 76837,
+      "fileSize": 76999,
       "bodyWordCount": 895,
       "metaTitle": "Best Smooth Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
-      "metaDescription": "Smooth gay sites ranked by quality. Twink and swimmer-aesthetic performers scored on catalog depth and pricing.",
+      "metaDescription": "Smooth gay sites ranked by quality. Twink and swimmer-aesthetic performers — hairless, lean physiques — scored on catalog depth, pricing, and update cadence.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/niche/solo",
       "pageType": "niche",
-      "fileSize": 33145,
+      "fileSize": 33298,
       "bodyWordCount": 530,
       "metaTitle": "Best Solo Male Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
-      "metaDescription": "Solo male gay sites ranked. Single-performer JO, cam, and self-shot content scored on quality and catalog depth.",
+      "metaDescription": "Solo male gay sites ranked by quality and depth. Single-performer JO, cam, and self-shot content scored on production polish, catalog size, and update cadence.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/niche/str8-curious",
       "pageType": "niche",
-      "fileSize": 92582,
+      "fileSize": 92669,
       "bodyWordCount": 1031,
-      "metaTitle": "Best Straight-Curious Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
-      "metaDescription": "Straight-curious and str8-bait gay sites ranked. First-time, reluctant, and roleplay content scored across networks.",
+      "metaTitle": "Best Straight-Curious Gay Sites Ranked 2026 | TwinkVault",
+      "metaDescription": "Straight-curious and str8-bait gay sites ranked. First-time, reluctant, and roleplay content scored across networks on chemistry, production quality, and value.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "LONG_TITLE",
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/niche/twink",
       "pageType": "niche",
-      "fileSize": 185601,
+      "fileSize": 185613,
       "bodyWordCount": 1840,
       "metaTitle": "Best Twink Sites — Ranked & Reviewed 2026 | TwinkVault",
       "metaDescription": "Every twink site we've tested, ranked by content quality, pricing, and updates. Slim, smooth performers from studio-polished to genuinely amateur.",
@@ -4327,30 +4216,27 @@
     {
       "route": "/niche/uncut",
       "pageType": "niche",
-      "fileSize": 32902,
+      "fileSize": 32995,
       "bodyWordCount": 529,
       "metaTitle": "Best Uncut Gay Sites — Ranked & Reviewed 2026 | TwinkVault",
-      "metaDescription": "Uncut gay sites ranked. European and international networks with uncircumcised performers scored on content quality.",
+      "metaDescription": "Uncut gay sites ranked. European and international networks with uncircumcised performers scored on content depth, value, and update frequency.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": true,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/privacy-policy",
       "pageType": "legal",
-      "fileSize": 24217,
+      "fileSize": 24541,
       "bodyWordCount": 815,
       "metaTitle": "Privacy Policy | TwinkVault",
-      "metaDescription": "TwinkVault's privacy policy. How we handle your data.",
+      "metaDescription": "TwinkVault's privacy policy: what data we collect, how we use it, cookie practices, third-party tracking, your data rights, and how to opt out. Updated for 2026.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
       "flags": [
-        "THIN_TITLE",
-        "THIN_DESC"
+        "THIN_TITLE"
       ]
     },
     {
@@ -4716,16 +4602,14 @@
     {
       "route": "/reviews",
       "pageType": "landing",
-      "fileSize": 379563,
+      "fileSize": 379779,
       "bodyWordCount": 1948,
       "metaTitle": "All Twink Site Reviews 2026 | TwinkVault",
-      "metaDescription": "Browse every twink site review on TwinkVault. Honest scores, pricing breakdowns, and pros/cons.",
+      "metaDescription": "Browse every twink site review on TwinkVault. Honest scores, pricing breakdowns, pros and cons after a paid membership — sortable by value, score, or update cadence.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/reviews/japanboyz",
@@ -5138,60 +5022,52 @@
     {
       "route": "/sean-cody-alternatives",
       "pageType": "other",
-      "fileSize": 57529,
+      "fileSize": 57631,
       "bodyWordCount": 792,
       "metaTitle": "Sean Cody Alternatives (2026) | TwinkVault",
-      "metaDescription": "The 5 best alternatives to Sean Cody — athletic, all-American, bareback gay sites ranked by similarity and value.",
+      "metaDescription": "The 5 best alternatives to Sean Cody — athletic, all-American, bareback gay sites ranked by similarity, content quality, value, and update cadence.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/sitemap",
       "pageType": "utility",
-      "fileSize": 401203,
+      "fileSize": 401428,
       "bodyWordCount": 10399,
-      "metaTitle": "Sitemap — TwinkVault",
-      "metaDescription": "Browse everything on TwinkVault. All reviews, categories, comparisons, and info pages.",
+      "metaTitle": "Sitemap — All TwinkVault Pages",
+      "metaDescription": "Every page on TwinkVault in one index — all reviews, niche categories, comparisons, deal pages, guides, and editorial coverage. Navigate the catalog.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_TITLE",
-        "THIN_DESC"
-      ]
+      "flags": []
     },
     {
       "route": "/terms",
       "pageType": "legal",
-      "fileSize": 22368,
+      "fileSize": 22665,
       "bodyWordCount": 713,
       "metaTitle": "Terms of Service | TwinkVault",
-      "metaDescription": "TwinkVault terms of service and conditions of use.",
+      "metaDescription": "TwinkVault terms of service: eligibility, acceptable use, intellectual property, disclaimers, liability limits, and dispute resolution. Updated 2026.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
       "flags": [
-        "THIN_TITLE",
-        "THIN_DESC"
+        "THIN_TITLE"
       ]
     },
     {
       "route": "/top-sites",
       "pageType": "landing",
-      "fileSize": 681956,
+      "fileSize": 682175,
       "bodyWordCount": 4242,
       "metaTitle": "Top Gay Twink Sites 2026 — Ranked & Reviewed | TwinkVault",
-      "metaDescription": "Our ranked list of the best gay twink sites. Real scores, real pricing, updated monthly.",
+      "metaDescription": "Our ranked list of the best gay twink sites of 2026. Real scores, real pricing, paid membership reviews, updated monthly. Filter by HD, free trial, or value.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "THIN_DESC"
-      ]
+      "flags": []
     }
   ]
 }
