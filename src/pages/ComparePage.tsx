@@ -573,43 +573,95 @@ const ComparePage = () => {
             name="robots"
             content={isFeaturedComparePair(slug) ? "index, follow" : "noindex, follow"}
           />
-          {/* Schema is emitted only for featured pairs. Non-featured pairs
-              are noindex'd, so structured data on them would be wasted bytes
-              that Google won't surface. */}
-          {isFeaturedComparePair(slug) && (
-            <>
-              <script type="application/ld+json">{JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
-                  { "@type": "ListItem", position: 2, name: "Compare", item: "https://twinkvault.com/compare" },
-                  { "@type": "ListItem", position: 3, name: `${siteA.name} vs ${siteB.name}`, item: `https://twinkvault.com/compare/${slug}` },
-                ],
-              })}</script>
-              <script type="application/ld+json">{JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "ItemList",
-                name: `${siteA.name} vs ${siteB.name}`,
-                description: `Side-by-side comparison of ${siteA.name} and ${siteB.name}.`,
-                numberOfItems: 2,
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: siteA.name, url: `https://twinkvault.com/reviews/${siteA.slug}` },
-                  { "@type": "ListItem", position: 2, name: siteB.name, url: `https://twinkvault.com/reviews/${siteB.slug}` },
-                ],
-              })}</script>
-              <script type="application/ld+json">{JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                mainEntity: generateCompareFaqs(siteA, siteB).map((f) => ({
-                  "@type": "Question",
-                  name: f.q,
-                  acceptedAnswer: { "@type": "Answer", text: f.a },
-                })),
-              })}</script>
-            </>
-          )}
         </Helmet>
+
+        {/* JSON-LD schemas — emitted in the body (not inside Helmet) so they
+            land in the prerendered HTML where crawlers can read them.
+            Only featured pairs get schema; non-featured pairs are noindex'd. */}
+        {isFeaturedComparePair(slug) && (() => {
+          const parseMo = (s: string) => parseFloat(s.replace(/[^0-9.]/g, "")) || 0;
+          const today = new Date().toISOString().split("T")[0];
+          const productSchema = (s: typeof siteA) => ({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: s.name,
+            description: s.short_description,
+            brand: { "@type": "Brand", name: s.name },
+            url: `https://twinkvault.com/reviews/${s.slug}`,
+            aggregateRating: s.overall_score > 0 ? {
+              "@type": "AggregateRating",
+              ratingValue: s.overall_score,
+              bestRating: 5,
+              worstRating: 1,
+              reviewCount: 1,
+              ratingCount: 1,
+            } : undefined,
+            offers: parseMo(s.price_annual) > 0 ? {
+              "@type": "AggregateOffer",
+              priceCurrency: "USD",
+              lowPrice: parseMo(s.price_annual).toFixed(2),
+              highPrice: parseMo(s.price_monthly).toFixed(2),
+              offerCount: 2,
+              availability: "https://schema.org/InStock",
+            } : undefined,
+          });
+          const reviewSchema = (s: typeof siteA) => s.overall_score > 0 ? ({
+            "@context": "https://schema.org",
+            "@type": "Review",
+            itemReviewed: { "@type": "Product", name: s.name },
+            reviewRating: { "@type": "Rating", ratingValue: s.overall_score, bestRating: 5, worstRating: 1 },
+            author: { "@type": "Organization", name: "TwinkVault" },
+            datePublished: `${currentYear}-01-01`,
+            dateModified: today,
+            url: `https://twinkvault.com/compare/${slug}`,
+          }) : null;
+
+          const breadcrumb = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
+              { "@type": "ListItem", position: 2, name: "Compare", item: "https://twinkvault.com/compare" },
+              { "@type": "ListItem", position: 3, name: `${siteA.name} vs ${siteB.name}`, item: `https://twinkvault.com/compare/${slug}` },
+            ],
+          };
+          const itemList = {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: `${siteA.name} vs ${siteB.name}`,
+            description: `Side-by-side comparison of ${siteA.name} and ${siteB.name}.`,
+            numberOfItems: 2,
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: siteA.name, url: `https://twinkvault.com/reviews/${siteA.slug}` },
+              { "@type": "ListItem", position: 2, name: siteB.name, url: `https://twinkvault.com/reviews/${siteB.slug}` },
+            ],
+          };
+          const faqPage = {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: generateCompareFaqs(siteA, siteB).map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          };
+
+          return (
+            <>
+              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
+              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }} />
+              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema(siteA)) }} />
+              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema(siteB)) }} />
+              {reviewSchema(siteA) && (
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema(siteA)) }} />
+              )}
+              {reviewSchema(siteB) && (
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema(siteB)) }} />
+              )}
+            </>
+          );
+        })()}
         <section className="py-16">
           <div className="container max-w-4xl">
             <Breadcrumbs

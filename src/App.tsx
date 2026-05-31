@@ -59,6 +59,8 @@ import BestBarebackTwink from "./pages/seo/BestBarebackTwink";
 import BlogIndex from "./pages/BlogIndex";
 import BlogPost from "./pages/BlogPost";
 import BlogCategory from "./pages/BlogCategory";
+import GuidePage from "./pages/GuidePage";
+import GenericAlternatives from "./pages/seo/GenericAlternatives";
 import BestGayPornSites from "./pages/seo/BestGayPornSites";
 import BestSubscription from "./pages/seo/BestSubscription";
 import BestTwinkPorn from "./pages/seo/BestTwinkPorn";
@@ -174,6 +176,8 @@ export const AppRoutes = () => (
     <Route path="/helix-studios-alternatives" element={<HelixAlternatives />} />
     <Route path="/sean-cody-alternatives" element={<SeanCodyAlternatives />} />
     <Route path="/nakedsword-alternatives" element={<NakedSwordAlternatives />} />
+    <Route path="/alternatives/:slug" element={<GenericAlternatives />} />
+    <Route path="/guide/:slug" element={<GuidePage />} />
     <Route path="/best-gay-sites-for-beginners" element={<BestForBeginners />} />
     <Route path="/best-gay-twink-sites-2026" element={<BestTwink2026 />} />
     <Route path="/best-gay-sites-with-downloads" element={<BestWithDownloads />} />

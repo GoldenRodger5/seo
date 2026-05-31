@@ -163,70 +163,79 @@ const ReviewPage = () => {
           return `${site.name} scored ${site.overall_score}/5 — twink site reviews you can trust. ${firstSentence} ${site.price_monthly}/mo — see the full breakdown.`;
         })()} />
         <link rel="canonical" href={`https://twinkvault.com/reviews/${site.slug}`} />
-        {(() => {
-          const url = `https://twinkvault.com/reviews/${site.slug}`;
-          const today = new Date().toISOString().split("T")[0];
-          const parseMo = (s: string) => parseFloat(s.replace(/[^0-9.]/g, "")) || 0;
-          const annualPerMo = parseMo(site.price_annual);
-          const monthlyPerMo = parseMo(site.price_monthly);
-          const verdict = getVerdict(site.slug);
-          const body = reviewBodies[site.slug];
-          // 150-300 char excerpt for reviewBody. Prefer the AI review body's
-          // first sentence if available, else the verdict, else the site
-          // short description.
-          const firstSentence = (s: string) => s.split(/(?<=[.!?])\s/)[0];
-          const excerpt = (
-            (body ? firstSentence(body) : "") ||
-            verdict ||
-            site.short_description
-          ).slice(0, 290);
-          return (
-            <>
-              <script type="application/ld+json">{JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Review",
-                itemReviewed: {
-                  "@type": "Product",
-                  name: site.name,
-                  description: site.short_description,
-                  brand: { "@type": "Brand", name: site.name },
-                  url: site.homepage_url,
-                  offers: annualPerMo > 0 ? {
-                    "@type": "AggregateOffer",
-                    priceCurrency: "USD",
-                    lowPrice: annualPerMo.toFixed(2),
-                    highPrice: monthlyPerMo.toFixed(2),
-                    offerCount: 2,
-                    availability: "https://schema.org/InStock",
-                  } : undefined,
-                },
-                reviewRating: {
-                  "@type": "Rating",
-                  ratingValue: site.overall_score,
-                  bestRating: 5,
-                  worstRating: 1,
-                },
-                author: { "@type": "Organization", name: "TwinkVault", url: "https://twinkvault.com" },
-                publisher: { "@type": "Organization", name: "TwinkVault", url: "https://twinkvault.com", logo: { "@type": "ImageObject", url: "https://twinkvault.com/pwa-512.png" } },
-                name: `${site.name} Review`,
-                url,
-                datePublished: `${currentYear}-01-01`,
-                dateModified: today,
-                reviewBody: excerpt,
-              })}</script>
-              <script type="application/ld+json">{JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
-                  { "@type": "ListItem", position: 2, name: "Reviews", item: "https://twinkvault.com/reviews" },
-                  { "@type": "ListItem", position: 3, name: site.name, item: url },
-                ],
-              })}</script>
-            </>
-          );
-        })()}
       </Helmet>
+
+      {/*
+        JSON-LD schemas live in the page body via dangerouslySetInnerHTML —
+        react-helmet-async drops `<script type="application/ld+json">` from
+        helmet.script on the server, so any schema inside <Helmet> never
+        reaches the prerendered HTML. Rich snippets require these in the
+        crawled response, not after hydration.
+      */}
+      {(() => {
+        const url = `https://twinkvault.com/reviews/${site.slug}`;
+        const today = new Date().toISOString().split("T")[0];
+        const parseMo = (s: string) => parseFloat(s.replace(/[^0-9.]/g, "")) || 0;
+        const annualPerMo = parseMo(site.price_annual);
+        const monthlyPerMo = parseMo(site.price_monthly);
+        const verdict = getVerdict(site.slug);
+        const body = reviewBodies[site.slug];
+        const firstSentence = (s: string) => s.split(/(?<=[.!?])\s/)[0];
+        const excerpt = (
+          (body ? firstSentence(body) : "") ||
+          verdict ||
+          site.short_description
+        ).slice(0, 290);
+        const reviewSchema = {
+          "@context": "https://schema.org",
+          "@type": "Review",
+          itemReviewed: {
+            "@type": "Product",
+            name: site.name,
+            description: site.short_description,
+            brand: { "@type": "Brand", name: site.name },
+            url: site.homepage_url,
+            ...(annualPerMo > 0 ? {
+              offers: {
+                "@type": "AggregateOffer",
+                priceCurrency: "USD",
+                lowPrice: annualPerMo.toFixed(2),
+                highPrice: monthlyPerMo.toFixed(2),
+                offerCount: 2,
+                availability: "https://schema.org/InStock",
+              },
+            } : {}),
+          },
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: site.overall_score,
+            bestRating: 5,
+            worstRating: 1,
+          },
+          author: { "@type": "Organization", name: "TwinkVault", url: "https://twinkvault.com" },
+          publisher: { "@type": "Organization", name: "TwinkVault", url: "https://twinkvault.com", logo: { "@type": "ImageObject", url: "https://twinkvault.com/pwa-512.png" } },
+          name: `${site.name} Review`,
+          url,
+          datePublished: `${currentYear}-01-01`,
+          dateModified: today,
+          reviewBody: excerpt,
+        };
+        const breadcrumbSchema = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://twinkvault.com/" },
+            { "@type": "ListItem", position: 2, name: "Reviews", item: "https://twinkvault.com/reviews" },
+            { "@type": "ListItem", position: 3, name: site.name, item: url },
+          ],
+        };
+        return (
+          <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+          </>
+        );
+      })()}
 
       {/* Affiliate disclosure */}
       <div className="border-b border-primary/10 bg-secondary/5">

@@ -1119,7 +1119,36 @@ async function main() {
   }
 
   // ── Pings ─────────────────────────────────────────────────────────────
-  const pageUrl = `${BASE_URL}/${target.kind === "review" ? `reviews/${target.entry.slug}` : target.entry.slug}`;
+  // URL construction must match the actual frontend route — IndexNow and
+  // Google Indexing API both 404 silently on bad URLs, so getting this
+  // right is the difference between a same-day crawl and a 2-week wait.
+  const pageUrl = (() => {
+    if (target.kind === "review") return `${BASE_URL}/reviews/${target.entry.slug}`;
+    const slug = target.entry.slug;
+    switch (contentType) {
+      case "comparison":
+        // queue slugs are stored as "compare/{a}-vs-{b}" — strip the prefix
+        return `${BASE_URL}/compare/${slug.replace(/^compare\//, "")}`;
+      case "alternatives":
+        // queue slugs are "{site}-alternatives". Three legacy hand-routed
+        // pages live at the bare path; everything else uses the generic
+        // /alternatives/{site} route. Both are honored — the daily engine
+        // pings the path that actually renders.
+        if (["helix-studios-alternatives", "sean-cody-alternatives", "nakedsword-alternatives"].includes(slug)) {
+          return `${BASE_URL}/${slug}`;
+        }
+        return `${BASE_URL}/alternatives/${slug.replace(/-alternatives$/, "")}`;
+      case "isworthit":
+        return `${BASE_URL}/is-${slug}-worth-it`;
+      case "guide":
+        return `${BASE_URL}/guide/${slug.replace(/^guide\//, "")}`;
+      case "discount":
+        return `${BASE_URL}/discount/${slug}`;
+      default:
+        return `${BASE_URL}/${slug}`;
+    }
+  })();
+  log.info(`Submitting to crawlers: ${pageUrl}`);
   const [googleOk, bingOk] = await Promise.all([pingGoogle(pageUrl), pingBing(pageUrl)]);
 
   // ── Supabase log ──────────────────────────────────────────────────────

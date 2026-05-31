@@ -49,6 +49,8 @@ import { sites, categories } from "../src/data/sites.js";
 import { DEAL_VERIFIED_DATE } from "../src/lib/dates.js";
 import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.js";
 import { BLOG_POSTS, BLOG_CATEGORIES } from "../src/data/blog-posts.js";
+import { ALTERNATIVES_CONTENT } from "../src/data/alternatives-content.js";
+import { GUIDE_CONTENT } from "../src/data/guide-content.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = resolve(__dirname, "..", "dist");
@@ -156,7 +158,16 @@ for (const post of BLOG_POSTS) {
   routes.push({ path: `/blog/${post.slug}`, title: `${post.title} | TwinkVault`, description: post.meta_description });
 }
 for (const slug of SITE_SLUGS) {
-  routes.push({ path: `/reviews/${slug}`, title: `${SITE_NAMES[slug]} Review ${YEAR} — Is It Worth It? | TwinkVault`, description: `Honest ${SITE_NAMES[slug]} review with real scores, pricing breakdown, and pros/cons. Updated ${YEAR}.` });
+  const name = SITE_NAMES[slug];
+  // Title kept under 60 chars even for long names like "Yoshi Kawasaki XXX".
+  // "Is It Worth It?" moved into the meta description hook.
+  const baseTitle = `${name} Review ${YEAR} — TwinkVault`;
+  const title = baseTitle.length <= 60 ? baseTitle : `${name} Review | TwinkVault`;
+  routes.push({
+    path: `/reviews/${slug}`,
+    title,
+    description: `Is ${name} worth the membership? Honest ${YEAR} review — real scores on content, value, updates, mobile, plus pricing and pros/cons.`,
+  });
 }
 for (const site of sites) {
   const pct = site.deal_discount;
@@ -174,11 +185,42 @@ for (const slug of Object.keys(NICHE_META)) {
   const meta = NICHE_META[slug];
   routes.push({ path: `/niche/${slug}`, title: `${meta.seoTitle} ${YEAR} | TwinkVault`, description: meta.seoDescription });
 }
+// Generic /alternatives/{site} routes — one per entry in
+// ALTERNATIVES_CONTENT that isn't already routed at /{site}-alternatives.
+const LEGACY_ALT_ROUTES = new Set(["helix-studios-alternatives", "sean-cody-alternatives", "nakedsword-alternatives"]);
+for (const key of Object.keys(ALTERNATIVES_CONTENT)) {
+  if (LEGACY_ALT_ROUTES.has(key)) continue;
+  const siteSlug = key.replace(/-alternatives$/, "");
+  const site = sites.find((s) => s.slug === siteSlug);
+  if (!site) continue;
+  routes.push({
+    path: `/alternatives/${siteSlug}`,
+    title: `${site.name} Alternatives (${YEAR}) | TwinkVault`,
+    description: `The best alternatives to ${site.name} — ranked by overlap on content style, pricing, and library depth. Updated for ${YEAR}.`,
+  });
+}
+
+// Guide routes — one per entry in GUIDE_CONTENT.
+for (const slug of Object.keys(GUIDE_CONTENT)) {
+  const body = GUIDE_CONTENT[slug];
+  routes.push({
+    path: `/guide/${slug}`,
+    title: `${body.h1} | TwinkVault`,
+    description: body.meta_description,
+  });
+}
+
 for (const pairSlug of getFeaturedComparePairsList()) {
   const [a, b] = pairSlug.split("-vs-");
   const aName = SITE_NAMES[a] ?? a;
   const bName = SITE_NAMES[b] ?? b;
-  routes.push({ path: `/compare/${pairSlug}`, title: `${aName} vs ${bName} ${YEAR} — Which Is Worth It? | TwinkVault`, description: `${aName} vs ${bName} compared side by side. Scores, pricing, pros and cons — find out which is the better gay porn site subscription in ${YEAR}.` });
+  // Tighter title — "Which Is Worth It?" hook moved to meta description
+  // to keep titles under 60 chars in SERPs.
+  routes.push({
+    path: `/compare/${pairSlug}`,
+    title: `${aName} vs ${bName} (${YEAR}) | TwinkVault`,
+    description: `${aName} vs ${bName} compared side by side — scores, pricing, pros/cons, and the verdict on which is the better gay porn site subscription in ${YEAR}.`,
+  });
 }
 
 // ---------------------------------------------------------------------------

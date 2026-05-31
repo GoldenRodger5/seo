@@ -1,8 +1,8 @@
-# Content Audit Report — 2026-05-19
+# Content Audit Report — 2026-05-31
 
 ## Critical findings
 
-**🚨 0 / 401 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 409 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -30,42 +30,41 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Page type | Count | Median body words (prerendered) | Min | Max | Verdict |
 | --- | ---: | ---: | ---: | ---: | --- |
-| compare | 188 | 628 | 557 | 1957 | HEALTHY |
-| discount | 62 | 763 | 698 | 813 | HEALTHY |
-| review | 62 | 1086 | 887 | 1309 | HEALTHY |
-| landing | 24 | 1167 | 413 | 4240 | HEALTHY |
-| niche | 21 | 640 | 486 | 2073 | HEALTHY |
-| other | 16 | 445 | 380 | 882 | HEALTHY |
+| compare | 190 | 628 | 557 | 1957 | HEALTHY |
+| discount | 64 | 759 | 698 | 813 | HEALTHY |
+| review | 64 | 1046 | 728 | 1309 | HEALTHY |
+| landing | 24 | 1167 | 413 | 4242 | HEALTHY |
+| niche | 21 | 642 | 486 | 2073 | HEALTHY |
+| other | 18 | 445 | 380 | 900 | HEALTHY |
 | blog | 10 | 1499 | 226 | 1826 | HEALTHY |
 | legal | 6 | 759 | 358 | 1003 | HEALTHY |
-| category | 6 | 1112 | 389 | 1917 | HEALTHY |
-| utility | 5 | 273 | 231 | 9709 | HEALTHY |
-| homepage | 1 | 702 | 702 | 702 | HEALTHY |
+| category | 6 | 1112 | 389 | 1919 | HEALTHY |
+| utility | 5 | 273 | 231 | 10399 | HEALTHY |
+| homepage | 1 | 649 | 649 | 649 | HEALTHY |
 
 ## Flag breakdown across all routes
 
 | Flag | Count |
 | --- | ---: |
-| THIN_DESC | 121 |
-| LONG_TITLE | 114 |
-| MISSING_REVIEW_SCHEMA | 62 |
-| THIN_TITLE | 10 |
+| THIN_DESC | 62 |
+| LONG_TITLE | 40 |
+| THIN_TITLE | 28 |
 | THIN_BLOG | 4 |
 | THIN_LANDING | 1 |
 
 ## Compare page deep-dive
 
-- **Page count:** 188
+- **Page count:** 190
 - **Template source:** `src/pages/ComparePage.tsx` (runtime React component, hydrated client-side).
 - **Per-pair content source:** `src/data/comparison-content.ts` (~9,971 words across all pairs combined, never prerendered).
-- **All 188 compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.
+- **All 190 compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.
 - **Kill-list recommendation:** until prerendering is fixed, the kill-list question is moot. Once Google can see content, then evaluate pairs by (a) neither site in top-10, (b) <5 GSC impressions/30d.
 
 ## Review page deep-dive
 
-- **Page count:** 62
+- **Page count:** 64
 - **AI content rendering:** `AI_CONTENT_CLIENT_ONLY`. Static reviewBodies map exists with ~275 median words per site, but the prose only mounts into the DOM after `useAIReview` runs client-side.
-- **Prerendered body word counts:** every review page is in the 887–1309 word range (NoScript + page chrome only).
+- **Prerendered body word counts:** every review page is in the 728–1309 word range (NoScript + page chrome only).
 
 ## Worst-offender routes (smallest prerendered body)
 
@@ -89,20 +88,20 @@ Sorted ascending by body word count. Top 30:
 | /is-southern-strokes-worth-it | other | 390 | 31.1 | THIN_DESC |
 | /is-rawhole-worth-it | other | 393 | 31.4 | THIN_DESC |
 | /is-peterfever-worth-it | other | 395 | 31.4 | THIN_DESC |
+| /is-helix-studios-worth-it | other | 400 | 31.7 | THIN_DESC |
 | /compare | landing | 413 | 31.2 | THIN_LANDING, THIN_DESC |
 | /is-sayuncle-worth-it | other | 422 | 31.5 | THIN_DESC |
 | /is-men-worth-it | other | 438 | 31.8 | THIN_DESC |
 | /is-sean-cody-worth-it | other | 445 | 31.9 | THIN_DESC |
-| /is-helix-studios-worth-it | other | 470 | 32.6 | THIN_DESC |
 | /niche/military | niche | 486 | 28.6 |  |
 | /niche/latin | niche | 495 | 28.5 |  |
 | /niche/big-dick | niche | 508 | 28.5 |  |
 | /blog | landing | 512 | 29.2 |  |
 | /niche/uncut | niche | 529 | 32.1 | THIN_DESC |
 | /niche/solo | niche | 530 | 32.3 | THIN_DESC |
-| /gay-porn-sites-ranked | other | 531 | 113.5 | LONG_TITLE, THIN_DESC |
-| /category/mobile-friendly | category | 550 | 62.5 | THIN_DESC |
-| /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 46.9 |  |
+| /gay-porn-sites-ranked | other | 531 | 113.9 | LONG_TITLE, THIN_DESC |
+| /category/mobile-friendly | category | 552 | 62.9 | THIN_DESC |
+| /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 50.8 |  |
 
 ## Auto-generation pipeline assessment
 
