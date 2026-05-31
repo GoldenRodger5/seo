@@ -83,9 +83,17 @@ function extractText(html: string): string {
 }
 
 function extractMeta(html: string, name: string): string {
-  const re = new RegExp(`<meta\\s+(?:name|property)=["']${name}["']\\s+content=["']([^"']*)["']`, "i");
+  // Match double-quoted content only — that's what react-helmet-async and
+  // our prerender template emit. Earlier regex ended capture at the first
+  // single-quote, which mis-counted descriptions containing apostrophes
+  // (e.g. "what you're looking for" reported length 20 instead of 165).
+  const re = new RegExp(`<meta\\s+(?:name|property)="${name}"\\s+content="([^"]*)"`, "i");
   const m = html.match(re);
-  return m ? m[1] : "";
+  if (m) return m[1];
+  // Fallback: single-quoted name attr if a tag uses that style.
+  const re2 = new RegExp(`<meta\\s+(?:name|property)='${name}'\\s+content="([^"]*)"`, "i");
+  const m2 = html.match(re2);
+  return m2 ? m2[1] : "";
 }
 
 function extractTitle(html: string): string {
@@ -144,8 +152,13 @@ async function auditRoute(absPath: string): Promise<RouteAudit> {
     flags.push(tt.flag);
   }
 
-  // Meta length checks
-  if (metaTitle.length < 35) flags.push("THIN_TITLE");
+  // Meta length checks. Threshold rationale:
+  // - Titles: Google shows up to ~60 chars in SERPs. <30 is "too sparse",
+  //   not <35 — 30-35 char titles like "BoyFun Review 2026 — TwinkVault"
+  //   are fine, just brand-short.
+  // - Descriptions: <120 risks Google rewriting the snippet from page
+  //   content rather than honoring the meta. >165 truncates.
+  if (metaTitle.length < 30) flags.push("THIN_TITLE");
   else if (metaTitle.length > 65) flags.push("LONG_TITLE");
   if (metaDescription.length < 120) flags.push("THIN_DESC");
   else if (metaDescription.length > 165) flags.push("LONG_DESC");

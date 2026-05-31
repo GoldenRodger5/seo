@@ -100,33 +100,33 @@ const routes: RouteMeta[] = [
   { path: "/", title: `TwinkVault — Best Gay Twink Sites ${YEAR} Ranked & Reviewed`, description: `Honest reviews of the best gay twink sites, ranked by quality and value. Real scores, real pricing, updated ${YEAR}.` },
   { path: "/top-sites", title: `Top Gay Twink Sites ${YEAR} — Ranked & Reviewed | TwinkVault`, description: "Our ranked list of the best gay twink sites. Real scores, real pricing, updated monthly." },
   { path: "/reviews", title: `All Twink Site Reviews ${YEAR} | TwinkVault`, description: "Browse every twink site review on TwinkVault. Honest scores, pricing breakdowns, and pros/cons." },
-  { path: "/best-deals", title: `Best Gay Twink Site Deals & Discounts ${YEAR} | TwinkVault`, description: "The best current gay twink site deals and discounts. Verified offers updated weekly." },
+  { path: "/best-deals", title: `Best Gay Twink Site Deals & Discounts ${YEAR} | TwinkVault`, description: `The best current gay twink site deals and discounts for ${YEAR}. Verified offers updated weekly with annual savings, free trial info, and verdict on each.` },
   { path: "/compare", title: "Compare Twink Sites — Side by Side | TwinkVault", description: "Compare the best twink content sites side by side. See scores, prices, and features at a glance." },
-  { path: "/best-twink-sites", title: `Best Twink Sites ${YEAR} — Expert Ranked | TwinkVault`, description: `The best twink sites in ${YEAR}, ranked by content quality, value, and features. Updated monthly.` },
-  { path: "/free-trial-twink-sites", title: `Twink Sites with Free Trials ${YEAR} | TwinkVault`, description: `The best gay twink sites offering free trials in ${YEAR}. Try before you commit.` },
-  { path: "/cheapest-twink-sites", title: `Cheapest Twink Sites ${YEAR} | TwinkVault`, description: `The cheapest twink sites in ${YEAR}. Quality content at the lowest prices.` },
+  { path: "/best-twink-sites", title: `Best Twink Sites ${YEAR} — Expert Ranked | TwinkVault`, description: `The best twink sites of ${YEAR}, ranked by content quality, value, update frequency, and mobile experience. Honest scores after a paid membership on each.` },
+  { path: "/free-trial-twink-sites", title: `Twink Sites with Free Trials ${YEAR} | TwinkVault`, description: `The best gay twink sites offering free trials in ${YEAR}. Try before you commit — trial length, content included, and post-trial pricing for each one.` },
+  { path: "/cheapest-twink-sites", title: `Cheapest Twink Sites ${YEAR} | TwinkVault`, description: `The cheapest twink sites in ${YEAR}. Quality content at the lowest verified prices — annual rates, value scores, and what's worth paying for at each tier.` },
   { path: "/gay-dating-sites", title: `Best Gay Dating Sites ${YEAR} — Find Men Near You | TwinkVault`, description: `Find the best gay dating and hookup sites in ${YEAR}. Meet gay men near you — compare options, read reviews, and connect.` },
-  { path: "/ask-ai", title: "AI Twink Site Recommender | TwinkVault", description: "Tell us what you're looking for and our AI recommends the best twink site for you." },
+  { path: "/ask-ai", title: "AI Twink Site Recommender | TwinkVault", description: "Tell our AI what you're looking for — body type, niche, budget, must-haves — and get a personalized gay twink site recommendation based on real scores and pricing." },
   { path: "/find-my-site", title: "Find Your Perfect Twink Site — Quiz | TwinkVault", description: "Take our 30-second quiz and we'll recommend the best twink content site for you." },
-  { path: "/about", title: "About TwinkVault — Who We Are", description: "Learn about TwinkVault's mission: honest, independent reviews of gay twink content sites." },
+  { path: "/about", title: "About TwinkVault — Who We Are", description: "TwinkVault is an independent gay porn site review platform. Honest paid-membership reviews, real pricing, no commission-rigged rankings. Meet the team behind it." },
   { path: "/methodology", title: `Review Methodology — How TwinkVault Scores Sites | TwinkVault`, description: `How TwinkVault scores gay membership sites: four weighted pillars, transparent checks, monthly re-verification.` },
   { path: "/contact", title: "Contact TwinkVault", description: "Get in touch with the TwinkVault team. Questions, corrections, or partnership inquiries." },
   { path: "/privacy-policy", title: "Privacy Policy | TwinkVault", description: "TwinkVault's privacy policy. How we handle your data." },
   { path: "/terms", title: "Terms of Service | TwinkVault", description: "TwinkVault terms of service and conditions of use." },
-  { path: "/affiliate-disclosure", title: "Affiliate Disclosure | TwinkVault", description: "How TwinkVault earns revenue through affiliate partnerships." },
-  { path: "/2257", title: "2257 Compliance Statement | TwinkVault", description: "TwinkVault 18 U.S.C. § 2257 compliance statement." },
+  { path: "/affiliate-disclosure", title: "Affiliate Disclosure | TwinkVault", description: "How TwinkVault earns revenue through affiliate partnerships, why rankings are never influenced by commissions, and how to spot affiliate links on the site." },
+  { path: "/2257", title: "2257 Compliance Statement | TwinkVault", description: "TwinkVault's 18 U.S.C. § 2257 Record-Keeping Requirements Compliance Statement. Records of age verification for all content referenced on the site." },
   { path: "/sitemap", title: "Sitemap — TwinkVault", description: "Browse everything on TwinkVault. All reviews, categories, comparisons, and info pages." },
   { path: "/best-gay-sites-under-10", title: `Best Gay Porn Sites Under $10 (${YEAR}) | TwinkVault`, description: `The best gay membership sites under $10/mo on the annual plan. Real scores, real prices, ranked by value-for-money in ${YEAR}.` },
-  { path: "/best-bareback-gay-sites", title: `Best Bareback Gay Sites (${YEAR}) | TwinkVault`, description: `Every bareback gay site we've tested, ranked by content quality, library depth, and pricing for ${YEAR}.` },
-  { path: "/best-asian-gay-sites", title: `Best Asian Gay Porn Sites (${YEAR}) | TwinkVault`, description: `The best Asian gay sites ranked by quality, performer authenticity, and library depth in ${YEAR}.` },
-  { path: "/best-amateur-gay-sites", title: `Best Amateur Gay Porn Sites (${YEAR}) | TwinkVault`, description: `Real performers, authentic chemistry, no studio gloss. The best amateur gay sites ranked by quality and value in ${YEAR}.` },
+  { path: "/best-bareback-gay-sites", title: `Best Bareback Gay Sites (${YEAR}) | TwinkVault`, description: `Every bareback gay site we've tested, ranked by content quality, library depth, update frequency, and pricing for ${YEAR}. Paid membership reviews only.` },
+  { path: "/best-asian-gay-sites", title: `Best Asian Gay Porn Sites (${YEAR}) | TwinkVault`, description: `The best Asian gay porn sites of ${YEAR} ranked by content quality, performer authenticity, library depth, and value. Japanese, Thai, Chinese, pan-Asian covered.` },
+  { path: "/best-amateur-gay-sites", title: `Best Amateur Gay Porn Sites (${YEAR}) | TwinkVault`, description: `Real performers, authentic chemistry, no studio gloss. The best amateur gay porn sites of ${YEAR} ranked by quality, value, and update cadence — paid membership reviews.` },
   { path: "/best-premium-gay-sites", title: `Best Premium Gay Porn Sites (${YEAR}) | TwinkVault`, description: `The premium-tier studio gay sites — high production values, exclusive performers, and the catalogs that built the modern industry. Ranked for ${YEAR}.` },
   { path: "/helix-studios-alternatives", title: `Helix Studios Alternatives (${YEAR}) | TwinkVault`, description: `The 5 best alternatives to Helix Studios — premium twink-focused sites with comparable production quality. Updated for ${YEAR}.` },
   { path: "/sean-cody-alternatives", title: `Sean Cody Alternatives (${YEAR}) | TwinkVault`, description: `The 5 best alternatives to Sean Cody — athletic, all-American, bareback gay sites ranked by similarity and value.` },
   { path: "/nakedsword-alternatives", title: `NakedSword Alternatives (${YEAR}) | TwinkVault`, description: `The 5 best alternatives to NakedSword — large-library multi-studio gay platforms ranked by content depth and value.` },
   { path: "/best-gay-sites-for-beginners", title: `Best Gay Porn Sites for Beginners (${YEAR}) | TwinkVault`, description: `New to gay membership sites? These are the most approachable: low entry price, strong mobile experience, and free trials where available.` },
-  { path: "/best-gay-twink-sites-2026", title: `Best Gay Twink Sites 2026 | TwinkVault`, description: `The top 15 gay twink sites for 2026, ranked by content quality, value, and update frequency. Updated monthly.` },
-  { path: "/best-gay-sites-with-downloads", title: `Best Gay Porn Sites with Downloads (${YEAR}) | TwinkVault`, description: `Gay membership sites that let you download scenes for offline viewing. Streaming-only sites excluded.` },
+  { path: "/best-gay-twink-sites-2026", title: `Best Gay Twink Sites 2026 | TwinkVault`, description: `The top 15 gay twink sites for 2026, ranked by content quality, value, update frequency, mobile experience, and free trial availability. Paid membership reviews.` },
+  { path: "/best-gay-sites-with-downloads", title: `Best Gay Porn Sites with Downloads (${YEAR}) | TwinkVault`, description: `Gay membership sites that let you download scenes for offline viewing in ${YEAR}. Streaming-only sites excluded — ranked by library size, quality, and value.` },
   { path: "/best-daddy-twink-sites", title: `Best Daddy/Twink Gay Sites (${YEAR}) | TwinkVault`, description: `The best daddy and older/younger gay sites ranked. Authentic age-gap chemistry, family-fantasy taboo, and dedicated daddy/twink studios scored honestly.` },
   { path: "/best-twink-porn-sites-with-free-trials", title: `Best Twink Porn Sites with Free Trials ${YEAR} | TwinkVault`, description: `The best twink porn sites offering free trials in ${YEAR}. Try before you commit — ranked by trial length, content quality, and post-trial pricing.` },
   { path: "/best-cheap-gay-porn-sites", title: `Best Cheap Gay Porn Sites ${YEAR} — Budget Picks Ranked | TwinkVault`, description: `The best cheap gay porn sites in ${YEAR}. Real quality at budget prices — ranked by content depth and value per dollar, cheap-but-bad sites filtered out.` },
@@ -152,10 +152,21 @@ const routes: RouteMeta[] = [
 ];
 
 for (const cat of BLOG_CATEGORIES) {
-  routes.push({ path: `/blog/category/${cat.slug}`, title: `${cat.label} — TwinkVault Blog`, description: `${cat.description} Browse all ${cat.label.toLowerCase()} articles from TwinkVault Editorial.` });
+  routes.push({
+    path: `/blog/category/${cat.slug}`,
+    title: `${cat.label} — TwinkVault Blog`,
+    description: `${cat.description} Browse all ${cat.label.toLowerCase()} articles from TwinkVault Editorial — guides, comparisons, pricing analysis, and industry coverage.`,
+  });
 }
 for (const post of BLOG_POSTS) {
-  routes.push({ path: `/blog/${post.slug}`, title: `${post.title} | TwinkVault`, description: post.meta_description });
+  // Blog post titles are editorial and often >60 chars on their own.
+  // Drop the " | TwinkVault" suffix when the combined string exceeds 60.
+  const withSuffix = `${post.title} | TwinkVault`;
+  routes.push({
+    path: `/blog/${post.slug}`,
+    title: withSuffix.length <= 60 ? withSuffix : post.title,
+    description: post.meta_description,
+  });
 }
 for (const slug of SITE_SLUGS) {
   const name = SITE_NAMES[slug];
@@ -172,14 +183,26 @@ for (const slug of SITE_SLUGS) {
 for (const site of sites) {
   const pct = site.deal_discount;
   const hasDeal = pct > 0;
+  // Title kept under 60 chars even for long names. Verification month
+  // moved to the description to free up title characters.
+  const dealTitle = `${site.name}: ${pct}% Off (${YEAR}) | TwinkVault`;
+  const noDealTitle = `${site.name} Discount Code ${YEAR} | TwinkVault`;
   routes.push({
     path: `/discount/${site.slug}`,
-    title: hasDeal ? `${site.name} Discount Code: ${pct}% Off (Verified ${DEAL_VERIFIED_DATE}) — Save Now` : `${site.name} Discount Code (${YEAR}) — Best Verified Price`,
-    description: hasDeal ? `Get ${site.name} for just ${site.price_annual} with our verified ${pct}% discount. Lowest price guaranteed — deal confirmed ${DEAL_VERIFIED_DATE}. Click to activate instantly.` : `Looking for a ${site.name} discount code? Get the lowest verified price on ${site.name} membership. Updated ${DEAL_VERIFIED_DATE}.`,
+    title: hasDeal
+      ? (dealTitle.length <= 60 ? dealTitle : `${site.name}: ${pct}% Off | TwinkVault`)
+      : (noDealTitle.length <= 60 ? noDealTitle : `${site.name} Discount | TwinkVault`),
+    description: hasDeal
+      ? `Get ${site.name} for ${site.price_annual} with our verified ${pct}% discount — deal confirmed ${DEAL_VERIFIED_DATE}. Click to activate the lowest price.`
+      : `Looking for a ${site.name} discount code? Get the lowest verified ${site.name} membership price. Updated ${DEAL_VERIFIED_DATE} — read pricing.`,
   });
 }
 for (const slug of CATEGORY_SLUGS) {
-  routes.push({ path: `/category/${slug}`, title: `${CATEGORY_NAMES[slug]} Twink Sites ${YEAR} | TwinkVault`, description: `The best ${CATEGORY_NAMES[slug].toLowerCase()} twink sites ranked and reviewed for ${YEAR}.` });
+  routes.push({
+    path: `/category/${slug}`,
+    title: `${CATEGORY_NAMES[slug]} Twink Sites ${YEAR} | TwinkVault`,
+    description: `The best ${CATEGORY_NAMES[slug].toLowerCase()} twink sites of ${YEAR}, ranked and reviewed. Verified pricing, real scores, paid membership reviews — no commission-rigged rankings.`,
+  });
 }
 for (const slug of Object.keys(NICHE_META)) {
   const meta = NICHE_META[slug];
@@ -196,7 +219,7 @@ for (const key of Object.keys(ALTERNATIVES_CONTENT)) {
   routes.push({
     path: `/alternatives/${siteSlug}`,
     title: `${site.name} Alternatives (${YEAR}) | TwinkVault`,
-    description: `The best alternatives to ${site.name} — ranked by overlap on content style, pricing, and library depth. Updated for ${YEAR}.`,
+    description: `The best alternatives to ${site.name} — ranked by overlap on content style, pricing, library depth, and update frequency. Honest reviews, updated for ${YEAR}.`,
   });
 }
 

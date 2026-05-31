@@ -46,9 +46,10 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Flag | Count |
 | --- | ---: |
-| THIN_DESC | 62 |
-| LONG_TITLE | 40 |
-| THIN_TITLE | 28 |
+| THIN_DESC | 42 |
+| THIN_TITLE | 8 |
+| LONG_TITLE | 7 |
+| LONG_DESC | 4 |
 | THIN_BLOG | 4 |
 | THIN_LANDING | 1 |
 
@@ -72,36 +73,36 @@ Sorted ascending by body word count. Top 30:
 
 | Route | Type | Body words | File size (KB) | Flags |
 | --- | --- | ---: | ---: | --- |
-| /blog/category/industry | blog | 226 | 17.9 | THIN_BLOG, THIN_TITLE, THIN_DESC |
+| /blog/category/industry | blog | 226 | 18.1 | THIN_BLOG, THIN_TITLE, LONG_DESC |
 | /find-my-site | utility | 231 | 18.3 | THIN_DESC |
 | /contact | utility | 254 | 20.6 | THIN_TITLE, THIN_DESC |
-| /blog/category/money | blog | 270 | 19.8 | THIN_BLOG, THIN_TITLE, THIN_DESC |
-| /ask-ai | utility | 273 | 21.3 | THIN_DESC |
-| /blog/category/comparisons | blog | 301 | 21.4 | THIN_BLOG, THIN_TITLE, THIN_DESC |
-| /2257 | legal | 358 | 18.5 | THIN_DESC |
-| /affiliate-disclosure | legal | 366 | 18.5 | THIN_TITLE, THIN_DESC |
-| /blog/category/guides | blog | 367 | 23.2 | THIN_BLOG, THIN_TITLE, THIN_DESC |
-| /is-athletic-twinks-worth-it | other | 380 | 31.0 | THIN_DESC |
+| /blog/category/money | blog | 270 | 20.0 | THIN_BLOG, LONG_DESC |
+| /ask-ai | utility | 273 | 21.5 |  |
+| /blog/category/comparisons | blog | 301 | 21.6 | THIN_BLOG, THIN_TITLE |
+| /2257 | legal | 358 | 18.8 |  |
+| /affiliate-disclosure | legal | 366 | 18.8 |  |
+| /blog/category/guides | blog | 367 | 23.4 | THIN_BLOG, THIN_TITLE, LONG_DESC |
+| /is-athletic-twinks-worth-it | other | 380 | 31.1 | THIN_DESC |
 | /is-twinks-in-shorts-worth-it | other | 384 | 31.1 | THIN_DESC |
-| /category/free-trials | category | 389 | 38.5 | THIN_DESC |
-| /is-nakedsword-worth-it | other | 389 | 31.4 | THIN_DESC |
-| /is-southern-strokes-worth-it | other | 390 | 31.1 | THIN_DESC |
+| /category/free-trials | category | 389 | 38.8 |  |
+| /is-nakedsword-worth-it | other | 389 | 31.5 | THIN_DESC |
+| /is-southern-strokes-worth-it | other | 390 | 31.2 | THIN_DESC |
 | /is-rawhole-worth-it | other | 393 | 31.4 | THIN_DESC |
-| /is-peterfever-worth-it | other | 395 | 31.4 | THIN_DESC |
+| /is-peterfever-worth-it | other | 395 | 31.5 | THIN_DESC |
 | /is-helix-studios-worth-it | other | 400 | 31.7 | THIN_DESC |
 | /compare | landing | 413 | 31.2 | THIN_LANDING, THIN_DESC |
 | /is-sayuncle-worth-it | other | 422 | 31.5 | THIN_DESC |
-| /is-men-worth-it | other | 438 | 31.8 | THIN_DESC |
+| /is-men-worth-it | other | 438 | 31.9 | THIN_DESC |
 | /is-sean-cody-worth-it | other | 445 | 31.9 | THIN_DESC |
 | /niche/military | niche | 486 | 28.6 |  |
 | /niche/latin | niche | 495 | 28.5 |  |
-| /niche/big-dick | niche | 508 | 28.5 |  |
+| /niche/big-dick | niche | 508 | 28.6 |  |
 | /blog | landing | 512 | 29.2 |  |
 | /niche/uncut | niche | 529 | 32.1 | THIN_DESC |
-| /niche/solo | niche | 530 | 32.3 | THIN_DESC |
-| /gay-porn-sites-ranked | other | 531 | 113.9 | LONG_TITLE, THIN_DESC |
-| /category/mobile-friendly | category | 552 | 62.9 | THIN_DESC |
-| /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 50.8 |  |
+| /niche/solo | niche | 530 | 32.4 | THIN_DESC |
+| /gay-porn-sites-ranked | other | 531 | 115.9 | LONG_TITLE, THIN_DESC |
+| /category/mobile-friendly | category | 552 | 63.4 |  |
+| /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 50.9 |  |
 
 ## Auto-generation pipeline assessment
 

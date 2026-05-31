@@ -51,8 +51,13 @@ const OutboundLink = ({ site, className, children, onClick, sourceTypeOverride, 
     onClick?.();
   };
 
+  // rel="sponsored noopener nofollow" — belt-and-suspenders FTC signaling.
+  // url is internal (/go/{slug}) and the /go page is noindex,nofollow with
+  // a JS-driven redirect, so PageRank to the affiliate is already zero —
+  // but the explicit sponsored/nofollow on the link-graph edge avoids any
+  // ambiguity in Google's affiliate-link auditing.
   return (
-    <Link to={url} className={className} onClick={handleClick}>
+    <Link to={url} className={className} onClick={handleClick} rel="sponsored noopener nofollow">
       {children}
     </Link>
   );

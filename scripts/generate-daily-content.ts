@@ -788,6 +788,36 @@ function persistSupportingContent(entry: SupportingQueueEntry, generated: Record
     );
   }
   upsertContentEntry(binding.file, writeKey, generated);
+
+  // Stamp the route's lastmod so generate-sitemap.ts can emit accurate
+  // <lastmod> for this URL — without this Google never gets a recrawl
+  // signal when AI body content updates.
+  const routePath = (() => {
+    switch (entry.content_type) {
+      case "comparison":
+        return `/compare/${writeKey}`;
+      case "alternatives":
+        return `/alternatives/${writeKey.replace(/-alternatives$/, "")}`;
+      case "isworthit":
+        return `/is-${writeKey}-worth-it`;
+      case "guide":
+        return `/guide/${writeKey}`;
+      default:
+        return `/${writeKey}`;
+    }
+  })();
+  stampContentLastmod(routePath);
+}
+
+/** Tracker for per-route lastmod values; consumed by generate-sitemap.ts. */
+const CONTENT_LASTMOD_FILE = resolve(ROOT, "docs/content-lastmod.json");
+function stampContentLastmod(routePath: string): void {
+  let map: Record<string, string> = {};
+  try {
+    map = JSON.parse(readFileSync(CONTENT_LASTMOD_FILE, "utf-8"));
+  } catch { /* file may not exist on first run */ }
+  map[routePath] = new Date().toISOString().split("T")[0];
+  writeFileSync(CONTENT_LASTMOD_FILE, JSON.stringify(map, null, 2) + "\n", "utf-8");
 }
 
 function markQueuePublished(slug: string, kind: "review" | "supporting") {

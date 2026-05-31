@@ -6,6 +6,17 @@ import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.
 import { BLOG_POSTS, BLOG_CATEGORIES } from "../src/data/blog-posts.js";
 import { ALTERNATIVES_CONTENT } from "../src/data/alternatives-content.js";
 import { GUIDE_CONTENT } from "../src/data/guide-content.js";
+import { readFileSync } from "fs";
+
+// Per-route lastmod stamps written by generate-daily-content.ts whenever
+// an AI body upserts. Falls back to TODAY if a route isn't stamped (e.g.
+// for routes that get hand-edited but don't go through the daily engine).
+let CONTENT_LASTMOD: Record<string, string> = {};
+try {
+  const __dirname2 = dirname(fileURLToPath(import.meta.url));
+  CONTENT_LASTMOD = JSON.parse(readFileSync(resolve(__dirname2, "..", "docs/content-lastmod.json"), "utf-8"));
+} catch { /* first run before any stamps */ }
+const lastmodFor = (path: string, fallback: string): string => CONTENT_LASTMOD[path] ?? fallback;
 
 // ---------------------------------------------------------------------------
 // Config
@@ -220,11 +231,13 @@ const pairs = getFeaturedComparePairsList().map((slug): [string, string] => {
   return [a, b];
 });
 for (const [a, b] of pairs) {
+  const path = `/compare/${a}-vs-${b}`;
   urls.push(
     urlEntry({
-      loc: `/compare/${a}-vs-${b}`,
+      loc: path,
       changefreq: "monthly",
       priority: "0.6",
+      lastmod: lastmodFor(path, TODAY),
     })
   );
 }
@@ -237,12 +250,14 @@ let altCount = 0;
 for (const key of Object.keys(ALTERNATIVES_CONTENT)) {
   if (LEGACY_ALT_ROUTES.has(key)) continue;
   const siteSlug = key.replace(/-alternatives$/, "");
-  urls.push(urlEntry({ loc: `/alternatives/${siteSlug}`, changefreq: "monthly", priority: "0.7", lastmod: TODAY }));
+  const path = `/alternatives/${siteSlug}`;
+  urls.push(urlEntry({ loc: path, changefreq: "monthly", priority: "0.7", lastmod: lastmodFor(path, TODAY) }));
   altCount++;
 }
 let guideCount = 0;
 for (const slug of Object.keys(GUIDE_CONTENT)) {
-  urls.push(urlEntry({ loc: `/guide/${slug}`, changefreq: "monthly", priority: "0.6", lastmod: TODAY }));
+  const path = `/guide/${slug}`;
+  urls.push(urlEntry({ loc: path, changefreq: "monthly", priority: "0.6", lastmod: lastmodFor(path, TODAY) }));
   guideCount++;
 }
 
