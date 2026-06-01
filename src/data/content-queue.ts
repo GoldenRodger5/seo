@@ -322,7 +322,7 @@ const backlogEntries: SupportingQueueEntry[] = [
   { title: "Best Alternatives to Men.com", slug: "men-alternatives", content_type: "alternatives", target_keyword: "men.com alternatives", related_sites: ["men"], priority: 90, status: "published" },
   { title: "Best Alternatives to PeterFever", slug: "peterfever-alternatives", content_type: "alternatives", target_keyword: "peterfever alternatives", related_sites: ["peterfever"], priority: 89, status: "published" },
   { title: "Best Alternatives to Twinks in Shorts", slug: "twinks-in-shorts-alternatives", content_type: "alternatives", target_keyword: "twinks in shorts alternatives", related_sites: ["twinks-in-shorts"], priority: 88, status: "published" },
-  { title: "Best Alternatives to Southern Strokes", slug: "southern-strokes-alternatives", content_type: "alternatives", target_keyword: "southern strokes alternatives", related_sites: ["southern-strokes"], priority: 87, status: "queued" },
+  { title: "Best Alternatives to Southern Strokes", slug: "southern-strokes-alternatives", content_type: "alternatives", target_keyword: "southern strokes alternatives", related_sites: ["southern-strokes"], priority: 87, status: "published" },
 
   // Days 15-21 — "Is X Worth It" body content (priority 86 → 80).
   // Slug = bare site slug, matching WorthItPage's getWorthItBody(site.slug).

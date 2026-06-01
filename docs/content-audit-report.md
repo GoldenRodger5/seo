@@ -1,8 +1,8 @@
-# Content Audit Report — 2026-05-31
+# Content Audit Report — 2026-06-01
 
 ## Critical findings
 
-**🚨 0 / 410 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 411 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -19,7 +19,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | `src/hooks/useAIReview.ts (reviewBodies map)` | 31 | 9,098 | 275 |
 | `src/data/comparison-content.ts` | 7 | 9,971 | 1,424 |
 | `src/data/blog-posts.ts` | 10 | 8,395 | 839 |
-| `src/data/alternatives-content.ts` | 6 | 5,592 | 932 |
+| `src/data/alternatives-content.ts` | 7 | 6,456 | 922 |
 
 - **src/hooks/useAIReview.ts (reviewBodies map)** — Static review prose, ~3–4 paragraphs per site. Loaded into sessionStorage on first visit. NEVER appears in prerendered HTML (root div is empty until JS runs).
 - **src/data/comparison-content.ts** — Per-pair compare content (likely BLUF + reasoning). Same prerender problem — body never enters static HTML.
@@ -35,7 +35,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | review | 64 | 1046 | 728 | 1309 | HEALTHY |
 | landing | 28 | 960 | 226 | 4242 | HEALTHY |
 | niche | 21 | 642 | 486 | 2073 | HEALTHY |
-| other | 19 | 445 | 380 | 900 | HEALTHY |
+| other | 20 | 531 | 380 | 900 | HEALTHY |
 | legal | 6 | 759 | 358 | 1003 | HEALTHY |
 | blog | 6 | 1673 | 1480 | 1826 | HEALTHY |
 | category | 6 | 1112 | 389 | 1919 | HEALTHY |

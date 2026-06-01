@@ -250,6 +250,44 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
       }
     ]
   },
+  "southern-strokes-alternatives": {
+    "h1": "Best Alternatives to Southern Strokes in 2026",
+    "intro": "Southern Strokes built its brand on a specific fantasy: lean, young, Southern-American guys with that wholesome boy-next-door energy — often solo or paired off in a way that feels more amateur than produced. It's a niche that appeals hard when it lands, but the site has long struggled with inconsistent update schedules, an aging back-catalog that isn't growing fast enough, and a membership price that's hard to justify when bigger, better-stocked studios are competing for the same dollar. Whether you've already burned through what Southern Strokes has to offer, you want better production values, or you're chasing the same twink-next-door vibe with more content to dig into, there are stronger options on the market right now. Here's what we'd actually recommend.",
+    "alternatives": [
+      {
+        "slug": "helix-studios",
+        "reason": "If Southern Strokes is a regional diner, Helix Studios is the full-service restaurant — same core demographic of fresh-faced, slim American twinks, but with a production budget that shows in every frame. The scene count dwarfs what Southern Strokes offers, updates arrive on a reliable weekly schedule, and the performers are consistently good-looking without feeling factory-stamped. You get exclusive series, genuine on-screen chemistry between models, and a library deep enough that you won't exhaust it. For anyone frustrated by Southern Strokes' slow content drip, Helix is the obvious upgrade and our top pick by a wide margin."
+      },
+      {
+        "slug": "next-door-twink",
+        "reason": "Next Door Twink pulls off the boy-next-door aesthetic that Southern Strokes is aiming for, but executes it with sharper cameras, better lighting, and more frequent drops. The performers skew young and slim — very much in the same physical lane — and the site benefits from Next Door's wider network infrastructure, so the streaming experience is smoother. If what you liked about Southern Strokes was the approachable, non-intimidating look of the guys rather than any specific Southern flavor, Next Door Twink scratches that itch reliably and then some."
+      },
+      {
+        "slug": "twinks-in-shorts",
+        "reason": "For viewers who gravitated toward Southern Strokes specifically because of its casual, almost candid presentation of young guys, Twinks in Shorts hits a surprisingly similar note. The concept is fun and the casting leans into that natural, unpolished look rather than overcorrecting toward glossy perfection. It's not the biggest library on this list, but it's a focused, honest site that doesn't pretend to be something it isn't — which puts it ahead of Southern Strokes on pure authenticity. A solid mid-tier pick for members who don't need a sprawling archive."
+      },
+      {
+        "slug": "athletic-twinks",
+        "reason": "Southern Strokes often cast guys with that lean, lightly athletic build — not bodybuilder territory, just naturally fit young men. Athletic Twinks doubles down on exactly that type, with a cast that trends sporty and toned without going full muscle-worship. If the physical archetype was your main draw with Southern Strokes, this is a natural fit. The content is consistent, the niche is well-defined, and you're not going to wade through scenes that don't match what you came for. A focused alternative that earns its place on this shortlist."
+      },
+      {
+        "slug": "hard-brit-lads",
+        "reason": "This one's a deliberate curve ball, but hear us out: Hard Brit Lads occupies the same 'regional flavor' lane that Southern Strokes was going for, just with a UK accent instead of a Southern drawl. If what you actually wanted was a site with a strong sense of place and a distinct type of guy — rather than specifically American content — Hard Brit Lads delivers that identity more convincingly than Southern Strokes does. The lads are real, the attitude is distinct, and the update consistency is better. Worth a look if geography wasn't the actual selling point for you."
+      }
+    ],
+    "verdict": "Southern Strokes had a compelling pitch — regional character, approachable guys, unpretentious production — but in 2026 it's hard to recommend when the alternatives are this competitive. Helix Studios is the clear step-up for most members, delivering the same core demographic with dramatically more content and better production. Next Door Twink is the closest like-for-like swap if you want to stay in familiar territory. Athletic Twinks and Twinks in Shorts are smart picks for members who valued the physical type over everything else. Any of these five will give you more bang for your membership dollar than Southern Strokes is currently offering.",
+    "meta_description": "Looking for better options than Southern Strokes? We picked the 5 best alternatives for twink and boy-next-door content in 2026, ranked and reviewed honestly.",
+    "faq": [
+      {
+        "question": "Is Southern Strokes still worth joining in 2026?",
+        "answer": "Honestly, it's hard to recommend as a primary membership. The back-catalog has some charm, but update frequency has been a persistent complaint and the pricing doesn't reflect the value gap between Southern Strokes and more active competitors. If you're curious, wait for a discounted trial — don't commit to a long-term subscription before you've tested the current state of the site."
+      },
+      {
+        "question": "Which Southern Strokes alternative is best if I want the same type of guys?",
+        "answer": "Next Door Twink is the closest match on model type — lean, young, and conventionally attractive without being over-styled. Helix Studios is the better all-around value with a much larger library of similar performers. If a specific physical build (slim and lightly athletic) was your main draw, Athletic Twinks is worth bookmarking as well."
+      }
+    ]
+  },
 };
 
 export const getAlternativesBody = (slug: string): AlternativesBody | undefined =>
