@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-01T12:05:43.525Z",
+  "generated_at": "2026-06-02T11:37:05.533Z",
   "summary": {
     "routes": 411,
     "clientOnlyCount": 0,
@@ -55,9 +55,9 @@
       {
         "type": "other",
         "count": 20,
-        "median": 531,
+        "median": 715,
         "min": 380,
-        "max": 900,
+        "max": 1659,
         "flagCounts": {},
         "allClientOnly": false
       },
@@ -3892,8 +3892,8 @@
     {
       "route": "/is-nakedsword-worth-it",
       "pageType": "other",
-      "fileSize": 32610,
-      "bodyWordCount": 389,
+      "fileSize": 41900,
+      "bodyWordCount": 1659,
       "metaTitle": "Is NakedSword Worth It? (2026 Review) | TwinkVault",
       "metaDescription": "Honest answer to \"is NakedSword worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,

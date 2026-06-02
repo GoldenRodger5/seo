@@ -1,4 +1,4 @@
-# Content Audit Report — 2026-06-01
+# Content Audit Report — 2026-06-02
 
 ## Critical findings
 
@@ -35,7 +35,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | review | 64 | 1046 | 728 | 1309 | HEALTHY |
 | landing | 28 | 960 | 226 | 4242 | HEALTHY |
 | niche | 21 | 642 | 486 | 2073 | HEALTHY |
-| other | 20 | 531 | 380 | 900 | HEALTHY |
+| other | 20 | 715 | 380 | 1659 | HEALTHY |
 | legal | 6 | 759 | 358 | 1003 | HEALTHY |
 | blog | 6 | 1673 | 1480 | 1826 | HEALTHY |
 | category | 6 | 1112 | 389 | 1919 | HEALTHY |
@@ -81,7 +81,6 @@ Sorted ascending by body word count. Top 30:
 | /is-athletic-twinks-worth-it | other | 380 | 31.5 |  |
 | /is-twinks-in-shorts-worth-it | other | 384 | 31.5 |  |
 | /category/free-trials | category | 389 | 40.0 |  |
-| /is-nakedsword-worth-it | other | 389 | 31.8 |  |
 | /is-southern-strokes-worth-it | other | 390 | 31.5 |  |
 | /is-rawhole-worth-it | other | 393 | 31.8 |  |
 | /is-peterfever-worth-it | other | 395 | 31.8 |  |
@@ -99,6 +98,7 @@ Sorted ascending by body word count. Top 30:
 | /gay-porn-sites-ranked | other | 531 | 116.3 |  |
 | /category/mobile-friendly | category | 552 | 65.2 |  |
 | /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 50.9 |  |
+| /compare/bigstr-vs-twinktrade | compare | 562 | 51.2 |  |
 
 ## Auto-generation pipeline assessment
 
