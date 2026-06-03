@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-02T11:37:05.533Z",
+  "generated_at": "2026-06-03T11:45:04.974Z",
   "summary": {
     "routes": 411,
     "clientOnlyCount": 0,
@@ -55,9 +55,9 @@
       {
         "type": "other",
         "count": 20,
-        "median": 715,
+        "median": 725,
         "min": 380,
-        "max": 1659,
+        "max": 1976,
         "flagCounts": {},
         "allClientOnly": false
       },
@@ -3940,8 +3940,8 @@
     {
       "route": "/is-sean-cody-worth-it",
       "pageType": "other",
-      "fileSize": 33060,
-      "bodyWordCount": 445,
+      "fileSize": 44120,
+      "bodyWordCount": 1976,
       "metaTitle": "Is Sean Cody Worth It? (2026 Review) | TwinkVault",
       "metaDescription": "Honest answer to \"is Sean Cody worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
