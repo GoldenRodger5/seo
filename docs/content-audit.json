@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-03T11:45:04.974Z",
+  "generated_at": "2026-06-04T11:11:10.011Z",
   "summary": {
     "routes": 411,
     "clientOnlyCount": 0,
@@ -55,9 +55,9 @@
       {
         "type": "other",
         "count": 20,
-        "median": 725,
+        "median": 727,
         "min": 380,
-        "max": 1976,
+        "max": 2021,
         "flagCounts": {},
         "allClientOnly": false
       },
@@ -3868,8 +3868,8 @@
     {
       "route": "/is-helix-studios-worth-it",
       "pageType": "other",
-      "fileSize": 32839,
-      "bodyWordCount": 400,
+      "fileSize": 44427,
+      "bodyWordCount": 2021,
       "metaTitle": "Is Helix Studios Worth It? (2026 Review) | TwinkVault",
       "metaDescription": "Honest answer to \"is Helix Studios worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,

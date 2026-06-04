@@ -1,4 +1,4 @@
-# Content Audit Report — 2026-06-03
+# Content Audit Report — 2026-06-04
 
 ## Critical findings
 
@@ -35,7 +35,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | review | 64 | 1046 | 728 | 1309 | HEALTHY |
 | landing | 28 | 960 | 226 | 4242 | HEALTHY |
 | niche | 21 | 642 | 486 | 2073 | HEALTHY |
-| other | 20 | 725 | 380 | 1976 | HEALTHY |
+| other | 20 | 727 | 380 | 2021 | HEALTHY |
 | legal | 6 | 759 | 358 | 1003 | HEALTHY |
 | blog | 6 | 1673 | 1480 | 1826 | HEALTHY |
 | category | 6 | 1112 | 389 | 1919 | HEALTHY |
@@ -84,7 +84,6 @@ Sorted ascending by body word count. Top 30:
 | /is-southern-strokes-worth-it | other | 390 | 31.5 |  |
 | /is-rawhole-worth-it | other | 393 | 31.8 |  |
 | /is-peterfever-worth-it | other | 395 | 31.8 |  |
-| /is-helix-studios-worth-it | other | 400 | 32.1 |  |
 | /compare | landing | 413 | 31.4 | THIN_LANDING |
 | /is-sayuncle-worth-it | other | 422 | 31.9 |  |
 | /is-men-worth-it | other | 438 | 32.2 |  |
@@ -99,6 +98,7 @@ Sorted ascending by body word count. Top 30:
 | /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 50.9 |  |
 | /compare/bigstr-vs-twinktrade | compare | 562 | 51.2 |  |
 | /compare/bigstr-vs-rawhole | compare | 564 | 51.1 |  |
+| /compare/bigstr-vs-dudesraw | compare | 565 | 51.1 |  |
 
 ## Auto-generation pipeline assessment
 
