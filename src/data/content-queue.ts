@@ -329,7 +329,7 @@ const backlogEntries: SupportingQueueEntry[] = [
   { title: "Is NakedSword Worth It?", slug: "nakedsword", content_type: "isworthit", target_keyword: "is nakedsword worth it", related_sites: ["nakedsword"], priority: 86, status: "published" },
   { title: "Is Sean Cody Worth It?", slug: "sean-cody", content_type: "isworthit", target_keyword: "is sean cody worth it", related_sites: ["sean-cody"], priority: 85, status: "published" },
   { title: "Is Helix Studios Worth It?", slug: "helix-studios", content_type: "isworthit", target_keyword: "is helix studios worth it", related_sites: ["helix-studios"], priority: 84, status: "published" },
-  { title: "Is Men.com Worth It?", slug: "men", content_type: "isworthit", target_keyword: "is men.com worth it", related_sites: ["men"], priority: 83, status: "queued" },
+  { title: "Is Men.com Worth It?", slug: "men", content_type: "isworthit", target_keyword: "is men.com worth it", related_sites: ["men"], priority: 83, status: "published" },
   { title: "Is Twinks in Shorts Worth It?", slug: "twinks-in-shorts", content_type: "isworthit", target_keyword: "is twinks in shorts worth it", related_sites: ["twinks-in-shorts"], priority: 82, status: "queued" },
   { title: "Is Southern Strokes Worth It?", slug: "southern-strokes", content_type: "isworthit", target_keyword: "is southern strokes worth it", related_sites: ["southern-strokes"], priority: 81, status: "queued" },
   { title: "Is PeterFever Worth It?", slug: "peterfever", content_type: "isworthit", target_keyword: "is peterfever worth it", related_sites: ["peterfever"], priority: 80, status: "queued" },

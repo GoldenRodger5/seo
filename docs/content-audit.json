@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-04T11:11:10.011Z",
+  "generated_at": "2026-06-06T10:44:26.704Z",
   "summary": {
     "routes": 411,
     "clientOnlyCount": 0,
@@ -55,7 +55,7 @@
       {
         "type": "other",
         "count": 20,
-        "median": 727,
+        "median": 747,
         "min": 380,
         "max": 2021,
         "flagCounts": {},
@@ -3880,8 +3880,8 @@
     {
       "route": "/is-men-worth-it",
       "pageType": "other",
-      "fileSize": 33015,
-      "bodyWordCount": 438,
+      "fileSize": 43442,
+      "bodyWordCount": 1894,
       "metaTitle": "Is Men.com Worth It? (2026 Review) | TwinkVault",
       "metaDescription": "Honest answer to \"is Men.com worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
