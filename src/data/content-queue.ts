@@ -331,7 +331,7 @@ const backlogEntries: SupportingQueueEntry[] = [
   { title: "Is Helix Studios Worth It?", slug: "helix-studios", content_type: "isworthit", target_keyword: "is helix studios worth it", related_sites: ["helix-studios"], priority: 84, status: "published" },
   { title: "Is Men.com Worth It?", slug: "men", content_type: "isworthit", target_keyword: "is men.com worth it", related_sites: ["men"], priority: 83, status: "published" },
   { title: "Is Twinks in Shorts Worth It?", slug: "twinks-in-shorts", content_type: "isworthit", target_keyword: "is twinks in shorts worth it", related_sites: ["twinks-in-shorts"], priority: 82, status: "published" },
-  { title: "Is Southern Strokes Worth It?", slug: "southern-strokes", content_type: "isworthit", target_keyword: "is southern strokes worth it", related_sites: ["southern-strokes"], priority: 81, status: "queued" },
+  { title: "Is Southern Strokes Worth It?", slug: "southern-strokes", content_type: "isworthit", target_keyword: "is southern strokes worth it", related_sites: ["southern-strokes"], priority: 81, status: "published" },
   { title: "Is PeterFever Worth It?", slug: "peterfever", content_type: "isworthit", target_keyword: "is peterfever worth it", related_sites: ["peterfever"], priority: 80, status: "queued" },
 
   // Days 22-30 — Guides (priority 79 → 71)

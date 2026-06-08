@@ -1,4 +1,4 @@
-# Content Audit Report — 2026-06-07
+# Content Audit Report — 2026-06-08
 
 ## Critical findings
 
@@ -35,7 +35,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | review | 64 | 1046 | 728 | 1309 | HEALTHY |
 | landing | 28 | 960 | 226 | 4242 | HEALTHY |
 | niche | 21 | 642 | 486 | 2073 | HEALTHY |
-| other | 20 | 783 | 380 | 2021 | HEALTHY |
+| other | 20 | 786 | 380 | 2021 | HEALTHY |
 | legal | 6 | 759 | 358 | 1003 | HEALTHY |
 | blog | 6 | 1673 | 1480 | 1826 | HEALTHY |
 | category | 6 | 1112 | 389 | 1919 | HEALTHY |
@@ -80,7 +80,6 @@ Sorted ascending by body word count. Top 30:
 | /affiliate-disclosure | legal | 366 | 18.8 |  |
 | /is-athletic-twinks-worth-it | other | 380 | 31.5 |  |
 | /category/free-trials | category | 389 | 40.0 |  |
-| /is-southern-strokes-worth-it | other | 390 | 31.5 |  |
 | /is-rawhole-worth-it | other | 393 | 31.8 |  |
 | /is-peterfever-worth-it | other | 395 | 31.8 |  |
 | /compare | landing | 413 | 31.4 | THIN_LANDING |
@@ -99,6 +98,7 @@ Sorted ascending by body word count. Top 30:
 | /compare/bigstr-vs-dudesraw | compare | 565 | 51.1 |  |
 | /compare/alternadudes-vs-bigstr | compare | 566 | 51.4 |  |
 | /compare/bigstr-vs-trailertrashboys | compare | 568 | 51.5 |  |
+| /compare/dudesraw-vs-spicevidsgay | compare | 570 | 52.1 |  |
 
 ## Auto-generation pipeline assessment
 

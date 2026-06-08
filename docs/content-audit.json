@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-07T10:51:50.129Z",
+  "generated_at": "2026-06-08T11:44:01.275Z",
   "summary": {
     "routes": 411,
     "clientOnlyCount": 0,
@@ -55,7 +55,7 @@
       {
         "type": "other",
         "count": 20,
-        "median": 783,
+        "median": 786,
         "min": 380,
         "max": 2021,
         "flagCounts": {},
@@ -3952,8 +3952,8 @@
     {
       "route": "/is-southern-strokes-worth-it",
       "pageType": "other",
-      "fileSize": 32288,
-      "bodyWordCount": 390,
+      "fileSize": 42161,
+      "bodyWordCount": 1774,
       "metaTitle": "Is Southern Strokes Worth It? (2026 Review) | TwinkVault",
       "metaDescription": "Honest answer to \"is Southern Strokes worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,
