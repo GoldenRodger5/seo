@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-08T11:44:01.275Z",
+  "generated_at": "2026-06-09T11:10:08.201Z",
   "summary": {
     "routes": 411,
     "clientOnlyCount": 0,
@@ -55,7 +55,7 @@
       {
         "type": "other",
         "count": 20,
-        "median": 786,
+        "median": 792,
         "min": 380,
         "max": 2021,
         "flagCounts": {},
@@ -3904,8 +3904,8 @@
     {
       "route": "/is-peterfever-worth-it",
       "pageType": "other",
-      "fileSize": 32592,
-      "bodyWordCount": 395,
+      "fileSize": 42317,
+      "bodyWordCount": 1811,
       "metaTitle": "Is PeterFever Worth It? (2026 Review) | TwinkVault",
       "metaDescription": "Honest answer to \"is PeterFever worth it\" — score breakdown, monthly vs annual pricing, real pros and cons, and the bottom line.",
       "hasReviewSchema": false,

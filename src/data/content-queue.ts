@@ -332,7 +332,7 @@ const backlogEntries: SupportingQueueEntry[] = [
   { title: "Is Men.com Worth It?", slug: "men", content_type: "isworthit", target_keyword: "is men.com worth it", related_sites: ["men"], priority: 83, status: "published" },
   { title: "Is Twinks in Shorts Worth It?", slug: "twinks-in-shorts", content_type: "isworthit", target_keyword: "is twinks in shorts worth it", related_sites: ["twinks-in-shorts"], priority: 82, status: "published" },
   { title: "Is Southern Strokes Worth It?", slug: "southern-strokes", content_type: "isworthit", target_keyword: "is southern strokes worth it", related_sites: ["southern-strokes"], priority: 81, status: "published" },
-  { title: "Is PeterFever Worth It?", slug: "peterfever", content_type: "isworthit", target_keyword: "is peterfever worth it", related_sites: ["peterfever"], priority: 80, status: "queued" },
+  { title: "Is PeterFever Worth It?", slug: "peterfever", content_type: "isworthit", target_keyword: "is peterfever worth it", related_sites: ["peterfever"], priority: 80, status: "published" },
 
   // Days 22-30 — Guides (priority 79 → 71)
   { title: "How To Cancel Gay Porn Site Subscriptions", slug: "guide/how-to-cancel-gay-porn-subscriptions", content_type: "guide", target_keyword: "cancel gay porn subscription", related_sites: TOP_10_SLUGS, priority: 79, status: "queued" },
