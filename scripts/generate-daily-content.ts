@@ -882,7 +882,11 @@ function commitAndPush(message: string): string {
 async function pingGoogle(url: string): Promise<boolean> {
   const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
   if (!raw) {
-    log.warn("GOOGLE_SERVICE_ACCOUNT_JSON not set — skipping Google ping");
+    // Loud failure — visible in the Action summary, not buried in a warn.
+    // After the June 2026 crawl-block incident, silently skipping these
+    // pings while the site needs every crawl signal possible is the
+    // wrong default. See docs/seo-pipeline-setup.md for setup.
+    log.err("🚨 GOOGLE_SERVICE_ACCOUNT_JSON is NOT SET — Google Indexing API ping skipped. Google won't be nudged to crawl new content. Set this secret in GitHub Actions → Repository Secrets. See docs/seo-pipeline-setup.md.");
     return false;
   }
   try {
@@ -909,7 +913,7 @@ async function pingGoogle(url: string): Promise<boolean> {
 async function pingBing(url: string): Promise<boolean> {
   const key = process.env.BING_INDEXNOW_KEY;
   if (!key) {
-    log.warn("BING_INDEXNOW_KEY not set — skipping Bing ping");
+    log.err("🚨 BING_INDEXNOW_KEY is NOT SET — Bing IndexNow ping skipped. Set this secret in GitHub Actions → Repository Secrets, and host the same key at https://twinkvault.com/{key}.txt. See docs/seo-pipeline-setup.md.");
     return false;
   }
   try {
