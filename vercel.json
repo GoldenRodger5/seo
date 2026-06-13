@@ -1,10 +1,17 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "crons": [
     { "path": "/api/cron/gsc-sync", "schedule": "0 4 * * *" }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "comment": "SPA fallback. Excludes: any path with a file extension (covers robots.txt, sitemap.xml, blog-sitemap.xml, *.html, *.js, *.css, *.png, etc.), /assets/, /api/, and a few named files. cleanUrls: true means Vercel resolves extensionless routes (e.g. /reviews/helix-studios) to dist/reviews/helix-studios/index.html via the filesystem BEFORE this rewrite is evaluated, so SSG-prerendered routes serve their per-route HTML — only genuinely client-only routes (admin, etc.) fall through to the root shell.",
+      "source": "/((?!api/|assets/|.*\\.[a-zA-Z0-9]+$).*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
@@ -20,16 +27,24 @@
       ]
     },
     {
+      "source": "/robots.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
       "source": "/sitemap.xml",
       "headers": [
-        { "key": "Content-Type", "value": "application/xml" },
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=86400" }
       ]
     },
     {
-      "source": "/robots.txt",
+      "source": "/blog-sitemap.xml",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=86400" }
       ]
     },
     {

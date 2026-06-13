@@ -1,23 +1,27 @@
+# robots.txt for twinkvault.com
 User-agent: *
 Allow: /
-Disallow: /go/
-Disallow: /admin/
-Disallow: /admin
 
+# Block internal/utility routes that shouldn't be indexed
+Disallow: /admin
+Disallow: /admin/
+Disallow: /go/
+Disallow: /api/
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+
+# Allow all major search + social crawlers explicitly
 User-agent: Googlebot
 Allow: /
-Disallow: /go/
-Disallow: /admin/
 Disallow: /admin
+Disallow: /admin/
+Disallow: /go/
 
 User-agent: Bingbot
 Allow: /
-Disallow: /go/
-Disallow: /admin/
 Disallow: /admin
+Disallow: /admin/
+Disallow: /go/
 
 Sitemap: https://twinkvault.com/sitemap.xml
 Sitemap: https://twinkvault.com/blog-sitemap.xml
-
-# Crawl-delay for polite crawling (ignored by Google, respected by Bing/others)
-Crawl-delay: 1
