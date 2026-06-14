@@ -34,7 +34,60 @@ interface RouteAudit {
   hasReviewSchema: boolean;
   hasFaqSchema: boolean;
   hasBreadcrumbSchema: boolean;
+  /** All internal link targets found on the page (normalized paths). Used to
+   *  build the inbound-link graph for ORPHAN_PAGE detection. */
+  internalLinks: string[];
   flags: string[];
+}
+
+/**
+ * Editorial word-count floors (WARN, not crawl-breaking). These sit ABOVE
+ * the THIN_* minimums — THIN_* catches genuinely empty pages; WORD_COUNT_LOW
+ * catches pages that render but fall short of the editorial target.
+ * "niche-landing" = niche/category landing pages.
+ */
+const WORD_COUNT_FLOOR: Record<string, number> = {
+  guide: 1000,
+  review: 800,
+  compare: 600,
+  alternatives: 600,
+  niche: 800,
+  category: 800,
+};
+
+/** Normalize an href to a comparable internal path (or null if external). */
+function normalizeInternalHref(href: string): string | null {
+  if (!href.startsWith("/")) return null;
+  let h = href.split("#")[0].split("?")[0];
+  if (h.length > 1) h = h.replace(/\/+$/, "");
+  return h || null;
+}
+
+/** All distinct internal link targets anywhere in the HTML. */
+function extractInternalLinks(html: string): string[] {
+  const out = new Set<string>();
+  const re = /<a\s[^>]*href="([^"]+)"/gi;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(html))) {
+    const h = normalizeInternalHref(m[1]);
+    if (h) out.add(h);
+  }
+  return [...out];
+}
+
+/** Distinct internal links inside the main <article>/<main> region only —
+ *  i.e. contextual body links, excluding nav/footer chrome. */
+function countBodyInternalLinks(html: string): number | null {
+  const m = html.match(/<article[\s\S]*?<\/article>/i) ?? html.match(/<main[\s\S]*?<\/main>/i);
+  if (!m) return null;
+  const set = new Set<string>();
+  const re = /<a\s[^>]*href="(\/[^"]*)"/gi;
+  let mm: RegExpExecArray | null;
+  while ((mm = re.exec(m[0]))) {
+    const h = normalizeInternalHref(mm[1]);
+    if (h && h !== "/") set.add(h);
+  }
+  return set.size;
 }
 
 const THRESHOLDS: Record<string, { target: number; minimum: number; flag: string }> = {
@@ -59,6 +112,9 @@ function classifyRoute(route: string): string {
   if (route.startsWith("/discount/")) return "discount";
   if (route.startsWith("/niche/")) return "niche";
   if (route.startsWith("/category/")) return "category";
+  if (route === "/guides") return "landing";       // guide index hub
+  if (route.startsWith("/guide/")) return "guide";  // individual guide article
+  if (route.startsWith("/alternatives/")) return "alternatives";
   // /blog/category/* is a listing page (cards of posts), not a blog post.
   // Classifying it as blog applied the 700-word minimum to a card grid.
   if (route.startsWith("/blog/category/")) return "landing";
@@ -268,7 +324,33 @@ async function auditRoute(absPath: string): Promise<RouteAudit> {
   // gay-porn-billing-guide FAQ field-name drift at build time.
   if (hasEmptyFaqEntries(html)) flags.push("EMPTY_FAQ");
 
-  return { route, pageType, fileSize: stat.size, bodyWordCount, bodyText, metaTitle, metaDescription, hasReviewSchema, hasFaqSchema, hasBreadcrumbSchema, flags };
+  // ── Editorial-quality WARN flags (non-crawl-breaking) ──────────────────
+  // WORD_COUNT_LOW: renders fine but below the editorial target for its type.
+  const floor = WORD_COUNT_FLOOR[pageType];
+  if (floor && bodyWordCount >= 100 && bodyWordCount < floor) flags.push("WORD_COUNT_LOW");
+
+  // NO_IMAGES: a guide/article page with no in-body content image (hero or
+  // otherwise). Chrome SVGs/logos don't count — we look for the content
+  // image directories specifically.
+  const hasContentImage = /<img[^>]+src="[^"]*\/(site-banners|niche-covers|blog)\//i.test(html);
+  if ((pageType === "guide" || pageType === "blog") && !hasContentImage) flags.push("NO_IMAGES");
+
+  // LOW_INTERNAL_LINKS: fewer than 3 contextual internal links in the article
+  // body (excludes nav/footer). Only meaningful for prose article types.
+  if (pageType === "guide" || pageType === "blog") {
+    const bodyLinks = countBodyInternalLinks(html);
+    if (bodyLinks !== null && bodyLinks < 3) flags.push("LOW_INTERNAL_LINKS");
+  }
+
+  // MISSING_OG_IMAGE: og:image still points at the generic favicon.
+  const ogImage = extractMeta(html, "og:image");
+  if ((pageType === "guide" || pageType === "blog") && (/pwa-\d+\.png(\?|$)/i.test(ogImage) || ogImage === "")) {
+    flags.push("MISSING_OG_IMAGE");
+  }
+
+  const internalLinks = extractInternalLinks(html);
+
+  return { route, pageType, fileSize: stat.size, bodyWordCount, bodyText, metaTitle, metaDescription, hasReviewSchema, hasFaqSchema, hasBreadcrumbSchema, internalLinks, flags };
 }
 
 interface SourceContentStat {
@@ -357,6 +439,22 @@ async function main() {
 
   const audits: RouteAudit[] = [];
   for (const f of files) audits.push(await auditRoute(f));
+
+  // ORPHAN_PAGE: a content page reachable only via the sitemap — i.e. no
+  // OTHER prerendered route links to it. Build the inbound-link graph from
+  // every page's internal links, then flag content pages with zero inbound.
+  const inbound = new Map<string, number>();
+  for (const a of audits) {
+    for (const href of a.internalLinks) {
+      if (href === a.route) continue; // self-links don't count
+      inbound.set(href, (inbound.get(href) ?? 0) + 1);
+    }
+  }
+  const ORPHAN_CHECK_TYPES = new Set(["review", "compare", "discount", "niche", "category", "guide", "alternatives", "blog"]);
+  for (const a of audits) {
+    if (!ORPHAN_CHECK_TYPES.has(a.pageType)) continue;
+    if ((inbound.get(a.route) ?? 0) === 0) a.flags.push("ORPHAN_PAGE");
+  }
 
   // Group by pageType
   const byType = new Map<string, RouteAudit[]>();

@@ -120,7 +120,7 @@ async function pingBing(urls: string[], dryRun: boolean): Promise<{ ok: number; 
     const r = await fetch("https://www.bing.com/indexnow", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ host: "twinkvault.com", key, urlList: urls }),
+      body: JSON.stringify({ host: "twinkvault.com", key, keyLocation: `https://twinkvault.com/${key}.txt`, urlList: urls }),
     });
     if (r.ok) {
       console.log(`  ✓ Bing IndexNow accepted batch of ${urls.length} URLs (${r.status})`);

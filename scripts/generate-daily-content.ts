@@ -42,6 +42,8 @@ import {
   type SupportingContentType,
 } from "../src/data/content-queue.js";
 import { sites, type SiteData } from "../src/data/sites.js";
+import { selectGuideHero } from "../src/lib/guideImagery.js";
+import { countProseLinks } from "../src/lib/proseLinker.js";
 
 // ---------------------------------------------------------------------------
 // Constants & paths
@@ -567,7 +569,90 @@ function qualityGate(content: Record<string, unknown>, contentType: ContentTypeK
     if (wc < 400) errors.push(`discount word count ${wc} < 400`);
   }
 
+  if (contentType === "guide") {
+    const sections = Array.isArray(content.sections) ? (content.sections as { content?: string }[]) : [];
+    const wc = wordCount(
+      [content.intro, ...sections.map((s) => s?.content ?? ""), content.conclusion]
+        .filter((x): x is string => typeof x === "string")
+        .join(" "),
+    );
+    if (wc < 1000) errors.push(`guide word count ${wc} < 1000`);
+    const faq = content.faq as unknown[] | undefined;
+    if (!faq || faq.length < 3) errors.push("guide faq has < 3 entries");
+  }
+
   return { ok: errors.length === 0, errors };
+}
+
+// Body word count for the quality log line, per content type.
+function bodyWordsFor(content: Record<string, unknown>, contentType: ContentTypeKey): number {
+  const join = (...keys: string[]) =>
+    wordCount(keys.map((k) => content[k]).filter((v): v is string => typeof v === "string").join(" "));
+  if (contentType === "review") return join("review_body_p1", "review_body_p2", "review_body_p3", "review_body_p4");
+  if (contentType === "discount") return join("intro_paragraph", "body_p1", "body_p2", "body_p3");
+  if (contentType === "guide") {
+    const sections = Array.isArray(content.sections) ? (content.sections as { content?: string }[]) : [];
+    return wordCount(
+      [content.intro, ...sections.map((s) => s?.content ?? ""), content.conclusion]
+        .filter((x): x is string => typeof x === "string")
+        .join(" "),
+    );
+  }
+  return wordCount(JSON.stringify(content));
+}
+
+const SCHEMA_BY_TYPE: Record<string, string> = {
+  review: "Review,Product,BreadcrumbList,FAQPage",
+  guide: "Article,BreadcrumbList,FAQPage",
+  comparison: "Product,Review,ItemList,BreadcrumbList,FAQPage",
+  alternatives: "ItemList,BreadcrumbList",
+  isworthit: "Article,BreadcrumbList,FAQPage",
+  discount: "Product,BreadcrumbList,FAQPage",
+};
+
+/**
+ * Emit the per-run [content][quality] summary line, e.g.:
+ *   [content][quality] type=guide slug=… words=1861 images=1 ilinks=6
+ *     schema=Article,BreadcrumbList,FAQPage faqs=5 title=44c desc=159c
+ *     ogimg=hero → PASS
+ */
+function logQualityLine(
+  generated: Record<string, unknown>,
+  target: { kind: "review"; entry: ReviewQueueEntry } | { kind: "supporting"; entry: SupportingQueueEntry },
+  contentType: ContentTypeKey,
+  pass: boolean,
+): void {
+  const slug = target.entry.slug;
+  const words = bodyWordsFor(generated, contentType);
+  const faqs = Array.isArray(generated.faq) ? (generated.faq as unknown[]).length : 0;
+  const h1 = (generated.h1 as string) ?? "";
+  const meta = (generated.meta_description as string) ?? "";
+  const schema = SCHEMA_BY_TYPE[contentType] ?? "—";
+
+  let images = 0;
+  let ilinks = Array.isArray(generated.internal_links) ? (generated.internal_links as unknown[]).length : 0;
+  let ogimg = "favicon";
+
+  if (contentType === "guide") {
+    const related = target.kind === "supporting" ? (target.entry.related_sites ?? []) : [];
+    const hero = selectGuideHero(related);
+    images = hero ? 1 : 0;
+    ogimg = hero ? "hero" : "favicon";
+    const sections = Array.isArray(generated.sections) ? (generated.sections as { content?: string }[]) : [];
+    const chunks = [generated.intro, ...sections.map((s) => s?.content ?? ""), generated.conclusion]
+      .filter((x): x is string => typeof x === "string");
+    ilinks = countProseLinks(chunks);
+  } else if (contentType === "review") {
+    ogimg = "fetched"; // og image fetched from the site at persist time
+  }
+
+  // Direct console.log (not log.info) so the line starts exactly with
+  // [content][quality] rather than the doubled "[content] [content][quality]".
+  console.log(
+    `[content][quality] type=${contentType} slug=${slug} words=${words} images=${images} ` +
+    `ilinks=${ilinks} schema=${schema} faqs=${faqs} title=${h1.length}c desc=${meta.length}c ` +
+    `ogimg=${ogimg} → ${pass ? "PASS" : "WARN"}`,
+  );
 }
 
 function wordCount(s: string): number {
@@ -887,6 +972,19 @@ function persistSupportingContent(entry: SupportingQueueEntry, generated: Record
   // model sometimes returns `{question, answer}` (or other variants),
   // which silently ships empty FAQs both visually and in JSON-LD until a
   // human notices. Normalize here so the field-name choice can't drift.
+  // Guides: stamp the hero image (chosen from existing clean site covers) and
+  // the related_sites list onto the body so GuidePage can render the hero,
+  // link it to the depicted site, set og:image, and show "Sites mentioned".
+  if (entry.content_type === "guide") {
+    generated.related_sites = entry.related_sites;
+    const hero = selectGuideHero(entry.related_sites);
+    if (hero) {
+      generated.hero_image = hero.hero_image;
+      generated.hero_alt = hero.hero_alt;
+      generated.hero_site_slug = hero.hero_site_slug;
+    }
+  }
+
   const normalized = normalizeGeneratedFaq(generated);
   upsertContentEntry(binding.file, writeKey, normalized);
 
@@ -1006,20 +1104,64 @@ async function pingGoogle(url: string): Promise<boolean> {
   }
 }
 
+/**
+ * Confirm the IndexNow key file is actually served as the bare key before
+ * pinging. The 403 we hit in production came from this file returning the SPA
+ * HTML shell (when it predated the live deploy) instead of the key — Bing
+ * fetches it to verify ownership and rejects the whole submission if it
+ * doesn't byte-match. Catching it here turns a silent 403 into an actionable
+ * diagnostic instead of a doomed POST.
+ */
+async function verifyIndexNowKeyHosted(key: string, keyUrl: string): Promise<boolean> {
+  try {
+    const r = await fetch(keyUrl, { headers: { "cache-control": "no-cache" } });
+    const ct = r.headers.get("content-type") ?? "";
+    const body = (await r.text()).trim();
+    if (!r.ok) {
+      log.err(`🚨 IndexNow key file ${keyUrl} returned HTTP ${r.status}. Bing will 403 every submission until it serves the bare key.`);
+      return false;
+    }
+    if (ct.includes("text/html") || body !== key) {
+      log.err(
+        `🚨 IndexNow key file ${keyUrl} is NOT serving the bare key (content-type=${ct || "?"}, ` +
+        `${body.length} bytes). It's likely returning the SPA HTML shell because public/${key}.txt ` +
+        `isn't in the live deploy yet. Deploy it and confirm it serves text/plain — Bing rejects key ` +
+        `verification (403) until then. Skipping the Bing ping.`,
+      );
+      return false;
+    }
+    return true;
+  } catch (e) {
+    log.warn(`Could not verify IndexNow key file (${(e as Error).message}); skipping Bing ping to avoid a 403.`);
+    return false;
+  }
+}
+
 async function pingBing(url: string): Promise<boolean> {
   const key = process.env.BING_INDEXNOW_KEY;
   if (!key) {
     log.err("🚨 BING_INDEXNOW_KEY is NOT SET — Bing IndexNow ping skipped. Set this secret in GitHub Actions → Repository Secrets, and host the same key at https://twinkvault.com/{key}.txt. See docs/seo-pipeline-setup.md.");
     return false;
   }
+  const keyUrl = `${BASE_URL}/${key}.txt`;
+  // Pre-flight: a doomed POST against an unverifiable key file is the exact
+  // 403 we saw daily. Verify first, log precisely, and skip if not hosted.
+  if (!(await verifyIndexNowKeyHosted(key, keyUrl))) return false;
   try {
     const r = await fetch("https://www.bing.com/indexnow", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ host: "twinkvault.com", key, urlList: [url] }),
+      // keyLocation is explicit (spec-recommended) so Bing fetches the exact
+      // hosted file rather than guessing the host root.
+      body: JSON.stringify({ host: "twinkvault.com", key, keyLocation: keyUrl, urlList: [url] }),
     });
-    log.info(`Bing ping ${r.ok ? "ok" : "failed"} (${r.status})`);
-    return r.ok;
+    if (!r.ok) {
+      const detail = await r.text().catch(() => "");
+      log.warn(`Bing ping failed (${r.status})${detail ? ` — ${detail.slice(0, 200)}` : ""}`);
+      return false;
+    }
+    log.info(`Bing ping ok (${r.status})`);
+    return true;
   } catch (e) {
     log.warn(`Bing ping failed: ${(e as Error).message}`);
     return false;
@@ -1127,10 +1269,15 @@ async function resolveTarget(flags: Flags): Promise<{ kind: "review"; entry: Rev
   ];
   const index = buildIndex(gscQueries, routes, existingSlugs);
 
-  // Editorial-only cap: count how many editorial-only reviews are
-  // currently live on the site. Cap at 5 per the owner's spec.
+  // Editorial-only cap: limit genuinely non-monetized speculative coverage.
+  // The count keys off editorial_status === "editorial-only" (NOT
+  // editorial_mode === "research-only"), which makes it self-correcting: when
+  // a research-only review gets a real affiliate deal and is flipped to a
+  // normal commercial review, the owner sets editorial_status: "reviewed", so
+  // it stops counting here and frees a slot. Only still-unmonetized pages
+  // count toward the cap. Raised 5 → 8 per the owner's spec.
   const editorialOnlyCurrent = sites.filter((s) => s.editorial_status === "editorial-only").length;
-  const editorialOnlyCap = 5;
+  const editorialOnlyCap = 8;
 
   const reviews = reviewCandidates();
   const supporting = supportingCandidates();
@@ -1241,10 +1388,14 @@ async function main() {
     log.warn(`Attempt ${attempt} failed gate: ${lastErr}`);
   }
 
+  // Per-run quality summary (reflects the final state, PASS or WARN).
+  logQualityLine(generated, target, contentType, gate.ok);
+
   // Distinguish cosmetic gate failures (meta length within 20 chars of the
   // accepted range) from genuinely broken content (missing fields, malformed
   // structure, missing required keys). Cosmetic issues log a warning and
-  // proceed; only genuinely broken content stops the pipeline.
+  // proceed; word-count shortfalls WARN and skip just this page (per spec);
+  // only genuinely broken content stops the pipeline.
   if (!gate.ok) {
     const isCosmetic = (err: string) => {
       if (!err.includes("meta_description length")) return false;
@@ -1254,9 +1405,17 @@ async function main() {
       // Within 20 chars of either end of the 120-200 accepted range.
       return len >= 100 && len <= 220;
     };
+    const isWordCount = (err: string) => /word count \d+ < \d+/.test(err);
     const allCosmetic = gate.errors.every(isCosmetic);
+    const allSkippable = gate.errors.every((e) => isCosmetic(e) || isWordCount(e));
     if (allCosmetic) {
       log.warn(`Quality gate had cosmetic issues (proceeding anyway):\n  ${gate.errors.join("\n  ")}`);
+    } else if (allSkippable) {
+      // Word-count shortfall survived the retry. Don't publish a thin page,
+      // but don't paint the run red either — skip and let a future run retry.
+      log.warn(`Word count below floor after ${MAX_ATTEMPTS} attempts — skipping this page (not publishing):\n  ${gate.errors.join("\n  ")}`);
+      if (flags.dryRun) log.json("Skipped JSON", generated);
+      process.exit(0);
     } else {
       log.err(`Quality gate failed (genuine content issues):\n  ${gate.errors.join("\n  ")}`);
       if (flags.dryRun) log.json("Failed JSON", generated);

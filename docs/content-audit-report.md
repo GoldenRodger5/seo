@@ -2,7 +2,7 @@
 
 ## Critical findings
 
-**🚨 0 / 413 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 414 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -30,22 +30,28 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Page type | Count | Median body words (prerendered) | Min | Max | Verdict |
 | --- | ---: | ---: | ---: | ---: | --- |
-| compare | 190 | 628 | 557 | 1957 | HEALTHY |
-| discount | 64 | 759 | 698 | 813 | HEALTHY |
-| review | 64 | 1046 | 728 | 1309 | HEALTHY |
-| landing | 28 | 960 | 226 | 4242 | HEALTHY |
-| other | 22 | 888 | 380 | 2132 | HEALTHY |
-| niche | 21 | 642 | 486 | 2073 | HEALTHY |
-| legal | 6 | 759 | 358 | 1003 | HEALTHY |
-| blog | 6 | 1673 | 1480 | 1826 | HEALTHY |
-| category | 6 | 1112 | 389 | 1919 | HEALTHY |
-| utility | 5 | 273 | 231 | 10399 | HEALTHY |
-| homepage | 1 | 649 | 649 | 649 | HEALTHY |
+| compare | 190 | 630 | 559 | 1959 | HEALTHY |
+| discount | 64 | 835 | 774 | 889 | HEALTHY |
+| review | 64 | 1048 | 730 | 1311 | HEALTHY |
+| landing | 29 | 941 | 228 | 4244 | HEALTHY |
+| niche | 21 | 644 | 488 | 2075 | HEALTHY |
+| other | 16 | 902 | 382 | 2023 | HEALTHY |
+| legal | 6 | 761 | 360 | 1005 | HEALTHY |
+| blog | 6 | 1675 | 1482 | 1828 | HEALTHY |
+| category | 6 | 1114 | 391 | 1921 | HEALTHY |
+| utility | 5 | 275 | 233 | 10401 | HEALTHY |
+| alternatives | 4 | 729 | 717 | 749 | HEALTHY |
+| guide | 2 | 2220 | 2056 | 2220 | HEALTHY |
+| homepage | 1 | 651 | 651 | 651 | HEALTHY |
 
 ## Flag breakdown across all routes
 
 | Flag | Count |
 | --- | ---: |
+| WORD_COUNT_LOW | 68 |
+| ORPHAN_PAGE | 7 |
+| NO_IMAGES | 6 |
+| MISSING_OG_IMAGE | 6 |
 | THIN_LANDING | 6 |
 | THIN_TITLE | 2 |
 
@@ -61,7 +67,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 - **Page count:** 64
 - **AI content rendering:** `AI_CONTENT_CLIENT_ONLY`. Static reviewBodies map exists with ~275 median words per site, but the prose only mounts into the DOM after `useAIReview` runs client-side.
-- **Prerendered body word counts:** every review page is in the 728–1309 word range (NoScript + page chrome only).
+- **Prerendered body word counts:** every review page is in the 730–1311 word range (NoScript + page chrome only).
 
 ## Worst-offender routes (smallest prerendered body)
 
@@ -69,36 +75,36 @@ Sorted ascending by body word count. Top 30:
 
 | Route | Type | Body words | File size (KB) | Flags |
 | --- | --- | ---: | ---: | --- |
-| /blog/category/industry | landing | 226 | 18.8 | THIN_LANDING |
-| /find-my-site | utility | 231 | 18.5 |  |
-| /contact | utility | 254 | 20.9 |  |
-| /blog/category/money | landing | 270 | 20.9 | THIN_LANDING |
-| /ask-ai | utility | 273 | 21.5 |  |
-| /blog/category/comparisons | landing | 290 | 22.5 | THIN_LANDING |
-| /blog/category/guides | landing | 355 | 24.5 | THIN_LANDING |
-| /2257 | legal | 358 | 18.8 |  |
-| /affiliate-disclosure | legal | 366 | 18.8 |  |
-| /is-athletic-twinks-worth-it | other | 380 | 31.5 |  |
-| /category/free-trials | category | 389 | 40.0 |  |
-| /is-rawhole-worth-it | other | 393 | 31.8 |  |
-| /compare | landing | 413 | 31.4 | THIN_LANDING |
-| /is-sayuncle-worth-it | other | 422 | 31.9 |  |
-| /niche/military | niche | 486 | 31.0 |  |
-| /blog | landing | 489 | 31.3 | THIN_LANDING |
-| /niche/latin | niche | 495 | 30.9 |  |
-| /niche/big-dick | niche | 508 | 30.9 |  |
-| /niche/uncut | niche | 529 | 34.7 |  |
-| /niche/solo | niche | 530 | 35.0 |  |
-| /gay-porn-sites-ranked | other | 531 | 116.3 |  |
-| /category/mobile-friendly | category | 552 | 65.2 |  |
-| /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 51.8 |  |
-| /compare/bigstr-vs-twinktrade | compare | 562 | 52.1 |  |
-| /compare/bigstr-vs-rawhole | compare | 564 | 51.9 |  |
-| /compare/bigstr-vs-dudesraw | compare | 565 | 52.0 |  |
-| /compare/alternadudes-vs-bigstr | compare | 566 | 52.2 |  |
-| /compare/bigstr-vs-trailertrashboys | compare | 568 | 52.4 |  |
-| /compare/dudesraw-vs-spicevidsgay | compare | 570 | 52.9 |  |
-| /free-trial-twink-sites | landing | 571 | 43.5 |  |
+| /blog/category/industry | landing | 228 | 19.0 | THIN_LANDING |
+| /find-my-site | utility | 233 | 18.7 |  |
+| /contact | utility | 256 | 21.1 |  |
+| /blog/category/money | landing | 272 | 21.1 | THIN_LANDING |
+| /ask-ai | utility | 275 | 21.7 |  |
+| /blog/category/comparisons | landing | 292 | 22.7 | THIN_LANDING |
+| /blog/category/guides | landing | 357 | 24.7 | THIN_LANDING |
+| /2257 | legal | 360 | 19.0 |  |
+| /affiliate-disclosure | legal | 368 | 19.0 |  |
+| /is-athletic-twinks-worth-it | other | 382 | 31.7 |  |
+| /category/free-trials | category | 391 | 40.2 | WORD_COUNT_LOW |
+| /is-rawhole-worth-it | other | 395 | 32.0 |  |
+| /compare | landing | 415 | 31.6 | THIN_LANDING |
+| /is-sayuncle-worth-it | other | 424 | 32.1 |  |
+| /niche/military | niche | 488 | 31.2 | WORD_COUNT_LOW |
+| /blog | landing | 491 | 31.5 | THIN_LANDING |
+| /niche/latin | niche | 497 | 31.1 | WORD_COUNT_LOW |
+| /niche/big-dick | niche | 510 | 31.1 | WORD_COUNT_LOW |
+| /niche/uncut | niche | 531 | 34.9 | WORD_COUNT_LOW |
+| /niche/solo | niche | 532 | 35.2 | WORD_COUNT_LOW |
+| /gay-porn-sites-ranked | other | 533 | 116.5 |  |
+| /guides | landing | 539 | 23.7 |  |
+| /category/mobile-friendly | category | 554 | 65.4 | WORD_COUNT_LOW |
+| /compare/bigstr-vs-dirtyboyvideo | compare | 559 | 52.0 | WORD_COUNT_LOW |
+| /compare/bigstr-vs-twinktrade | compare | 564 | 52.3 | WORD_COUNT_LOW |
+| /compare/bigstr-vs-rawhole | compare | 566 | 52.1 | WORD_COUNT_LOW, ORPHAN_PAGE |
+| /compare/bigstr-vs-dudesraw | compare | 567 | 52.2 | WORD_COUNT_LOW, ORPHAN_PAGE |
+| /compare/alternadudes-vs-bigstr | compare | 568 | 52.4 | WORD_COUNT_LOW |
+| /compare/bigstr-vs-trailertrashboys | compare | 570 | 52.6 | WORD_COUNT_LOW |
+| /compare/dudesraw-vs-spicevidsgay | compare | 572 | 53.1 | WORD_COUNT_LOW |
 
 ## Auto-generation pipeline assessment
 

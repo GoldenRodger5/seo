@@ -34,6 +34,14 @@
       ]
     },
     {
+      "comment": "Bing/IndexNow ownership-verification key. Must serve the bare key as text/plain — if it ever returns the SPA HTML shell, IndexNow rejects every submission with 403. Short max-age so a key rotation isn't pinned behind a stale edge cache.",
+      "source": "/8694982feef2470cb613162daaa47ed1.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=300" }
+      ]
+    },
+    {
       "source": "/sitemap.xml",
       "headers": [
         { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
