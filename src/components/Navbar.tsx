@@ -10,6 +10,7 @@ const navLinks = [
   { label: "Reviews", to: "/reviews", gold: false },
   { label: "Methodology", to: "/methodology", gold: false },
   { label: "Compare", to: "/compare", gold: false },
+  { label: "Guides", to: "/guides", gold: false },
   { label: "Blog", to: "/blog", gold: false },
   { label: "Ask TwinkAI", to: "/ask-ai", gold: false },
   { label: "Best Deals", to: "/best-deals", gold: true },

@@ -60,6 +60,7 @@ import BlogIndex from "./pages/BlogIndex";
 import BlogPost from "./pages/BlogPost";
 import BlogCategory from "./pages/BlogCategory";
 import GuidePage from "./pages/GuidePage";
+import GuidesIndex from "./pages/GuidesIndex";
 import GenericAlternatives from "./pages/seo/GenericAlternatives";
 import BestGayPornSites from "./pages/seo/BestGayPornSites";
 import BestSubscription from "./pages/seo/BestSubscription";
@@ -177,6 +178,7 @@ export const AppRoutes = () => (
     <Route path="/sean-cody-alternatives" element={<SeanCodyAlternatives />} />
     <Route path="/nakedsword-alternatives" element={<NakedSwordAlternatives />} />
     <Route path="/alternatives/:slug" element={<GenericAlternatives />} />
+    <Route path="/guides" element={<GuidesIndex />} />
     <Route path="/guide/:slug" element={<GuidePage />} />
     <Route path="/best-gay-sites-for-beginners" element={<BestForBeginners />} />
     <Route path="/best-gay-twink-sites-2026" element={<BestTwink2026 />} />

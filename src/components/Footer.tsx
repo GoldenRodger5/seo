@@ -123,6 +123,7 @@ const Footer = () => (
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
             <li><Link to="/ask-ai" className={footerLink}>Ask TwinkAI</Link></li>
             <li><Link to="/find-my-site" className={footerLink}>Site Finder Quiz</Link></li>
+            <li><Link to="/guides" className={footerLink}>Guides</Link></li>
             <li><Link to="/blog" className={footerLink}>Blog</Link></li>
             <li><Link to="/gay-dating-sites" className={footerLink}>Dating Sites Guide</Link></li>
           </ul>

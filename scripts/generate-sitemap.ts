@@ -254,6 +254,8 @@ for (const key of Object.keys(ALTERNATIVES_CONTENT)) {
   urls.push(urlEntry({ loc: path, changefreq: "monthly", priority: "0.7", lastmod: lastmodFor(path, TODAY) }));
   altCount++;
 }
+// /guides hub — higher priority than individual guides (it's the index).
+urls.push(urlEntry({ loc: "/guides", changefreq: "weekly", priority: "0.8", lastmod: lastmodFor("/guides", TODAY) }));
 let guideCount = 0;
 for (const slug of Object.keys(GUIDE_CONTENT)) {
   const path = `/guide/${slug}`;

@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import Layout from "../components/Layout";
 import Breadcrumbs from "../components/Breadcrumbs";
+import RelatedGuides from "../components/RelatedGuides";
 import LocalisedPrice from "../components/LocalisedPrice";
 import { PageTransition, MotionCard, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
 import VisitSiteButton from "../components/VisitSiteButton";
@@ -590,6 +591,12 @@ const DiscountPage = () => {
             </motion.div>
           </div>
         </section>
+        <div className="container max-w-4xl pb-16">
+          <RelatedGuides
+            slugs={["gay-porn-billing-guide", "how-to-cancel-gay-porn-subscriptions"]}
+            title="Before you subscribe — read these"
+          />
+        </div>
       </PageTransition>
       <StickyMobileCTA site={site} />
     </Layout>

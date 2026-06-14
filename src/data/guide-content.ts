@@ -23,6 +23,17 @@ export interface GuideBody {
   conclusion: string;
   meta_description: string;
   faq: { q: string; a: string }[];
+  /** Hero/lead image — chosen from existing clean site covers by
+   *  selectGuideHero() in src/lib/guideImagery.ts. Absent → page falls back
+   *  to the favicon for og:image and renders no hero. */
+  hero_image?: string;
+  /** SFW alt for the hero. */
+  hero_alt?: string;
+  /** Slug of the site the hero depicts — hero links to /reviews/{slug}. */
+  hero_site_slug?: string;
+  /** Sites this guide discusses — powers the "Sites mentioned" block and
+   *  is the input to hero selection. Existing site slugs. */
+  related_sites?: string[];
 }
 
 export const GUIDE_CONTENT: Record<string, GuideBody> = {
@@ -74,7 +85,11 @@ export const GUIDE_CONTENT: Record<string, GuideBody> = {
         "q": "I used PayPal to subscribe. Does cancelling on the site also cancel the PayPal billing agreement?",
         "a": "Not necessarily. PayPal billing agreements can persist independently of the site's own records. Log into your PayPal account, navigate to Settings → Payments → Manage Pre-Approved Payments, find the merchant, and explicitly cancel the agreement from PayPal's side. Do this in addition to cancelling on the site or through the billing processor."
       }
-    ]
+    ],
+    "related_sites": ["helix-studios", "next-door-twink", "next-door-world", "twinks-in-shorts", "athletic-twinks", "southern-strokes", "daddy-on-twink", "touch-that-boy", "breed-me-raw", "bareback-that-hole"],
+    "hero_image": "/site-banners/twinks-in-shorts-hero.jpg",
+    "hero_alt": "Twinks in Shorts — twink gay porn site banner",
+    "hero_site_slug": "twinks-in-shorts"
   },
   "gay-porn-billing-guide": {
     "h1": "Gay Porn Site Billing Explained",
@@ -124,7 +139,11 @@ export const GUIDE_CONTENT: Record<string, GuideBody> = {
         "q": "What's the difference between a monthly and an annual gay porn site membership?",
         "a": "Annual memberships consistently cost less per month — often 30 to 50 percent less — but require a larger upfront payment. For example, Helix Studios' yearly plan has offered a rate around $11.99/month versus a higher monthly rate, while Next Door Twink's 18-month plan has come in around €7.50/month. The trade-off is flexibility. An annual plan makes sense if you've already trialled the site and know you'll use it regularly. For smaller niche sites with slower update schedules, a monthly rolling plan often makes more practical sense."
       }
-    ]
+    ],
+    "related_sites": ["helix-studios", "next-door-twink", "next-door-world", "twinks-in-shorts", "athletic-twinks", "southern-strokes", "daddy-on-twink", "touch-that-boy", "breed-me-raw", "bareback-that-hole"],
+    "hero_image": "/site-banners/twinks-in-shorts-hero.jpg",
+    "hero_alt": "Twinks in Shorts — twink gay porn site banner",
+    "hero_site_slug": "twinks-in-shorts"
   },
 };
 

@@ -62,6 +62,9 @@ interface RouteMeta {
   path: string;
   title: string;
   description: string;
+  /** Absolute og:image/twitter:image URL. When set, injectMeta replaces the
+   *  generic favicon default so the route ships a real social card image. */
+  ogImage?: string;
 }
 
 const SITE_SLUGS = sites.map((s) => s.slug);
@@ -223,6 +226,15 @@ for (const key of Object.keys(ALTERNATIVES_CONTENT)) {
   });
 }
 
+// /guides index — hub linking every guide (real intro copy lives in
+// src/pages/GuidesIndex.tsx; this just supplies <title>/<meta>).
+routes.push({
+  path: "/guides",
+  title: "Gay Porn Site Guides — Billing, Cancelling & Trials | TwinkVault",
+  description:
+    "Plain-English guides to gay porn site memberships: how billing and trials work, how to cancel cleanly, decode mystery charges, and protect your privacy.",
+});
+
 // Guide routes — one per entry in GUIDE_CONTENT. Title trim matches the
 // fallback in src/pages/GuidePage.tsx so prerendered HTML <title> agrees
 // with the React Helmet output after hydration.
@@ -237,6 +249,9 @@ for (const slug of Object.keys(GUIDE_CONTENT)) {
     path: `/guide/${slug}`,
     title,
     description: body.meta_description,
+    // Hero cover (chosen from existing clean site creative) doubles as the
+    // social-card image; replaces the generic favicon default.
+    ogImage: body.hero_image ? `${BASE_URL}${body.hero_image}` : undefined,
   });
 }
 
@@ -285,6 +300,17 @@ function injectMeta(html: string, route: RouteMeta, helmetHtml: string): string 
   html = html.replace(/<meta property="og:description" content="[^"]*" \/>/, `<meta property="og:description" content="${desc}" />`);
   html = html.replace(/<meta name="twitter:title" content="[^"]*" \/>/, `<meta name="twitter:title" content="${title}" />`);
   html = html.replace(/<meta name="twitter:description" content="[^"]*" \/>/, `<meta name="twitter:description" content="${desc}" />`);
+
+  // Per-route social-card image. Without this every route inherits the
+  // generic favicon (pwa-512.png) from the template. Site-banner heroes are
+  // 1200×750, so the og:image dimension hints are updated to match.
+  if (route.ogImage) {
+    const img = htmlAttrEscape(route.ogImage);
+    html = html.replace(/<meta property="og:image" content="[^"]*" \/>/, `<meta property="og:image" content="${img}" />`);
+    html = html.replace(/<meta property="og:image:width" content="[^"]*" \/>/, `<meta property="og:image:width" content="1200" />`);
+    html = html.replace(/<meta property="og:image:height" content="[^"]*" \/>/, `<meta property="og:image:height" content="750" />`);
+    html = html.replace(/<meta name="twitter:image" content="[^"]*" \/>/, `<meta name="twitter:image" content="${img}" />`);
+  }
 
   // Append helmet output (schema scripts, JSON-LD, etc.) just before </head>
   if (helmetHtml) {

@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import Layout from "../components/Layout";
 import Breadcrumbs from "../components/Breadcrumbs";
+import RelatedGuides from "../components/RelatedGuides";
 import { sites, isAffiliated } from "../data/sites";
 import type { SiteData } from "../data/sites";
 import { PageTransition } from "../components/MotionWrappers";
@@ -392,6 +393,12 @@ const BestDeals = () => {
             <div className="mt-12">
               <DealsEmailCapture />
             </div>
+
+            <RelatedGuides
+              slugs={["gay-porn-billing-guide", "how-to-cancel-gay-porn-subscriptions"]}
+              title="Spend smart — read these first"
+              className="mt-14"
+            />
           </div>
         </section>
       </PageTransition>
