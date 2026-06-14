@@ -2,7 +2,7 @@
 
 ## Critical findings
 
-**🚨 1 / 411 routes (0.2%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 412 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -34,9 +34,9 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | discount | 64 | 759 | 698 | 813 | HEALTHY |
 | review | 64 | 1046 | 728 | 1309 | HEALTHY |
 | landing | 28 | 960 | 226 | 4242 | HEALTHY |
+| other | 21 | 792 | 380 | 2021 | HEALTHY |
 | niche | 21 | 642 | 486 | 2073 | HEALTHY |
-| other | 20 | 792 | 380 | 2021 | HEALTHY |
-| legal | 6 | 713 | 0 | 1003 | HEALTHY |
+| legal | 6 | 759 | 358 | 1003 | HEALTHY |
 | blog | 6 | 1673 | 1480 | 1826 | HEALTHY |
 | category | 6 | 1112 | 389 | 1919 | HEALTHY |
 | utility | 5 | 273 | 231 | 10399 | HEALTHY |
@@ -47,8 +47,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | Flag | Count |
 | --- | ---: |
 | THIN_LANDING | 6 |
-| THIN_TITLE | 3 |
-| CLIENT_SIDE_ONLY | 1 |
+| THIN_TITLE | 2 |
 
 ## Compare page deep-dive
 
@@ -70,7 +69,6 @@ Sorted ascending by body word count. Top 30:
 
 | Route | Type | Body words | File size (KB) | Flags |
 | --- | --- | ---: | ---: | --- |
-| /about | legal | 0 | 0.3 | CLIENT_SIDE_ONLY, THIN_TITLE |
 | /blog/category/industry | landing | 226 | 18.8 | THIN_LANDING |
 | /find-my-site | utility | 231 | 18.5 |  |
 | /contact | utility | 254 | 20.9 |  |
@@ -100,6 +98,7 @@ Sorted ascending by body word count. Top 30:
 | /compare/alternadudes-vs-bigstr | compare | 566 | 51.4 |  |
 | /compare/bigstr-vs-trailertrashboys | compare | 568 | 51.5 |  |
 | /compare/dudesraw-vs-spicevidsgay | compare | 570 | 52.1 |  |
+| /free-trial-twink-sites | landing | 571 | 43.5 |  |
 
 ## Auto-generation pipeline assessment
 

@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-06-14T02:16:31.296Z",
+  "generated_at": "2026-06-14T03:55:12.893Z",
   "summary": {
-    "routes": 411,
-    "clientOnlyCount": 1,
-    "clientOnlyPct": "0.2",
+    "routes": 412,
+    "clientOnlyCount": 0,
+    "clientOnlyPct": "0.0",
     "typeStats": [
       {
         "type": "compare",
@@ -44,6 +44,15 @@
         "allClientOnly": false
       },
       {
+        "type": "other",
+        "count": 21,
+        "median": 792,
+        "min": 380,
+        "max": 2021,
+        "flagCounts": {},
+        "allClientOnly": false
+      },
+      {
         "type": "niche",
         "count": 21,
         "median": 642,
@@ -53,23 +62,13 @@
         "allClientOnly": false
       },
       {
-        "type": "other",
-        "count": 20,
-        "median": 792,
-        "min": 380,
-        "max": 2021,
-        "flagCounts": {},
-        "allClientOnly": false
-      },
-      {
         "type": "legal",
         "count": 6,
-        "median": 713,
-        "min": 0,
+        "median": 759,
+        "min": 358,
         "max": 1003,
         "flagCounts": {
-          "CLIENT_SIDE_ONLY": 1,
-          "THIN_TITLE": 3
+          "THIN_TITLE": 2
         },
         "allClientOnly": false
       },
@@ -161,17 +160,14 @@
     {
       "route": "/about",
       "pageType": "legal",
-      "fileSize": 294,
-      "bodyWordCount": 0,
-      "metaTitle": "x",
-      "metaDescription": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "fileSize": 36186,
+      "bodyWordCount": 759,
+      "metaTitle": "About TwinkVault — Who Reviews These Gay Porn Sites",
+      "metaDescription": "TwinkVault is an independent gay porn site review platform. Honest paid-membership reviews, real pricing, no commission-rigged rankings. Meet the team behind it.",
       "hasReviewSchema": false,
-      "hasFaqSchema": false,
+      "hasFaqSchema": true,
       "hasBreadcrumbSchema": false,
-      "flags": [
-        "CLIENT_SIDE_ONLY",
-        "THIN_TITLE"
-      ]
+      "flags": []
     },
     {
       "route": "/affiliate-disclosure",
@@ -3830,6 +3826,18 @@
       "metaDescription": "Every gay porn site offering a free or low-cost intro trial. Try before you commit — verified offers across twink, bareback, premium, and Asian niches.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
+      "hasBreadcrumbSchema": true,
+      "flags": []
+    },
+    {
+      "route": "/guide/how-to-cancel-gay-porn-subscriptions",
+      "pageType": "other",
+      "fileSize": 31931,
+      "bodyWordCount": 1638,
+      "metaTitle": "How To Cancel Gay Porn Subs | TwinkVault",
+      "metaDescription": "Step-by-step guide to cancelling Helix Studios, Next Door Twink, Southern Strokes, Breed Me Raw and other gay porn site memberships before the next charge.",
+      "hasReviewSchema": false,
+      "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
       "flags": []
     },
