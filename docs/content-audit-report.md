@@ -2,7 +2,7 @@
 
 ## Critical findings
 
-**🚨 0 / 413 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 411 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -34,8 +34,8 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | discount | 64 | 759 | 698 | 813 | HEALTHY |
 | review | 64 | 1046 | 728 | 1309 | HEALTHY |
 | landing | 28 | 960 | 226 | 4242 | HEALTHY |
-| other | 22 | 888 | 380 | 2021 | HEALTHY |
 | niche | 21 | 642 | 486 | 2073 | HEALTHY |
+| other | 20 | 792 | 380 | 2021 | HEALTHY |
 | legal | 6 | 759 | 358 | 1003 | HEALTHY |
 | blog | 6 | 1673 | 1480 | 1826 | HEALTHY |
 | category | 6 | 1112 | 389 | 1919 | HEALTHY |
@@ -91,13 +91,13 @@ Sorted ascending by body word count. Top 30:
 | /niche/solo | niche | 530 | 35.0 |  |
 | /gay-porn-sites-ranked | other | 531 | 116.3 |  |
 | /category/mobile-friendly | category | 552 | 65.2 |  |
-| /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 50.9 |  |
-| /compare/bigstr-vs-twinktrade | compare | 562 | 51.2 |  |
-| /compare/bigstr-vs-rawhole | compare | 564 | 51.1 |  |
-| /compare/bigstr-vs-dudesraw | compare | 565 | 51.1 |  |
-| /compare/alternadudes-vs-bigstr | compare | 566 | 51.4 |  |
-| /compare/bigstr-vs-trailertrashboys | compare | 568 | 51.5 |  |
-| /compare/dudesraw-vs-spicevidsgay | compare | 570 | 52.1 |  |
+| /compare/bigstr-vs-dirtyboyvideo | compare | 557 | 51.8 |  |
+| /compare/bigstr-vs-twinktrade | compare | 562 | 52.1 |  |
+| /compare/bigstr-vs-rawhole | compare | 564 | 51.9 |  |
+| /compare/bigstr-vs-dudesraw | compare | 565 | 52.0 |  |
+| /compare/alternadudes-vs-bigstr | compare | 566 | 52.2 |  |
+| /compare/bigstr-vs-trailertrashboys | compare | 568 | 52.4 |  |
+| /compare/dudesraw-vs-spicevidsgay | compare | 570 | 52.9 |  |
 | /free-trial-twink-sites | landing | 571 | 43.5 |  |
 
 ## Auto-generation pipeline assessment

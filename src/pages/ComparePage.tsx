@@ -581,40 +581,83 @@ const ComparePage = () => {
         {isFeaturedComparePair(slug) && (() => {
           const parseMo = (s: string) => parseFloat(s.replace(/[^0-9.]/g, "")) || 0;
           const today = new Date().toISOString().split("T")[0];
-          const productSchema = (s: typeof siteA) => ({
-            "@context": "https://schema.org",
-            "@type": "Product",
-            name: s.name,
-            description: s.short_description,
-            brand: { "@type": "Brand", name: s.name },
-            url: `https://twinkvault.com/reviews/${s.slug}`,
-            aggregateRating: s.overall_score > 0 ? {
-              "@type": "AggregateRating",
-              ratingValue: s.overall_score,
-              bestRating: 5,
-              worstRating: 1,
-              reviewCount: 1,
-              ratingCount: 1,
-            } : undefined,
-            offers: parseMo(s.price_annual) > 0 ? {
-              "@type": "AggregateOffer",
-              priceCurrency: "USD",
-              lowPrice: parseMo(s.price_annual).toFixed(2),
-              highPrice: parseMo(s.price_monthly).toFixed(2),
-              offerCount: 2,
-              availability: "https://schema.org/InStock",
-            } : undefined,
-          });
-          const reviewSchema = (s: typeof siteA) => s.overall_score > 0 ? ({
-            "@context": "https://schema.org",
-            "@type": "Review",
-            itemReviewed: { "@type": "Product", name: s.name },
-            reviewRating: { "@type": "Rating", ratingValue: s.overall_score, bestRating: 5, worstRating: 1 },
-            author: { "@type": "Organization", name: "TwinkVault" },
-            datePublished: `${currentYear}-01-01`,
-            dateModified: today,
-            url: `https://twinkvault.com/compare/${slug}`,
-          }) : null;
+
+          // Build the Product's aggregateRating + offers ONCE per site and
+          // share them between the standalone Product schema and the Review
+          // schema's nested itemReviewed. Google validates the nested Product
+          // against the same Product spec — without these fields the nested
+          // Product fails the same "must include offers/review/aggregateRating"
+          // check that triggered the GSC warning. Sharing eliminates drift
+          // between the two emissions.
+          const aggregateRatingFor = (s: typeof siteA) => s.overall_score > 0 ? {
+            "@type": "AggregateRating",
+            ratingValue: s.overall_score,
+            bestRating: 5,
+            worstRating: 1,
+            reviewCount: 1,
+            ratingCount: 1,
+          } : null;
+          const offersFor = (s: typeof siteA) => parseMo(s.price_annual) > 0 ? {
+            "@type": "AggregateOffer",
+            priceCurrency: "USD",
+            lowPrice: parseMo(s.price_annual).toFixed(2),
+            highPrice: parseMo(s.price_monthly).toFixed(2),
+            offerCount: 2,
+            availability: "https://schema.org/InStock",
+          } : null;
+
+          // Skip Product emission entirely for pending-review sites (TLA Gay
+          // Unlimited, VisionX Flix). They have no real score yet so any
+          // Product object would be incomplete — better to omit than ship
+          // schema Google will reject.
+          const productSchema = (s: typeof siteA) => {
+            if (s.editorial_status === "pending-review") return null;
+            const ar = aggregateRatingFor(s);
+            const of = offersFor(s);
+            // A Product without offers/review/aggregateRating violates
+            // Google's spec. If a regular site somehow has no score AND no
+            // parseable price (shouldn't happen, but defensively), skip it.
+            if (!ar && !of) return null;
+            return {
+              "@context": "https://schema.org",
+              "@type": "Product",
+              "@id": `https://twinkvault.com/reviews/${s.slug}#product`,
+              name: s.name,
+              description: s.short_description,
+              brand: { "@type": "Brand", name: s.name },
+              url: `https://twinkvault.com/reviews/${s.slug}`,
+              ...(ar ? { aggregateRating: ar } : {}),
+              ...(of ? { offers: of } : {}),
+            };
+          };
+
+          // Review.itemReviewed must itself be a complete Product (Google
+          // validates it independently). Inline the same aggregateRating
+          // + offers so the nested Product passes the same spec — fixes the
+          // GSC "Product must include offers/review/aggregateRating" issue.
+          const reviewSchema = (s: typeof siteA) => {
+            if (s.editorial_status === "pending-review" || s.overall_score === 0) return null;
+            const ar = aggregateRatingFor(s);
+            const of = offersFor(s);
+            if (!ar && !of) return null;
+            return {
+              "@context": "https://schema.org",
+              "@type": "Review",
+              itemReviewed: {
+                "@type": "Product",
+                "@id": `https://twinkvault.com/reviews/${s.slug}#product`,
+                name: s.name,
+                url: `https://twinkvault.com/reviews/${s.slug}`,
+                ...(ar ? { aggregateRating: ar } : {}),
+                ...(of ? { offers: of } : {}),
+              },
+              reviewRating: { "@type": "Rating", ratingValue: s.overall_score, bestRating: 5, worstRating: 1 },
+              author: { "@type": "Organization", name: "TwinkVault" },
+              datePublished: `${currentYear}-01-01`,
+              dateModified: today,
+              url: `https://twinkvault.com/compare/${slug}`,
+            };
+          };
 
           const breadcrumb = {
             "@context": "https://schema.org",
@@ -651,8 +694,12 @@ const ComparePage = () => {
               <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
               <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
               <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }} />
-              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema(siteA)) }} />
-              <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema(siteB)) }} />
+              {productSchema(siteA) && (
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema(siteA)) }} />
+              )}
+              {productSchema(siteB) && (
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema(siteB)) }} />
+              )}
               {reviewSchema(siteA) && (
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema(siteA)) }} />
               )}
