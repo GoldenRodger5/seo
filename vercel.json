@@ -8,7 +8,6 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     {
-      "comment": "SPA fallback. Excludes: any path with a file extension (covers robots.txt, sitemap.xml, blog-sitemap.xml, *.html, *.js, *.css, *.png, etc.), /assets/, /api/, and a few named files. cleanUrls: true means Vercel resolves extensionless routes (e.g. /reviews/helix-studios) to dist/reviews/helix-studios/index.html via the filesystem BEFORE this rewrite is evaluated, so SSG-prerendered routes serve their per-route HTML — only genuinely client-only routes (admin, etc.) fall through to the root shell.",
       "source": "/((?!api/|assets/|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/index.html"
     }
@@ -34,7 +33,6 @@
       ]
     },
     {
-      "comment": "Bing/IndexNow ownership-verification key. Must serve the bare key as text/plain — if it ever returns the SPA HTML shell, IndexNow rejects every submission with 403. Short max-age so a key rotation isn't pinned behind a stale edge cache.",
       "source": "/8694982feef2470cb613162daaa47ed1.txt",
       "headers": [
         { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
