@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-14T03:55:12.893Z",
+  "generated_at": "2026-06-14T11:04:41.207Z",
   "summary": {
-    "routes": 412,
+    "routes": 413,
     "clientOnlyCount": 0,
     "clientOnlyPct": "0.0",
     "typeStats": [
@@ -45,8 +45,8 @@
       },
       {
         "type": "other",
-        "count": 21,
-        "median": 792,
+        "count": 22,
+        "median": 888,
         "min": 380,
         "max": 2021,
         "flagCounts": {},
@@ -3826,6 +3826,18 @@
       "metaDescription": "Every gay porn site offering a free or low-cost intro trial. Try before you commit — verified offers across twink, bareback, premium, and Asian niches.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
+      "hasBreadcrumbSchema": true,
+      "flags": []
+    },
+    {
+      "route": "/guide/gay-porn-billing-guide",
+      "pageType": "other",
+      "fileSize": 32158,
+      "bodyWordCount": 1694,
+      "metaTitle": "Gay Porn Site Billing Explained | TwinkVault",
+      "metaDescription": "Everything gay men need to know about gay porn site billing — processors, trial traps, statement descriptors, cancellation, and where your money actually goes.",
+      "hasReviewSchema": false,
+      "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
       "flags": []
     },

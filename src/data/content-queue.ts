@@ -336,7 +336,7 @@ const backlogEntries: SupportingQueueEntry[] = [
 
   // Days 22-30 — Guides (priority 79 → 71)
   { title: "How To Cancel Gay Porn Site Subscriptions", slug: "guide/how-to-cancel-gay-porn-subscriptions", content_type: "guide", target_keyword: "cancel gay porn subscription", related_sites: TOP_10_SLUGS, priority: 79, status: "published" },
-  { title: "Gay Porn Site Billing — What To Expect", slug: "guide/gay-porn-billing-guide", content_type: "guide", target_keyword: "gay porn site billing", related_sites: TOP_10_SLUGS, priority: 78, status: "queued" },
+  { title: "Gay Porn Site Billing — What To Expect", slug: "guide/gay-porn-billing-guide", content_type: "guide", target_keyword: "gay porn site billing", related_sites: TOP_10_SLUGS, priority: 78, status: "published" },
   { title: "Best Gay Porn Sites For Mobile Users", slug: "guide/gay-porn-sites-for-mobile", content_type: "guide", target_keyword: "best gay porn sites for mobile", related_sites: TOP_10_SLUGS, priority: 77, status: "queued" },
   { title: "Gay Porn Free Trials — What You Actually Get", slug: "guide/gay-porn-free-trials-explained", content_type: "guide", target_keyword: "gay porn free trials", related_sites: ["next-door-twink", "next-door-world"], priority: 76, status: "queued" },
   { title: "How To Find Gay Porn Site Discounts", slug: "guide/how-to-find-gay-porn-discounts", content_type: "guide", target_keyword: "gay porn discounts", related_sites: TOP_10_SLUGS, priority: 75, status: "queued" },
