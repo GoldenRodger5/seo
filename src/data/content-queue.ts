@@ -11,6 +11,20 @@
 
 export type ReviewQueueStatus = "queued" | "published" | "skipped";
 
+export type ReviewEditorialMode =
+  /** Default — has (or will have) an affiliate program; review writes the
+   *  full conversion path with Visit Site CTA, pricing, AggregateOffer. */
+  | "ready"
+  /** SEO-only review for a high-demand site we don't yet partner with.
+   *  Picker can still write it (capped at top 3-5 by demand) but the
+   *  rendered page hides the affiliate CTA and shows a "not yet
+   *  partnered" disclosure. Captures franchise-cluster traffic without
+   *  promising a commission relationship that doesn't exist. */
+  | "research-only"
+  /** Permanently disabled — picker never selects. Slug collisions,
+   *  abandoned sites, etc. */
+  | "archived";
+
 export interface ReviewQueueEntry {
   name: string;
   slug: string;
@@ -22,6 +36,8 @@ export interface ReviewQueueEntry {
   estimated_monthly_searches: number;
   status: ReviewQueueStatus;
   content_type: "review";
+  /** Defaults to "ready" when omitted (matches all existing entries). */
+  editorial_mode?: ReviewEditorialMode;
 }
 
 export type SupportingContentType =
@@ -86,8 +102,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
     priority: 9,
     estimated_monthly_searches: 60500,
     status: "queued",
-    content_type: "review",
-  },
+    content_type: "review", editorial_mode: "research-only"},
 
   // ── Buddy Profits (pending) ─────────────────────────────────────────────
   {
@@ -100,8 +115,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
     priority: 9,
     estimated_monthly_searches: 49500,
     status: "queued",
-    content_type: "review",
-  },
+    content_type: "review", editorial_mode: "research-only"},
   {
     name: "Icon Male",
     slug: "icon-male",
@@ -124,43 +138,39 @@ export const reviewQueue: ReviewQueueEntry[] = [
     priority: 8,
     estimated_monthly_searches: 33100,
     status: "queued",
-    content_type: "review",
-  },
+    content_type: "review", editorial_mode: "research-only"},
 
   // ── Pending approval / unresolved network ───────────────────────────────
-  { name: "Naked Sword", slug: "naked-sword", homepage_url: "https://www.nakedsword.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 8, estimated_monthly_searches: 40500, status: "queued", content_type: "review" },
-  { name: "Corbin Fisher", slug: "corbin-fisher", homepage_url: "https://www.corbinfisher.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "amateur-twinks"], priority: 8, estimated_monthly_searches: 40500, status: "queued", content_type: "review" },
-  { name: "Bel Ami Online", slug: "bel-ami-online", homepage_url: "https://www.belamionline.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "amateur-twinks", "hd-quality"], priority: 9, estimated_monthly_searches: 49500, status: "queued", content_type: "review" },
-  { name: "Lucas Entertainment", slug: "lucas-entertainment", homepage_url: "https://www.lucasentertainment.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 7, estimated_monthly_searches: 22200, status: "queued", content_type: "review" },
-  { name: "Randy Blue", slug: "randy-blue", homepage_url: "https://www.randyblue.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 6, estimated_monthly_searches: 14800, status: "queued", content_type: "review" },
-  { name: "CockyBoys", slug: "cockyboys", homepage_url: "https://www.cockyboys.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 8, estimated_monthly_searches: 33100, status: "queued", content_type: "review" },
-  { name: "Czech Hunter", slug: "czech-hunter", homepage_url: "https://www.czechhunter.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 8, estimated_monthly_searches: 60500, status: "queued", content_type: "review" },
-  { name: "Badpuppy", slug: "badpuppy", homepage_url: "https://www.badpuppy.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 5, estimated_monthly_searches: 8100, status: "queued", content_type: "review" },
-  { name: "Hammer Boys", slug: "hammer-boys", homepage_url: "https://www.hammerboys.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 5, estimated_monthly_searches: 6600, status: "queued", content_type: "review" },
-  { name: "BoyFun", slug: "boyfun", homepage_url: "https://www.boyfun.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review" },
-  { name: "Staxus", slug: "staxus", homepage_url: "https://www.staxus.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "hd-quality"], priority: 7, estimated_monthly_searches: 18100, status: "queued", content_type: "review" },
-  { name: "Eurocreme", slug: "eurocreme", homepage_url: "https://www.eurocreme.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 6, estimated_monthly_searches: 12100, status: "queued", content_type: "review" },
-  { name: "William Higgins", slug: "william-higgins", homepage_url: "https://www.williamhiggins.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 7, estimated_monthly_searches: 18100, status: "queued", content_type: "review" },
-  { name: "Str8Hell", slug: "str8hell", homepage_url: "https://www.str8hell.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 5, estimated_monthly_searches: 8100, status: "queued", content_type: "review" },
-  { name: "Next Door Studios", slug: "next-door-studios", homepage_url: "https://www.nextdoorstudios.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 8, estimated_monthly_searches: 27100, status: "queued", content_type: "review" },
-  { name: "Maskurbate", slug: "maskurbate", homepage_url: "https://www.maskurbate.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 5, estimated_monthly_searches: 6600, status: "queued", content_type: "review" },
-  { name: "TimTales", slug: "timtales", homepage_url: "https://www.timtales.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 6, estimated_monthly_searches: 12100, status: "queued", content_type: "review" },
-  { name: "Freshmen", slug: "freshmen", homepage_url: "https://www.freshmen.net", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "hd-quality"], priority: 7, estimated_monthly_searches: 22200, status: "queued", content_type: "review" },
-  { name: "CollegeDudes", slug: "college-dudes", homepage_url: "https://www.collegedudes.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review" },
-  { name: "GayRoom", slug: "gay-room", homepage_url: "https://www.gayroom.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 6, estimated_monthly_searches: 14800, status: "queued", content_type: "review" },
-  { name: "MenOver30", slug: "men-over-30", homepage_url: "https://www.menover30.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review" },
-  { name: "DadCreep", slug: "dad-creep", homepage_url: "https://www.dadcreep.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 5, estimated_monthly_searches: 6600, status: "queued", content_type: "review" },
-  { name: "SpunkWorthy", slug: "spunkworthy", homepage_url: "https://www.spunkworthy.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review" },
-  { name: "ChaosMen", slug: "chaos-men", homepage_url: "https://www.chaosmen.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "premium-studios"], priority: 7, estimated_monthly_searches: 18100, status: "queued", content_type: "review" },
-  { name: "SexuallyBroken", slug: "sexually-broken", homepage_url: "https://www.sexuallybroken.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 4, estimated_monthly_searches: 4400, status: "queued", content_type: "review" },
+  { name: "Corbin Fisher", slug: "corbin-fisher", homepage_url: "https://www.corbinfisher.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "amateur-twinks"], priority: 8, estimated_monthly_searches: 40500, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Bel Ami Online", slug: "bel-ami-online", homepage_url: "https://www.belamionline.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "amateur-twinks", "hd-quality"], priority: 9, estimated_monthly_searches: 49500, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Lucas Entertainment", slug: "lucas-entertainment", homepage_url: "https://www.lucasentertainment.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 7, estimated_monthly_searches: 22200, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Randy Blue", slug: "randy-blue", homepage_url: "https://www.randyblue.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 6, estimated_monthly_searches: 14800, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "CockyBoys", slug: "cockyboys", homepage_url: "https://www.cockyboys.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 8, estimated_monthly_searches: 33100, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Czech Hunter", slug: "czech-hunter", homepage_url: "https://www.czechhunter.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 8, estimated_monthly_searches: 60500, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Badpuppy", slug: "badpuppy", homepage_url: "https://www.badpuppy.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 5, estimated_monthly_searches: 8100, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Hammer Boys", slug: "hammer-boys", homepage_url: "https://www.hammerboys.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 5, estimated_monthly_searches: 6600, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Staxus", slug: "staxus", homepage_url: "https://www.staxus.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "hd-quality"], priority: 7, estimated_monthly_searches: 18100, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Eurocreme", slug: "eurocreme", homepage_url: "https://www.eurocreme.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 6, estimated_monthly_searches: 12100, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "William Higgins", slug: "william-higgins", homepage_url: "https://www.williamhiggins.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 7, estimated_monthly_searches: 18100, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Str8Hell", slug: "str8hell", homepage_url: "https://www.str8hell.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 5, estimated_monthly_searches: 8100, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Next Door Studios", slug: "next-door-studios", homepage_url: "https://www.nextdoorstudios.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 8, estimated_monthly_searches: 27100, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Maskurbate", slug: "maskurbate", homepage_url: "https://www.maskurbate.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 5, estimated_monthly_searches: 6600, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "TimTales", slug: "timtales", homepage_url: "https://www.timtales.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 6, estimated_monthly_searches: 12100, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Freshmen", slug: "freshmen", homepage_url: "https://www.freshmen.net", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "hd-quality"], priority: 7, estimated_monthly_searches: 22200, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "CollegeDudes", slug: "college-dudes", homepage_url: "https://www.collegedudes.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "GayRoom", slug: "gay-room", homepage_url: "https://www.gayroom.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 6, estimated_monthly_searches: 14800, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "MenOver30", slug: "men-over-30", homepage_url: "https://www.menover30.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "DadCreep", slug: "dad-creep", homepage_url: "https://www.dadcreep.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 5, estimated_monthly_searches: 6600, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "SpunkWorthy", slug: "spunkworthy", homepage_url: "https://www.spunkworthy.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "ChaosMen", slug: "chaos-men", homepage_url: "https://www.chaosmen.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "premium-studios"], priority: 7, estimated_monthly_searches: 18100, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "SexuallyBroken", slug: "sexually-broken", homepage_url: "https://www.sexuallybroken.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 4, estimated_monthly_searches: 4400, status: "queued", content_type: "review", editorial_mode: "research-only" },
   { name: "TwinkPop", slug: "twinkpop", homepage_url: "https://www.twinkpop.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "hd-quality"], priority: 7, estimated_monthly_searches: 18100, status: "published", content_type: "review" },
-  { name: "BoyNapped", slug: "boy-napped", homepage_url: "https://www.boynapped.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 5, estimated_monthly_searches: 6600, status: "queued", content_type: "review" },
-  { name: "English Lads", slug: "english-lads", homepage_url: "https://www.englishlads.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review" },
-  { name: "Bel Ami", slug: "bel-ami", homepage_url: "https://www.belami.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "amateur-twinks"], priority: 8, estimated_monthly_searches: 33100, status: "queued", content_type: "review" },
-  { name: "Kristen Bjorn", slug: "kristen-bjorn", homepage_url: "https://www.kristenbjorn.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review" },
-  { name: "Raging Stallion", slug: "raging-stallion", homepage_url: "https://www.ragingstallion.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 7, estimated_monthly_searches: 22200, status: "queued", content_type: "review" },
-  { name: "Hot House", slug: "hot-house", homepage_url: "https://www.hothouse.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 6, estimated_monthly_searches: 14800, status: "queued", content_type: "review" },
-  { name: "Falcon Edge", slug: "falcon-edge", homepage_url: "https://www.falconedge.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 6, estimated_monthly_searches: 8100, status: "queued", content_type: "review" },
+  { name: "BoyNapped", slug: "boy-napped", homepage_url: "https://www.boynapped.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 5, estimated_monthly_searches: 6600, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "English Lads", slug: "english-lads", homepage_url: "https://www.englishlads.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Kristen Bjorn", slug: "kristen-bjorn", homepage_url: "https://www.kristenbjorn.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 6, estimated_monthly_searches: 9900, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Raging Stallion", slug: "raging-stallion", homepage_url: "https://www.ragingstallion.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 7, estimated_monthly_searches: 22200, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Hot House", slug: "hot-house", homepage_url: "https://www.hothouse.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 6, estimated_monthly_searches: 14800, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Falcon Edge", slug: "falcon-edge", homepage_url: "https://www.falconedge.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 6, estimated_monthly_searches: 8100, status: "queued", content_type: "review", editorial_mode: "research-only" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -289,7 +299,6 @@ const pricingEntries: SupportingQueueEntry[] = TOP_10_SLUGS.map((slug) => ({
 // resolution this is less critical, but the names now match the rotation
 // constant so older references don't drift.
 const hubEntries: SupportingQueueEntry[] = [
-  { title: "Best Gay Twink Sites", slug: "gay-twink-sites", content_type: "bestof", target_keyword: "gay twink sites", related_sites: ["helix-studios", "next-door-twink", "twinks-in-shorts", "athletic-twinks", "southern-strokes", "daddy-on-twink", "touch-that-boy", "twinkpop"], priority: 9, status: "queued" },
   { title: "Best Gay Bareback Sites", slug: "gay-bareback-sites", content_type: "bestof", target_keyword: "gay bareback sites", related_sites: ["rawhole", "dudesraw", "bareback-that-hole", "breed-me-raw"], priority: 9, status: "queued" },
   { title: "Best Gay Asian Sites", slug: "gay-asian-sites", content_type: "bestof", target_keyword: "gay asian porn sites", related_sites: ["peterfever", "gayasiannetwork"], priority: 8, status: "queued" },
   { title: "Best Gay Amateur Sites", slug: "gay-amateur-sites", content_type: "bestof", target_keyword: "gay amateur sites", related_sites: ["next-door-twink", "twinks-in-shorts", "southern-strokes", "breed-me-raw", "bareback-that-hole", "hard-brit-lads", "prideflame"], priority: 9, status: "queued" },
@@ -337,13 +346,11 @@ const backlogEntries: SupportingQueueEntry[] = [
   // Days 22-30 — Guides (priority 79 → 71)
   { title: "How To Cancel Gay Porn Site Subscriptions", slug: "guide/how-to-cancel-gay-porn-subscriptions", content_type: "guide", target_keyword: "cancel gay porn subscription", related_sites: TOP_10_SLUGS, priority: 79, status: "published" },
   { title: "Gay Porn Site Billing — What To Expect", slug: "guide/gay-porn-billing-guide", content_type: "guide", target_keyword: "gay porn site billing", related_sites: TOP_10_SLUGS, priority: 78, status: "published" },
-  { title: "Best Gay Porn Sites For Mobile Users", slug: "guide/gay-porn-sites-for-mobile", content_type: "guide", target_keyword: "best gay porn sites for mobile", related_sites: TOP_10_SLUGS, priority: 77, status: "queued" },
-  { title: "Gay Porn Free Trials — What You Actually Get", slug: "guide/gay-porn-free-trials-explained", content_type: "guide", target_keyword: "gay porn free trials", related_sites: ["next-door-twink", "next-door-world"], priority: 76, status: "queued" },
+  { title: "How To Watch Gay Porn On Mobile (iPhone vs Android)", slug: "guide/watch-gay-porn-on-mobile", content_type: "guide", target_keyword: "how to watch gay porn on iphone", related_sites: TOP_10_SLUGS, priority: 77, status: "queued" },
+  { title: "How Gay Porn Site Trials Work — Auto-Renewal Explained", slug: "guide/how-gay-porn-trials-work", content_type: "guide", target_keyword: "how do gay porn trials work", related_sites: ["next-door-twink", "next-door-world"], priority: 76, status: "queued" },
   { title: "How To Find Gay Porn Site Discounts", slug: "guide/how-to-find-gay-porn-discounts", content_type: "guide", target_keyword: "gay porn discounts", related_sites: TOP_10_SLUGS, priority: 75, status: "queued" },
   { title: "Gay Porn Site Security & Privacy Guide", slug: "guide/gay-porn-security-privacy", content_type: "guide", target_keyword: "gay porn site privacy", related_sites: TOP_10_SLUGS, priority: 74, status: "queued" },
-  { title: "Best Gay Porn Sites For Beginners", slug: "guide/gay-porn-sites-for-beginners-2026", content_type: "guide", target_keyword: "gay porn sites for beginners", related_sites: ["next-door-world", "maleaccess", "twinks-in-shorts"], priority: 73, status: "queued" },
   { title: "Gay Porn Network Sites Explained", slug: "guide/gay-porn-network-sites-explained", content_type: "guide", target_keyword: "gay porn network sites", related_sites: ["next-door-world", "men", "nakedsword", "sayuncle"], priority: 72, status: "queued" },
-  { title: "Gay Porn Site Value Guide 2026", slug: "guide/gay-porn-value-guide-2026", content_type: "guide", target_keyword: "gay porn value", related_sites: TOP_10_SLUGS, priority: 71, status: "queued" },
 ];
 
 const guideEntries: SupportingQueueEntry[] = [
@@ -388,14 +395,44 @@ export const supportingQueue: SupportingQueueEntry[] = [
   awardsEntry,
 ];
 
+/**
+ * Eligible review pickers. The GSC-driven ranker in
+ * src/lib/contentRanker.ts converts these candidates to effective
+ * priority before final selection.
+ *
+ * "archived" entries are always excluded (slug collisions, abandoned
+ * sites). "research-only" entries ARE eligible — the ranker applies a
+ * no-affiliate penalty, so an affiliated review of equal static
+ * priority wins head-to-head, but a high-demand research-only review
+ * can still surface above a low-demand ready review.
+ */
+export function reviewCandidates(): ReviewQueueEntry[] {
+  return reviewQueue.filter(
+    (r) => r.status === "queued" && r.editorial_mode !== "archived",
+  );
+}
+
+export function supportingCandidates(type?: SupportingContentType): SupportingQueueEntry[] {
+  return supportingQueue.filter(
+    (s) => s.status === "queued" && (!type || s.content_type === type),
+  );
+}
+
+/**
+ * Static-priority shortlist (kept for back-compat and as a fallback
+ * when GSC data isn't available). For demand-driven picking use
+ * pickHighestEffectivePriority() in src/lib/contentRanker.ts.
+ */
 export function nextReviewToPublish(): ReviewQueueEntry | undefined {
-  return reviewQueue
-    .filter((r) => r.status === "queued" && r.affiliate_url !== null)
-    .sort((a, b) => b.priority - a.priority)[0];
+  // Affiliate-ready entries still preferred in the static fallback —
+  // matches the prior behavior. The dynamic ranker is the new default
+  // path; this stays as a last-resort cron pick if GSC is unreachable.
+  const candidates = reviewCandidates();
+  const ready = candidates.filter((r) => r.affiliate_url !== null);
+  const pool = ready.length > 0 ? ready : candidates;
+  return [...pool].sort((a, b) => b.priority - a.priority)[0];
 }
 
 export function nextSupporting(type?: SupportingContentType): SupportingQueueEntry | undefined {
-  return supportingQueue
-    .filter((s) => s.status === "queued" && (!type || s.content_type === type))
-    .sort((a, b) => b.priority - a.priority)[0];
+  return [...supportingCandidates(type)].sort((a, b) => b.priority - a.priority)[0];
 }

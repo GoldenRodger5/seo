@@ -17,7 +17,7 @@ import ScoreRing from "../components/ScoreRing";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import CommunityRating from "../components/CommunityRating";
 import VisitSiteButton from "../components/VisitSiteButton";
-import { getSiteBySlug, sites, getVisitUrl, isAffiliated, isPendingReview } from "../data/sites";
+import { getSiteBySlug, sites, getVisitUrl, isAffiliated, isPendingReview, isEditorialOnly } from "../data/sites";
 import { useAIReview, reviewBodies } from "../hooks/useAIReview";
 import { currentYear, currentMonthShort, currentMonthLong } from "../lib/dates";
 import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
@@ -237,12 +237,24 @@ const ReviewPage = () => {
         );
       })()}
 
-      {/* Affiliate disclosure */}
-      <div className="border-b border-primary/10 bg-secondary/5">
-        <div className="container py-2 text-center text-xs text-muted-foreground">
-          TwinkVault uses partner links. Commissions never influence our rankings.
+      {/* Editorial relationship disclosure. For editorial-only reviews
+          (sites we don't yet partner with) we surface a clear notice so
+          readers understand the review isn't a sponsored placement. */}
+      {isEditorialOnly(site) ? (
+        <div className="border-b border-amber-500/20 bg-amber-500/5">
+          <div className="container py-3 text-center text-xs text-amber-200/90">
+            <strong className="font-semibold">Editorial review.</strong>{" "}
+            TwinkVault has not partnered with {site.name}. This page exists for
+            independent SEO coverage — no affiliate link, no commission.
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="border-b border-primary/10 bg-secondary/5">
+          <div className="container py-2 text-center text-xs text-muted-foreground">
+            TwinkVault uses partner links. Commissions never influence our rankings.
+          </div>
+        </div>
+      )}
 
       <div className="container py-12">
         <div className="flex flex-col gap-10 lg:flex-row">

@@ -73,7 +73,18 @@ export interface SiteData {
    * Tied to live affiliate signups where coverage hasn't been written yet
    * (e.g. new AEC brands added before Isaac has subscribed and tested).
    */
-  editorial_status?: "reviewed" | "pending-review";
+  /**
+   * "reviewed"        — default. We have a full review + (usually) an affiliate
+   *                    relationship. Visit Site CTA + AggregateOffer schema render.
+   * "pending-review"  — affiliate URL is set / partnership exists, but our editorial
+   *                    review hasn't been written yet (e.g. TLA Gay Unlimited).
+   *                    Renders a "Coming soon" placeholder; CTA still works.
+   * "editorial-only"  — we've written an SEO review for a high-demand site, but
+   *                    have NOT partnered with it. Renders the review + a "we have
+   *                    not yet partnered" disclosure. NO affiliate CTA, no
+   *                    AggregateOffer schema. Site stays out of ranked surfaces.
+   */
+  editorial_status?: "reviewed" | "pending-review" | "editorial-only";
   /**
    * ISO date (YYYY-MM-DD) when Isaac last manually confirmed the deal is live.
    *  • Within 14 days  → shown as "Verified MMM DD"
@@ -98,6 +109,20 @@ export function isAffiliated(site: SiteData): boolean {
 /** Sites awaiting editorial coverage — excluded from ranked surfaces. */
 export function isPendingReview(site: SiteData): boolean {
   return site.editorial_status === "pending-review";
+}
+
+/** SEO-only reviews for sites we don't partner with — review prose ships
+ *  but no affiliate CTA, no commercial schema. Excluded from ranked
+ *  surfaces (no commercial relationship). */
+export function isEditorialOnly(site: SiteData): boolean {
+  return site.editorial_status === "editorial-only";
+}
+
+/** Whether to surface a "Visit Site" affiliate CTA at all. False for
+ *  editorial-only sites. */
+export function shouldRenderAffiliateCta(site: SiteData): boolean {
+  if (site.editorial_status === "editorial-only") return false;
+  return isAffiliated(site);
 }
 
 /** Affiliate-link deep linking pattern for AdultEmpireCash brands:
@@ -2177,14 +2202,14 @@ export function getSitesByCategory(categorySlug: string): SiteData[] {
 }
 
 export function getFeaturedSites(): SiteData[] {
-  return sites.filter(s => s.is_featured && !isPendingReview(s)).sort((a, b) => a.rank - b.rank);
+  return sites.filter(s => s.is_featured && !isPendingReview(s) && !isEditorialOnly(s)).sort((a, b) => a.rank - b.rank);
 }
 
 const hasHeroBanner = (s: SiteData): boolean =>
   Boolean(getSiteImagery(s.slug).hero_image_url);
 
 export function getPromotableSites(): SiteData[] {
-  return sites.filter(s => isAffiliated(s) && hasHeroBanner(s) && !isPendingReview(s));
+  return sites.filter(s => isAffiliated(s) && hasHeroBanner(s) && !isPendingReview(s) && !isEditorialOnly(s));
 }
 
 export function getTopRatedPromotable(limit: number): SiteData[] {
@@ -2195,7 +2220,7 @@ export function getTopRatedPromotable(limit: number): SiteData[] {
 
 /** Top-rated affiliated sites regardless of banner — for the Top 5 card section. */
 export function getTopRatedAffiliated(limit: number): SiteData[] {
-  return [...sites.filter(s => isAffiliated(s) && !isPendingReview(s))]
+  return [...sites.filter(s => isAffiliated(s) && !isPendingReview(s) && !isEditorialOnly(s))]
     .sort((a, b) => b.overall_score - a.overall_score || b.update_frequency - a.update_frequency)
     .slice(0, limit);
 }
@@ -2227,7 +2252,7 @@ export function getRecentlyUpdatedPromotable(limit: number, exclude: SiteData[] 
  * Phase 4 click + impression data accumulates per destination.
  */
 export function getTopDealPick(): SiteData | null {
-  const affiliated = sites.filter(s => isAffiliated(s) && !isPendingReview(s));
+  const affiliated = sites.filter(s => isAffiliated(s) && !isPendingReview(s) && !isEditorialOnly(s));
   if (affiliated.length === 0) return null;
   const withDeals = affiliated.filter(s => s.deal_discount > 0);
   if (withDeals.length > 0) {

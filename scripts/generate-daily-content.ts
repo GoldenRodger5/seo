@@ -32,6 +32,8 @@ import { GoogleAuth } from "google-auth-library";
 
 import {
   reviewQueue,
+  reviewCandidates,
+  supportingCandidates,
   supportingQueue,
   nextReviewToPublish,
   nextSupporting,
@@ -353,7 +355,9 @@ function buildUserPrompt(type: ContentTypeKey, payload: Record<string, unknown>)
 function rawUserPrompt(type: ContentTypeKey, payload: Record<string, unknown>): string {
   switch (type) {
     case "review":
-      return reviewPrompt(payload);
+      return payload.editorial_only === true
+        ? reviewEditorialOnlyPrompt(payload)
+        : reviewPrompt(payload);
     case "discount":
       return discountPrompt(payload);
     case "comparison":
@@ -403,6 +407,57 @@ meta_description (HARD CONSTRAINT — must be between 145 and 155 characters INC
 h1 (primary H1 with main keyword)
 h2_sections (array of 5 H2 strings)
 comparison_sites (3 existing slugs from the list above, most relevant)
+internal_links (3 existing slugs)
+og_description (under 100 chars)
+twitter_description (under 100 chars)`;
+}
+
+/**
+ * Editorial-only review prompt — for sites we don't yet partner with
+ * but want SEO coverage of. The output schema matches reviewPrompt() so
+ * the same persistence path works, but the prompt:
+ *   - Tells the model TwinkVault has no commercial relationship.
+ *   - Bans CTA/conversion language ("get the discount", "sign up now",
+ *     "save 67%") — those would mislead readers about a deal we don't
+ *     actually offer.
+ *   - Skips pricing fields (we set price_* to "n/a" at persist time
+ *     since we haven't subscribed).
+ *   - Asks for an editorial verdict paragraph that names the gap
+ *     (e.g., "We haven't tested this site with a paid membership").
+ */
+function reviewEditorialOnlyPrompt(p: Record<string, unknown>): string {
+  return `Search for current public information about "${p.name}" before writing — performer roster, content style, scene count, recent member feedback. Do NOT search for affiliate pricing or join page; we will not be linking. Then generate a complete editorial-only review JSON object using what you found.
+
+Site: ${p.name}
+Homepage: ${p.homepage_url}
+Niche: ${(p.niche as string[]).join(", ")}
+Existing reviewed sites you can reference for comparison: ${(p.existing_slugs as string[]).slice(0, 12).join(", ")}
+
+CONTEXT — IMPORTANT:
+TwinkVault has NOT subscribed to this site and is NOT affiliated. This review is editorial coverage for readers who search for it. The output must NOT promise discounts, contain affiliate CTAs, or use first-person "we tested" language about a paid membership. Be transparent: surface what's known publicly, what isn't, and what a reader should investigate themselves.
+
+HARD CONSTRAINTS — these are not suggestions:
+- The four review_body fields MUST total >= 900 words combined.
+- BANNED phrases: "we tested", "we logged in", "we subscribed", "during our membership", "we paid for", "TwinkVault members get", "use our discount", "exclusive offer", "save XX%", "sign up here", "limited time".
+- INSTEAD use: "publicly available scenes suggest", "the site advertises", "member reports indicate", "trade press has noted".
+- review_body_p4 (verdict) must include a sentence noting we have not yet partnered with this site and the review is based on public information.
+- meta_description MUST be 145-155 characters. Count characters before returning. Include the site name.
+
+Return JSON with fields:
+review_body_p1 (200-240 words: overview, who made it, niche, who it's for — sourced from public info)
+review_body_p2 (260-300 words: content overview — scene count claims, model roster, resolution, exclusivity — flag what's verifiable vs marketing-claim)
+review_body_p3 (200-240 words: positioning vs competitors we've actually tested; don't fabricate pricing)
+review_body_p4 (160-200 words: editorial verdict with transparency about our coverage gap)
+pros (4-5 specific pros from public observation — never generic)
+cons (2-3 honest cons, including "we haven't independently tested" as one)
+scores: { content_quality, value_for_money, site_design, update_frequency, overall } (each 1-10, one decimal; score conservatively since we haven't tested)
+tagline (one sentence under 15 words)
+best_for (one sentence describing the ideal reader, NOT framed as a purchase recommendation)
+faq (5 entries, each {q, a} — focus on what readers actually search: what is this site, who runs it, what content does it have, is it active, how does it compare publicly to X)
+meta_description (145-155 chars — include site name, end with editorial framing not a deal hook)
+h1 (primary H1 with main keyword + "Review")
+h2_sections (array of 5 H2 strings)
+comparison_sites (3 existing slugs we have reviewed, most relevant)
 internal_links (3 existing slugs)
 og_description (under 100 chars)
 twitter_description (under 100 chars)`;
@@ -623,7 +678,11 @@ function appendSiteEntry(entry: ReviewQueueEntry, generated: Record<string, unkn
   const price_annual = (generated.price_annual as string) ?? "$9.95/mo";
   const price_quarterly = (generated.price_quarterly as string) ?? "$19.95/mo";
 
-  // Append new entry before the closing `];` of the sites array.
+  // Editorial-only reviews: no affiliate, no price (we don't know it
+  // without partnering), no deal. The flag also stamps editorial_status
+  // so renderers + ranking-surface filters know to handle accordingly.
+  const isEditorialOnly = entry.editorial_mode === "research-only";
+
   const block = `  {
     id: "${nextId}",
     name: "${entry.name}",
@@ -635,24 +694,24 @@ function appendSiteEntry(entry: ReviewQueueEntry, generated: Record<string, unkn
     value_score: ${round(scores.value_for_money)},
     update_frequency: ${round(scores.update_frequency)},
     mobile_score: ${round(scores.site_design)},
-    price_from: "${price_annual}",
-    price_monthly: "${price_monthly}",
-    price_quarterly: "${price_quarterly}",
-    price_annual: "${price_annual}",
+    price_from: ${JSON.stringify(isEditorialOnly ? "n/a" : price_annual)},
+    price_monthly: ${JSON.stringify(isEditorialOnly ? "n/a" : price_monthly)},
+    price_quarterly: ${JSON.stringify(isEditorialOnly ? "n/a" : price_quarterly)},
+    price_annual: ${JSON.stringify(isEditorialOnly ? "n/a" : price_annual)},
     affiliate_url: ${entry.affiliate_url ? JSON.stringify(entry.affiliate_url) : "null"},
     homepage_url: ${JSON.stringify(entry.homepage_url)},
     categories: ${JSON.stringify(entry.niche)},
     pros: ${JSON.stringify(pros)},
     cons: ${JSON.stringify(cons)},
     rank: ${nextRank},
-    badge: null,
+    badge: ${isEditorialOnly ? JSON.stringify("Editorial-only") : "null"},
     is_featured: false,
     has_free_trial: false,
     has_hd: true,
     best_for: ${JSON.stringify(generated.best_for)},
-    deal_text: ${JSON.stringify("Up to 67% off annual plan")},
-    deal_discount: 67,
-    deal_type: "ongoing",
+    deal_text: ${JSON.stringify(isEditorialOnly ? "" : "Up to 67% off annual plan")},
+    deal_discount: ${isEditorialOnly ? 0 : 67},
+    deal_type: "ongoing",${isEditorialOnly ? `\n    editorial_status: "editorial-only",` : ""}
   },
 `;
 
@@ -1002,8 +1061,8 @@ async function logToSupabase(row: Record<string, unknown>) {
 // ---------------------------------------------------------------------------
 // Resolution: which item to generate today?
 // ---------------------------------------------------------------------------
-function resolveTarget(flags: Flags): { kind: "review"; entry: ReviewQueueEntry } | { kind: "supporting"; entry: SupportingQueueEntry } | null {
-  // --site override
+async function resolveTarget(flags: Flags): Promise<{ kind: "review"; entry: ReviewQueueEntry } | { kind: "supporting"; entry: SupportingQueueEntry } | null> {
+  // --site override (unchanged: explicit slug always wins)
   if (flags.site) {
     const r = reviewQueue.find((q) => q.slug === flags.site);
     if (r) return { kind: "review", entry: r };
@@ -1022,26 +1081,76 @@ function resolveTarget(flags: Flags): { kind: "review"; entry: ReviewQueueEntry 
     return s ? { kind: "supporting", entry: s } : null;
   }
 
-  // --force: highest-priority queued review (even without affiliate URL).
+  // --force: highest static-priority queued review, skipping archived only.
   if (flags.force) {
-    const sorted = [...reviewQueue].filter((r) => r.status === "queued").sort((a, b) => b.priority - a.priority);
+    const sorted = [...reviewQueue]
+      .filter((r) => r.status === "queued" && r.editorial_mode !== "archived")
+      .sort((a, b) => b.priority - a.priority);
     if (sorted.length) return { kind: "review", entry: sorted[0] };
   }
 
-  // Priority-driven queue resolution.
-  // Compare top of review queue (priority + affiliate_url gate) against
-  // top of supporting queue (priority only) and return the higher.
-  const r = nextReviewToPublish();
-  const s = nextSupporting();
+  // ── Demand-driven resolution ─────────────────────────────────────────
+  // Fetch live GSC query data + build the cannibalization/duplication
+  // index, then pick the highest-effective-priority candidate across
+  // both queues. Falls back to static priority if Supabase is unreachable.
+  const { fetchGscQueriesNode } = await import("./lib/gsc-node-client.js");
+  const { aggregateGscQueries, buildIndex, pickHighestEffective } = await import(
+    "../src/lib/contentRanker.js"
+  );
+  const rawGsc = await fetchGscQueriesNode(28);
+  const gscQueries = aggregateGscQueries(rawGsc);
+  log.info(`Ranker: loaded ${gscQueries.length} aggregated GSC queries${rawGsc.length === 0 ? " (none — falling back to static priority)" : ""}`);
 
-  if (r && s) {
-    return r.priority >= s.priority
-      ? { kind: "review", entry: r }
-      : { kind: "supporting", entry: s };
-  }
-  if (r) return { kind: "review", entry: r };
-  if (s) return { kind: "supporting", entry: s };
-  return null;
+  // Build the existing-content index from sites.ts + already-published
+  // queue entries (so we never re-rank a published item to the top).
+  const existingSlugs = new Set<string>([
+    ...sites.map((s) => s.slug),
+    ...reviewQueue.filter((r) => r.status === "published").map((r) => r.slug),
+    ...supportingQueue.filter((s) => s.status === "published").map((s) => s.slug),
+  ]);
+  // Use the site's static route table as the cannibalization corpus —
+  // best-* landing pages, niche pages, and existing reviews all count.
+  const routes = [
+    "/", "/top-sites", "/reviews", "/best-deals", "/compare",
+    ...sites.map((s) => `/reviews/${s.slug}`),
+    ...sites.map((s) => `/discount/${s.slug}`),
+    "/best-twink-sites", "/free-trial-twink-sites", "/cheapest-twink-sites",
+    "/best-bareback-gay-sites", "/best-asian-gay-sites", "/best-amateur-gay-sites",
+    "/best-premium-gay-sites", "/best-daddy-twink-sites",
+    "/best-gay-sites-under-10", "/best-gay-twink-sites-2026",
+    "/best-gay-sites-with-downloads", "/best-twink-porn-sites-with-free-trials",
+    "/best-cheap-gay-porn-sites", "/best-bareback-twink-sites",
+    "/best-gay-porn-sites", "/best-gay-porn-subscription",
+    "/best-twink-porn-sites", "/gay-porn-sites-with-free-trial",
+    "/best-value-gay-porn-sites", "/gay-porn-site-reviews", "/gay-porn-sites-ranked",
+    "/best-gay-sites-for-beginners",
+  ];
+  const index = buildIndex(gscQueries, routes, existingSlugs);
+
+  // Editorial-only cap: count how many editorial-only reviews are
+  // currently live on the site. Cap at 5 per the owner's spec.
+  const editorialOnlyCurrent = sites.filter((s) => s.editorial_status === "editorial-only").length;
+  const editorialOnlyCap = 5;
+
+  const reviews = reviewCandidates();
+  const supporting = supportingCandidates();
+  const picked = pickHighestEffective(reviews, supporting, index, {
+    editorialOnlyCap,
+    editorialOnlyCurrent,
+  });
+  if (!picked) return null;
+
+  // Log the decision for visibility.
+  const r = picked.ranking;
+  log.info(
+    `Picker: ${picked.kind}=${picked.entry.slug} effective=${r.effective} ` +
+    `(static=${r.staticPriority} +demand=${r.demandBonus} ` +
+    `-cann=${r.cannibalizationPenalty} -noaff=${r.noAffiliatePenalty} -dup=${r.duplicationPenalty})` +
+    (r.matchedQueries.length ? ` topQueries=${r.matchedQueries.slice(0, 3).map((q) => `"${q.query}"(${q.impressions}imp)`).join(", ")}` : ""),
+  );
+  return picked.kind === "review"
+    ? { kind: "review", entry: picked.entry }
+    : { kind: "supporting", entry: picked.entry };
 }
 
 // ---------------------------------------------------------------------------
@@ -1057,7 +1166,7 @@ async function main() {
     process.exit(0);
   }
 
-  const target = resolveTarget(flags);
+  const target = await resolveTarget(flags);
   if (!target) {
     log.warn("No queued item resolved for today's rotation. Exiting cleanly.");
     return;
@@ -1080,6 +1189,10 @@ async function main() {
           affiliate_network: entry.affiliate_network,
           existing_slugs: sites.map((s) => s.slug),
           retry_hint: extraHint,
+          // Switches the prompt to reviewEditorialOnlyPrompt() — no
+          // pricing focus, no affiliate CTA framing, transparency about
+          // the lack of partnership.
+          editorial_only: entry.editorial_mode === "research-only",
         },
       });
     }
