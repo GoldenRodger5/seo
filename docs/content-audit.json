@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-14T17:08:43.983Z",
+  "generated_at": "2026-06-14T18:01:33.259Z",
   "summary": {
-    "routes": 411,
+    "routes": 413,
     "clientOnlyCount": 0,
     "clientOnlyPct": "0.0",
     "typeStats": [
@@ -44,20 +44,20 @@
         "allClientOnly": false
       },
       {
+        "type": "other",
+        "count": 22,
+        "median": 888,
+        "min": 380,
+        "max": 2132,
+        "flagCounts": {},
+        "allClientOnly": false
+      },
+      {
         "type": "niche",
         "count": 21,
         "median": 642,
         "min": 486,
         "max": 2073,
-        "flagCounts": {},
-        "allClientOnly": false
-      },
-      {
-        "type": "other",
-        "count": 20,
-        "median": 792,
-        "min": 380,
-        "max": 2021,
         "flagCounts": {},
         "allClientOnly": false
       },
@@ -3826,6 +3826,30 @@
       "metaDescription": "Every gay porn site offering a free or low-cost intro trial. Try before you commit — verified offers across twink, bareback, premium, and Asian niches.",
       "hasReviewSchema": false,
       "hasFaqSchema": false,
+      "hasBreadcrumbSchema": true,
+      "flags": []
+    },
+    {
+      "route": "/guide/gay-porn-billing-guide",
+      "pageType": "other",
+      "fileSize": 37735,
+      "bodyWordCount": 2132,
+      "metaTitle": "Gay Porn Site Billing Explained | TwinkVault",
+      "metaDescription": "Everything gay men need to know about gay porn site billing — processors, trial traps, statement descriptors, cancellation, and where your money actually goes.",
+      "hasReviewSchema": false,
+      "hasFaqSchema": true,
+      "hasBreadcrumbSchema": true,
+      "flags": []
+    },
+    {
+      "route": "/guide/how-to-cancel-gay-porn-subscriptions",
+      "pageType": "other",
+      "fileSize": 36228,
+      "bodyWordCount": 1971,
+      "metaTitle": "How To Cancel Gay Porn Subs | TwinkVault",
+      "metaDescription": "Step-by-step guide to cancelling Helix Studios, Next Door Twink, Southern Strokes, Breed Me Raw and other gay porn site memberships before the next charge.",
+      "hasReviewSchema": false,
+      "hasFaqSchema": true,
       "hasBreadcrumbSchema": true,
       "flags": []
     },

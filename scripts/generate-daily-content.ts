@@ -425,7 +425,7 @@ function comparisonPrompt(p: Record<string, unknown>): string {
 Site A: ${p.site_a_name} (${p.site_a_slug}) — ${p.site_a_summary}
 Site B: ${p.site_b_name} (${p.site_b_slug}) — ${p.site_b_summary}
 
-Return JSON: { site_a_slug, site_b_slug, h1 ("[A] vs [B] — Which Is Better in 2026?"), intro (~150w), site_a_summary (~100w on A's strengths), site_b_summary (~100w on B's strengths), comparison_categories: 5 entries with { category, site_a_score (1-10), site_b_score (1-10), site_a_detail (2-3 sentences), site_b_detail (2-3 sentences) } covering Content Library, Pricing & Value, Site Design & UX, Update Frequency, Niche Focus. verdict (~200w decisive), who_should_choose_a (one sentence), who_should_choose_b (one sentence), faq (2 comparison-specific entries), meta_description (145-155 chars) }`;
+Return JSON: { site_a_slug, site_b_slug, h1 ("[A] vs [B] — Which Is Better in 2026?"), intro (~150w), site_a_summary (~100w on A's strengths), site_b_summary (~100w on B's strengths), comparison_categories: 5 entries with { category, site_a_score (1-10), site_b_score (1-10), site_a_detail (2-3 sentences), site_b_detail (2-3 sentences) } covering Content Library, Pricing & Value, Site Design & UX, Update Frequency, Niche Focus. verdict (~200w decisive), who_should_choose_a (one sentence), who_should_choose_b (one sentence), faq (2 entries, each {q, a} — q is the search question, a is the answer 80-150 words), meta_description (145-155 chars) }`;
 }
 
 function bestofPrompt(p: Record<string, unknown>): string {
@@ -434,7 +434,7 @@ function bestofPrompt(p: Record<string, unknown>): string {
 Niche: ${p.niche ?? p.title}
 Sites to rank (with current overall scores): ${JSON.stringify(p.candidates)}
 
-Return JSON: { h1 ("Best [Niche] Sites 2026 — Ranked & Reviewed"), intro (~200w establishing authority and ranking criteria), sites: array with { slug, rank (1..N), blurb (~150w), best_for (one sentence) } in ranked order, conclusion (~150w summary + CTA), methodology_note (2 sentences on ranking criteria), meta_description (145-155 chars), faq (3 listicle-specific entries) }`;
+Return JSON: { h1 ("Best [Niche] Sites 2026 — Ranked & Reviewed"), intro (~200w establishing authority and ranking criteria), sites: array with { slug, rank (1..N), blurb (~150w), best_for (one sentence) } in ranked order, conclusion (~150w summary + CTA), methodology_note (2 sentences on ranking criteria), meta_description (145-155 chars), faq (3 entries, each {q, a} — q is the search question, a is the answer 80-150 words) }`;
 }
 
 function alternativesPrompt(p: Record<string, unknown>): string {
@@ -442,7 +442,7 @@ function alternativesPrompt(p: Record<string, unknown>): string {
 
 Existing sites available as alternatives: ${JSON.stringify(p.candidates)}
 
-Return JSON: { h1 ("Best Alternatives To [Site] in 2026"), intro (~150w on why someone wants alternatives + what to look for), alternatives: array with { slug, reason (~100w on fit + comparison) } — pick 5 most relevant from candidates, verdict (~100w wrap-up), meta_description (145-155 chars), faq (2 entries) }`;
+Return JSON: { h1 ("Best Alternatives To [Site] in 2026"), intro (~150w on why someone wants alternatives + what to look for), alternatives: array with { slug, reason (~100w on fit + comparison) } — pick 5 most relevant from candidates, verdict (~100w wrap-up), meta_description (145-155 chars), faq (2 entries, each {q, a} — q is the search question, a is the answer 80-150 words) }`;
 }
 
 function guidePrompt(p: Record<string, unknown>): string {
@@ -454,7 +454,7 @@ Related sites: ${(p.related_sites as string[]).join(", ")}
 
 HARD CONSTRAINT on h1: must be 30-50 characters (so that "{h1} | TwinkVault" stays under the 65-char SERP title cap). Long slug names need terse h1s — "How To Cancel Gay Porn Subs" is fine, "How To Cancel A Gay Porn Site Subscription Step By Step Walkthrough" is too long.
 
-Return JSON: { h1 (30-50 chars — count carefully), intro (~200w), sections: 4-5 entries with { h2, content (200-300w each) }, conclusion (~150w with CTAs to review pages), meta_description (145-155 chars), faq (5 entries) }`;
+Return JSON: { h1 (30-50 chars — count carefully), intro (~200w), sections: 4-5 entries with { h2, content (200-300w each) }, conclusion (~150w with CTAs to review pages), meta_description (145-155 chars), faq (5 entries, each {q, a} — q is the search question, a is the answer 80-150 words. Use EXACTLY field names "q" and "a", not "question"/"answer") }`;
 }
 
 function hubPrompt(p: Record<string, unknown>): string {
@@ -464,7 +464,7 @@ Niche title: ${p.title}
 Niche keyword: ${p.target_keyword}
 Sites in this niche: ${JSON.stringify(p.related_sites)}
 
-Return JSON: { h1 ("[Niche] Porn Sites — Complete Guide 2026"), intro (~200w establishing this as the definitive resource), niche_explanation (~150w explaining the niche), site_blurbs: array { slug, blurb (~75w on why this site fits) }, buying_guide (~200w on what to look for), conclusion (~100w), meta_description (145-155 chars), faq (4 entries) }`;
+Return JSON: { h1 ("[Niche] Porn Sites — Complete Guide 2026"), intro (~200w establishing this as the definitive resource), niche_explanation (~150w explaining the niche), site_blurbs: array { slug, blurb (~75w on why this site fits) }, buying_guide (~200w on what to look for), conclusion (~100w), meta_description (145-155 chars), faq (4 entries, each {q, a} — q is the search question, a is the answer 80-150 words) }`;
 }
 
 // ---------------------------------------------------------------------------
@@ -746,6 +746,27 @@ function upsertContentEntry(file: string, key: string, body: unknown): void {
  * the frontend will look up. A mismatch throws — better to fail loudly
  * at write time than to ship invisible content.
  */
+/**
+ * Map any AI FAQ-shape drift back to the canonical `{q, a}` the data
+ * layer + renderers expect. Handles {question, answer}, {Q, A}, etc.
+ * Silently drops malformed entries (no recognizable text content).
+ */
+function normalizeGeneratedFaq(generated: Record<string, unknown>): Record<string, unknown> {
+  const faq = generated.faq;
+  if (!Array.isArray(faq)) return generated;
+  const Q_ALIASES = ["q", "question", "Q", "Question"];
+  const A_ALIASES = ["a", "answer", "A", "Answer", "text", "acceptedAnswer"];
+  const normalized = faq.flatMap((entry) => {
+    if (!entry || typeof entry !== "object") return [];
+    const e = entry as Record<string, unknown>;
+    const q = Q_ALIASES.map((k) => e[k]).find((v) => typeof v === "string" && (v as string).trim().length > 0);
+    const a = A_ALIASES.map((k) => e[k]).find((v) => typeof v === "string" && (v as string).trim().length > 0);
+    if (!q || !a) return [];
+    return [{ q: (q as string).trim(), a: (a as string).trim() }];
+  });
+  return { ...generated, faq: normalized };
+}
+
 function persistSupportingContent(entry: SupportingQueueEntry, generated: Record<string, unknown>): void {
   type ContentBinding = {
     file: string;
@@ -799,7 +820,16 @@ function persistSupportingContent(entry: SupportingQueueEntry, generated: Record
       `Refusing to write invisible content. Fix keyFromSlug/frontendLookup in persistSupportingContent for content_type=${entry.content_type}.`
     );
   }
-  upsertContentEntry(binding.file, writeKey, generated);
+
+  // FAQ field-shape canonicalization. The TS interfaces (guide-content.ts,
+  // comparison-content.ts, alternatives-content.ts, isworthit-content.ts)
+  // and every renderer (GuidePage.tsx, ReviewPage.tsx, ComparePage.tsx)
+  // read `{q, a}`. Some prompts only loosely specify the FAQ shape and the
+  // model sometimes returns `{question, answer}` (or other variants),
+  // which silently ships empty FAQs both visually and in JSON-LD until a
+  // human notices. Normalize here so the field-name choice can't drift.
+  const normalized = normalizeGeneratedFaq(generated);
+  upsertContentEntry(binding.file, writeKey, normalized);
 
   // Stamp the route's lastmod so generate-sitemap.ts can emit accurate
   // <lastmod> for this URL — without this Google never gets a recrawl

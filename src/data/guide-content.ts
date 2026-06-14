@@ -55,24 +55,24 @@ export const GUIDE_CONTENT: Record<string, GuideBody> = {
     "conclusion": "Cancelling a gay porn subscription is genuinely straightforward once you know whether to go through the site, through the third-party billing processor, or straight to your bank. The core advice: always save your cancellation confirmation, check your statement for one full billing cycle afterward, and never rely on simply uninstalling an app or stopping using a service — auto-renewals don't care whether you've logged in recently. If you're reconsidering a site rather than permanently walking away, it's worth checking our full reviews before you re-subscribe. We cover Helix Studios, Next Door Twink, Next Door World, Twinks In Shorts, Athletic Twinks, Southern Strokes, Daddy On Twink, Touch That Boy, Breed Me Raw, and Bareback That Hole in depth — current pricing, honest scene counts, what's actually good and what's overpriced — so you spend money only on the memberships worth keeping.",
     "faq": [
       {
-        "question": "Will I lose access immediately when I cancel a gay porn site subscription?",
-        "answer": "No. On virtually every major platform — including Helix Studios and the Next Door network — cancelling stops the next automatic renewal but leaves your access active until the end of the billing period you've already paid for. You're not owed a refund for unused days on the current cycle, but you won't be cut off the moment you hit cancel."
+        "q": "Will I lose access immediately when I cancel a gay porn site subscription?",
+        "a": "No. On virtually every major platform — including Helix Studios and the Next Door network — cancelling stops the next automatic renewal but leaves your access active until the end of the billing period you've already paid for. You're not owed a refund for unused days on the current cycle, but you won't be cut off the moment you hit cancel."
       },
       {
-        "question": "I signed up through a third-party billing company. Which one handles most gay porn sites?",
-        "answer": "CCBill, Epoch, and SegPay are the three processors used by the overwhelming majority of gay porn subscription sites, including the ones in TwinkVault's coverage. Each has a consumer support portal where you can look up and cancel active subscriptions using just your email address and card details — no site login required."
+        "q": "I signed up through a third-party billing company. Which one handles most gay porn sites?",
+        "a": "CCBill, Epoch, and SegPay are the three processors used by the overwhelming majority of gay porn subscription sites, including the ones in TwinkVault's coverage. Each has a consumer support portal where you can look up and cancel active subscriptions using just your email address and card details — no site login required."
       },
       {
-        "question": "The cancel button is missing from my member account. What now?",
-        "answer": "Go directly to the billing company's consumer portal (CCBill, Epoch, or SegPay depending on which appears on your statement) and cancel from there. Alternatively, call the phone number printed next to the charge on your credit card statement — that number reaches the billing processor, not the content site, and they can cancel on the spot."
+        "q": "The cancel button is missing from my member account. What now?",
+        "a": "Go directly to the billing company's consumer portal (CCBill, Epoch, or SegPay depending on which appears on your statement) and cancel from there. Alternatively, call the phone number printed next to the charge on your credit card statement — that number reaches the billing processor, not the content site, and they can cancel on the spot."
       },
       {
-        "question": "Can I get a refund after cancelling a gay porn site membership?",
-        "answer": "Refunds are rarely offered as a matter of standard policy. Most sites explicitly state that current-period charges are non-refundable. Your best chance of recovering money is if you were charged after a confirmed cancellation — in that case, file a dispute with your card issuer and provide the cancellation confirmation as evidence."
+        "q": "Can I get a refund after cancelling a gay porn site membership?",
+        "a": "Refunds are rarely offered as a matter of standard policy. Most sites explicitly state that current-period charges are non-refundable. Your best chance of recovering money is if you were charged after a confirmed cancellation — in that case, file a dispute with your card issuer and provide the cancellation confirmation as evidence."
       },
       {
-        "question": "I used PayPal to subscribe. Does cancelling on the site also cancel the PayPal billing agreement?",
-        "answer": "Not necessarily. PayPal billing agreements can persist independently of the site's own records. Log into your PayPal account, navigate to Settings → Payments → Manage Pre-Approved Payments, find the merchant, and explicitly cancel the agreement from PayPal's side. Do this in addition to cancelling on the site or through the billing processor."
+        "q": "I used PayPal to subscribe. Does cancelling on the site also cancel the PayPal billing agreement?",
+        "a": "Not necessarily. PayPal billing agreements can persist independently of the site's own records. Log into your PayPal account, navigate to Settings → Payments → Manage Pre-Approved Payments, find the merchant, and explicitly cancel the agreement from PayPal's side. Do this in addition to cancelling on the site or through the billing processor."
       }
     ]
   },
@@ -105,24 +105,24 @@ export const GUIDE_CONTENT: Record<string, GuideBody> = {
     "conclusion": "Gay porn site billing is genuinely less opaque than it used to be — processors like CCBill and Epoch have consumer portals, discreet descriptors are industry standard, and legitimate sites comply with auto-renewal disclosure rules. What catches people out is inattention: skimming past trial terms, missing a rebill date, or not recognizing a processor name on a statement. Armed with what's in this guide, you're better positioned than most. If you're weighing up which sites are actually worth your money right now, our full reviews go deep on content quality, update frequency, and whether each membership earns a renewal. Start with our Helix Studios review, Next Door Twink, Next Door World, Southern Strokes, Athletic Twinks, Twinks in Shorts, Daddy on Twink, Touch That Boy, Breed Me Raw, and Bareback That Hole — each review includes current pricing notes and a clear verdict on value.",
     "faq": [
       {
-        "question": "Why is there a charge from CCBill or Epoch on my statement that I don't recognize?",
-        "answer": "CCBill and Epoch are the two dominant payment processors for gay adult sites. When you subscribe to almost any paysite — Helix Studios, Next Door Twink, Bareback That Hole, and hundreds of others — the actual charge is processed through one of these third parties, not the studio directly. The descriptor on your statement will show the processor name plus a reference, not the site name. Check the charge amount against your last signup, and Google the exact descriptor string. It almost certainly matches a subscription you authorized."
+        "q": "Why is there a charge from CCBill or Epoch on my statement that I don't recognize?",
+        "a": "CCBill and Epoch are the two dominant payment processors for gay adult sites. When you subscribe to almost any paysite — Helix Studios, Next Door Twink, Bareback That Hole, and hundreds of others — the actual charge is processed through one of these third parties, not the studio directly. The descriptor on your statement will show the processor name plus a reference, not the site name. Check the charge amount against your last signup, and Google the exact descriptor string. It almost certainly matches a subscription you authorized."
       },
       {
-        "question": "How do I cancel a gay porn site subscription?",
-        "answer": "The cleanest route for CCBill-billed sites is through CCBill's consumer portal at ccbill.com/cs/consumer — log in with the email you used to sign up and you'll see all active subs. For Epoch-billed sites, epoch.com has an equivalent self-service tool. You can also cancel through the site's own member area under account or billing settings. Cancellation stops future renewals; you'll typically retain access until the current paid period ends."
+        "q": "How do I cancel a gay porn site subscription?",
+        "a": "The cleanest route for CCBill-billed sites is through CCBill's consumer portal at ccbill.com/cs/consumer — log in with the email you used to sign up and you'll see all active subs. For Epoch-billed sites, epoch.com has an equivalent self-service tool. You can also cancel through the site's own member area under account or billing settings. Cancellation stops future renewals; you'll typically retain access until the current paid period ends."
       },
       {
-        "question": "Will a gay porn site trial automatically renew?",
-        "answer": "Yes, in every case. Trial offers — whether it's a $2.95 3-day trial at Helix Studios or a €2.95 intro at Next Door Twink — are structured to convert to a full recurring subscription automatically when the trial period ends. The site discloses this at checkout, but it's easy to miss. Set a calendar reminder for at least 24 hours before the trial ends if you want to test without committing to a full charge."
+        "q": "Will a gay porn site trial automatically renew?",
+        "a": "Yes, in every case. Trial offers — whether it's a $2.95 3-day trial at Helix Studios or a €2.95 intro at Next Door Twink — are structured to convert to a full recurring subscription automatically when the trial period ends. The site discloses this at checkout, but it's easy to miss. Set a calendar reminder for at least 24 hours before the trial ends if you want to test without committing to a full charge."
       },
       {
-        "question": "Is it safe to use my real credit card on gay porn sites?",
-        "answer": "Legitimate sites using established processors like CCBill or Epoch are PCI-compliant and handle card data securely. The more practical concern for most people is privacy — the descriptor on your statement will be discreet by design and won't obviously flag the site name. If you want an extra layer of separation, a prepaid virtual card loaded with just enough for the trial limits any exposure and prevents automatic rebills if you forget to cancel."
+        "q": "Is it safe to use my real credit card on gay porn sites?",
+        "a": "Legitimate sites using established processors like CCBill or Epoch are PCI-compliant and handle card data securely. The more practical concern for most people is privacy — the descriptor on your statement will be discreet by design and won't obviously flag the site name. If you want an extra layer of separation, a prepaid virtual card loaded with just enough for the trial limits any exposure and prevents automatic rebills if you forget to cancel."
       },
       {
-        "question": "What's the difference between a monthly and an annual gay porn site membership?",
-        "answer": "Annual memberships consistently cost less per month — often 30 to 50 percent less — but require a larger upfront payment. For example, Helix Studios' yearly plan has offered a rate around $11.99/month versus a higher monthly rate, while Next Door Twink's 18-month plan has come in around €7.50/month. The trade-off is flexibility. An annual plan makes sense if you've already trialled the site and know you'll use it regularly. For smaller niche sites with slower update schedules, a monthly rolling plan often makes more practical sense."
+        "q": "What's the difference between a monthly and an annual gay porn site membership?",
+        "a": "Annual memberships consistently cost less per month — often 30 to 50 percent less — but require a larger upfront payment. For example, Helix Studios' yearly plan has offered a rate around $11.99/month versus a higher monthly rate, while Next Door Twink's 18-month plan has come in around €7.50/month. The trade-off is flexibility. An annual plan makes sense if you've already trialled the site and know you'll use it regularly. For smaller niche sites with slower update schedules, a monthly rolling plan often makes more practical sense."
       }
     ]
   },

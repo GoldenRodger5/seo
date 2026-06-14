@@ -116,6 +116,38 @@ function hasSchema(html: string, type: string): boolean {
 }
 
 /**
+ * Detect FAQPage JSON-LD where any Question is missing its `name` or its
+ * `acceptedAnswer.text`. An empty FAQ schema is rejected by Google and is
+ * the signature of a renderer/data field-name mismatch (e.g. data uses
+ * `{question, answer}` while renderer reads `{q, a}` and emits blanks).
+ */
+function hasEmptyFaqEntries(html: string): boolean {
+  const re = /<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    let obj: unknown;
+    try { obj = JSON.parse(m[1].trim()); } catch { continue; }
+    const items = Array.isArray(obj) ? obj : [obj];
+    for (const it of items) {
+      if (!it || typeof it !== "object") continue;
+      const node = it as Record<string, unknown>;
+      if (node["@type"] !== "FAQPage") continue;
+      const main = node.mainEntity;
+      if (!Array.isArray(main)) return true;
+      for (const q of main) {
+        if (!q || typeof q !== "object") return true;
+        const qe = q as Record<string, unknown>;
+        const name = typeof qe.name === "string" ? qe.name.trim() : "";
+        const aa = qe.acceptedAnswer as Record<string, unknown> | undefined;
+        const text = aa && typeof aa.text === "string" ? aa.text.trim() : "";
+        if (!name || !text) return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
  * Extract and parse every <script type="application/ld+json"> block.
  * Returns the number of valid blocks and a list of parse errors so the
  * audit can flag INVALID_JSON_LD on any page that ships broken schema.
@@ -228,6 +260,13 @@ async function auditRoute(absPath: string): Promise<RouteAudit> {
   // ALL structured data on the page, not just the broken one. Catch early.
   const jsonLd = validateJsonLd(html);
   if (jsonLd.errors.length > 0) flags.push("INVALID_JSON_LD");
+
+  // EMPTY_FAQ — any FAQPage schema where one or more Question entries has
+  // a blank name OR a blank acceptedAnswer.text. Google rejects FAQPage
+  // schema with empty content (won't show FAQ rich results, may flag the
+  // page in Search Console). This is the guard that would've caught the
+  // gay-porn-billing-guide FAQ field-name drift at build time.
+  if (hasEmptyFaqEntries(html)) flags.push("EMPTY_FAQ");
 
   return { route, pageType, fileSize: stat.size, bodyWordCount, bodyText, metaTitle, metaDescription, hasReviewSchema, hasFaqSchema, hasBreadcrumbSchema, flags };
 }
@@ -467,6 +506,7 @@ async function main() {
     const HARD_FAIL = new Set([
       "CLIENT_SIDE_ONLY",   // page renders no body content — Google can't read it
       "INVALID_JSON_LD",    // malformed JSON-LD makes Google ignore ALL schema on the page
+      "EMPTY_FAQ",          // FAQPage with blank Question/Answer — Google rejects + may flag in GSC
     ]);
     const WARN_FLAGS = new Set<string>();
     for (const a of audits) for (const f of a.flags) if (!HARD_FAIL.has(f)) WARN_FLAGS.add(f);
