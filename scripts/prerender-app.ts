@@ -223,12 +223,19 @@ for (const key of Object.keys(ALTERNATIVES_CONTENT)) {
   });
 }
 
-// Guide routes — one per entry in GUIDE_CONTENT.
+// Guide routes — one per entry in GUIDE_CONTENT. Title trim matches the
+// fallback in src/pages/GuidePage.tsx so prerendered HTML <title> agrees
+// with the React Helmet output after hydration.
 for (const slug of Object.keys(GUIDE_CONTENT)) {
   const body = GUIDE_CONTENT[slug];
+  const withSuffix = `${body.h1} | TwinkVault`;
+  const title =
+    withSuffix.length <= 60 ? withSuffix
+    : body.h1.length <= 60 ? body.h1
+    : body.h1.slice(0, 57) + "…";
   routes.push({
     path: `/guide/${slug}`,
-    title: `${body.h1} | TwinkVault`,
+    title,
     description: body.meta_description,
   });
 }

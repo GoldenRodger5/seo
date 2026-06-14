@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-06-09T11:10:08.201Z",
+  "generated_at": "2026-06-14T02:16:31.296Z",
   "summary": {
     "routes": 411,
-    "clientOnlyCount": 0,
-    "clientOnlyPct": "0.0",
+    "clientOnlyCount": 1,
+    "clientOnlyPct": "0.2",
     "typeStats": [
       {
         "type": "compare",
@@ -64,11 +64,12 @@
       {
         "type": "legal",
         "count": 6,
-        "median": 759,
-        "min": 358,
+        "median": 713,
+        "min": 0,
         "max": 1003,
         "flagCounts": {
-          "THIN_TITLE": 2
+          "CLIENT_SIDE_ONLY": 1,
+          "THIN_TITLE": 3
         },
         "allClientOnly": false
       },
@@ -160,14 +161,17 @@
     {
       "route": "/about",
       "pageType": "legal",
-      "fileSize": 36186,
-      "bodyWordCount": 759,
-      "metaTitle": "About TwinkVault — Who Reviews These Gay Porn Sites",
-      "metaDescription": "TwinkVault is an independent gay porn site review platform. Honest paid-membership reviews, real pricing, no commission-rigged rankings. Meet the team behind it.",
+      "fileSize": 294,
+      "bodyWordCount": 0,
+      "metaTitle": "x",
+      "metaDescription": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "hasReviewSchema": false,
-      "hasFaqSchema": true,
+      "hasFaqSchema": false,
       "hasBreadcrumbSchema": false,
-      "flags": []
+      "flags": [
+        "CLIENT_SIDE_ONLY",
+        "THIN_TITLE"
+      ]
     },
     {
       "route": "/affiliate-disclosure",
@@ -2992,7 +2996,7 @@
     {
       "route": "/discount/alternadudes",
       "pageType": "discount",
-      "fileSize": 60117,
+      "fileSize": 60122,
       "bodyWordCount": 731,
       "metaTitle": "AlternaDudes: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get AlternaDudes for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3004,7 +3008,7 @@
     {
       "route": "/discount/athletic-twinks",
       "pageType": "discount",
-      "fileSize": 60196,
+      "fileSize": 60201,
       "bodyWordCount": 747,
       "metaTitle": "Athletic Twinks: 40% Off (2026) | TwinkVault",
       "metaDescription": "Get Athletic Twinks for $9.95/mo with our verified 40% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3016,7 +3020,7 @@
     {
       "route": "/discount/aussiesdoit",
       "pageType": "discount",
-      "fileSize": 60166,
+      "fileSize": 60171,
       "bodyWordCount": 786,
       "metaTitle": "Aussies Do It: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Aussies Do It for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3028,7 +3032,7 @@
     {
       "route": "/discount/bareback-that-hole",
       "pageType": "discount",
-      "fileSize": 60085,
+      "fileSize": 60090,
       "bodyWordCount": 766,
       "metaTitle": "Bareback That Hole: 45% Off (2026) | TwinkVault",
       "metaDescription": "Get Bareback That Hole for $9.95/mo with our verified 45% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3040,7 +3044,7 @@
     {
       "route": "/discount/barebackcumpigs",
       "pageType": "discount",
-      "fileSize": 60385,
+      "fileSize": 60390,
       "bodyWordCount": 787,
       "metaTitle": "Bareback Cum Pigs: 50% Off (2026) | TwinkVault",
       "metaDescription": "Get Bareback Cum Pigs for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3052,7 +3056,7 @@
     {
       "route": "/discount/barebackrtxxx",
       "pageType": "discount",
-      "fileSize": 60236,
+      "fileSize": 60241,
       "bodyWordCount": 781,
       "metaTitle": "Bareback RT XXX: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Bareback RT XXX for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3064,7 +3068,7 @@
     {
       "route": "/discount/bearchubs",
       "pageType": "discount",
-      "fileSize": 60051,
+      "fileSize": 60056,
       "bodyWordCount": 768,
       "metaTitle": "Bear Chubs: 50% Off (2026) | TwinkVault",
       "metaDescription": "Get Bear Chubs for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3076,7 +3080,7 @@
     {
       "route": "/discount/bearfilms",
       "pageType": "discount",
-      "fileSize": 60060,
+      "fileSize": 60065,
       "bodyWordCount": 771,
       "metaTitle": "Bear Films: 50% Off (2026) | TwinkVault",
       "metaDescription": "Get Bear Films for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3088,7 +3092,7 @@
     {
       "route": "/discount/biempire",
       "pageType": "discount",
-      "fileSize": 60147,
+      "fileSize": 60152,
       "bodyWordCount": 765,
       "metaTitle": "BiEmpire: 63% Off (2026) | TwinkVault",
       "metaDescription": "Get BiEmpire for $7.49/mo with our verified 63% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3100,7 +3104,7 @@
     {
       "route": "/discount/bigstr",
       "pageType": "discount",
-      "fileSize": 59749,
+      "fileSize": 59754,
       "bodyWordCount": 749,
       "metaTitle": "BigStr: 25% Off (2026) | TwinkVault",
       "metaDescription": "Get BigStr for $7.47/mo with our verified 25% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3112,7 +3116,7 @@
     {
       "route": "/discount/black-male-me",
       "pageType": "discount",
-      "fileSize": 60425,
+      "fileSize": 60430,
       "bodyWordCount": 813,
       "metaTitle": "Black Male Me: 72% Off (2026) | TwinkVault",
       "metaDescription": "Get Black Male Me for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3124,7 +3128,7 @@
     {
       "route": "/discount/boyfun",
       "pageType": "discount",
-      "fileSize": 59900,
+      "fileSize": 59905,
       "bodyWordCount": 743,
       "metaTitle": "BoyFun: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get BoyFun for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3136,7 +3140,7 @@
     {
       "route": "/discount/boysatcamp",
       "pageType": "discount",
-      "fileSize": 60101,
+      "fileSize": 60106,
       "bodyWordCount": 782,
       "metaTitle": "Boys at Camp: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Boys at Camp for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3148,7 +3152,7 @@
     {
       "route": "/discount/breed-me-raw",
       "pageType": "discount",
-      "fileSize": 60056,
+      "fileSize": 60061,
       "bodyWordCount": 779,
       "metaTitle": "Breed Me Raw: 40% Off (2026) | TwinkVault",
       "metaDescription": "Get Breed Me Raw for $9.95/mo with our verified 40% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3160,7 +3164,7 @@
     {
       "route": "/discount/brothercrush",
       "pageType": "discount",
-      "fileSize": 60148,
+      "fileSize": 60153,
       "bodyWordCount": 752,
       "metaTitle": "Brother Crush: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Brother Crush for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3172,7 +3176,7 @@
     {
       "route": "/discount/bullyhim",
       "pageType": "discount",
-      "fileSize": 59961,
+      "fileSize": 59966,
       "bodyWordCount": 751,
       "metaTitle": "Bully Him: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Bully Him for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3184,7 +3188,7 @@
     {
       "route": "/discount/cumpigmen",
       "pageType": "discount",
-      "fileSize": 60058,
+      "fileSize": 60063,
       "bodyWordCount": 781,
       "metaTitle": "Cum Pig Men: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Cum Pig Men for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3196,7 +3200,7 @@
     {
       "route": "/discount/dadcreep",
       "pageType": "discount",
-      "fileSize": 59965,
+      "fileSize": 59970,
       "bodyWordCount": 759,
       "metaTitle": "Dad Creep: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Dad Creep for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3208,7 +3212,7 @@
     {
       "route": "/discount/daddy-on-twink",
       "pageType": "discount",
-      "fileSize": 59926,
+      "fileSize": 59931,
       "bodyWordCount": 771,
       "metaTitle": "Daddy on Twink: 45% Off (2026) | TwinkVault",
       "metaDescription": "Get Daddy on Twink for $9.95/mo with our verified 45% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3220,7 +3224,7 @@
     {
       "route": "/discount/dirtyboyvideo",
       "pageType": "discount",
-      "fileSize": 60155,
+      "fileSize": 60160,
       "bodyWordCount": 730,
       "metaTitle": "DirtyBoyVideo: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get DirtyBoyVideo for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3232,7 +3236,7 @@
     {
       "route": "/discount/dudesraw",
       "pageType": "discount",
-      "fileSize": 59932,
+      "fileSize": 59937,
       "bodyWordCount": 731,
       "metaTitle": "DudesRaw: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get DudesRaw for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3244,7 +3248,7 @@
     {
       "route": "/discount/familydick",
       "pageType": "discount",
-      "fileSize": 60037,
+      "fileSize": 60042,
       "bodyWordCount": 758,
       "metaTitle": "Family Dick: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Family Dick for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3256,7 +3260,7 @@
     {
       "route": "/discount/gayasiannetwork",
       "pageType": "discount",
-      "fileSize": 60336,
+      "fileSize": 60341,
       "bodyWordCount": 743,
       "metaTitle": "GayAsianNetwork: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get GayAsianNetwork for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3268,7 +3272,7 @@
     {
       "route": "/discount/gaywire",
       "pageType": "discount",
-      "fileSize": 60143,
+      "fileSize": 60148,
       "bodyWordCount": 785,
       "metaTitle": "Gay Wire: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Gay Wire for $9.99/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3280,7 +3284,7 @@
     {
       "route": "/discount/guy-selector",
       "pageType": "discount",
-      "fileSize": 60068,
+      "fileSize": 60073,
       "bodyWordCount": 770,
       "metaTitle": "Guy Selector: 60% Off (2026) | TwinkVault",
       "metaDescription": "Get Guy Selector for $7.99/mo with our verified 60% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3292,7 +3296,7 @@
     {
       "route": "/discount/hairyandraw",
       "pageType": "discount",
-      "fileSize": 60157,
+      "fileSize": 60162,
       "bodyWordCount": 792,
       "metaTitle": "Hairy and Raw: 50% Off (2026) | TwinkVault",
       "metaDescription": "Get Hairy and Raw for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3304,7 +3308,7 @@
     {
       "route": "/discount/hard-brit-lads",
       "pageType": "discount",
-      "fileSize": 60123,
+      "fileSize": 60128,
       "bodyWordCount": 771,
       "metaTitle": "Hard Brit Lads: 40% Off (2026) | TwinkVault",
       "metaDescription": "Get Hard Brit Lads for $9.95/mo with our verified 40% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3316,7 +3320,7 @@
     {
       "route": "/discount/helix-studios",
       "pageType": "discount",
-      "fileSize": 60166,
+      "fileSize": 60171,
       "bodyWordCount": 749,
       "metaTitle": "Helix Studios: 66% Off (2026) | TwinkVault",
       "metaDescription": "Get Helix Studios for $11.99/mo with our verified 66% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3328,7 +3332,7 @@
     {
       "route": "/discount/hiroyaxxx",
       "pageType": "discount",
-      "fileSize": 59975,
+      "fileSize": 59980,
       "bodyWordCount": 733,
       "metaTitle": "HiroyaXXX: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get HiroyaXXX for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3340,7 +3344,7 @@
     {
       "route": "/discount/icon-male",
       "pageType": "discount",
-      "fileSize": 60199,
+      "fileSize": 60204,
       "bodyWordCount": 789,
       "metaTitle": "Icon Male: 72% Off (2026) | TwinkVault",
       "metaDescription": "Get Icon Male for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3352,7 +3356,7 @@
     {
       "route": "/discount/japanboyz",
       "pageType": "discount",
-      "fileSize": 59972,
+      "fileSize": 59977,
       "bodyWordCount": 734,
       "metaTitle": "Japanboyz: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Japanboyz for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3364,7 +3368,7 @@
     {
       "route": "/discount/jawked",
       "pageType": "discount",
-      "fileSize": 59843,
+      "fileSize": 59848,
       "bodyWordCount": 738,
       "metaTitle": "Jawked: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Jawked for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3376,7 +3380,7 @@
     {
       "route": "/discount/latinleche",
       "pageType": "discount",
-      "fileSize": 60094,
+      "fileSize": 60099,
       "bodyWordCount": 758,
       "metaTitle": "Latin Leche: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Latin Leche for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3388,7 +3392,7 @@
     {
       "route": "/discount/maleaccess",
       "pageType": "discount",
-      "fileSize": 60266,
+      "fileSize": 60271,
       "bodyWordCount": 784,
       "metaTitle": "MaleAccess: 47% Off (2026) | TwinkVault",
       "metaDescription": "Get MaleAccess for $7.99/mo with our verified 47% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3400,7 +3404,7 @@
     {
       "route": "/discount/men",
       "pageType": "discount",
-      "fileSize": 60152,
+      "fileSize": 60157,
       "bodyWordCount": 768,
       "metaTitle": "Men.com: 72% Off (2026) | TwinkVault",
       "metaDescription": "Get Men.com for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3412,7 +3416,7 @@
     {
       "route": "/discount/militarydick",
       "pageType": "discount",
-      "fileSize": 60164,
+      "fileSize": 60169,
       "bodyWordCount": 756,
       "metaTitle": "Military Dick: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Military Dick for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3424,7 +3428,7 @@
     {
       "route": "/discount/missionaryboys",
       "pageType": "discount",
-      "fileSize": 60311,
+      "fileSize": 60316,
       "bodyWordCount": 763,
       "metaTitle": "Missionary Boys: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Missionary Boys for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3436,7 +3440,7 @@
     {
       "route": "/discount/nakedsword",
       "pageType": "discount",
-      "fileSize": 60012,
+      "fileSize": 60017,
       "bodyWordCount": 727,
       "metaTitle": "NakedSword: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get NakedSword for $9.99/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3448,7 +3452,7 @@
     {
       "route": "/discount/next-door-twink",
       "pageType": "discount",
-      "fileSize": 58938,
+      "fileSize": 58943,
       "bodyWordCount": 768,
       "metaTitle": "Next Door Twink: 56% Off (2026) | TwinkVault",
       "metaDescription": "Get Next Door Twink for $10.95/mo with our verified 56% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3460,7 +3464,7 @@
     {
       "route": "/discount/next-door-world",
       "pageType": "discount",
-      "fileSize": 58937,
+      "fileSize": 58942,
       "bodyWordCount": 768,
       "metaTitle": "Next Door World: 56% Off (2026) | TwinkVault",
       "metaDescription": "Get Next Door World for $10.95/mo with our verified 56% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3472,7 +3476,7 @@
     {
       "route": "/discount/noirmale",
       "pageType": "discount",
-      "fileSize": 60223,
+      "fileSize": 60228,
       "bodyWordCount": 764,
       "metaTitle": "NoirMale: 60% Off (2026) | TwinkVault",
       "metaDescription": "Get NoirMale for $11.99/mo with our verified 60% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3484,7 +3488,7 @@
     {
       "route": "/discount/peterfever",
       "pageType": "discount",
-      "fileSize": 60113,
+      "fileSize": 60118,
       "bodyWordCount": 749,
       "metaTitle": "PeterFever: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get PeterFever for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3496,7 +3500,7 @@
     {
       "route": "/discount/prideflame",
       "pageType": "discount",
-      "fileSize": 58339,
+      "fileSize": 58344,
       "bodyWordCount": 698,
       "metaTitle": "Prideflame: 35% Off (2026) | TwinkVault",
       "metaDescription": "Get Prideflame for $9.95/mo with our verified 35% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3508,7 +3512,7 @@
     {
       "route": "/discount/rawhole",
       "pageType": "discount",
-      "fileSize": 59926,
+      "fileSize": 59931,
       "bodyWordCount": 738,
       "metaTitle": "RawHole: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get RawHole for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3520,7 +3524,7 @@
     {
       "route": "/discount/reality-dudes",
       "pageType": "discount",
-      "fileSize": 60481,
+      "fileSize": 60486,
       "bodyWordCount": 793,
       "metaTitle": "Reality Dudes: 72% Off (2026) | TwinkVault",
       "metaDescription": "Get Reality Dudes for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3532,7 +3536,7 @@
     {
       "route": "/discount/realmenfuck",
       "pageType": "discount",
-      "fileSize": 60113,
+      "fileSize": 60118,
       "bodyWordCount": 772,
       "metaTitle": "Real Men Fuck: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Real Men Fuck for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3544,7 +3548,7 @@
     {
       "route": "/discount/sayuncle",
       "pageType": "discount",
-      "fileSize": 60073,
+      "fileSize": 60078,
       "bodyWordCount": 784,
       "metaTitle": "Say Uncle: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Say Uncle for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3556,7 +3560,7 @@
     {
       "route": "/discount/sean-cody",
       "pageType": "discount",
-      "fileSize": 60198,
+      "fileSize": 60203,
       "bodyWordCount": 789,
       "metaTitle": "Sean Cody: 75% Off (2026) | TwinkVault",
       "metaDescription": "Get Sean Cody for $7.49/mo with our verified 75% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3568,7 +3572,7 @@
     {
       "route": "/discount/sexjapantv",
       "pageType": "discount",
-      "fileSize": 60003,
+      "fileSize": 60008,
       "bodyWordCount": 732,
       "metaTitle": "SexJapanTV: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get SexJapanTV for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3580,7 +3584,7 @@
     {
       "route": "/discount/southern-strokes",
       "pageType": "discount",
-      "fileSize": 60224,
+      "fileSize": 60229,
       "bodyWordCount": 749,
       "metaTitle": "Southern Strokes: 55% Off (2026) | TwinkVault",
       "metaDescription": "Get Southern Strokes for $9.95/mo with our verified 55% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3592,7 +3596,7 @@
     {
       "route": "/discount/spicevidsgay",
       "pageType": "discount",
-      "fileSize": 60346,
+      "fileSize": 60351,
       "bodyWordCount": 763,
       "metaTitle": "SpiceVidsGay: 45% Off (2026) | TwinkVault",
       "metaDescription": "Get SpiceVidsGay for $5.49/mo with our verified 45% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3604,7 +3608,7 @@
     {
       "route": "/discount/squirtstudios",
       "pageType": "discount",
-      "fileSize": 60169,
+      "fileSize": 60174,
       "bodyWordCount": 750,
       "metaTitle": "Squirt Studios: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Squirt Studios for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3616,7 +3620,7 @@
     {
       "route": "/discount/swinginballs",
       "pageType": "discount",
-      "fileSize": 60126,
+      "fileSize": 60131,
       "bodyWordCount": 754,
       "metaTitle": "Swingin Balls: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Swingin Balls for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3628,7 +3632,7 @@
     {
       "route": "/discount/tla-gay-unlimited",
       "pageType": "discount",
-      "fileSize": 58676,
+      "fileSize": 58681,
       "bodyWordCount": 729,
       "metaTitle": "TLA Gay Unlimited Discount Code 2026 | TwinkVault",
       "metaDescription": "Looking for a TLA Gay Unlimited discount code? Get the lowest verified TLA Gay Unlimited membership price. Updated May 2026 — read pricing tiers and value verdict.",
@@ -3640,7 +3644,7 @@
     {
       "route": "/discount/touch-that-boy",
       "pageType": "discount",
-      "fileSize": 59923,
+      "fileSize": 59928,
       "bodyWordCount": 773,
       "metaTitle": "Touch That Boy: 35% Off (2026) | TwinkVault",
       "metaDescription": "Get Touch That Boy for $9.95/mo with our verified 35% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3652,7 +3656,7 @@
     {
       "route": "/discount/trailertrashboys",
       "pageType": "discount",
-      "fileSize": 60328,
+      "fileSize": 60333,
       "bodyWordCount": 728,
       "metaTitle": "TrailerTrashBoys: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get TrailerTrashBoys for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3664,7 +3668,7 @@
     {
       "route": "/discount/twinkpop",
       "pageType": "discount",
-      "fileSize": 60080,
+      "fileSize": 60085,
       "bodyWordCount": 753,
       "metaTitle": "Twinkpop: 72% Off (2026) | TwinkVault",
       "metaDescription": "Get Twinkpop for $8.33/mo with our verified 72% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3676,7 +3680,7 @@
     {
       "route": "/discount/twinks-in-shorts",
       "pageType": "discount",
-      "fileSize": 60393,
+      "fileSize": 60398,
       "bodyWordCount": 767,
       "metaTitle": "Twinks in Shorts: 50% Off (2026) | TwinkVault",
       "metaDescription": "Get Twinks in Shorts for $9.95/mo with our verified 50% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3688,7 +3692,7 @@
     {
       "route": "/discount/twinktrade",
       "pageType": "discount",
-      "fileSize": 60017,
+      "fileSize": 60022,
       "bodyWordCount": 729,
       "metaTitle": "TwinkTrade: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get TwinkTrade for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3700,7 +3704,7 @@
     {
       "route": "/discount/visionx-flix",
       "pageType": "discount",
-      "fileSize": 58401,
+      "fileSize": 58406,
       "bodyWordCount": 701,
       "metaTitle": "VisionX Flix Discount Code 2026 | TwinkVault",
       "metaDescription": "Looking for a VisionX Flix discount code? Get the lowest verified VisionX Flix membership price. Updated May 2026 — read pricing tiers and value verdict.",
@@ -3712,7 +3716,7 @@
     {
       "route": "/discount/wuboyz",
       "pageType": "discount",
-      "fileSize": 59798,
+      "fileSize": 59803,
       "bodyWordCount": 730,
       "metaTitle": "WuBoyz: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get WuBoyz for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3724,7 +3728,7 @@
     {
       "route": "/discount/yesfather",
       "pageType": "discount",
-      "fileSize": 60012,
+      "fileSize": 60017,
       "bodyWordCount": 759,
       "metaTitle": "Yes Father: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Yes Father for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3736,7 +3740,7 @@
     {
       "route": "/discount/yoshikawasakixxx",
       "pageType": "discount",
-      "fileSize": 60457,
+      "fileSize": 60462,
       "bodyWordCount": 800,
       "metaTitle": "Yoshi Kawasaki XXX: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Yoshi Kawasaki XXX for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",
@@ -3748,7 +3752,7 @@
     {
       "route": "/discount/youngperps",
       "pageType": "discount",
-      "fileSize": 60047,
+      "fileSize": 60052,
       "bodyWordCount": 753,
       "metaTitle": "Young Perps: 67% Off (2026) | TwinkVault",
       "metaDescription": "Get Young Perps for $9.95/mo with our verified 67% discount — deal confirmed May 2026. Click to activate the lowest verified price on annual membership.",

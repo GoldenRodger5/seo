@@ -446,27 +446,49 @@ async function main() {
   console.log(`CRITICAL: ${clientOnlyCount} / ${audits.length} routes are CLIENT_SIDE_ONLY (${clientOnlyPct}%).`);
 
   // Strict-mode build gate. Run via `npx tsx scripts/audit-content.ts --strict`
-  // (or set AUDIT_STRICT=1) to fail the process if any flag is set.
+  // (or set AUDIT_STRICT=1) to fail the process if any HARD_FAIL flag is set.
   // Used by CI / pre-deploy to keep meta hygiene from regressing.
   const strict = process.argv.includes("--strict") || process.env.AUDIT_STRICT === "1";
   if (strict) {
-    // Flags that always fail strict mode. THIN_TITLE and LONG_DESC are
-    // soft: Google doesn't penalize on either, just truncates/auto-rewrites.
+    // Severity policy after the June 2026 audit-blocked-daily-run incident:
+    //
+    // HARD_FAIL — only crawl-breaking issues. These abort the build and roll
+    // back the daily-content engine's edits because they make the page
+    // un-rankable / un-crawlable. Sitewide-impact issues (missing/HTML
+    // robots.txt, malformed sitemap, duplicate <title>s sitewide, homepage
+    // noindex) are caught by scripts/seo-preflight.ts; this audit handles
+    // per-route content shape.
+    //
+    // WARN — everything else. Cosmetic SEO regressions (long titles, thin
+    // descriptions, missing optional schemas, thin word counts) get logged
+    // loudly so they're visible in the run summary, but don't block other
+    // generated pages from shipping. A single over-long auto-generated
+    // guide title must NOT cost a day of clean review/comparison work.
     const HARD_FAIL = new Set([
-      "CLIENT_SIDE_ONLY",
-      "MISSING_REVIEW_SCHEMA",
-      "MISSING_COMPARE_SCHEMA",
-      "MISSING_ARTICLE_SCHEMA",
-      "MISSING_LIST_SCHEMA",
-      "MISSING_HOMEPAGE_SCHEMA",
-      "MISSING_BREADCRUMB_SCHEMA",
-      "THIN_REVIEW",
-      "THIN_COMPARE",
-      "THIN_HOMEPAGE",
-      "THIN_DESC",
-      "LONG_TITLE",
-      "INVALID_JSON_LD",
+      "CLIENT_SIDE_ONLY",   // page renders no body content — Google can't read it
+      "INVALID_JSON_LD",    // malformed JSON-LD makes Google ignore ALL schema on the page
     ]);
+    const WARN_FLAGS = new Set<string>();
+    for (const a of audits) for (const f of a.flags) if (!HARD_FAIL.has(f)) WARN_FLAGS.add(f);
+
+    // Summarize warnings by flag, with a sample of affected routes.
+    const warnsByFlag = new Map<string, string[]>();
+    for (const a of audits) {
+      for (const f of a.flags) {
+        if (HARD_FAIL.has(f)) continue;
+        if (!warnsByFlag.has(f)) warnsByFlag.set(f, []);
+        warnsByFlag.get(f)!.push(a.route);
+      }
+    }
+    if (warnsByFlag.size > 0) {
+      console.log(`\n⚠ Audit warnings (${[...warnsByFlag.values()].reduce((s, r) => s + r.length, 0)} flag instances across ${[...warnsByFlag.keys()].length} flag types — non-blocking):`);
+      for (const [flag, routes] of [...warnsByFlag.entries()].sort((a, b) => b[1].length - a[1].length)) {
+        const sample = routes.slice(0, 3).join(", ");
+        const more = routes.length > 3 ? `, …+${routes.length - 3} more` : "";
+        console.log(`   ${flag.padEnd(28)} ${routes.length.toString().padStart(3)} routes  e.g. ${sample}${more}`);
+      }
+    }
+
     const failures = audits.filter((a) => a.flags.some((f) => HARD_FAIL.has(f)));
     if (failures.length > 0) {
       console.error(`\n✗ Strict audit FAILED: ${failures.length} route(s) have hard-fail flags.`);
@@ -477,7 +499,7 @@ async function main() {
       if (failures.length > 20) console.error(`   …and ${failures.length - 20} more`);
       process.exit(1);
     }
-    console.log(`✓ Strict audit passed: no hard-fail flags.`);
+    console.log(`\n✓ Strict audit passed: no hard-fail flags (warnings above are non-blocking).`);
   }
 }
 

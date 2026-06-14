@@ -65,14 +65,25 @@ const GuidePage = () => {
     })),
   } : null;
 
+  // SEO title budget = 65 chars. The semantic <h1> on the page can be
+  // longer (it's editorial), so build the meta <title> with a smart
+  // fallback rather than blindly appending the " | TwinkVault" suffix.
+  // Same pattern the prerender route table uses for review/blog routes.
+  const SUFFIX = " | TwinkVault";
+  const withSuffix = `${body.h1}${SUFFIX}`;
+  const metaTitle =
+    withSuffix.length <= 60 ? withSuffix
+    : body.h1.length <= 60 ? body.h1
+    : body.h1.slice(0, 57) + "…";
+
   return (
     <Layout>
       <Helmet>
-        <title>{`${body.h1} | TwinkVault`}</title>
+        <title>{metaTitle}</title>
         <meta name="description" content={body.meta_description} />
         <link rel="canonical" href={url} />
         <meta property="og:url" content={url} />
-        <meta property="og:title" content={body.h1} />
+        <meta property="og:title" content={metaTitle} />
         <meta property="og:description" content={body.meta_description} />
       </Helmet>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />

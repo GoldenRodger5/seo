@@ -452,7 +452,9 @@ Title: ${p.title}
 Target keyword: ${p.target_keyword}
 Related sites: ${(p.related_sites as string[]).join(", ")}
 
-Return JSON: { h1, intro (~200w), sections: 4-5 entries with { h2, content (200-300w each) }, conclusion (~150w with CTAs to review pages), meta_description (145-155 chars), faq (5 entries) }`;
+HARD CONSTRAINT on h1: must be 30-50 characters (so that "{h1} | TwinkVault" stays under the 65-char SERP title cap). Long slug names need terse h1s — "How To Cancel Gay Porn Subs" is fine, "How To Cancel A Gay Porn Site Subscription Step By Step Walkthrough" is too long.
+
+Return JSON: { h1 (30-50 chars — count carefully), intro (~200w), sections: 4-5 entries with { h2, content (200-300w each) }, conclusion (~150w with CTAs to review pages), meta_description (145-155 chars), faq (5 entries) }`;
 }
 
 function hubPrompt(p: Record<string, unknown>): string {
@@ -479,10 +481,15 @@ function qualityGate(content: Record<string, unknown>, contentType: ContentTypeK
   if (!meta) errors.push("meta_description missing");
   else if (meta.length < 120 || meta.length > 165) errors.push(`meta_description length ${meta.length} not in 120-165`);
 
-  // Meta title gate: 30-65 chars. Below 30 the title is too sparse for
-  // SERP weight; above 65 Google truncates the rendered display.
+  // h1 gate. Renderers append " | TwinkVault" (13 chars) for the meta
+  // <title>; a 52-char h1 yields a 65-char title which is Google's
+  // SERP-display cap. Below 20 is too sparse for SERP weight. The
+  // renderer (GuidePage, prerender-app) also includes a defensive
+  // truncate-with-ellipsis fallback if the model overshoots — see
+  // src/pages/GuidePage.tsx — so this gate is the first line of defense
+  // but not the only one.
   const h1 = content.h1 as string | undefined;
-  if (h1 && (h1.length < 20 || h1.length > 100)) errors.push(`h1 length ${h1.length} out of 20-100`);
+  if (h1 && (h1.length < 20 || h1.length > 52)) errors.push(`h1 length ${h1.length} out of 20-52`);
 
   if (contentType === "review") {
     const wc = wordCount([
