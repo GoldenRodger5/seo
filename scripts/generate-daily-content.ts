@@ -79,16 +79,21 @@ interface Flags {
   site?: string;
   audit: boolean;
   push: boolean;
+  /** Live generation → persist → real build/prerender → print a full
+   *  inspection report from the prerendered HTML → restore ALL source files.
+   *  Never commits, pushes, or pings. For end-to-end QA of a fresh article. */
+  inspect: boolean;
 }
 
 function parseFlags(argv: string[]): Flags {
-  const f: Flags = { dryRun: false, force: false, audit: false, push: false };
+  const f: Flags = { dryRun: false, force: false, audit: false, push: false, inspect: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--dry-run") f.dryRun = true;
     else if (a === "--force") f.force = true;
     else if (a === "--audit") f.audit = true;
     else if (a === "--push") f.push = true;
+    else if (a === "--inspect") f.inspect = true;
     else if (a === "--type") f.type = argv[++i] as Flags["type"];
     else if (a === "--site") f.site = argv[++i];
   }
@@ -1057,6 +1062,58 @@ function runBuild(): { passed: boolean; commitHash: string } {
   }
 }
 
+/**
+ * Print a full inspection report for a freshly-generated page from its
+ * prerendered HTML in dist/. Used by --inspect. Read-only on dist/.
+ */
+function printInspectionReport(routePath: string, gateOk: boolean, generated: Record<string, unknown>): void {
+  const fileRel = routePath === "/" ? "index.html" : `${routePath.replace(/^\//, "")}/index.html`;
+  const distFile = resolve(ROOT, "dist", fileRel);
+  console.log("\n════════ INSPECTION REPORT — live-generated, no commit/push/ping ════════");
+  console.log(`route: ${routePath}`);
+  console.log(`[5] GATES: ${gateOk ? "PASS (no WARN/HARD_FAIL)" : "did NOT fully pass — see warnings above"}`);
+
+  let html = "";
+  try { html = readFileSync(distFile, "utf-8"); }
+  catch { console.log(`⚠ prerendered HTML not found at dist/${fileRel} (build failed before prerender?)`); return; }
+
+  // [2] Hero image
+  const hero = html.match(/<img[^>]*src="(\/(?:site-banners|niche-covers)\/[^"]+)"[^>]*\balt="([^"]*)"/i);
+  const og = html.match(/<meta property="og:image" content="([^"]*)"/i);
+  console.log("\n[2] HERO IMAGE:");
+  if (hero) {
+    console.log(`  src = ${hero[1]}`);
+    console.log(`  alt = "${hero[2]}"`);
+    console.log(`  → clean per-site cover from site-imagery.ts (not the favicon, not a leaderboard/promo banner)`);
+  } else {
+    console.log("  ⚠ no content hero <img> found");
+  }
+  console.log(`  og:image = ${og?.[1] ?? "?"}${og && /pwa-\d+\.png/.test(og[1]) ? "  ⚠ FAVICON" : "  ✓ (real hero, not favicon)"}`);
+
+  // [3] Internal links in the article body (excludes nav/footer chrome)
+  const article = (html.match(/<article[\s\S]*?<\/article>/i) ?? [""])[0];
+  const seen = new Set<string>();
+  const links = [...article.matchAll(/<a[^>]*href="(\/(?:reviews|niche)\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/gi)]
+    .map((m) => ({ href: m[1], text: m[2].replace(/<[^>]+>/g, "").trim() }))
+    .filter((l) => (seen.has(l.href) ? false : seen.add(l.href)));
+  console.log(`\n[3] INTERNAL LINKS in <article> body (${links.length}):`);
+  links.slice(0, 25).forEach((l) => console.log(`  ${l.href}  ←  "${l.text}"`));
+  console.log(`  → ${links.length >= 3 ? "✓ ≥3 contextual internal links" : "⚠ fewer than 3"}`);
+
+  // [4] FAQ — visible HTML + FAQPage JSON-LD
+  const faqArr = Array.isArray(generated.faq) ? (generated.faq as { q?: string; a?: string }[]) : [];
+  const faqLd = html.match(/\{[^{}]*"@type"\s*:\s*"FAQPage"[\s\S]*?\}\s*<\/script>/i)
+    ?? html.match(/"@type"\s*:\s*"FAQPage"[\s\S]*?<\/script>/i);
+  const qCount = faqLd ? (faqLd[0].match(/"@type"\s*:\s*"Question"/g) ?? []).length : 0;
+  const hasEmpty = faqLd ? /"name"\s*:\s*""|"text"\s*:\s*""/.test(faqLd[0]) : true;
+  const firstQ = faqArr[0]?.q;
+  console.log("\n[4] FAQ:");
+  console.log(`  generated FAQ entries: ${faqArr.length}`);
+  console.log(`  FAQPage JSON-LD: ${faqLd ? "present" : "MISSING"}; Question entries: ${qCount}; non-empty: ${faqLd && !hasEmpty ? "yes ✓ (EMPTY_FAQ bug not present)" : "NO ⚠"}`);
+  if (firstQ) console.log(`  first question rendered in visible HTML: ${html.includes(firstQ.slice(0, 30)) ? "yes ✓" : "NO ⚠"}`);
+  console.log("═══════════════════════════════════════════════════════════════════════\n");
+}
+
 // ---------------------------------------------------------------------------
 // Git commit + push
 // ---------------------------------------------------------------------------
@@ -1459,6 +1516,12 @@ async function main() {
   // Now we snapshot the touched files, persist, build, and if the build
   // fails we restore those files before exiting so the next run can retry
   // the same queue entry cleanly.
+  //
+  // The snapshot set covers BOTH the data files we edit directly AND the
+  // tracked files runBuild() regenerates mid-pipeline (the sitemaps via
+  // generate-sitemap.ts, the audit docs via audit-content.ts --strict).
+  // Without the latter, a rolled-back run left stale sitemap/audit edits
+  // referencing content that was reverted.
   const FILES_TO_SNAPSHOT = [
     QUEUE_FILE,
     REVIEWS_FILE,
@@ -1468,6 +1531,11 @@ async function main() {
     ISWORTHIT_CONTENT_FILE,
     GUIDE_CONTENT_FILE,
     resolve(ROOT, "docs/content-lastmod.json"),
+    // Regenerated by runBuild() — snapshot so rollback leaves no stale artifact.
+    resolve(ROOT, "public/sitemap.xml"),
+    resolve(ROOT, "public/blog-sitemap.xml"),
+    resolve(ROOT, "docs/content-audit-report.md"),
+    resolve(ROOT, "docs/content-audit.json"),
   ];
   const snapshots = new Map<string, string>();
   for (const f of FILES_TO_SNAPSHOT) {
@@ -1489,6 +1557,32 @@ async function main() {
 
   // ── Build ─────────────────────────────────────────────────────────────
   const build = runBuild();
+
+  // ── Inspect mode: report from prerendered HTML, then restore everything ─
+  // True end-to-end QA — live generation + real build/prerender — but leaves
+  // NO trace: all source/queue edits are reverted, nothing is committed,
+  // pushed, or pinged. Runs even if the strict audit hard-failed (the
+  // prerender still produced HTML to inspect).
+  if (flags.inspect) {
+    const slug = target.entry.slug;
+    const routePath =
+      target.kind === "review" ? `/reviews/${slug}`
+      : contentType === "comparison" ? `/compare/${slug.replace(/^compare\//, "")}`
+      : contentType === "alternatives"
+        ? (["helix-studios-alternatives", "sean-cody-alternatives", "nakedsword-alternatives"].includes(slug)
+            ? `/${slug}` : `/alternatives/${slug.replace(/-alternatives$/, "")}`)
+      : contentType === "isworthit" ? `/is-${slug}-worth-it`
+      : contentType === "guide" ? `/guide/${slug.replace(/^guide\//, "")}`
+      : contentType === "discount" ? `/discount/${slug}`
+      : `/${slug}`;
+    printInspectionReport(routePath, build.passed, generated);
+    for (const [f, content] of snapshots) {
+      try { writeFileSync(f, content, "utf-8"); } catch { /* */ }
+    }
+    log.info("Inspect mode: restored all source files (content + queue). No commit, no push, no ping.");
+    return;
+  }
+
   if (!build.passed) {
     log.err("Build failed — rolling back data-file edits so tomorrow's run can retry.");
     for (const [f, content] of snapshots) {
