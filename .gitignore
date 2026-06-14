@@ -28,3 +28,8 @@ dist-ssr
 .env.production
 .claude/
 dist-server/
+
+# Google service-account credentials — never commit
+twinkvault-*.json
+*-service-account.json
+*-credentials.json

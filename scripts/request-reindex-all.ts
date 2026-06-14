@@ -136,6 +136,8 @@ async function pingBing(urls: string[], dryRun: boolean): Promise<{ ok: number; 
 
 async function main() {
   const dryRun = process.argv.includes("--dry-run");
+  const skipBing = process.argv.includes("--skip-bing") || !process.env.BING_INDEXNOW_KEY;
+  const skipGoogle = process.argv.includes("--skip-google");
   const urls = buildUrlList();
   console.log(`Built URL list: ${urls.length} URLs`);
 
@@ -145,15 +147,28 @@ async function main() {
   }
   const submitUrls = urls.slice(0, 200);
 
-  console.log(`\nPinging Google Indexing API (${submitUrls.length} URLs)...`);
-  const g = await pingGoogle(submitUrls, dryRun);
-  console.log(`Google: ${g.ok} ok, ${g.fail} failed\n`);
+  let gFail = 0;
+  if (skipGoogle) {
+    console.log(`\nSkipping Google Indexing API (--skip-google).`);
+  } else {
+    console.log(`\nPinging Google Indexing API (${submitUrls.length} URLs)...`);
+    const g = await pingGoogle(submitUrls, dryRun);
+    console.log(`Google: ${g.ok} ok, ${g.fail} failed\n`);
+    gFail = g.fail;
+  }
 
-  console.log(`Pinging Bing IndexNow (${urls.length} URLs in single batch)...`);
-  const b = await pingBing(urls, dryRun);
-  console.log(`Bing: ${b.ok} ok, ${b.fail} failed\n`);
+  let bFail = 0;
+  if (skipBing) {
+    const reason = process.argv.includes("--skip-bing") ? "--skip-bing flag" : "BING_INDEXNOW_KEY not set";
+    console.log(`Skipping Bing IndexNow (${reason}).`);
+  } else {
+    console.log(`Pinging Bing IndexNow (${urls.length} URLs in single batch)...`);
+    const b = await pingBing(urls, dryRun);
+    console.log(`Bing: ${b.ok} ok, ${b.fail} failed\n`);
+    bFail = b.fail;
+  }
 
-  if (g.fail > 0 || b.fail > 0) process.exit(1);
+  if (gFail > 0 || bFail > 0) process.exit(1);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });
