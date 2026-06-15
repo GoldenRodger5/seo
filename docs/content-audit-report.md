@@ -1,8 +1,8 @@
-# Content Audit Report — 2026-06-14
+# Content Audit Report — 2026-06-15
 
 ## Critical findings
 
-**🚨 0 / 414 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 415 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -41,7 +41,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | category | 6 | 1114 | 391 | 1921 | HEALTHY |
 | utility | 5 | 275 | 233 | 10401 | HEALTHY |
 | alternatives | 4 | 729 | 717 | 749 | HEALTHY |
-| guide | 2 | 2220 | 2056 | 2220 | HEALTHY |
+| guide | 3 | 2256 | 2092 | 2518 | HEALTHY |
 | homepage | 1 | 651 | 651 | 651 | HEALTHY |
 
 ## Flag breakdown across all routes
@@ -96,7 +96,6 @@ Sorted ascending by body word count. Top 30:
 | /niche/uncut | niche | 531 | 34.9 | WORD_COUNT_LOW |
 | /niche/solo | niche | 532 | 35.2 | WORD_COUNT_LOW |
 | /gay-porn-sites-ranked | other | 533 | 116.5 |  |
-| /guides | landing | 539 | 23.7 |  |
 | /category/mobile-friendly | category | 554 | 65.4 | WORD_COUNT_LOW |
 | /compare/bigstr-vs-dirtyboyvideo | compare | 559 | 52.0 | WORD_COUNT_LOW |
 | /compare/bigstr-vs-twinktrade | compare | 564 | 52.3 | WORD_COUNT_LOW |
@@ -105,6 +104,7 @@ Sorted ascending by body word count. Top 30:
 | /compare/alternadudes-vs-bigstr | compare | 568 | 52.4 | WORD_COUNT_LOW |
 | /compare/bigstr-vs-trailertrashboys | compare | 570 | 52.6 | WORD_COUNT_LOW |
 | /compare/dudesraw-vs-spicevidsgay | compare | 572 | 53.1 | WORD_COUNT_LOW |
+| /free-trial-twink-sites | landing | 573 | 43.7 |  |
 
 ## Auto-generation pipeline assessment
 
