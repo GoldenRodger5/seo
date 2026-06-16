@@ -1,8 +1,8 @@
-# Content Audit Report — 2026-06-15
+# Content Audit Report — 2026-06-16
 
 ## Critical findings
 
-**🚨 0 / 415 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 416 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -41,7 +41,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | category | 6 | 1114 | 391 | 1921 | HEALTHY |
 | utility | 5 | 275 | 233 | 10401 | HEALTHY |
 | alternatives | 4 | 729 | 717 | 749 | HEALTHY |
-| guide | 3 | 2256 | 2092 | 2518 | HEALTHY |
+| guide | 4 | 2334 | 2129 | 2555 | HEALTHY |
 | homepage | 1 | 651 | 651 | 651 | HEALTHY |
 
 ## Flag breakdown across all routes
