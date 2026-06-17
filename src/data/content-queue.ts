@@ -368,7 +368,7 @@ const backlogEntries: SupportingQueueEntry[] = [
   { title: "Gay Porn Site Billing — What To Expect", slug: "guide/gay-porn-billing-guide", content_type: "guide", target_keyword: "gay porn site billing", related_sites: TOP_10_SLUGS, priority: 78, status: "published" },
   { title: "How To Watch Gay Porn On Mobile (iPhone vs Android)", slug: "guide/watch-gay-porn-on-mobile", content_type: "guide", target_keyword: "how to watch gay porn on iphone", related_sites: TOP_10_SLUGS, priority: 77, status: "published" },
   { title: "How Gay Porn Site Trials Work — Auto-Renewal Explained", slug: "guide/how-gay-porn-trials-work", content_type: "guide", target_keyword: "how do gay porn trials work", related_sites: ["next-door-twink", "next-door-world"], priority: 76, status: "published" },
-  { title: "How To Find Gay Porn Site Discounts", slug: "guide/how-to-find-gay-porn-discounts", content_type: "guide", target_keyword: "gay porn discounts", related_sites: TOP_10_SLUGS, priority: 75, status: "queued" },
+  { title: "How To Find Gay Porn Site Discounts", slug: "guide/how-to-find-gay-porn-discounts", content_type: "guide", target_keyword: "gay porn discounts", related_sites: TOP_10_SLUGS, priority: 75, status: "published" },
   { title: "Gay Porn Site Security & Privacy Guide", slug: "guide/gay-porn-security-privacy", content_type: "guide", target_keyword: "gay porn site privacy", related_sites: TOP_10_SLUGS, priority: 74, status: "queued" },
   { title: "Gay Porn Network Sites Explained", slug: "guide/gay-porn-network-sites-explained", content_type: "guide", target_keyword: "gay porn network sites", related_sites: ["next-door-world", "men", "nakedsword", "sayuncle"], priority: 72, status: "queued" },
 ];
