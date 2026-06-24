@@ -166,10 +166,15 @@ for (const post of BLOG_POSTS) {
   // Blog post titles are editorial and often >60 chars on their own.
   // Drop the " | TwinkVault" suffix when the combined string exceeds 60.
   const withSuffix = `${post.title} | TwinkVault`;
+  // Social-card image: a seeded clean cover (matches BlogPost's render-time
+  // pick), replacing the generic favicon default. Falls back to the post's
+  // featured_image only if no related-site cover exists.
+  const blogHero = selectGuideHero(post.related_sites ?? [], post.slug);
   routes.push({
     path: `/blog/${post.slug}`,
     title: withSuffix.length <= 60 ? withSuffix : post.title,
     description: post.meta_description,
+    ogImage: blogHero ? `${BASE_URL}${blogHero.hero_image}` : undefined,
   });
 }
 for (const slug of SITE_SLUGS) {

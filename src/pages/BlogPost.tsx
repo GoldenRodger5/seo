@@ -11,6 +11,8 @@ import {
   type BlogBlock,
 } from "../data/blog-posts";
 import { sites, getSiteBySlug, isAffiliated } from "../data/sites";
+import SmartImage from "../components/common/SmartImage";
+import { selectGuideHero } from "../lib/guideImagery";
 import StarRating from "../components/StarRating";
 import OutboundLink from "../components/OutboundLink";
 import { getVerdict } from "../data/site-verdicts";
@@ -196,6 +198,14 @@ const BlogPostPage = () => {
   const fullTitle = `${post.title} | TwinkVault`;
   const readingMin = readingTimeMinutes(post);
 
+  // Hero/social image from an existing clean site cover (seeded by slug so
+  // posts vary), falling back to the post's featured_image. Blog posts used to
+  // ship the generic favicon as og:image with no body image at all — bad social
+  // cards + no Discover/Top-Stories thumbnail eligibility.
+  const hero = selectGuideHero(post.related_sites ?? [], post.slug);
+  const heroPath = hero?.hero_image ?? post.featured_image;
+  const heroAbs = `${BASE_URL}${heroPath}`;
+
   return (
     <Layout>
       <PageTransition>
@@ -207,7 +217,7 @@ const BlogPostPage = () => {
           <meta property="og:title" content={fullTitle} />
           <meta property="og:description" content={post.meta_description} />
           <meta property="og:url" content={url} />
-          <meta property="og:image" content={`${BASE_URL}${post.featured_image}`} />
+          <meta property="og:image" content={heroAbs} />
           <meta property="article:published_time" content={post.published_date} />
           <meta property="article:modified_time" content={post.updated_date} />
           <meta property="article:author" content={post.author} />
@@ -218,7 +228,7 @@ const BlogPostPage = () => {
             "@type": "Article",
             headline: post.title,
             description: post.meta_description,
-            image: `${BASE_URL}${post.featured_image}`,
+            image: { "@type": "ImageObject", url: heroAbs, width: 1200, height: 750 },
             datePublished: post.published_date,
             dateModified: post.updated_date,
             author: { "@type": "Organization", name: post.author, url: BASE_URL },
@@ -277,6 +287,18 @@ const BlogPostPage = () => {
               </div>
               <p className="mt-4 text-lg text-foreground/85 leading-relaxed">{post.excerpt}</p>
             </header>
+
+            {hero && (
+              <figure className="mt-8">
+                {hero.hero_site_slug ? (
+                  <Link to={`/reviews/${hero.hero_site_slug}`} aria-label={`Read our ${hero.hero_alt || "site"} review`}>
+                    <SmartImage src={hero.hero_image} alt={hero.hero_alt || post.h1} aspectRatio="16:10" priority fallbackLabel={post.h1} className="w-full rounded-xl overflow-hidden" />
+                  </Link>
+                ) : (
+                  <SmartImage src={hero.hero_image} alt={hero.hero_alt || post.h1} aspectRatio="16:10" priority fallbackLabel={post.h1} className="w-full rounded-xl overflow-hidden" />
+                )}
+              </figure>
+            )}
 
             <TableOfContents post={post} />
 
