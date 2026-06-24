@@ -19,6 +19,7 @@ import CommunityRating from "../components/CommunityRating";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { getSiteBySlug, sites, getVisitUrl, isAffiliated, isPendingReview, isEditorialOnly } from "../data/sites";
 import { ALTERNATIVES_CONTENT } from "../data/alternatives-content";
+import { featuredComparePairsForSite } from "../data/featured-compare-pairs";
 import { useAIReview, reviewBodies } from "../hooks/useAIReview";
 import { currentYear, currentMonthShort, currentMonthLong } from "../lib/dates";
 import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
@@ -620,6 +621,38 @@ const ReviewPage = () => {
                   >
                     Looking for alternatives to {site.name}? See the full list →
                   </Link>
+                );
+              })()}
+
+              {(() => {
+                // Head-to-head comparisons this site appears in. These pages are
+                // indexable but were orphaned (sitemap-only); linking them here
+                // de-orphans them and adds high-relevance internal links.
+                const pairs = featuredComparePairsForSite(site.slug).slice(0, 6);
+                if (pairs.length === 0) return null;
+                return (
+                  <div className="mt-8">
+                    <h3 className="font-heading text-sm font-semibold text-muted-foreground">
+                      Compare {site.name} head-to-head
+                    </h3>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {pairs.map((pair) => {
+                        const [a, b] = pair.split("-vs-");
+                        const otherSlug = a === site.slug ? b : a;
+                        const other = getSiteBySlug(otherSlug);
+                        if (!other) return null;
+                        return (
+                          <Link
+                            key={pair}
+                            to={`/compare/${pair}`}
+                            className="inline-flex items-center rounded-full border border-border/50 px-3 py-1.5 text-sm hover:border-secondary/60 hover:text-secondary transition-colors"
+                          >
+                            {site.name} vs {other.name}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
                 );
               })()}
             </AnimateOnScroll>

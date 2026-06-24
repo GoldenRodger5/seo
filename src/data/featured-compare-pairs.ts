@@ -101,3 +101,16 @@ export function canonicalComparePairSlug(slug: string): string {
   if (parts.length !== 2) return slug;
   return [...parts].sort().join("-vs-");
 }
+
+/**
+ * Featured compare-pair slugs (canonical order) that include `siteSlug`. Lets
+ * a site's review page link the head-to-head pages it participates in — these
+ * pages are indexable but were orphaned (reachable only via the sitemap), so
+ * surfacing them here adds inbound internal links + de-orphans them.
+ */
+export function featuredComparePairsForSite(siteSlug: string): string[] {
+  return getFeaturedComparePairsList().filter((p) => {
+    const parts = p.split("-vs-");
+    return parts.length === 2 && (parts[0] === siteSlug || parts[1] === siteSlug);
+  });
+}
