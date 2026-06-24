@@ -17,7 +17,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | Source | Entries | Total words | Median words/entry |
 | --- | ---: | ---: | ---: |
 | `src/hooks/useAIReview.ts (reviewBodies map)` | 31 | 9,098 | 275 |
-| `src/data/comparison-content.ts` | 7 | 9,971 | 1,424 |
+| `src/data/comparison-content.ts` | 8 | 11,444 | 1,430 |
 | `src/data/blog-posts.ts` | 10 | 8,395 | 839 |
 | `src/data/alternatives-content.ts` | 7 | 6,456 | 922 |
 
@@ -30,18 +30,18 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Page type | Count | Median body words (prerendered) | Min | Max | Verdict |
 | --- | ---: | ---: | ---: | ---: | --- |
-| compare | 190 | 739 | 656 | 1959 | HEALTHY |
+| compare | 190 | 739 | 656 | 1960 | HEALTHY |
 | discount | 64 | 835 | 774 | 889 | HEALTHY |
 | review | 64 | 1080 | 730 | 1332 | HEALTHY |
-| landing | 29 | 941 | 228 | 4244 | HEALTHY |
+| landing | 29 | 943 | 228 | 4244 | HEALTHY |
 | niche | 21 | 765 | 488 | 2691 | HEALTHY |
-| other | 16 | 902 | 382 | 2023 | HEALTHY |
+| other | 16 | 904 | 382 | 2023 | HEALTHY |
 | guide | 7 | 2345 | 2129 | 2555 | HEALTHY |
 | legal | 6 | 761 | 360 | 1005 | HEALTHY |
 | blog | 6 | 1689 | 1490 | 1842 | HEALTHY |
 | category | 6 | 1476 | 531 | 2589 | HEALTHY |
 | utility | 5 | 275 | 233 | 10401 | HEALTHY |
-| alternatives | 4 | 729 | 717 | 749 | HEALTHY |
+| alternatives | 4 | 731 | 719 | 751 | HEALTHY |
 | homepage | 1 | 651 | 651 | 651 | HEALTHY |
 
 ## Flag breakdown across all routes
@@ -50,12 +50,13 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | --- | ---: |
 | WORD_COUNT_LOW | 16 |
 | THIN_LANDING | 6 |
+| ORPHAN_PAGE | 1 |
 
 ## Compare page deep-dive
 
 - **Page count:** 190
 - **Template source:** `src/pages/ComparePage.tsx` (runtime React component, hydrated client-side).
-- **Per-pair content source:** `src/data/comparison-content.ts` (~9,971 words across all pairs combined, never prerendered).
+- **Per-pair content source:** `src/data/comparison-content.ts` (~11,444 words across all pairs combined, never prerendered).
 - **All 190 compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.
 - **Kill-list recommendation:** until prerendering is fixed, the kill-list question is moot. Once Google can see content, then evaluate pairs by (a) neither site in top-10, (b) <5 GSC impressions/30d.
 
@@ -91,10 +92,10 @@ Sorted ascending by body word count. Top 30:
 | /category/free-trials | category | 531 | 43.7 | WORD_COUNT_LOW |
 | /gay-porn-sites-ranked | other | 533 | 116.5 |  |
 | /free-trial-twink-sites | landing | 573 | 43.7 |  |
-| /best-asian-gay-sites | landing | 609 | 67.5 |  |
+| /best-asian-gay-sites | landing | 611 | 67.5 |  |
 | /niche/solo | niche | 611 | 37.4 | WORD_COUNT_LOW |
 | /niche/uncut | niche | 612 | 37.1 | WORD_COUNT_LOW |
-| /best-daddy-twink-sites | landing | 638 | 67.7 |  |
+| /best-daddy-twink-sites | landing | 640 | 67.8 |  |
 | /gay-dating-sites | utility | 645 | 27.2 |  |
 | / | homepage | 651 | 85.1 |  |
 | /compare/bigstr-vs-dirtyboyvideo | compare | 656 | 54.6 |  |

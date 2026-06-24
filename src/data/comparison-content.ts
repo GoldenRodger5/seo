@@ -446,6 +446,65 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     ],
     "meta_description": "Say Uncle vs Family Dick in 2026 — pricing, scene counts, niche focus, and which membership actually delivers better value for gay subscribers."
   },
+  "twinks-in-shorts-vs-southern-strokes": {
+    "site_a_slug": "twinks-in-shorts",
+    "site_b_slug": "southern-strokes",
+    "h1": "Twinks in Shorts vs Southern Strokes (2026)",
+    "intro": "Two niche twink sites, two very different flavors — Twinks in Shorts leans into tactile, massage-driven amateur content where the chemistry between performers feels genuinely unscripted, while Southern Strokes plants its flag firmly in All-American territory: sun-kissed guys next door with easy smiles and natural bodies. Both operate in the lighter end of the twink spectrum, away from the hyper-produced studio machine, but they diverge sharply on aesthetics, catalog depth, and the kind of mood they deliver. If you've been burned by bloated network memberships full of filler, both of these smaller sites are a refreshing change — the question is which one matches your specific taste. We dug into both to give you a straight answer.",
+    "site_a_summary": "Twinks in Shorts carves out a distinct lane with its massage-and-more format — scenes typically open with genuine physical attention before escalating naturally, and that slow-burn pacing is exactly what fans of authentic amateur chemistry come for. The performers skew young and lean, with a noticeable preference for twinks who look like they wandered in from real life rather than a casting couch. Production values are modest but deliberate: natural lighting, minimal scripting, and a genuine sense that both guys are actually into each other. It's a niche within a niche, and for the right viewer, nothing else on the market scratches the same itch.",
+    "site_b_summary": "Southern Strokes has been running since 2009, which means members get access to a genuinely deep back catalog — a rarity at this price point. The brand identity is consistent: wholesome-looking American twinks with natural builds, an unhurried Southeastern vibe, and scenes that rarely feel forced or mechanical. IMDB's episode credits show active releases through at least 2025, confirming the site hasn't gone dark the way many long-running niche operations eventually do. The performers return for multiple scenes, which helps build a sense of familiarity that fans of character-driven content will appreciate. Value for the catalog depth alone is hard to argue with.",
+    "comparison_categories": [
+      {
+        "category": "Content Library",
+        "site_a_score": 6,
+        "site_b_score": 8,
+        "site_a_detail": "Twinks in Shorts focuses on a specific massage-escalation format that keeps scenes feeling cohesive, but the overall catalog is on the smaller side. There's no publicly confirmed scene count, and the site's social activity has been quiet since around 2020, which raises questions about how aggressively new content is being added. What's there is quality — curated rather than voluminous.",
+        "site_b_detail": "Southern Strokes has been producing content since 2009, making it one of the longer-running twink sites in the niche. IMDB credits confirm a diverse and rotating cast across multiple seasons running through at least 2025, with several performers appearing in four to nine scenes each — a sign of an actively managed library. The depth of the back catalog gives new members genuine hours of material to work through."
+      },
+      {
+        "category": "Pricing & Value",
+        "site_a_score": 7,
+        "site_b_score": 8,
+        "site_a_detail": "Twinks in Shorts operates through standard billing processors including CCBill and Epoch, which signals it follows typical industry pricing tiers — likely in the $24–$30/month range with discounted longer-term options. Without a confirmed trial offer in current search results, the risk of joining blind is slightly higher than it should be. Value depends heavily on how much of the catalog has been refreshed recently.",
+        "site_b_detail": "For a site with 15-plus years of content behind it, Southern Strokes punches above its weight on value. The expectation at comparable niche sites is roughly $24–$29.95 per month, but the sheer depth of the archive makes even the standard monthly price feel reasonable. Returning performers and multi-season runs mean you're not paying for ten minutes of content padded into a scene."
+      },
+      {
+        "category": "Site Design & UX",
+        "site_a_score": 6,
+        "site_b_score": 6,
+        "site_a_detail": "The Twinks in Shorts members' area follows a fairly standard niche-site template — functional but not particularly refined. Navigation is straightforward enough, and the massage-oriented scene structure means browsing by content type is intuitive. Don't expect a slick streaming dashboard; this is a purpose-built niche site, not a platform.",
+        "site_b_detail": "Southern Strokes similarly operates on a clean but no-frills layout consistent with smaller independent gay sites. Given its longevity, the back-end infrastructure appears stable and reliable. Search and filter tools let you browse by performer — useful given the recurring cast — though the overall visual design hasn't kept pace with newer entrants in the space."
+      },
+      {
+        "category": "Update Frequency",
+        "site_a_score": 5,
+        "site_b_score": 7,
+        "site_a_detail": "This is Twinks in Shorts' weakest point right now. Social media presence has gone largely quiet since 2020, and there's no publicly verifiable evidence of consistent weekly updates in recent years. It may still be active, but the signals available to someone researching before joining don't inspire confidence. Treat this as a catalog site rather than an active feed.",
+        "site_b_detail": "Southern Strokes shows IMDB episode credits running through 2025, with at least one cast member confirmed in a 2025 episode — a reasonable indicator of ongoing production. The multi-year seasonal structure suggests a predictable release cadence rather than sporadic drops, which is exactly what a paying member wants. It's not a daily-update powerhouse, but it appears to be genuinely active."
+      },
+      {
+        "category": "Niche Focus",
+        "site_a_score": 9,
+        "site_b_score": 8,
+        "site_a_detail": "The massage-to-sex format is Twinks in Shorts' defining feature, and the site executes it with more authenticity than most. If that specific fantasy — tactile, slow-building, genuinely tender — is what you're after, this site was built for you. The combination of that format with the twink aesthetic is almost impossible to find executed this well elsewhere.",
+        "site_b_detail": "Southern Strokes owns its lane confidently: All-American twinks with a laid-back Southern sensibility, recurring performers, and a consistent tonal identity across 15-plus years. It never tries to be something it isn't. For viewers who want wholesome-ish guys next door rather than European aesthetics or heavily produced studio content, Southern Strokes is one of the most reliable names in the niche."
+      }
+    ],
+    "verdict": "These two sites appeal to overlapping but distinct corners of the twink-loving audience. Southern Strokes is the stronger all-around membership in 2026 — it has the catalog depth, the proven update history through at least 2025, and a clearly defined brand identity that's been consistent for over fifteen years. Recurring performers across multiple seasons give it a character-driven quality most niche sites can't match, and the value proposition of accessing that archive at standard niche pricing is genuinely solid. Twinks in Shorts, on the other hand, wins decisively on specificity: if the massage-escalation format is your thing, no other site does it with the same amateur authenticity, and that focused execution earns it serious points. The concern is freshness — social signals suggest production may have slowed considerably since 2020, which means you'd be paying primarily for a back catalog rather than an active subscription. If we're being direct: join Southern Strokes as your primary membership and explore Twinks in Shorts on a trial basis to assess whether the current library is worth committing to long-term. Expecting daily updates from either would be setting yourself up for disappointment, but Southern Strokes is the more trustworthy ongoing subscription of the two.",
+    "who_should_choose_a": "Choose Twinks in Shorts if the massage-and-escalation format is a core part of your fantasy and you'd rather have a focused, curated library that nails one specific vibe than a broader catalog with variable content.",
+    "who_should_choose_b": "Choose Southern Strokes if you want a proven, actively updated site with deep back-catalog access, recurring performers you can follow across scenes, and a consistent All-American twink aesthetic at a fair price.",
+    "faq": [
+      {
+        "q": "Is Twinks in Shorts still active and adding new scenes in 2026?",
+        "a": "Based on available public signals, Twinks in Shorts appears to have significantly slowed its output since around 2020 — social media activity has been minimal and there's no verifiable evidence of a consistent recent update schedule. That doesn't necessarily mean the site is defunct, but prospective members should approach it as a catalog site rather than an active weekly-update subscription. We'd recommend using a trial period to assess how much content has been added in the past six to twelve months before committing to a recurring membership. If the existing library matches your tastes, the value is still there — just go in with accurate expectations."
+      },
+      {
+        "q": "How does Southern Strokes compare to other All-American twink sites?",
+        "a": "Southern Strokes stands out in its niche primarily because of longevity and consistency. Launching in 2009 and maintaining documented production activity through 2025 puts it well ahead of most smaller independent sites that tend to go dark within a few years. The recurring cast model — where performers return for multiple scenes across seasons — creates a more invested viewing experience than sites that constantly cycle through one-and-done performers. The All-American aesthetic is genuine rather than manufactured, and the catalog depth means new members have substantial content to explore from day one. It's not the flashiest option on the market, but it's one of the most reliable."
+      }
+    ],
+    "meta_description": "Twinks in Shorts vs Southern Strokes: we compare pricing, content depth, update frequency, and niche appeal to help you pick the right membership in 2026."
+  },
 };
 
 export const getComparisonBody = (slug: string): ComparisonBody | undefined => {
