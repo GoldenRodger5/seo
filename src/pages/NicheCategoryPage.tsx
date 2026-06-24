@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import { PageTransition, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
 import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import SiteCard from "../components/SiteCard";
+import LandingDataBlock from "../components/LandingDataBlock";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { sites } from "../data/sites";
 import { getNiche } from "../data/niches";
@@ -166,6 +167,9 @@ const NicheCategoryPage = () => {
             </p>
           </div>
         </section>
+
+        {/* Data-driven comparison block — unique stats + table from our scores */}
+        <LandingDataBlock sites={matching} label={niche.displayName.toLowerCase()} />
 
         <FeaturedDealBanner placement="niche-category" context={{ nicheSlug: niche.slug }} />
 

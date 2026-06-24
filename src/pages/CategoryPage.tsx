@@ -8,6 +8,7 @@ import StarRating from "../components/StarRating";
 import AnimateOnScroll from "../components/AnimateOnScroll";
 import LocalisedPrice from "../components/LocalisedPrice";
 import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
+import LandingDataBlock from "../components/LandingDataBlock";
 import { categories, getSitesByCategory } from "../data/sites";
 import { currentYear } from "../lib/dates";
 
@@ -89,6 +90,11 @@ const CategoryPage = () => {
               </div>
             </div>
           </AnimateOnScroll>
+
+          {/* Data-driven comparison block — unique stats + table from our scores */}
+          <div className="mt-10">
+            <LandingDataBlock sites={sorted} label={category.name.toLowerCase()} />
+          </div>
 
           {/* Sort */}
           <div className="mt-10 flex justify-center gap-2">
