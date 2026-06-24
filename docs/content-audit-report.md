@@ -1,4 +1,4 @@
-# Content Audit Report — 2026-06-20
+# Content Audit Report — 2026-06-24
 
 ## Critical findings
 
@@ -30,16 +30,16 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Page type | Count | Median body words (prerendered) | Min | Max | Verdict |
 | --- | ---: | ---: | ---: | ---: | --- |
-| compare | 190 | 630 | 559 | 1959 | HEALTHY |
+| compare | 190 | 739 | 656 | 1959 | HEALTHY |
 | discount | 64 | 835 | 774 | 889 | HEALTHY |
-| review | 64 | 1048 | 730 | 1311 | HEALTHY |
+| review | 64 | 1080 | 730 | 1332 | HEALTHY |
 | landing | 29 | 941 | 228 | 4244 | HEALTHY |
-| niche | 21 | 644 | 488 | 2075 | HEALTHY |
+| niche | 21 | 765 | 488 | 2691 | HEALTHY |
 | other | 16 | 902 | 382 | 2023 | HEALTHY |
 | guide | 7 | 2345 | 2129 | 2555 | HEALTHY |
 | legal | 6 | 761 | 360 | 1005 | HEALTHY |
-| blog | 6 | 1675 | 1482 | 1828 | HEALTHY |
-| category | 6 | 1114 | 391 | 1921 | HEALTHY |
+| blog | 6 | 1689 | 1490 | 1842 | HEALTHY |
+| category | 6 | 1476 | 531 | 2589 | HEALTHY |
 | utility | 5 | 275 | 233 | 10401 | HEALTHY |
 | alternatives | 4 | 729 | 717 | 749 | HEALTHY |
 | homepage | 1 | 651 | 651 | 651 | HEALTHY |
@@ -48,12 +48,8 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Flag | Count |
 | --- | ---: |
-| WORD_COUNT_LOW | 68 |
-| ORPHAN_PAGE | 7 |
-| NO_IMAGES | 6 |
-| MISSING_OG_IMAGE | 6 |
+| WORD_COUNT_LOW | 16 |
 | THIN_LANDING | 6 |
-| THIN_TITLE | 2 |
 
 ## Compare page deep-dive
 
@@ -67,7 +63,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 - **Page count:** 64
 - **AI content rendering:** `AI_CONTENT_CLIENT_ONLY`. Static reviewBodies map exists with ~275 median words per site, but the prose only mounts into the DOM after `useAIReview` runs client-side.
-- **Prerendered body word counts:** every review page is in the 730–1311 word range (NoScript + page chrome only).
+- **Prerendered body word counts:** every review page is in the 730–1332 word range (NoScript + page chrome only).
 
 ## Worst-offender routes (smallest prerendered body)
 
@@ -78,33 +74,33 @@ Sorted ascending by body word count. Top 30:
 | /blog/category/industry | landing | 228 | 19.0 | THIN_LANDING |
 | /find-my-site | utility | 233 | 18.7 |  |
 | /contact | utility | 256 | 21.1 |  |
-| /blog/category/money | landing | 272 | 21.1 | THIN_LANDING |
 | /ask-ai | utility | 275 | 21.7 |  |
-| /blog/category/comparisons | landing | 292 | 22.7 | THIN_LANDING |
-| /blog/category/guides | landing | 357 | 24.7 | THIN_LANDING |
+| /blog/category/money | landing | 333 | 21.7 | THIN_LANDING |
+| /blog/category/comparisons | landing | 355 | 23.4 | THIN_LANDING |
 | /2257 | legal | 360 | 19.0 |  |
 | /affiliate-disclosure | legal | 368 | 19.0 |  |
 | /is-athletic-twinks-worth-it | other | 382 | 31.7 |  |
-| /category/free-trials | category | 391 | 40.2 | WORD_COUNT_LOW |
 | /is-rawhole-worth-it | other | 395 | 32.0 |  |
 | /compare | landing | 415 | 31.6 | THIN_LANDING |
 | /is-sayuncle-worth-it | other | 424 | 32.1 |  |
+| /blog/category/guides | landing | 434 | 25.4 | THIN_LANDING |
 | /niche/military | niche | 488 | 31.2 | WORD_COUNT_LOW |
 | /blog | landing | 491 | 31.5 | THIN_LANDING |
 | /niche/latin | niche | 497 | 31.1 | WORD_COUNT_LOW |
 | /niche/big-dick | niche | 510 | 31.1 | WORD_COUNT_LOW |
-| /niche/uncut | niche | 531 | 34.9 | WORD_COUNT_LOW |
-| /niche/solo | niche | 532 | 35.2 | WORD_COUNT_LOW |
+| /category/free-trials | category | 531 | 43.7 | WORD_COUNT_LOW |
 | /gay-porn-sites-ranked | other | 533 | 116.5 |  |
-| /category/mobile-friendly | category | 554 | 65.4 | WORD_COUNT_LOW |
-| /compare/bigstr-vs-dirtyboyvideo | compare | 559 | 52.0 | WORD_COUNT_LOW |
-| /compare/bigstr-vs-twinktrade | compare | 564 | 52.3 | WORD_COUNT_LOW |
-| /compare/bigstr-vs-rawhole | compare | 566 | 52.1 | WORD_COUNT_LOW, ORPHAN_PAGE |
-| /compare/bigstr-vs-dudesraw | compare | 567 | 52.2 | WORD_COUNT_LOW, ORPHAN_PAGE |
-| /compare/alternadudes-vs-bigstr | compare | 568 | 52.4 | WORD_COUNT_LOW |
-| /compare/bigstr-vs-trailertrashboys | compare | 570 | 52.6 | WORD_COUNT_LOW |
-| /compare/dudesraw-vs-spicevidsgay | compare | 572 | 53.1 | WORD_COUNT_LOW |
 | /free-trial-twink-sites | landing | 573 | 43.7 |  |
+| /best-asian-gay-sites | landing | 609 | 67.5 |  |
+| /niche/solo | niche | 611 | 37.4 | WORD_COUNT_LOW |
+| /niche/uncut | niche | 612 | 37.1 | WORD_COUNT_LOW |
+| /best-daddy-twink-sites | landing | 638 | 67.7 |  |
+| /gay-dating-sites | utility | 645 | 27.2 |  |
+| / | homepage | 651 | 85.1 |  |
+| /compare/bigstr-vs-dirtyboyvideo | compare | 656 | 54.6 |  |
+| /compare/bigstr-vs-rawhole | compare | 661 | 54.6 |  |
+| /compare/bigstr-vs-twinktrade | compare | 664 | 54.8 |  |
+| /compare/alternadudes-vs-bigstr | compare | 665 | 55.0 |  |
 
 ## Auto-generation pipeline assessment
 
