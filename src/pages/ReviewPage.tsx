@@ -18,6 +18,7 @@ import AnimateOnScroll from "../components/AnimateOnScroll";
 import CommunityRating from "../components/CommunityRating";
 import VisitSiteButton from "../components/VisitSiteButton";
 import { getSiteBySlug, sites, getVisitUrl, isAffiliated, isPendingReview, isEditorialOnly } from "../data/sites";
+import { ALTERNATIVES_CONTENT } from "../data/alternatives-content";
 import { useAIReview, reviewBodies } from "../hooks/useAIReview";
 import { currentYear, currentMonthShort, currentMonthLong } from "../lib/dates";
 import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
@@ -602,13 +603,16 @@ const ReviewPage = () => {
             <AnimateOnScroll className="mt-12">
               <SimilarSites site={site} />
               {(() => {
-                const altMap: Record<string, string> = {
-                  "helix-studios": "/helix-studios-alternatives",
-                  "sean-cody": "/sean-cody-alternatives",
-                  "nakedsword": "/nakedsword-alternatives",
-                };
-                const altPath = altMap[site.slug];
-                if (!altPath) return null;
+                // Link to this site's alternatives page if one exists. The 3
+                // legacy pages live at a bare path; everything else uses the
+                // generic /alternatives/{slug} route. Previously only the 3
+                // legacy sites were linked, orphaning every generic alternatives
+                // page (reachable only via sitemap) — this links all of them.
+                if (!ALTERNATIVES_CONTENT[`${site.slug}-alternatives`]) return null;
+                const LEGACY_BARE = new Set(["helix-studios", "sean-cody", "nakedsword"]);
+                const altPath = LEGACY_BARE.has(site.slug)
+                  ? `/${site.slug}-alternatives`
+                  : `/alternatives/${site.slug}`;
                 return (
                   <Link
                     to={altPath}
