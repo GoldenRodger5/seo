@@ -57,6 +57,7 @@ const COMPARISON_CONTENT_FILE = resolve(ROOT, "src/data/comparison-content.ts");
 const ALTERNATIVES_CONTENT_FILE = resolve(ROOT, "src/data/alternatives-content.ts");
 const ISWORTHIT_CONTENT_FILE = resolve(ROOT, "src/data/isworthit-content.ts");
 const GUIDE_CONTENT_FILE = resolve(ROOT, "src/data/guide-content.ts");
+const SITEMAP_SCRIPT = resolve(ROOT, "scripts/generate-sitemap.ts");
 
 const BASE_URL = "https://twinkvault.com";
 // Sonnet 4.6 is the current latest at time of writing. Override here if you
@@ -64,10 +65,12 @@ const BASE_URL = "https://twinkvault.com";
 // but the newer model produces tighter JSON.
 const MODEL = "claude-sonnet-4-6";
 // Spec said 2000, but the prompt asks for ~700 words of body + 5 FAQs + scores
-// + meta — empirically that's ~3500 output tokens. Bumped to 4000 to avoid
-// mid-JSON truncation. Lower this only if you also tighten the word-count
-// targets in the prompt builders.
-const MAX_TOKENS = 4000;
+// + meta — empirically that's ~3500 output tokens. With web_search enabled the
+// model also emits tool-use + search-result blocks that share this budget, so
+// a 4000 cap could truncate the final JSON (or leave a turn with no text block)
+// on longer comparison/guide articles. 8000 gives comfortable headroom — the
+// cap only bounds length, it doesn't increase cost for shorter responses.
+const MAX_TOKENS = 8000;
 
 // ---------------------------------------------------------------------------
 // CLI flag parsing
@@ -314,17 +317,62 @@ async function generate({ contentType, payload }: GenerateOptions) {
   const anthropic = getAnthropic();
   const userPrompt = buildUserPrompt(contentType, payload);
 
-  const resp = await anthropic.messages.create({
+  const tools = [{ type: "web_search_20250305" as const, name: "web_search" }];
+  const messages: { role: "user" | "assistant"; content: unknown }[] = [
+    { role: "user", content: userPrompt },
+  ];
+
+  let resp = await anthropic.messages.create({
     model: MODEL,
     max_tokens: MAX_TOKENS,
     system: SYSTEM_PROMPT,
-    tools: [{ type: "web_search_20250305" as const, name: "web_search" }],
-    messages: [{ role: "user", content: userPrompt }],
+    tools,
+    messages: messages as never,
   });
 
-  const block = resp.content.find((b) => b.type === "text");
-  if (!block || block.type !== "text") throw new Error("No text content in Claude response");
-  return parseJsonStrict(block.text);
+  // The web_search server tool can end a turn with stop_reason "pause_turn"
+  // (the model paused mid-tool-use). That response carries only tool/search
+  // blocks and NO final text — which previously surfaced as the opaque
+  // "No text content in Claude response" error and burned the day. Continue
+  // the paused turn by feeding the partial assistant content back, up to a
+  // few times, until the model emits its final JSON text.
+  let continues = 0;
+  while (resp.stop_reason === "pause_turn" && continues < 4) {
+    messages.push({ role: "assistant", content: resp.content });
+    resp = await anthropic.messages.create({
+      model: MODEL,
+      max_tokens: MAX_TOKENS,
+      system: SYSTEM_PROMPT,
+      tools,
+      messages: messages as never,
+    });
+    continues++;
+  }
+
+  // Concatenate every text block (the final JSON can follow tool-use blocks).
+  const text = resp.content
+    .filter((b) => b.type === "text")
+    .map((b) => (b as { text: string }).text)
+    .join("");
+
+  if (!text.trim()) {
+    // Capture WHY it was empty so this is debuggable instead of opaque:
+    // stop_reason distinguishes max_tokens (truncated) / pause_turn (still
+    // paused after continues) / refusal / tool_use; block types + usage show
+    // whether the model only searched and never wrote.
+    const blockTypes = resp.content.map((b) => b.type).join(",") || "(none)";
+    const usage = resp.usage
+      ? `in=${resp.usage.input_tokens} out=${resp.usage.output_tokens}`
+      : "?";
+    log.warn(
+      `Empty Claude response — stop_reason=${resp.stop_reason} blocks=[${blockTypes}] ` +
+      `${usage} pause_continues=${continues}`,
+    );
+    throw new Error(
+      `No text content in Claude response (stop_reason=${resp.stop_reason}, blocks=[${blockTypes}], ${usage})`,
+    );
+  }
+  return parseJsonStrict(text);
 }
 
 function parseJsonStrict(raw: string): Record<string, unknown> {
@@ -487,7 +535,9 @@ function comparisonPrompt(p: Record<string, unknown>): string {
 Site A: ${p.site_a_name} (${p.site_a_slug}) — ${p.site_a_summary}
 Site B: ${p.site_b_name} (${p.site_b_slug}) — ${p.site_b_summary}
 
-Return JSON: { site_a_slug, site_b_slug, h1 ("[A] vs [B] — Which Is Better in 2026?"), intro (~150w), site_a_summary (~100w on A's strengths), site_b_summary (~100w on B's strengths), comparison_categories: 5 entries with { category, site_a_score (1-10), site_b_score (1-10), site_a_detail (2-3 sentences), site_b_detail (2-3 sentences) } covering Content Library, Pricing & Value, Site Design & UX, Update Frequency, Niche Focus. verdict (~200w decisive), who_should_choose_a (one sentence), who_should_choose_b (one sentence), faq (2 entries, each {q, a} — q is the search question, a is the answer 80-150 words), meta_description (145-155 chars) }`;
+HARD CONSTRAINT on h1: must be 50 characters or fewer (so "{h1} | TwinkVault" stays under the 65-char SERP cap). COUNT the characters. Use the form "[A] vs [B] (2026)". Only add "— Which Is Better" if the whole h1 still fits in 50 chars; for longer site names, "[A] vs [B] (2026)" alone is correct. Example: "Twinks in Shorts vs Southern Strokes (2026)" (43 chars) — good; the longer "— Which Is Better in 2026?" form would be 62 chars — too long.
+
+Return JSON: { site_a_slug, site_b_slug, h1 (≤50 chars — see constraint above), intro (~150w), site_a_summary (~100w on A's strengths), site_b_summary (~100w on B's strengths), comparison_categories: 5 entries with { category, site_a_score (1-10), site_b_score (1-10), site_a_detail (2-3 sentences), site_b_detail (2-3 sentences) } covering Content Library, Pricing & Value, Site Design & UX, Update Frequency, Niche Focus. verdict (~200w decisive), who_should_choose_a (one sentence), who_should_choose_b (one sentence), faq (2 entries, each {q, a} — q is the search question, a is the answer 80-150 words), meta_description (145-155 chars) }`;
 }
 
 function bestofPrompt(p: Record<string, unknown>): string {
@@ -1260,9 +1310,14 @@ async function logToSupabase(row: Record<string, unknown>) {
 // ---------------------------------------------------------------------------
 // Resolution: which item to generate today?
 // ---------------------------------------------------------------------------
-async function resolveTarget(flags: Flags): Promise<{ kind: "review"; entry: ReviewQueueEntry } | { kind: "supporting"; entry: SupportingQueueEntry } | null> {
-  // --site override (unchanged: explicit slug always wins)
+async function resolveTarget(
+  flags: Flags,
+  exclude: Set<string> = new Set(),
+): Promise<{ kind: "review"; entry: ReviewQueueEntry } | { kind: "supporting"; entry: SupportingQueueEntry } | null> {
+  // --site override (unchanged: explicit slug always wins). Never falls
+  // through to another item — you asked for this exact one.
   if (flags.site) {
+    if (exclude.has(flags.site)) return null;
     const r = reviewQueue.find((q) => q.slug === flags.site);
     if (r) return { kind: "review", entry: r };
     const s = supportingQueue.find((q) => q.slug === flags.site);
@@ -1270,20 +1325,22 @@ async function resolveTarget(flags: Flags): Promise<{ kind: "review"; entry: Rev
     return null;
   }
 
-  // --type override
+  // --type override (honors the exclusion set for fallback-to-next-item)
   if (flags.type) {
     if (flags.type === "review") {
       const r = nextReviewToPublish();
-      return r ? { kind: "review", entry: r } : null;
+      return r && !exclude.has(r.slug) ? { kind: "review", entry: r } : null;
     }
-    const s = nextSupporting(flags.type as SupportingContentType);
+    const s = [...supportingCandidates(flags.type as SupportingContentType)]
+      .filter((e) => !exclude.has(e.slug))
+      .sort((a, b) => b.priority - a.priority)[0];
     return s ? { kind: "supporting", entry: s } : null;
   }
 
-  // --force: highest static-priority queued review, skipping archived only.
+  // --force: highest static-priority queued review, skipping archived + tried.
   if (flags.force) {
     const sorted = [...reviewQueue]
-      .filter((r) => r.status === "queued" && r.editorial_mode !== "archived")
+      .filter((r) => r.status === "queued" && r.editorial_mode !== "archived" && !exclude.has(r.slug))
       .sort((a, b) => b.priority - a.priority);
     if (sorted.length) return { kind: "review", entry: sorted[0] };
   }
@@ -1336,8 +1393,10 @@ async function resolveTarget(flags: Flags): Promise<{ kind: "review"; entry: Rev
   const editorialOnlyCurrent = sites.filter((s) => s.editorial_status === "editorial-only").length;
   const editorialOnlyCap = 8;
 
-  const reviews = reviewCandidates();
-  const supporting = supportingCandidates();
+  // Exclude items already tried this run (fallback-to-next-item) so the
+  // picker returns the NEXT-best candidate instead of the one that just failed.
+  const reviews = reviewCandidates().filter((r) => !exclude.has(r.slug));
+  const supporting = supportingCandidates().filter((s) => !exclude.has(s.slug));
   const picked = pickHighestEffective(reviews, supporting, index, {
     editorialOnlyCap,
     editorialOnlyCurrent,
@@ -1357,29 +1416,45 @@ async function resolveTarget(flags: Flags): Promise<{ kind: "review"; entry: Rev
     : { kind: "supporting", entry: picked.entry };
 }
 
-// ---------------------------------------------------------------------------
-// Main flow
-// ---------------------------------------------------------------------------
-async function main() {
-  const flags = parseFlags(process.argv.slice(2));
+type ResolvedTarget =
+  | { kind: "review"; entry: ReviewQueueEntry }
+  | { kind: "supporting"; entry: SupportingQueueEntry };
 
-  // --audit short-circuits everything.
-  if (flags.audit) {
-    const issues = runAudit();
-    printAudit(issues);
-    process.exit(0);
+/** Build a corrective retry hint, with strong, specific guidance for the
+ *  common, fixable failures (H1 too long, meta length, thin word count). */
+function buildRetryHint(lastErr: string): string {
+  let hint = `Your previous attempt failed these quality checks — fix ONLY these while keeping everything else correct: ${lastErr}.`;
+  if (/h1 length \d+ out of/.test(lastErr)) {
+    hint += ` CRITICAL: the "h1" field MUST be 50 characters or fewer — count every character including spaces. Shorten it aggressively. For a comparison use the terse "[A] vs [B] (2026)" form (drop "Which Is Better"). Do NOT exceed 50 characters under any circumstances.`;
   }
-
-  const target = await resolveTarget(flags);
-  if (!target) {
-    log.warn("No queued item resolved for today's rotation. Exiting cleanly.");
-    return;
+  if (/meta_description length/.test(lastErr)) {
+    hint += ` The "meta_description" MUST be between 120 and 165 characters.`;
   }
+  const wc = lastErr.match(/word count \d+ < (\d+)/);
+  if (wc) {
+    hint += ` Expand the body to at least ${wc[1]} words with concrete, specific details (real features, pricing, scene specifics) — do not pad with filler.`;
+  }
+  return hint;
+}
 
+/**
+ * Generate + quality-gate ONE queue item, up to MAX_ATTEMPTS times. Returns
+ * "publish" when shippable (gate passed, or only cosmetic meta-length issues
+ * remain) or "failed" with a reason when the item can't be salvaged (empty/
+ * malformed/paused API responses, unfixable H1, thin content). An API error on
+ * one attempt no longer aborts — it retries; only exhausting all attempts
+ * fails the item. The caller decides whether to fall through to the next item.
+ */
+async function tryGenerateItem(
+  target: ResolvedTarget,
+  flags: Flags,
+): Promise<
+  | { status: "publish"; target: ResolvedTarget; contentType: ContentTypeKey; generated: Record<string, unknown>; gate: { ok: boolean; errors: string[] } }
+  | { status: "failed"; reason: string }
+> {
   const contentType: ContentTypeKey = target.kind === "review" ? "review" : (target.entry as SupportingQueueEntry).content_type;
   log.info(`Target: ${contentType} → ${target.entry.slug}`);
 
-  // Helper to do one full generation attempt with the payload below.
   const attemptGeneration = async (extraHint?: string): Promise<Record<string, unknown>> => {
     if (target.kind === "review") {
       const entry = target.entry as ReviewQueueEntry;
@@ -1393,9 +1468,8 @@ async function main() {
           affiliate_network: entry.affiliate_network,
           existing_slugs: sites.map((s) => s.slug),
           retry_hint: extraHint,
-          // Switches the prompt to reviewEditorialOnlyPrompt() — no
-          // pricing focus, no affiliate CTA framing, transparency about
-          // the lack of partnership.
+          // Switches the prompt to reviewEditorialOnlyPrompt() — no pricing
+          // focus, no affiliate CTA framing, transparency about no partnership.
           editorial_only: entry.editorial_mode === "research-only",
         },
       });
@@ -1406,27 +1480,24 @@ async function main() {
     return generate({ contentType, payload: enriched });
   };
 
-  // ── Generation with up to 2 retries on quality-gate failure ────────────
-  // Single-day failures used to silently waste the slot. Now: 2 retry
-  // attempts when the gate complains about content shape, each with the
-  // failure errors fed back to the model as a "fix these specific issues"
-  // hint. The repair-meta single-shot still wraps the first attempt.
   let generated: Record<string, unknown> = {};
   let gate = { ok: false, errors: ["initial"] as string[] };
+  let produced = false;
   const MAX_ATTEMPTS = 3;
   let lastErr = "";
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
-      const hint = attempt === 1 ? undefined :
-        `Previous attempt failed these checks — fix them while keeping everything else: ${lastErr}`;
+      const hint = attempt === 1 ? undefined : buildRetryHint(lastErr);
       log.info(attempt === 1 ? "Generating…" : `Retry ${attempt - 1}/${MAX_ATTEMPTS - 1} with failure hint…`);
       generated = await attemptGeneration(hint);
+      produced = true;
     } catch (e) {
-      // Anthropic-side failure (timeout, rate limit, network). Exit 0 so the
-      // GitHub Action stays green; tomorrow's run picks up the same queue
-      // entry. A red X on the workflow page over-signals a transient hiccup.
-      log.warn(`Generation failed — skipping today's run: ${(e as Error).message}`);
-      process.exit(0);
+      // API-shape failure (empty/paused response, timeout, rate limit).
+      // generate() already logged stop_reason/blocks/usage. Don't bail the
+      // item — a fresh attempt often succeeds. Record the reason and retry.
+      lastErr = `API error: ${(e as Error).message}`;
+      log.warn(`Attempt ${attempt}/${MAX_ATTEMPTS} API error: ${(e as Error).message}`);
+      continue;
     }
 
     gate = qualityGate(generated, contentType);
@@ -1445,42 +1516,87 @@ async function main() {
     log.warn(`Attempt ${attempt} failed gate: ${lastErr}`);
   }
 
-  // Per-run quality summary (reflects the final state, PASS or WARN).
+  if (!produced) {
+    return { status: "failed", reason: `no usable generation after ${MAX_ATTEMPTS} attempts (${lastErr})` };
+  }
+
+  // Per-item quality summary (reflects the final state, PASS or WARN).
   logQualityLine(generated, target, contentType, gate.ok);
 
-  // Distinguish cosmetic gate failures (meta length within 20 chars of the
-  // accepted range) from genuinely broken content (missing fields, malformed
-  // structure, missing required keys). Cosmetic issues log a warning and
-  // proceed; word-count shortfalls WARN and skip just this page (per spec);
-  // only genuinely broken content stops the pipeline.
   if (!gate.ok) {
+    // Cosmetic = meta length just outside the band → ship it. Anything else
+    // (unfixable H1, thin word count, missing fields) = this item failed; the
+    // caller may fall through to the next queue item.
     const isCosmetic = (err: string) => {
       if (!err.includes("meta_description length")) return false;
       const match = err.match(/length (\d+)/);
       if (!match) return false;
       const len = parseInt(match[1], 10);
-      // Within 20 chars of either end of the 120-200 accepted range.
       return len >= 100 && len <= 220;
     };
-    const isWordCount = (err: string) => /word count \d+ < \d+/.test(err);
-    const allCosmetic = gate.errors.every(isCosmetic);
-    const allSkippable = gate.errors.every((e) => isCosmetic(e) || isWordCount(e));
-    if (allCosmetic) {
+    if (gate.errors.every(isCosmetic)) {
       log.warn(`Quality gate had cosmetic issues (proceeding anyway):\n  ${gate.errors.join("\n  ")}`);
-    } else if (allSkippable) {
-      // Word-count shortfall survived the retry. Don't publish a thin page,
-      // but don't paint the run red either — skip and let a future run retry.
-      log.warn(`Word count below floor after ${MAX_ATTEMPTS} attempts — skipping this page (not publishing):\n  ${gate.errors.join("\n  ")}`);
-      if (flags.dryRun) log.json("Skipped JSON", generated);
-      process.exit(0);
     } else {
-      log.err(`Quality gate failed (genuine content issues):\n  ${gate.errors.join("\n  ")}`);
-      if (flags.dryRun) log.json("Failed JSON", generated);
-      // Soft exit (0, not 1) so a bad day doesn't paint the workflow red.
-      // The next scheduled run picks the same item back up.
-      process.exit(0);
+      if (flags.dryRun) log.json("Rejected JSON", generated);
+      return { status: "failed", reason: gate.errors.join("; ") };
     }
   }
+
+  return { status: "publish", target, contentType, generated, gate };
+}
+
+// ---------------------------------------------------------------------------
+// Main flow
+// ---------------------------------------------------------------------------
+async function main() {
+  const flags = parseFlags(process.argv.slice(2));
+
+  // --audit short-circuits everything.
+  if (flags.audit) {
+    const issues = runAudit();
+    printAudit(issues);
+    process.exit(0);
+  }
+
+  // ── Item selection with fallback-to-next-item ──────────────────────────
+  // A single problematic topic (empty/paused API response, an unfixable H1,
+  // thin content) shouldn't cost the whole day. Try up to MAX_ITEMS distinct
+  // queue items before giving up; only then skip the run. Explicit --site
+  // pins exactly one item (no fallthrough). "Skip the day" stays the final
+  // fallback — only after retries AND the next-item attempt are exhausted.
+  const MAX_ITEMS = flags.site ? 1 : 2;
+  const tried = new Set<string>();
+  let chosen:
+    | { target: ResolvedTarget; contentType: ContentTypeKey; generated: Record<string, unknown> }
+    | null = null;
+
+  for (let itemNo = 1; itemNo <= MAX_ITEMS; itemNo++) {
+    const candidate = await resolveTarget(flags, tried);
+    if (!candidate) {
+      log.warn(itemNo === 1 ? "No queued item resolved for today's rotation. Exiting cleanly." : "No further queued items to try.");
+      break;
+    }
+    tried.add(candidate.entry.slug);
+    if (MAX_ITEMS > 1) log.info(`── Item ${itemNo}/${MAX_ITEMS}: ${candidate.entry.slug} ──`);
+    const result = await tryGenerateItem(candidate, flags);
+    if (result.status === "publish") {
+      chosen = { target: result.target, contentType: result.contentType, generated: result.generated };
+      break;
+    }
+    log.warn(
+      `Item "${candidate.entry.slug}" did not produce a publishable article (${result.reason}).` +
+      (itemNo < MAX_ITEMS ? " Falling through to the next queue item." : " No more fallback attempts."),
+    );
+  }
+
+  if (!chosen) {
+    // Final fallback: queue is unchanged, soft exit (0) so the workflow stays
+    // green and the next scheduled run retries.
+    log.warn("No publishable item after exhausting retries + fallback — skipping today's run.");
+    process.exit(0);
+  }
+
+  const { target, contentType, generated } = chosen;
 
   if (target.kind === "review") {
     const entry = target.entry as ReviewQueueEntry;
