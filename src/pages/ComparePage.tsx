@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import Layout from "../components/Layout";
 import ScoreRing from "../components/ScoreRing";
+import CompareDataBlock from "../components/CompareDataBlock";
 import StarRating from "../components/StarRating";
 import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
 import { getComparisonBody } from "../data/comparison-content";
@@ -778,6 +779,11 @@ const ComparePage = () => {
                 </article>
               );
             })()}
+
+            {/* No AI body → render a programmatic pillar-by-pillar breakdown so
+                the page isn't thin (the comparison_categories article above only
+                renders for the handful of pairs with generated content). */}
+            {!aiBody && <CompareDataBlock siteA={siteA} siteB={siteB} />}
 
             {/* BLUF Summary */}
             {/* TODO_VOICE: rewrite this paragraph in first-person methodology voice. Drop "Bottom Line Up Front" framing; the heading itself is enough. Cite specific differences (numbers, niches, networks), not score-as-prose. */}
