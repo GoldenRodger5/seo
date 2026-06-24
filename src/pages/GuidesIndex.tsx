@@ -5,6 +5,7 @@ import { PageTransition } from "../components/MotionWrappers";
 import Breadcrumbs from "../components/Breadcrumbs";
 import SmartImage from "../components/common/SmartImage";
 import { GUIDE_CONTENT } from "../data/guide-content";
+import { selectGuideHero } from "../lib/guideImagery";
 
 /**
  * /guides index. Until now guides lived only at /guide/{slug} and were
@@ -96,6 +97,7 @@ const GuidesIndex = () => {
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {slugs.map((slug) => {
               const g = GUIDE_CONTENT[slug];
+              const hero = selectGuideHero(g.related_sites ?? [], slug);
               return (
                 <Link
                   key={slug}
@@ -103,8 +105,8 @@ const GuidesIndex = () => {
                   className="group block rounded-xl border border-border/40 overflow-hidden hover:border-secondary/60 transition-colors"
                 >
                   <SmartImage
-                    src={g.hero_image}
-                    alt={g.hero_alt || g.h1}
+                    src={hero?.hero_image ?? g.hero_image}
+                    alt={hero?.hero_alt || g.hero_alt || g.h1}
                     aspectRatio="16:10"
                     fallbackLabel={g.h1}
                     className="w-full"

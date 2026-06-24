@@ -7,6 +7,7 @@ import RelatedGuides from "../components/RelatedGuides";
 import LinkedProse from "../components/LinkedProse";
 import SmartImage from "../components/common/SmartImage";
 import { getGuideBody } from "../data/guide-content";
+import { selectGuideHero } from "../lib/guideImagery";
 import { sites } from "../data/sites";
 import { currentYear } from "../lib/dates";
 
@@ -46,7 +47,12 @@ const GuidePage = () => {
       { "@type": "ListItem", position: 3, name: body.h1, item: url },
     ],
   };
-  const heroAbs = body.hero_image ? `${BASE_URL}${body.hero_image}` : null;
+  // Hero chosen at render time, seeded by the guide slug, so each guide gets a
+  // distinct cover from its related sites (single source of truth; no stored
+  // value to drift). Falls back to any stored hero_image for safety.
+  const hero = selectGuideHero(body.related_sites ?? [], slug ?? "")
+    ?? (body.hero_image ? { hero_image: body.hero_image, hero_alt: body.hero_alt ?? body.h1, hero_site_slug: body.hero_site_slug ?? "" } : null);
+  const heroAbs = hero ? `${BASE_URL}${hero.hero_image}` : null;
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -125,13 +131,13 @@ const GuidePage = () => {
           />
           <h1 className="font-heading text-3xl md:text-4xl font-bold heading-gradient inline-block">{body.h1}</h1>
 
-          {body.hero_image && (
+          {hero && (
             <figure className="mt-6">
-              {body.hero_site_slug ? (
-                <Link to={`/reviews/${body.hero_site_slug}`} aria-label={`Read our ${body.hero_alt || "site"} review`}>
+              {hero.hero_site_slug ? (
+                <Link to={`/reviews/${hero.hero_site_slug}`} aria-label={`Read our ${hero.hero_alt || "site"} review`}>
                   <SmartImage
-                    src={body.hero_image}
-                    alt={body.hero_alt || body.h1}
+                    src={hero.hero_image}
+                    alt={hero.hero_alt || body.h1}
                     aspectRatio="16:10"
                     priority
                     fallbackLabel={body.h1}
@@ -140,8 +146,8 @@ const GuidePage = () => {
                 </Link>
               ) : (
                 <SmartImage
-                  src={body.hero_image}
-                  alt={body.hero_alt || body.h1}
+                  src={hero.hero_image}
+                  alt={hero.hero_alt || body.h1}
                   aspectRatio="16:10"
                   priority
                   fallbackLabel={body.h1}

@@ -51,6 +51,7 @@ import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.
 import { BLOG_POSTS, BLOG_CATEGORIES } from "../src/data/blog-posts.js";
 import { ALTERNATIVES_CONTENT } from "../src/data/alternatives-content.js";
 import { GUIDE_CONTENT } from "../src/data/guide-content.js";
+import { selectGuideHero } from "../src/lib/guideImagery.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = resolve(__dirname, "..", "dist");
@@ -249,9 +250,13 @@ for (const slug of Object.keys(GUIDE_CONTENT)) {
     path: `/guide/${slug}`,
     title,
     description: body.meta_description,
-    // Hero cover (chosen from existing clean site creative) doubles as the
-    // social-card image; replaces the generic favicon default.
-    ogImage: body.hero_image ? `${BASE_URL}${body.hero_image}` : undefined,
+    // Hero cover (seeded by slug, chosen from existing clean site creative)
+    // doubles as the social-card image; replaces the generic favicon default.
+    // Computed here so it matches GuidePage's render-time selection exactly.
+    ogImage: (() => {
+      const h = selectGuideHero(body.related_sites ?? [], slug);
+      return h ? `${BASE_URL}${h.hero_image}` : undefined;
+    })(),
   });
 }
 

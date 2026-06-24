@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import SmartImage from "./common/SmartImage";
 import { GUIDE_CONTENT } from "../data/guide-content";
+import { selectGuideHero } from "../lib/guideImagery";
 
 /**
  * "Related guides" block. Surfaces guide articles as human-navigable
@@ -36,6 +37,7 @@ const RelatedGuides = ({
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {pool.map((slug) => {
           const g = GUIDE_CONTENT[slug];
+          const hero = selectGuideHero(g.related_sites ?? [], slug);
           return (
             <Link
               key={slug}
@@ -43,8 +45,8 @@ const RelatedGuides = ({
               className="group block rounded-lg border border-border/40 overflow-hidden hover:border-secondary/60 transition-colors"
             >
               <SmartImage
-                src={g.hero_image}
-                alt={g.hero_alt || g.h1}
+                src={hero?.hero_image ?? g.hero_image}
+                alt={hero?.hero_alt || g.hero_alt || g.h1}
                 aspectRatio="16:10"
                 fallbackLabel={g.h1}
                 className="w-full"

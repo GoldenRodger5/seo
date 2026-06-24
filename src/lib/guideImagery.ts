@@ -47,21 +47,35 @@ function coverFor(slug: string): GuideHero | null {
   return null;
 }
 
+/** Deterministic 32-bit hash of a string (FNV-ish). Used to seed hero choice
+ *  so it's stable per slug across SSR + client but varied across articles. */
+function hashSeed(seed: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
 /**
- * Pick a hero for a guide from its related sites, falling back to topical
+ * Pick a hero for an article from its related sites, falling back to topical
  * defaults. Returns null only if nothing in the catalog has a cover (caller
  * then uses the favicon as a last resort).
+ *
+ * When `seed` is provided (the article slug), the hero is chosen
+ * deterministically from ALL covered related sites — so different articles get
+ * different heroes instead of every one collapsing onto the first covered
+ * slug. Without a seed it returns the first covered cover (back-compat).
  */
-export function selectGuideHero(relatedSlugs: string[] = []): GuideHero | null {
-  for (const slug of relatedSlugs) {
-    const hit = coverFor(slug);
-    if (hit) return hit;
-  }
-  for (const slug of DEFAULT_HERO_FALLBACK_SLUGS) {
-    const hit = coverFor(slug);
-    if (hit) return hit;
-  }
-  return null;
+export function selectGuideHero(relatedSlugs: string[] = [], seed?: string): GuideHero | null {
+  const coveredRelated = relatedSlugs.map(coverFor).filter((h): h is GuideHero => h !== null);
+  const pool = coveredRelated.length
+    ? coveredRelated
+    : DEFAULT_HERO_FALLBACK_SLUGS.map(coverFor).filter((h): h is GuideHero => h !== null);
+  if (pool.length === 0) return null;
+  if (!seed) return pool[0];
+  return pool[hashSeed(seed) % pool.length];
 }
 
 /** Build the absolute og:image URL for a guide hero (or favicon fallback). */

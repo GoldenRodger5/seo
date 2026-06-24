@@ -1040,7 +1040,10 @@ function persistSupportingContent(entry: SupportingQueueEntry, generated: Record
   // link it to the depicted site, set og:image, and show "Sites mentioned".
   if (entry.content_type === "guide") {
     generated.related_sites = entry.related_sites;
-    const hero = selectGuideHero(entry.related_sites);
+    // Seed by the guide slug so each guide gets a DIFFERENT hero from its
+    // covered related sites (instead of every guide collapsing onto the first
+    // covered slug). Deterministic → stable across rebuilds.
+    const hero = selectGuideHero(entry.related_sites, writeKey);
     if (hero) {
       generated.hero_image = hero.hero_image;
       generated.hero_alt = hero.hero_alt;
