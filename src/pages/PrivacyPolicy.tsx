@@ -5,7 +5,7 @@ import AnimateOnScroll from "../components/AnimateOnScroll";
 const PrivacyPolicy = () => (
   <Layout>
     <Helmet>
-      <title>Privacy Policy — TwinkVault</title>
+      <title>Privacy Policy &amp; Data Practices — TwinkVault</title>
       <meta name="description" content="TwinkVault privacy policy. Learn how we collect, use, and protect your data." />
       <link rel="canonical" href="https://twinkvault.com/privacy-policy" />
     </Helmet>

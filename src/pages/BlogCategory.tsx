@@ -66,6 +66,16 @@ const BlogCategoryPage = () => {
             </nav>
             <h1 className="font-heading text-3xl md:text-4xl font-bold heading-gradient inline-block">{meta.label}</h1>
             <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">{meta.description}</p>
+            {posts.length > 0 && (
+              <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
+                We've published <strong>{posts.length}</strong> {meta.label.toLowerCase()} {posts.length === 1 ? "article" : "articles"} so far
+                {posts.length > 0 && <>, including {posts.slice(0, 3).map((p) => p.title).join("; ")}</>}.
+                Every piece is written after paying for and testing the sites involved, and we re-check pricing, trials, and
+                deals monthly so the advice stays current. Browse the full list below, or head back to the{" "}
+                <Link to="/blog" className="text-secondary hover:underline">main blog</Link> or our{" "}
+                <Link to="/guides" className="text-secondary hover:underline">how-to guides</Link>.
+              </p>
+            )}
           </div>
         </section>
 

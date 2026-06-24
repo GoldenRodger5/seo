@@ -7,7 +7,7 @@ const Terms = () => (
   <Layout>
     <PageTransition>
       <Helmet>
-        <title>Terms of Service — TwinkVault</title>
+        <title>Terms of Service &amp; Use Agreement — TwinkVault</title>
         <meta name="description" content="TwinkVault terms of service. Read our terms before using this site." />
         <link rel="canonical" href="https://twinkvault.com/terms" />
       </Helmet>
