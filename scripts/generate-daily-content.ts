@@ -44,6 +44,7 @@ import {
 import { sites, type SiteData } from "../src/data/sites.js";
 import { selectGuideHero } from "../src/lib/guideImagery.js";
 import { countProseLinks } from "../src/lib/proseLinker.js";
+import { canonicalComparePairSlug, isFeaturedComparePair } from "../src/data/featured-compare-pairs.js";
 
 // ---------------------------------------------------------------------------
 // Constants & paths
@@ -57,7 +58,6 @@ const COMPARISON_CONTENT_FILE = resolve(ROOT, "src/data/comparison-content.ts");
 const ALTERNATIVES_CONTENT_FILE = resolve(ROOT, "src/data/alternatives-content.ts");
 const ISWORTHIT_CONTENT_FILE = resolve(ROOT, "src/data/isworthit-content.ts");
 const GUIDE_CONTENT_FILE = resolve(ROOT, "src/data/guide-content.ts");
-const SITEMAP_SCRIPT = resolve(ROOT, "scripts/generate-sitemap.ts");
 
 const BASE_URL = "https://twinkvault.com";
 // Sonnet 4.6 is the current latest at time of writing. Override here if you
@@ -190,15 +190,23 @@ function runAudit(): AuditResult[] {
     });
   }
 
-  // 5. Sitemap drift — slugs in sites.ts not present in generate-sitemap.ts.
-  const sitemapSrc = readFileSync(SITEMAP_SCRIPT, "utf-8");
-  for (const s of sites) {
-    if (!sitemapSrc.includes(`"${s.slug}"`)) {
-      issues.push({
-        category: "sitemap-drift",
-        severity: "critical",
-        detail: `${s.slug} is in sites.ts but missing from generate-sitemap.ts SITE_SLUGS.`,
-      });
+  // 5. Sitemap drift — every site's /reviews/{slug} URL must be in the
+  // generated sitemap.xml. Check the actual OUTPUT, not the script source:
+  // generate-sitemap.ts builds review URLs dynamically from sites.map(...), so
+  // individual slugs never appear as literals in the source (the old check
+  // grepped the source and false-flagged all 64 sites). If sitemap.xml hasn't
+  // been generated yet, skip — the build regenerates it before the audit runs.
+  const sitemapXmlPath = resolve(ROOT, "public/sitemap.xml");
+  if (existsSync(sitemapXmlPath)) {
+    const sitemapXml = readFileSync(sitemapXmlPath, "utf-8");
+    for (const s of sites) {
+      if (!sitemapXml.includes(`/reviews/${s.slug}<`)) {
+        issues.push({
+          category: "sitemap-drift",
+          severity: "critical",
+          detail: `${s.slug} is in sites.ts but its /reviews/${s.slug} URL is missing from sitemap.xml.`,
+        });
+      }
     }
   }
 
@@ -1049,7 +1057,10 @@ function persistSupportingContent(entry: SupportingQueueEntry, generated: Record
   const routePath = (() => {
     switch (entry.content_type) {
       case "comparison":
-        return `/compare/${writeKey}`;
+        // Canonical (alphabetical) so the lastmod keys the same /compare URL
+        // that generate-sitemap.ts emits — otherwise the sitemap lookup misses
+        // and falls back to TODAY, giving Google no real recrawl signal.
+        return `/compare/${canonicalComparePairSlug(writeKey)}`;
       case "alternatives":
         return `/alternatives/${writeKey.replace(/-alternatives$/, "")}`;
       case "isworthit":
@@ -1733,8 +1744,11 @@ async function main() {
     const slug = target.entry.slug;
     switch (contentType) {
       case "comparison":
-        // queue slugs are stored as "compare/{a}-vs-{b}" — strip the prefix
-        return `${BASE_URL}/compare/${slug.replace(/^compare\//, "")}`;
+        // Queue slugs are "compare/{a}-vs-{b}" in queue order, which may not be
+        // alphabetical. Canonicalize to the alphabetical form — that's the URL
+        // that's actually prerendered + in the sitemap + self-canonical, so it's
+        // the one crawlers should be pointed at (not the SPA-shell duplicate).
+        return `${BASE_URL}/compare/${canonicalComparePairSlug(slug.replace(/^compare\//, ""))}`;
       case "alternatives":
         // queue slugs are "{site}-alternatives". Three legacy hand-routed
         // pages live at the bare path; everything else uses the generic
@@ -1754,8 +1768,18 @@ async function main() {
         return `${BASE_URL}/${slug}`;
     }
   })();
-  log.info(`Submitting to crawlers: ${pageUrl}`);
-  const [googleOk, bingOk] = await Promise.all([pingGoogle(pageUrl), pingBing(pageUrl)]);
+  // Don't ping crawlers for a comparison that renders noindex (non-featured
+  // pairs are deliberately noindex to avoid near-duplicate flagging across the
+  // combinatorial pair space). Telling Google/Bing to crawl a noindex URL is
+  // wasted budget. Featured pairs (and all non-comparison content) still ping.
+  const isNoindexComparison =
+    contentType === "comparison" && !isFeaturedComparePair(target.entry.slug.replace(/^compare\//, ""));
+  if (isNoindexComparison) {
+    log.info(`Skipping crawler ping for non-featured (noindex) comparison: ${pageUrl}`);
+  }
+  const [googleOk, bingOk] = isNoindexComparison
+    ? [false, false]
+    : (log.info(`Submitting to crawlers: ${pageUrl}`), await Promise.all([pingGoogle(pageUrl), pingBing(pageUrl)]));
 
   // ── Supabase log ──────────────────────────────────────────────────────
   await logToSupabase(buildLogRow({ generated, target, contentType, imageUrl, build, commitHash, googleOk, bingOk }));

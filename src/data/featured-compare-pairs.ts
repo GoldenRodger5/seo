@@ -84,8 +84,20 @@ export function getFeaturedComparePairsList(): string[] {
 export function isFeaturedComparePair(slug: string): boolean {
   // Compare slugs come from URL params in canonical order (A-vs-B). Normalize
   // to alphabetical so legacy or hand-typed URLs still resolve correctly.
+  return getFeaturedComparePairs().has(canonicalComparePairSlug(slug));
+}
+
+/**
+ * Canonical form of a compare-pair slug: the two site slugs in alphabetical
+ * order joined by "-vs-". Prerender, sitemap, and featured-pair membership all
+ * use this form, so canonicalizing here keeps every surface in agreement and
+ * prevents the same comparison from existing at two indexable URLs (e.g. the
+ * queue writes "twinks-in-shorts-vs-southern-strokes" while the prerendered/
+ * sitemapped URL is "southern-strokes-vs-twinks-in-shorts"). Returns the slug
+ * unchanged if it isn't a well-formed "A-vs-B" pair.
+ */
+export function canonicalComparePairSlug(slug: string): string {
   const parts = slug.split("-vs-");
-  if (parts.length !== 2) return false;
-  const [a, b] = parts.sort();
-  return getFeaturedComparePairs().has(`${a}-vs-${b}`);
+  if (parts.length !== 2) return slug;
+  return [...parts].sort().join("-vs-");
 }

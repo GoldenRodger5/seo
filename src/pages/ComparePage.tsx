@@ -555,16 +555,24 @@ const ComparePage = () => {
   const runnerUp = winner.id === siteA.id ? siteB : siteA;
   const budgetPick = parseFloat(siteA.price_annual.replace(/[^0-9.]/g, "")) <= parseFloat(siteB.price_annual.replace(/[^0-9.]/g, "")) ? siteA : siteB;
 
+  // Canonical pair slug = the two site slugs alphabetically. The same
+  // comparison can be reached at either order (the daily engine historically
+  // pinged the non-alphabetical queue slug), but only the alphabetical form is
+  // prerendered + in the sitemap — so canonical/og:url always point there to
+  // consolidate link equity and avoid a duplicate-content URL.
+  const canonicalSlug = [siteA.slug, siteB.slug].sort().join("-vs-");
+  const canonicalUrl = `https://twinkvault.com/compare/${canonicalSlug}`;
+
   return (
     <Layout>
       <PageTransition>
         <Helmet>
           <title>{`${siteA.name} vs ${siteB.name} — Which Is Worth It? (${currentYear}) | TwinkVault`}</title>
           <meta name="description" content={`Compare ${siteA.name} vs ${siteB.name} side by side. Scores, pricing, pros and cons to help you decide.`} />
-          <link rel="canonical" href={`https://twinkvault.com/compare/${slug}`} />
+          <link rel="canonical" href={canonicalUrl} />
           <meta property="og:title" content={`${siteA.name} vs ${siteB.name} — TwinkVault`} />
           <meta property="og:description" content={`Compare ${siteA.name} vs ${siteB.name} side by side. Scores, pricing, pros and cons to help you decide.`} />
-          <meta property="og:url" content={`https://twinkvault.com/compare/${slug}`} />
+          <meta property="og:url" content={canonicalUrl} />
           {/* Robots: featured pairs get full indexing; non-featured pairs are
               noindex'd to prevent near-duplicate flagging across the 1,891-
               pair combinatorial space. follow stays on so the internal
