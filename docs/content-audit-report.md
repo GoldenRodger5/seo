@@ -1,4 +1,4 @@
-# Content Audit Report — 2026-06-26
+# Content Audit Report — 2026-06-27
 
 ## Critical findings
 
