@@ -19,6 +19,7 @@
 import { COMPARISON_CONTENT } from "./comparison-content";
 import { ALTERNATIVES_CONTENT } from "./alternatives-content";
 import { ISWORTHIT_CONTENT } from "./isworthit-content";
+import { sites } from "./sites";
 
 export type ReviewQueueStatus = "queued" | "published" | "skipped";
 
@@ -297,13 +298,23 @@ const comparisonPairs: [string, string][] = [
 const comparePublished = (a: string, b: string): boolean =>
   Boolean(COMPARISON_CONTENT[`${a}-vs-${b}`] ?? COMPARISON_CONTENT[`${b}-vs-${a}`]);
 
+// Compare creation is deliberately LOW priority. The site's #1 quality
+// problem is a flood of templated comparisons outranking real money pages in
+// the pick order — new compares only justify a publish slot when both sites
+// are genuinely searched (proxy: both in the catalog's top-20 by score), and
+// even then they rank below every money-page review. Non-top-20 pairings sit
+// at priority 1: effectively off unless real GSC demand lifts them.
+const TOP20_BY_SCORE = new Set(
+  [...sites].sort((x, y) => y.overall_score - x.overall_score).slice(0, 20).map((s) => s.slug),
+);
+
 const comparisonEntries: SupportingQueueEntry[] = comparisonPairs.map(([a, b]) => ({
   title: `${SITE_NAME[a] || a} vs ${SITE_NAME[b] || b}`,
   slug: `compare/${a}-vs-${b}`,
   content_type: "comparison",
   target_keyword: `${SITE_NAME[a] || a} vs ${SITE_NAME[b] || b}`.toLowerCase(),
   related_sites: [a, b],
-  priority: 7,
+  priority: TOP20_BY_SCORE.has(a) && TOP20_BY_SCORE.has(b) ? 4 : 1,
   status: comparePublished(a, b) ? "published" : "queued",
 }));
 

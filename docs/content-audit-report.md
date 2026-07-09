@@ -30,9 +30,9 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Page type | Count | Median body words (prerendered) | Min | Max | Verdict |
 | --- | ---: | ---: | ---: | ---: | --- |
-| compare | 190 | 739 | 656 | 1960 | HEALTHY |
+| compare | 190 | 743 | 659 | 1967 | HEALTHY |
 | discount | 64 | 835 | 774 | 889 | HEALTHY |
-| review | 64 | 1080 | 730 | 1332 | HEALTHY |
+| review | 64 | 1080 | 730 | 1334 | HEALTHY |
 | landing | 29 | 943 | 228 | 4244 | HEALTHY |
 | niche | 21 | 765 | 488 | 2691 | HEALTHY |
 | other | 16 | 904 | 382 | 2023 | HEALTHY |
@@ -64,7 +64,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 - **Page count:** 64
 - **AI content rendering:** `AI_CONTENT_CLIENT_ONLY`. Static reviewBodies map exists with ~275 median words per site, but the prose only mounts into the DOM after `useAIReview` runs client-side.
-- **Prerendered body word counts:** every review page is in the 730–1332 word range (NoScript + page chrome only).
+- **Prerendered body word counts:** every review page is in the 730–1334 word range (NoScript + page chrome only).
 
 ## Worst-offender routes (smallest prerendered body)
 
@@ -98,10 +98,10 @@ Sorted ascending by body word count. Top 30:
 | /best-daddy-twink-sites | landing | 640 | 67.8 |  |
 | /gay-dating-sites | utility | 645 | 27.2 |  |
 | / | homepage | 651 | 85.1 |  |
-| /compare/bigstr-vs-dirtyboyvideo | compare | 656 | 54.6 |  |
-| /compare/bigstr-vs-rawhole | compare | 661 | 54.6 |  |
-| /compare/bigstr-vs-twinktrade | compare | 664 | 54.8 |  |
-| /compare/alternadudes-vs-bigstr | compare | 665 | 55.0 |  |
+| /compare/bigstr-vs-dirtyboyvideo | compare | 659 | 55.5 |  |
+| /compare/bigstr-vs-rawhole | compare | 664 | 55.4 |  |
+| /compare/bigstr-vs-twinktrade | compare | 667 | 55.7 |  |
+| /compare/alternadudes-vs-bigstr | compare | 668 | 55.9 |  |
 
 ## Auto-generation pipeline assessment
 

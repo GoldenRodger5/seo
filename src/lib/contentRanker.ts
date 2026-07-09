@@ -138,6 +138,12 @@ function findMatchingQueries(
   return matches.sort((a, b) => b.opportunity - a.opportunity);
 }
 
+// Generic tokens shared by nearly every keyword on the site. Counting them
+// toward overlap made thematically-related pages look like duplicates — the
+// bestof hubs scored effective −1 (below marginal compares) purely for
+// containing "gay porn sites", which suppressed the highest-value queue items.
+const CANNIBALIZATION_STOPWORDS = new Set(["gay", "porn", "site", "sites", "best", "top"]);
+
 function cannibalizationFor(
   candidateKeywords: string[],
   routesByKeyword: Map<string, string[]>,
@@ -146,13 +152,14 @@ function cannibalizationFor(
   for (const kw of candidateKeywords) {
     const lkw = kw.toLowerCase();
     for (const [routeKw] of routesByKeyword) {
-      // Compute token overlap. If ≥ 60% of the candidate's tokens
-      // appear in an existing route's keyword, count as a hit.
-      const cTokens = lkw.split(/\s+/).filter((t) => t.length >= 3);
-      const rTokens = new Set(routeKw.split(/\s+/).filter((t) => t.length >= 3));
+      // Token overlap over MEANINGFUL tokens only, and a near-duplicate
+      // threshold (≥90%). The penalty exists to stop true keyword
+      // duplication, not thematic overlap.
+      const cTokens = lkw.split(/\s+/).filter((t) => t.length >= 3 && !CANNIBALIZATION_STOPWORDS.has(t));
+      const rTokens = new Set(routeKw.split(/\s+/).filter((t) => t.length >= 3 && !CANNIBALIZATION_STOPWORDS.has(t)));
       if (cTokens.length === 0) continue;
       const overlap = cTokens.filter((t) => rTokens.has(t)).length / cTokens.length;
-      if (overlap >= 0.6) {
+      if (overlap >= 0.9) {
         penalty += CANNIBALIZATION_PENALTY;
         break; // one penalty per candidate, not per match
       }
@@ -179,8 +186,15 @@ export function rankReview(
 
   const cannibalization = cannibalizationFor([entry.name, entry.slug.replace(/-/g, " ")], index.routesByKeyword);
   const duplication = index.existingSlugs.has(entry.slug) ? DUPLICATION_PENALTY : 0;
+  // The no-affiliate penalty targets purely speculative coverage. It is
+  // WAIVED when a deal is in motion — a named affiliate network, or the
+  // owner's priority-9+ "monetizable-soon" convention — because those are
+  // money pages whose editorial version should exist BEFORE the deal closes.
+  // Without the waiver, marginal compares (7) outranked Bromo (10−5=5) and
+  // the 32 money reviews starved while the engine manufactured templates.
+  const dealInMotion = entry.affiliate_network !== null || entry.priority >= 9;
   const noAffiliate =
-    entry.editorial_mode === "research-only" || entry.affiliate_url === null
+    (entry.editorial_mode === "research-only" || entry.affiliate_url === null) && !dealInMotion
       ? NO_AFFILIATE_PENALTY
       : 0;
 

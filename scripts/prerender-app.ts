@@ -183,10 +183,14 @@ for (const slug of SITE_SLUGS) {
   // "Is It Worth It?" moved into the meta description hook.
   const baseTitle = `${name} Review ${YEAR} — TwinkVault`;
   const title = baseTitle.length <= 60 ? baseTitle : `${name} Review | TwinkVault`;
+  // Social card from the site's own clean cover when we have one — the money
+  // pages shipped the generic favicon as og:image before this.
+  const reviewHero = selectGuideHero([slug]);
   routes.push({
     path: `/reviews/${slug}`,
     title,
     description: `Is ${name} worth the membership? Honest ${YEAR} review — real scores on content, value, updates, mobile, plus pricing and pros/cons.`,
+    ogImage: reviewHero && reviewHero.hero_site_slug === slug ? `${BASE_URL}${reviewHero.hero_image}` : undefined,
   });
 }
 for (const site of sites) {
@@ -269,12 +273,16 @@ for (const pairSlug of getFeaturedComparePairsList()) {
   const [a, b] = pairSlug.split("-vs-");
   const aName = SITE_NAMES[a] ?? a;
   const bName = SITE_NAMES[b] ?? b;
+  // Social-card image from the compared sites' clean covers (seeded by pair
+  // slug — matches ComparePage's render-time pick). Replaces the favicon.
+  const pairHero = selectGuideHero([a, b], pairSlug);
   // Tighter title — "Which Is Worth It?" hook moved to meta description
   // to keep titles under 60 chars in SERPs.
   routes.push({
     path: `/compare/${pairSlug}`,
     title: `${aName} vs ${bName} (${YEAR}) | TwinkVault`,
     description: `${aName} vs ${bName} compared side by side — scores, pricing, pros/cons, and the verdict on which is the better gay porn site subscription in ${YEAR}.`,
+    ogImage: pairHero ? `${BASE_URL}${pairHero.hero_image}` : undefined,
   });
 }
 

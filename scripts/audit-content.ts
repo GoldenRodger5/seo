@@ -329,22 +329,24 @@ async function auditRoute(absPath: string): Promise<RouteAudit> {
   const floor = WORD_COUNT_FLOOR[pageType];
   if (floor && bodyWordCount >= 100 && bodyWordCount < floor) flags.push("WORD_COUNT_LOW");
 
-  // NO_IMAGES: a guide/article page with no in-body content image (hero or
+  // NO_IMAGES: an article-type page with no in-body content image (hero or
   // otherwise). Chrome SVGs/logos don't count — we look for the content
-  // image directories specifically.
+  // image directories specifically. Compares carry the same bar as guides:
+  // they were exempt while flooding 46% of the sitemap with favicon cards.
+  const IMAGE_CHECKED_TYPES = new Set(["guide", "blog", "compare"]);
   const hasContentImage = /<img[^>]+src="[^"]*\/(site-banners|niche-covers|blog)\//i.test(html);
-  if ((pageType === "guide" || pageType === "blog") && !hasContentImage) flags.push("NO_IMAGES");
+  if (IMAGE_CHECKED_TYPES.has(pageType) && !hasContentImage) flags.push("NO_IMAGES");
 
   // LOW_INTERNAL_LINKS: fewer than 3 contextual internal links in the article
-  // body (excludes nav/footer). Only meaningful for prose article types.
-  if (pageType === "guide" || pageType === "blog") {
+  // body (excludes nav/footer). Meaningful for prose article types.
+  if (IMAGE_CHECKED_TYPES.has(pageType)) {
     const bodyLinks = countBodyInternalLinks(html);
     if (bodyLinks !== null && bodyLinks < 3) flags.push("LOW_INTERNAL_LINKS");
   }
 
   // MISSING_OG_IMAGE: og:image still points at the generic favicon.
   const ogImage = extractMeta(html, "og:image");
-  if ((pageType === "guide" || pageType === "blog") && (/pwa-\d+\.png(\?|$)/i.test(ogImage) || ogImage === "")) {
+  if (IMAGE_CHECKED_TYPES.has(pageType) && (/pwa-\d+\.png(\?|$)/i.test(ogImage) || ogImage === "")) {
     flags.push("MISSING_OG_IMAGE");
   }
 

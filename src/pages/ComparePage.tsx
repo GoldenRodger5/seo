@@ -7,6 +7,9 @@ import { useState, useMemo } from "react";
 import Layout from "../components/Layout";
 import ScoreRing from "../components/ScoreRing";
 import CompareDataBlock from "../components/CompareDataBlock";
+import SmartImage from "../components/common/SmartImage";
+import LinkedProse from "../components/LinkedProse";
+import { selectGuideHero } from "../lib/guideImagery";
 import StarRating from "../components/StarRating";
 import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
 import { getComparisonBody, alignComparisonBody } from "../data/comparison-content";
@@ -567,6 +570,11 @@ const ComparePage = () => {
   const canonicalSlug = [siteA.slug, siteB.slug].sort().join("-vs-");
   const canonicalUrl = `https://twinkvault.com/compare/${canonicalSlug}`;
 
+  // Hero from the compared sites' clean covers (seeded by pair slug, same
+  // system as guides/blog). Render-time so every pair — templated or
+  // AI-bodied — gets a real visible hero + og:image instead of the favicon.
+  const hero = selectGuideHero([siteA.slug, siteB.slug], canonicalSlug);
+
   return (
     <Layout>
       <PageTransition>
@@ -576,6 +584,7 @@ const ComparePage = () => {
           <link rel="canonical" href={canonicalUrl} />
           <meta property="og:title" content={`${siteA.name} vs ${siteB.name} — TwinkVault`} />
           <meta property="og:description" content={`Compare ${siteA.name} vs ${siteB.name} side by side. Scores, pricing, pros and cons to help you decide.`} />
+          {hero && <meta property="og:image" content={`https://twinkvault.com${hero.hero_image}`} />}
           <meta property="og:url" content={canonicalUrl} />
           {/* Robots: featured pairs get full indexing; non-featured pairs are
               noindex'd to prevent near-duplicate flagging across the 1,891-
@@ -738,23 +747,41 @@ const ComparePage = () => {
               Two sites scored on the same four pillars. Here's how they stack up.
             </p>
 
+            {hero && (
+              <figure className="mt-6">
+                <Link to={`/reviews/${hero.hero_site_slug}`} aria-label={`Read our ${hero.hero_alt || "site"} review`}>
+                  <SmartImage
+                    src={hero.hero_image}
+                    alt={hero.hero_alt || `${siteA.name} vs ${siteB.name}`}
+                    aspectRatio="16:10"
+                    priority
+                    fallbackLabel={`${siteA.name} vs ${siteB.name}`}
+                    className="w-full rounded-xl overflow-hidden"
+                  />
+                </Link>
+              </figure>
+            )}
+
             {/* AI-generated body (head-to-head deep dive) — renders above the
                 deterministic template when comparison-content.ts has an entry
                 for this slug. Falls through to the template below otherwise. */}
             {(() => {
               const ai = aiBody; // already aligned to the URL's siteA
               if (!ai) return null;
+              // First mention of each site/niche in the prose auto-links to
+              // its review/niche page (shared dedup set across the article).
+              const linkedSet = new Set<string>();
               return (
                 <article className="mt-8 space-y-6 text-sm text-foreground/90 leading-relaxed">
-                  <p className="text-base">{ai.intro}</p>
+                  <p className="text-base"><LinkedProse text={ai.intro} linked={linkedSet} /></p>
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="glass-card rounded-lg p-5">
                       <h3 className="font-heading text-base font-bold">{siteA.name} — Strengths</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">{ai.site_a_summary}</p>
+                      <p className="mt-2 text-sm text-muted-foreground"><LinkedProse text={ai.site_a_summary} linked={linkedSet} /></p>
                     </div>
                     <div className="glass-card rounded-lg p-5">
                       <h3 className="font-heading text-base font-bold">{siteB.name} — Strengths</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">{ai.site_b_summary}</p>
+                      <p className="mt-2 text-sm text-muted-foreground"><LinkedProse text={ai.site_b_summary} linked={linkedSet} /></p>
                     </div>
                   </div>
                   <div className="space-y-3">
@@ -773,7 +800,7 @@ const ComparePage = () => {
                   </div>
                   <div className="glass-card rounded-lg p-6 border-l-4 border-l-secondary">
                     <h3 className="font-heading text-lg font-bold">Verdict</h3>
-                    <p className="mt-2 text-sm text-foreground/90">{ai.verdict}</p>
+                    <p className="mt-2 text-sm text-foreground/90"><LinkedProse text={ai.verdict} linked={linkedSet} /></p>
                     <div className="mt-4 grid gap-3 md:grid-cols-2 text-xs">
                       <p><strong className="text-foreground">Choose {siteA.name} if:</strong> {ai.who_should_choose_a}</p>
                       <p><strong className="text-foreground">Choose {siteB.name} if:</strong> {ai.who_should_choose_b}</p>

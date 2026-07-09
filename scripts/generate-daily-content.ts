@@ -58,6 +58,27 @@ const COMPARISON_CONTENT_FILE = resolve(ROOT, "src/data/comparison-content.ts");
 const ALTERNATIVES_CONTENT_FILE = resolve(ROOT, "src/data/alternatives-content.ts");
 const ISWORTHIT_CONTENT_FILE = resolve(ROOT, "src/data/isworthit-content.ts");
 const GUIDE_CONTENT_FILE = resolve(ROOT, "src/data/guide-content.ts");
+const IMPROVEMENT_LOG_FILE = resolve(ROOT, "docs/improvement-log.json");
+const CONTENT_AUDIT_FILE = resolve(ROOT, "docs/content-audit.json");
+
+/** Every file a run may mutate — snapshot before persist, restore on any
+ *  rollback (build failure or --inspect). Includes the tracked files
+ *  runBuild() regenerates AND the improve-mode ledger. */
+const ENGINE_SNAPSHOT_FILES = () => [
+  QUEUE_FILE,
+  REVIEWS_FILE,
+  SITES_FILE,
+  COMPARISON_CONTENT_FILE,
+  ALTERNATIVES_CONTENT_FILE,
+  ISWORTHIT_CONTENT_FILE,
+  GUIDE_CONTENT_FILE,
+  IMPROVEMENT_LOG_FILE,
+  resolve(ROOT, "docs/content-lastmod.json"),
+  resolve(ROOT, "public/sitemap.xml"),
+  resolve(ROOT, "public/blog-sitemap.xml"),
+  resolve(ROOT, "docs/content-audit-report.md"),
+  resolve(ROOT, "docs/content-audit.json"),
+];
 
 const BASE_URL = "https://twinkvault.com";
 // Sonnet 4.6 is the current latest at time of writing. Override here if you
@@ -322,8 +343,35 @@ interface GenerateOptions {
 }
 
 async function generate({ contentType, payload }: GenerateOptions) {
+  return callClaude(buildUserPrompt(contentType, payload));
+}
+
+/**
+ * Improve-mode generation: same type-specific prompt as a create, plus the
+ * EXISTING content and an explicit expand-substantively instruction. The
+ * model returns the full improved JSON in the same schema, so gates and
+ * persistence are identical to the create path.
+ */
+async function generateImprove(
+  contentType: ContentTypeKey,
+  payload: Record<string, unknown>,
+  existing: unknown,
+  targetWords: number,
+): Promise<Record<string, unknown>> {
+  const prompt =
+    rawUserPrompt(contentType, payload) +
+    `\n\nIMPROVEMENT MODE: A version of this exact page already exists but is too thin to rank. ` +
+    `Rewrite it SUBSTANTIVELY BETTER: keep everything that is accurate, deepen it with concrete ` +
+    `specifics (real features, numbers, scene/site specifics, honest trade-offs), and target at ` +
+    `least ${targetWords} words of body prose — materially longer than the existing version. ` +
+    `Do not pad with filler; add information. Return the FULL improved JSON in the same schema.` +
+    `\n\nEXISTING CONTENT (JSON):\n${JSON.stringify(existing)}` +
+    JSON_ONLY_REMINDER;
+  return callClaude(prompt);
+}
+
+async function callClaude(userPrompt: string) {
   const anthropic = getAnthropic();
-  const userPrompt = buildUserPrompt(contentType, payload);
 
   const tools = [{ type: "web_search_20250305" as const, name: "web_search" }];
   const messages: { role: "user" | "assistant"; content: unknown }[] = [
@@ -467,7 +515,7 @@ tagline (one sentence under 15 words)
 best_for (one sentence describing ideal subscriber)
 faq (5 entries, each {q, a} — q is something people Google about this site, a is 100-150 words)
 meta_description (HARD CONSTRAINT — must be between 145 and 155 characters INCLUSIVE. Anything under 145 or over 155 fails downstream validation and the entire response will be rejected. Count characters in your draft, then expand with a buying-intent hook or Google-friendly phrase if too short. Must include the site name. Examples of valid lengths: 145, 148, 152, 155. Examples that will fail: 132, 140, 156, 170.)
-h1 (primary H1 with main keyword)
+h1 (primary H1 with main keyword — HARD LIMIT 52 characters INCLUDING spaces, count before returning; use the terse form "{Site} Review 2026: {2-4 word hook}", e.g. "Bromo Review 2026: Raw Studio Power" at 35 chars. NEVER a full sentence)
 h2_sections (array of 5 H2 strings)
 comparison_sites (3 existing slugs from the list above, most relevant)
 internal_links (3 existing slugs)
@@ -518,7 +566,7 @@ tagline (one sentence under 15 words)
 best_for (one sentence describing the ideal reader, NOT framed as a purchase recommendation)
 faq (5 entries, each {q, a} — focus on what readers actually search: what is this site, who runs it, what content does it have, is it active, how does it compare publicly to X)
 meta_description (145-155 chars — include site name, end with editorial framing not a deal hook)
-h1 (primary H1 with main keyword + "Review")
+h1 (primary H1 with main keyword + "Review" — HARD LIMIT 52 characters INCLUDING spaces, count before returning; terse form "{Site} Review 2026: {2-4 word hook}". NEVER a full sentence)
 h2_sections (array of 5 H2 strings)
 comparison_sites (3 existing slugs we have reviewed, most relevant)
 internal_links (3 existing slugs)
@@ -644,6 +692,29 @@ function qualityGate(content: Record<string, unknown>, contentType: ContentTypeK
     if (!faq || faq.length < 3) errors.push("guide faq has < 3 entries");
   }
 
+  // Comparisons previously passed on meta+h1 length ALONE while flooding 46%
+  // of the sitemap — the inverse of the quality bar guides face. Parity now:
+  // real word floor, minimum category depth, minimum FAQ. (Hero availability
+  // is enforced separately in tryGenerateItem — it needs the queue entry.)
+  if (contentType === "comparison") {
+    const cats = Array.isArray(content.comparison_categories)
+      ? (content.comparison_categories as { site_a_detail?: string; site_b_detail?: string }[])
+      : [];
+    const wc = wordCount(
+      [
+        content.intro, content.site_a_summary, content.site_b_summary,
+        ...cats.flatMap((c) => [c?.site_a_detail ?? "", c?.site_b_detail ?? ""]),
+        content.verdict, content.who_should_choose_a, content.who_should_choose_b,
+      ]
+        .filter((x): x is string => typeof x === "string")
+        .join(" "),
+    );
+    if (wc < 700) errors.push(`comparison word count ${wc} < 700`);
+    if (cats.length < 3) errors.push(`comparison has ${cats.length} category rows < 3`);
+    const faq = content.faq as unknown[] | undefined;
+    if (!faq || faq.length < 2) errors.push("comparison faq has < 2 entries");
+  }
+
   return { ok: errors.length === 0, errors };
 }
 
@@ -704,6 +775,21 @@ function logQualityLine(
     const sections = Array.isArray(generated.sections) ? (generated.sections as { content?: string }[]) : [];
     const chunks = [generated.intro, ...sections.map((s) => s?.content ?? ""), generated.conclusion]
       .filter((x): x is string => typeof x === "string");
+    ilinks = countProseLinks(chunks);
+  } else if (contentType === "comparison") {
+    const related = target.kind === "supporting" ? (target.entry.related_sites ?? []) : [];
+    const pairKey = canonicalComparePairSlug(slug.replace(/^compare\//, ""));
+    const hero = selectGuideHero(related, pairKey);
+    images = hero ? 1 : 0;
+    ogimg = hero ? "hero" : "favicon";
+    const cats = Array.isArray(generated.comparison_categories)
+      ? (generated.comparison_categories as { site_a_detail?: string; site_b_detail?: string }[])
+      : [];
+    const chunks = [
+      generated.intro, generated.site_a_summary, generated.site_b_summary,
+      ...cats.flatMap((c) => [c?.site_a_detail ?? "", c?.site_b_detail ?? ""]),
+      generated.verdict,
+    ].filter((x): x is string => typeof x === "string");
     ilinks = countProseLinks(chunks);
   } else if (contentType === "review") {
     ogimg = "fetched"; // og image fetched from the site at persist time
@@ -872,7 +958,7 @@ function appendSiteEntry(entry: ReviewQueueEntry, generated: Record<string, unkn
   void imageUrl; // image_url is currently not part of SiteData interface; kept for future migration.
 }
 
-function appendReviewBody(slug: string, generated: Record<string, unknown>) {
+function appendReviewBody(slug: string, generated: Record<string, unknown>, opts: { overwrite?: boolean } = {}) {
   const src = readFileSync(REVIEWS_FILE, "utf-8");
   const body = [
     generated.review_body_p1,
@@ -881,6 +967,23 @@ function appendReviewBody(slug: string, generated: Record<string, unknown>) {
     generated.review_body_p4,
   ].join("\n\n");
   const block = `\n  ${JSON.stringify(slug)}:\n    ${JSON.stringify(body)},\n`;
+
+  // Improve mode: replace the existing body entry (a single JSON string
+  // value) in place. Matches `"slug":\n    "…",` as written by this function.
+  const existingRe = new RegExp(
+    `\\n  ${JSON.stringify(slug).replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}:\\n    "(?:[^"\\\\]|\\\\.)*",?\\n`,
+  );
+  if (existingRe.test(src)) {
+    if (!opts.overwrite) {
+      log.info(`review body for ${slug} already exists, skipping`);
+      return;
+    }
+    const updated = src.replace(existingRe, () => block);
+    writeFileSync(REVIEWS_FILE, updated, "utf-8");
+    log.info(`OVERWROTE review body for ${slug}`);
+    return;
+  }
+
   const updated = src.replace(/(\n};\n)/, `${block}};\n`);
   if (updated === src) throw new Error("Failed to splice review body");
   writeFileSync(REVIEWS_FILE, updated, "utf-8");
@@ -902,14 +1005,43 @@ function appendReviewBody(slug: string, generated: Record<string, unknown>) {
  * Used to persist generated body content for comparison / alternatives /
  * isworthit / guide content types into their respective data files.
  */
-function upsertContentEntry(file: string, key: string, body: unknown): void {
+function upsertContentEntry(file: string, key: string, body: unknown, opts: { overwrite?: boolean } = {}): void {
   const src = readFileSync(file, "utf-8");
   const literal = `  ${JSON.stringify(key)}: ${JSON.stringify(body, null, 2).replace(/\n/g, "\n  ")},\n`;
 
-  // Detect existing key — skip rather than overwrite to avoid clobbering
-  // hand-edited content. Re-runs on the same key are a no-op.
-  if (new RegExp(`^\\s*${JSON.stringify(key).replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}\\s*:`, "m").test(src)) {
-    log.info(`upsert: ${key} already in ${file.split("/").pop()}, skipping`);
+  // Detect existing key. Default: skip rather than overwrite to avoid
+  // clobbering hand-edited content — re-runs on the same key are a no-op.
+  // Improve mode passes overwrite:true to REPLACE the existing entry (the
+  // whole point is regenerating a thin body with a materially better one).
+  const keyRe = new RegExp(`^\\s*${JSON.stringify(key).replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}\\s*:`, "m");
+  if (keyRe.test(src)) {
+    if (!opts.overwrite) {
+      log.info(`upsert: ${key} already in ${file.split("/").pop()}, skipping`);
+      return;
+    }
+    // Replace the existing entry: from the key, brace-match the value object
+    // to its balanced close (string/escape aware — entries are JSON.stringify
+    // output), consume the trailing comma/newline, splice the new literal.
+    const keyIdx = src.search(keyRe);
+    const braceStart = src.indexOf("{", keyIdx);
+    if (braceStart === -1) { log.warn(`upsert: no value object for ${key}`); return; }
+    let depth = 0, i = braceStart, inStr = false, esc = false;
+    for (; i < src.length; i++) {
+      const ch = src[i];
+      if (esc) { esc = false; continue; }
+      if (ch === "\\") { esc = true; continue; }
+      if (ch === '"') { inStr = !inStr; continue; }
+      if (inStr) continue;
+      if (ch === "{") depth++;
+      else if (ch === "}") { depth--; if (depth === 0) { i++; break; } }
+    }
+    let end = i;
+    if (src[end] === ",") end++;
+    if (src[end] === "\n") end++;
+    const entryStart = src.lastIndexOf("\n", keyIdx) + 1;
+    const updatedSrc = src.slice(0, entryStart) + literal + src.slice(end);
+    writeFileSync(file, updatedSrc, "utf-8");
+    log.info(`upsert: OVERWROTE ${key} in ${file.split("/").pop()}`);
     return;
   }
 
@@ -1333,9 +1465,36 @@ async function logToSupabase(row: Record<string, unknown>) {
 // ---------------------------------------------------------------------------
 // Resolution: which item to generate today?
 // ---------------------------------------------------------------------------
+/**
+ * Load demand queries once per run (mirror → direct GSC → none). Exposed so
+ * both the create picker and the improve-task builder price value in the
+ * same currency.
+ */
+async function loadDemandQueries(): Promise<{ queries: import("../src/lib/contentRanker.js").GscQueryAggregate[]; source: string }> {
+  const { fetchGscQueriesNode, fetchGscQueriesDirect } = await import("./lib/gsc-node-client.js");
+  const { aggregateGscQueries } = await import("../src/lib/contentRanker.js");
+  let rawGsc = await fetchGscQueriesNode(28);
+  let demandSource = "supabase-mirror";
+  if (rawGsc.length === 0) {
+    rawGsc = await fetchGscQueriesDirect(28);
+    demandSource = rawGsc.length > 0 ? "direct-gsc-api" : "none";
+  }
+  return { queries: aggregateGscQueries(rawGsc), source: demandSource };
+}
+
+/**
+ * Value floor for CREATING a new page. A candidate below this (and without
+ * real search demand) isn't worth a publish slot — the run's slot goes to
+ * improving an existing weak page instead. Explicit --site/--type/--force
+ * overrides bypass the floor (human intent).
+ */
+const CREATE_FLOOR = 6;
+const CREATE_DEMAND_OVERRIDE = 3; // demandBonus ≥ this ⇒ real searches exist
+
 async function resolveTarget(
   flags: Flags,
   exclude: Set<string> = new Set(),
+  demand?: { queries: import("../src/lib/contentRanker.js").GscQueryAggregate[]; source: string },
 ): Promise<{ kind: "review"; entry: ReviewQueueEntry } | { kind: "supporting"; entry: SupportingQueueEntry } | null> {
   // --site override (unchanged: explicit slug always wins). Never falls
   // through to another item — you asked for this exact one.
@@ -1372,22 +1531,9 @@ async function resolveTarget(
   // Fetch live GSC query data + build the cannibalization/duplication
   // index, then pick the highest-effective-priority candidate across
   // both queues. Falls back to static priority if Supabase is unreachable.
-  const { fetchGscQueriesNode, fetchGscQueriesDirect } = await import("./lib/gsc-node-client.js");
-  const { aggregateGscQueries, buildIndex, rankAllCandidates } = await import(
-    "../src/lib/contentRanker.js"
-  );
-  // Demand source order: Supabase mirror first (cheap), then DIRECT Search
-  // Console API (the mirror has two silent failure points — the gsc-sync
-  // cron and admin-only RLS vs the workflow's anon key — that starved the
-  // ranker of demand data for its entire life).
-  let rawGsc = await fetchGscQueriesNode(28);
-  let demandSource = "supabase-mirror";
-  if (rawGsc.length === 0) {
-    rawGsc = await fetchGscQueriesDirect(28);
-    demandSource = rawGsc.length > 0 ? "direct-gsc-api" : "none";
-  }
-  const gscQueries = aggregateGscQueries(rawGsc);
-  log.info(`Ranker: loaded ${gscQueries.length} aggregated GSC queries (source: ${demandSource}${rawGsc.length === 0 ? " — falling back to static priority" : ""})`);
+  const { buildIndex, rankAllCandidates } = await import("../src/lib/contentRanker.js");
+  const { queries: gscQueries, source: demandSource } = demand ?? (await loadDemandQueries());
+  log.info(`Ranker: loaded ${gscQueries.length} aggregated GSC queries (source: ${demandSource}${gscQueries.length === 0 ? " — falling back to static priority" : ""})`);
 
   // Build the existing-content index from sites.ts + already-published
   // queue entries (so we never re-rank a published item to the top).
@@ -1448,6 +1594,18 @@ async function resolveTarget(
     );
   }
 
+  // CREATE value floor: manufacturing a marginal page to fill the day is the
+  // exact failure mode this engine used to have. If the best candidate is
+  // below the floor and has no real search demand, decline — the caller
+  // routes the slot to improve-mode instead.
+  if (picked.ranking.effective < CREATE_FLOOR && picked.ranking.demandBonus < CREATE_DEMAND_OVERRIDE) {
+    log.info(
+      `Picker: best candidate ${picked.kind}=${picked.entry.slug} effective=${picked.ranking.effective} ` +
+      `is below the create floor (${CREATE_FLOOR}) with no demand override — declining to create.`,
+    );
+    return null;
+  }
+
   // Log the decision for visibility.
   const r = picked.ranking;
   log.info(
@@ -1470,7 +1628,7 @@ type ResolvedTarget =
 function buildRetryHint(lastErr: string): string {
   let hint = `Your previous attempt failed these quality checks — fix ONLY these while keeping everything else correct: ${lastErr}.`;
   if (/h1 length \d+ out of/.test(lastErr)) {
-    hint += ` CRITICAL: the "h1" field MUST be 50 characters or fewer — count every character including spaces. Shorten it aggressively. For a comparison use the terse "[A] vs [B] (2026)" form (drop "Which Is Better"). Do NOT exceed 50 characters under any circumstances.`;
+    hint += ` CRITICAL: the "h1" field MUST be 50 characters or fewer — count every character including spaces. Shorten it aggressively. For a comparison use the terse "[A] vs [B] (2026)" form (drop "Which Is Better"); for a review use "{Site} Review 2026: {2-3 word hook}" and drop the hook entirely if still over. Do NOT exceed 50 characters under any circumstances.`;
   }
   if (/meta_description length/.test(lastErr)) {
     hint += ` The "meta_description" MUST be between 120 and 165 characters.`;
@@ -1499,6 +1657,18 @@ async function tryGenerateItem(
 > {
   const contentType: ContentTypeKey = target.kind === "review" ? "review" : (target.entry as SupportingQueueEntry).content_type;
   log.info(`Target: ${contentType} → ${target.entry.slug}`);
+
+  // Comparisons require a real hero image from the clean cover library (the
+  // page's og:image + visible hero derive from the compared sites' covers).
+  // If neither site has a cover, the page can't meet the quality bar — fail
+  // BEFORE burning an API call so the picker falls through to the next item.
+  if (contentType === "comparison" && target.kind === "supporting") {
+    const entry = target.entry as SupportingQueueEntry;
+    const hero = selectGuideHero(entry.related_sites, canonicalComparePairSlug(entry.slug.replace(/^compare\//, "")));
+    if (!hero) {
+      return { status: "failed", reason: "no clean cover available for either compared site — hero required for comparisons" };
+    }
+  }
 
   const attemptGeneration = async (extraHint?: string): Promise<Record<string, unknown>> => {
     if (target.kind === "review") {
@@ -1591,6 +1761,241 @@ async function tryGenerateItem(
 }
 
 // ---------------------------------------------------------------------------
+// Improve-existing mode (FIX 5): when no create candidate clears the value
+// floor, the day's slot goes to substantively expanding an existing weak
+// page. Never cosmetic: the result must clear the same quality gate AND be
+// materially bigger than the current content, or nothing is persisted.
+// ---------------------------------------------------------------------------
+const MATERIAL_GROWTH_FACTOR = 1.3; // ≥ +30% …
+const MATERIAL_GROWTH_WORDS = 300;  // … or ≥ +300 words
+
+async function runImproveMode(
+  flags: Flags,
+  demand: { queries: import("../src/lib/contentRanker.js").GscQueryAggregate[]; source: string },
+): Promise<boolean> {
+  const { buildImprovementQueue, stampLedger } = await import("./lib/improve.js");
+  const { COMPARISON_CONTENT } = await import("../src/data/comparison-content.js");
+  const { GUIDE_CONTENT } = await import("../src/data/guide-content.js");
+  const { reviewBodies } = await import("../src/hooks/useAIReview.js");
+  const { getFeaturedComparePairsList } = await import("../src/data/featured-compare-pairs.js");
+
+  // What the engine can actually regenerate. Compares: pairs with an existing
+  // AI body (expand) plus featured keep-quality pairs (both sites top-20 —
+  // these get a body ADDED, the biggest single-page upgrade available).
+  const top20 = new Set([...sites].sort((a, b) => b.overall_score - a.overall_score).slice(0, 20).map((s) => s.slug));
+  const keepPairs = getFeaturedComparePairsList().filter((p) => {
+    const [a, b] = p.split("-vs-");
+    return top20.has(a) && top20.has(b);
+  });
+  const improvable = {
+    reviewSlugs: new Set(Object.keys(reviewBodies)),
+    comparePairs: new Set([...Object.keys(COMPARISON_CONTENT).map((k) => canonicalComparePairSlug(k)), ...keepPairs]),
+    guideSlugs: new Set(Object.keys(GUIDE_CONTENT)),
+  };
+
+  const tasks = buildImprovementQueue(CONTENT_AUDIT_FILE, demand.queries, IMPROVEMENT_LOG_FILE, improvable);
+  if (tasks.length === 0) {
+    log.info("Improve mode: no improvement candidates (audit clean or all under cooldown).");
+    return false;
+  }
+  log.info(`Improve mode: ${tasks.length} candidates. Top 5:`);
+  for (const t of tasks.slice(0, 5)) {
+    log.info(`  improve ${t.contentType}=${t.route} score=${t.score} [${t.reasons.join(", ")}]`);
+  }
+
+  const MAX_IMPROVE_ATTEMPTS = 3; // distinct tasks to try before giving up
+  for (const task of tasks.slice(0, MAX_IMPROVE_ATTEMPTS)) {
+    log.info(`── Improving ${task.route} ──`);
+
+    // Build the payload + existing content per type.
+    let payload: Record<string, unknown>;
+    let existing: unknown;
+    let existingWords = 0;
+    const contentType = task.contentType as ContentTypeKey;
+    if (contentType === "review") {
+      const site = sites.find((s) => s.slug === task.key);
+      if (!site) continue;
+      existing = reviewBodies[task.key] ?? "";
+      existingWords = wordCount(String(existing));
+      payload = {
+        name: site.name,
+        slug: site.slug,
+        homepage_url: site.homepage_url,
+        niche: site.categories,
+        affiliate_network: null,
+        existing_slugs: sites.map((s) => s.slug),
+        editorial_only: site.editorial_status === "editorial-only",
+      };
+    } else if (contentType === "comparison") {
+      const [a, b] = task.key.split("-vs-");
+      const sa = sites.find((s) => s.slug === a);
+      const sb = sites.find((s) => s.slug === b);
+      if (!sa || !sb) continue;
+      // Hero requirement applies to improved compares too.
+      if (!selectGuideHero([a, b], task.key)) {
+        log.info(`  skipping ${task.key}: no clean cover for either site (hero required)`);
+        continue;
+      }
+      existing = COMPARISON_CONTENT[task.key] ?? COMPARISON_CONTENT[`${b}-vs-${a}`] ?? { note: "no editorial body yet — page renders the score template only" };
+      existingWords = typeof existing === "object" && existing !== null && "intro" in (existing as Record<string, unknown>)
+        ? wordCount(JSON.stringify(Object.values(existing as Record<string, unknown>).filter((v) => typeof v === "string").join(" ")))
+        : 0;
+      payload = {
+        title: `${sa.name} vs ${sb.name}`,
+        slug: `compare/${task.key}`,
+        site_a_slug: a,
+        site_b_slug: b,
+        site_a_name: sa.name,
+        site_b_name: sb.name,
+        site_a_summary: sa.short_description ?? "",
+        site_b_summary: sb.short_description ?? "",
+      };
+    } else {
+      const g = GUIDE_CONTENT[task.key];
+      if (!g) continue;
+      existing = g;
+      existingWords = wordCount(
+        [g.intro, ...(g.sections ?? []).map((s: { content?: string }) => s?.content ?? ""), g.conclusion]
+          .filter((x): x is string => typeof x === "string")
+          .join(" "),
+      );
+      payload = {
+        title: g.h1,
+        slug: `guide/${task.key}`,
+        target_keyword: g.h1.toLowerCase(),
+        related_sites: g.related_sites ?? [],
+      };
+    }
+
+    const targetWords = Math.max(
+      contentType === "guide" ? 1200 : contentType === "review" ? 1000 : 900,
+      Math.ceil((existingWords * MATERIAL_GROWTH_FACTOR) / 100) * 100,
+    );
+
+    // Generate with the same retry discipline as creates.
+    let generated: Record<string, unknown> | null = null;
+    let gate = { ok: false, errors: ["initial"] as string[] };
+    let lastErr = "";
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        const base = await generateImprove(contentType, payload, existing, targetWords);
+        generated = lastErr && attempt > 1 ? base : base; // hint folded into prompt below on retry
+        gate = qualityGate(generated, contentType);
+        if (!gate.ok) {
+          lastErr = gate.errors.join("; ");
+          log.warn(`  improve attempt ${attempt} failed gate: ${lastErr}`);
+          // Fold gate errors into the payload as retry_hint for the next pass.
+          payload.retry_hint = buildRetryHint(lastErr);
+          continue;
+        }
+        break;
+      } catch (e) {
+        lastErr = `API error: ${(e as Error).message}`;
+        log.warn(`  improve attempt ${attempt} API error: ${(e as Error).message}`);
+      }
+    }
+    if (!generated || !gate.ok) {
+      log.warn(`  "${task.route}" did not produce a gate-passing improvement (${lastErr}). Trying next task.`);
+      continue;
+    }
+
+    // Material-change guardrail: substantive or nothing. No lastmod games.
+    const newWords = bodyWordsFor(generated, contentType);
+    const material = newWords >= existingWords * MATERIAL_GROWTH_FACTOR || newWords >= existingWords + MATERIAL_GROWTH_WORDS;
+    if (!material) {
+      log.warn(`  improvement not material (${existingWords}w → ${newWords}w) — skipping, no persist, no lastmod.`);
+      continue;
+    }
+
+    const syntheticTarget: ResolvedTarget = {
+      kind: "supporting",
+      entry: {
+        title: task.route,
+        slug: contentType === "comparison" ? `compare/${task.key}` : contentType === "guide" ? `guide/${task.key}` : task.key,
+        content_type: contentType === "review" ? "guide" : (contentType as SupportingContentType),
+        target_keyword: "",
+        related_sites: contentType === "comparison" ? task.key.split("-vs-") : [],
+        priority: 0,
+        status: "queued",
+      },
+    };
+    logQualityLine(generated, syntheticTarget, contentType, true);
+    log.info(`  material improvement: ${existingWords}w → ${newWords}w (+${existingWords ? Math.round(((newWords - existingWords) / Math.max(existingWords, 1)) * 100) : 100}%)`);
+
+    if (flags.dryRun) {
+      log.info("DRY RUN — improvement not persisted.");
+      log.json("Improved JSON", generated);
+      return true;
+    }
+
+    // ── Persist (overwrite) + stamps, with full-rollback snapshot ─────────
+    const snapshots = new Map<string, string>();
+    for (const f of ENGINE_SNAPSHOT_FILES()) {
+      try { snapshots.set(f, readFileSync(f, "utf-8")); } catch { /* may not exist */ }
+    }
+
+    if (contentType === "review") {
+      appendReviewBody(task.key, generated, { overwrite: true });
+    } else if (contentType === "comparison") {
+      const normalized = normalizeGeneratedFaq(generated);
+      upsertContentEntry(COMPARISON_CONTENT_FILE, task.key, normalized, { overwrite: true });
+    } else {
+      generated.related_sites = (existing as { related_sites?: string[] }).related_sites ?? [];
+      const hero = selectGuideHero(generated.related_sites as string[], task.key);
+      if (hero) {
+        generated.hero_image = hero.hero_image;
+        generated.hero_alt = hero.hero_alt;
+        generated.hero_site_slug = hero.hero_site_slug;
+      }
+      const normalized = normalizeGeneratedFaq(generated);
+      upsertContentEntry(GUIDE_CONTENT_FILE, task.key, normalized, { overwrite: true });
+    }
+    stampContentLastmod(task.route);
+    stampLedger(IMPROVEMENT_LOG_FILE, task.route);
+
+    const build = runBuild();
+
+    if (flags.inspect) {
+      printInspectionReport(task.route, build.passed, generated);
+      for (const [f, content] of snapshots) {
+        try { writeFileSync(f, content, "utf-8"); } catch { /* */ }
+      }
+      log.info("Inspect mode: restored all source files. No commit, no push, no ping.");
+      return true;
+    }
+
+    if (!build.passed) {
+      log.err("Build failed — rolling back improvement edits.");
+      for (const [f, content] of snapshots) {
+        try { writeFileSync(f, content, "utf-8"); } catch { /* */ }
+      }
+      process.exit(1);
+    }
+
+    if (!flags.push) {
+      log.info("Build passed. --push not set, skipping commit/push/ping.");
+      return true;
+    }
+
+    const commitMessage = `auto(improve): expand ${task.route} — ${new Date().toISOString().slice(0, 10)}`;
+    try {
+      commitAndPush(commitMessage);
+    } catch (e) {
+      log.err(`Commit/push failed: ${(e as Error).message}`);
+      process.exit(1);
+    }
+    const pageUrl = `${BASE_URL}${task.route}`;
+    log.info(`Submitting improved page to crawlers: ${pageUrl}`);
+    await Promise.all([pingGoogle(pageUrl), pingBing(pageUrl)]);
+    log.info(`Done (improve). ${pageUrl}`);
+    return true;
+  }
+
+  log.warn("Improve mode: no task produced a material, gate-passing improvement.");
+  return false;
+}
+
+// ---------------------------------------------------------------------------
 // Main flow
 // ---------------------------------------------------------------------------
 async function main() {
@@ -1615,10 +2020,14 @@ async function main() {
     | { target: ResolvedTarget; contentType: ContentTypeKey; generated: Record<string, unknown> }
     | null = null;
 
+  // Demand data loads ONCE per run and prices both decisions — what's worth
+  // creating and what's worth improving — in the same currency.
+  const demand = await loadDemandQueries();
+
   for (let itemNo = 1; itemNo <= MAX_ITEMS; itemNo++) {
-    const candidate = await resolveTarget(flags, tried);
+    const candidate = await resolveTarget(flags, tried, demand);
     if (!candidate) {
-      log.warn(itemNo === 1 ? "No queued item resolved for today's rotation. Exiting cleanly." : "No further queued items to try.");
+      log.info(itemNo === 1 ? "No create candidate clears the value floor." : "No further queued items to try.");
       break;
     }
     tried.add(candidate.entry.slug);
@@ -1635,9 +2044,12 @@ async function main() {
   }
 
   if (!chosen) {
-    // Final fallback: queue is unchanged, soft exit (0) so the workflow stays
-    // green and the next scheduled run retries.
-    log.warn("No publishable item after exhausting retries + fallback — skipping today's run.");
+    // The day's slot is NOT wasted on a marginal create: improve an existing
+    // weak page instead. A clean no-op happens only when there is genuinely
+    // nothing worth creating AND nothing worth improving.
+    const improved = await runImproveMode(flags, demand);
+    if (improved) return;
+    log.warn("Nothing worth creating and nothing worth improving — clean no-op run.");
     process.exit(0);
   }
 
@@ -1683,23 +2095,8 @@ async function main() {
   // generate-sitemap.ts, the audit docs via audit-content.ts --strict).
   // Without the latter, a rolled-back run left stale sitemap/audit edits
   // referencing content that was reverted.
-  const FILES_TO_SNAPSHOT = [
-    QUEUE_FILE,
-    REVIEWS_FILE,
-    SITES_FILE,
-    COMPARISON_CONTENT_FILE,
-    ALTERNATIVES_CONTENT_FILE,
-    ISWORTHIT_CONTENT_FILE,
-    GUIDE_CONTENT_FILE,
-    resolve(ROOT, "docs/content-lastmod.json"),
-    // Regenerated by runBuild() — snapshot so rollback leaves no stale artifact.
-    resolve(ROOT, "public/sitemap.xml"),
-    resolve(ROOT, "public/blog-sitemap.xml"),
-    resolve(ROOT, "docs/content-audit-report.md"),
-    resolve(ROOT, "docs/content-audit.json"),
-  ];
   const snapshots = new Map<string, string>();
-  for (const f of FILES_TO_SNAPSHOT) {
+  for (const f of ENGINE_SNAPSHOT_FILES()) {
     try { snapshots.set(f, readFileSync(f, "utf-8")); } catch { /* file may not exist on fresh runs */ }
   }
 

@@ -20,6 +20,7 @@ import VisitSiteButton from "../components/VisitSiteButton";
 import { getSiteBySlug, sites, getVisitUrl, isAffiliated, isPendingReview, isEditorialOnly } from "../data/sites";
 import { ALTERNATIVES_CONTENT } from "../data/alternatives-content";
 import { featuredComparePairsForSite } from "../data/featured-compare-pairs";
+import LinkedProse from "../components/LinkedProse";
 import { useAIReview, reviewBodies } from "../hooks/useAIReview";
 import { currentYear, currentMonthShort, currentMonthLong } from "../lib/dates";
 import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
@@ -435,9 +436,14 @@ const ReviewPage = () => {
                   </div>
                 ) : aiContent ? (
                   <div className="mt-3 space-y-4 text-muted-foreground leading-relaxed">
-                    {aiContent.split("\n\n").filter(Boolean).map((para, i) => (
-                      <p key={i}>{para}</p>
-                    ))}
+                    {(() => {
+                      // Auto-link first mentions of other sites/niches in the
+                      // review prose (never the site being reviewed).
+                      const linkedSet = new Set<string>([`site:${site.slug}`]);
+                      return aiContent.split("\n\n").filter(Boolean).map((para, i) => (
+                        <p key={i}><LinkedProse text={para} linked={linkedSet} /></p>
+                      ));
+                    })()}
                   </div>
                 ) : (
                   <p className="mt-3 text-muted-foreground leading-relaxed">{site.description}</p>
