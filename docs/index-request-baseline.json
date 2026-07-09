@@ -1,0 +1,106 @@
+{
+  "captured": "2026-07-08",
+  "note": "Baseline index states before manual GSC Request Indexing (batch 1: URLs 1-12 on 2026-07-08, batch 2: URLs 13-20 on 2026-07-09) + the 78-URL Indexing API/IndexNow reindex. Re-check with: npm run index-check",
+  "urls": [
+    {
+      "rank": 1,
+      "path": "/reviews/helix-studios",
+      "baseline": "URL is unknown to Google"
+    },
+    {
+      "rank": 2,
+      "path": "/discount/twinktrade",
+      "baseline": "Submitted and indexed (lastCrawl 2026-06-19; 25 imp @ pos 17)"
+    },
+    {
+      "rank": 3,
+      "path": "/niche/twink",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 4,
+      "path": "/reviews/twinks-in-shorts",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 5,
+      "path": "/niche/bareback",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 6,
+      "path": "/reviews/nakedsword",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 7,
+      "path": "/guides",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 8,
+      "path": "/reviews/men",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 9,
+      "path": "/reviews/sean-cody",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 10,
+      "path": "/guide/gay-porn-billing-guide",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 11,
+      "path": "/niche/amateur",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 12,
+      "path": "/reviews/athletic-twinks",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 13,
+      "path": "/guide/how-to-cancel-gay-porn-subscriptions",
+      "baseline": "URL is unknown to Google"
+    },
+    {
+      "rank": 14,
+      "path": "/reviews/peterfever",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 15,
+      "path": "/niche/asian",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 16,
+      "path": "/best-cheap-gay-porn-sites",
+      "baseline": "Submitted and indexed (lastCrawl 2026-06-21)"
+    },
+    {
+      "rank": 17,
+      "path": "/cheapest-twink-sites",
+      "baseline": "Submitted and indexed (lastCrawl 2026-06-20; pos 8.5)"
+    },
+    {
+      "rank": 18,
+      "path": "/reviews/sayuncle",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 19,
+      "path": "/niche/daddy",
+      "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 20,
+      "path": "/guide/gay-porn-security-privacy",
+      "baseline": "Discovered - currently not indexed"
+    }
+  ]
+}

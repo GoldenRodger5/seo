@@ -22,9 +22,11 @@
  *                                  https://twinkvault.com/{key}.txt)
  */
 import { GoogleAuth } from "google-auth-library";
-import { sites } from "../src/data/sites.js";
+import { sites, isAffiliated } from "../src/data/sites.js";
 import { ALTERNATIVES_CONTENT } from "../src/data/alternatives-content.js";
+import { GUIDE_CONTENT } from "../src/data/guide-content.js";
 import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.js";
+import { DEMOTION_TRANCHES } from "../src/data/compare-demotions.js";
 
 const BASE_URL = "https://twinkvault.com";
 const NICHE_SLUGS = [
@@ -42,30 +44,45 @@ const SEO_LANDING_SLUGS = [
 ];
 
 function buildUrlList(): string[] {
+  // Insertion order IS priority order (Set preserves it, and the Indexing
+  // API is submitted sequentially against a 200/day quota): homepage →
+  // money reviews → niche hubs → guides → landings/hubs → alternatives →
+  // the few keep-worthy compares last.
   const urls = new Set<string>();
   urls.add(`${BASE_URL}/`);
-  for (const p of SEO_LANDING_SLUGS) urls.add(`${BASE_URL}${p}`);
+
+  // Top affiliated money reviews by score. Editorial-only and pending-review
+  // sites are excluded — no commercial page, no crawl-priority claim.
+  const moneyReviews = [...sites]
+    .filter((s) => isAffiliated(s) && s.editorial_status !== "pending-review" && s.editorial_status !== "editorial-only")
+    .sort((a, b) => b.overall_score - a.overall_score)
+    .slice(0, 12);
+  for (const s of moneyReviews) urls.add(`${BASE_URL}/reviews/${s.slug}`);
+
+  // Niche hubs — 3,000+ word data-driven landers, the crawl-equity spine.
   for (const n of NICHE_SLUGS) urls.add(`${BASE_URL}/niche/${n}`);
 
-  // Top-10 reviews by overall score (drop pending-review since they have
-  // no editorial body — no point asking Google to crawl them yet).
-  const rankedReviews = [...sites]
-    .filter((s) => s.editorial_status !== "pending-review")
-    .sort((a, b) => b.overall_score - a.overall_score)
-    .slice(0, 10);
-  for (const s of rankedReviews) urls.add(`${BASE_URL}/reviews/${s.slug}`);
+  // Guides hub + every published guide.
+  urls.add(`${BASE_URL}/guides`);
+  for (const slug of Object.keys(GUIDE_CONTENT)) urls.add(`${BASE_URL}/guide/${slug}`);
 
-  // Featured compare pairs (these are the only ones noindex'd → indexed
-  // anyway, but featured = highest priority for crawl).
-  for (const pair of getFeaturedComparePairsList().slice(0, 10)) {
-    urls.add(`${BASE_URL}/compare/${pair}`);
-  }
+  // Key landing/hub pages.
+  for (const p of SEO_LANDING_SLUGS) urls.add(`${BASE_URL}${p}`);
 
   // Alternatives pages with actual AI body content.
   const LEGACY = new Set(["helix-studios-alternatives","sean-cody-alternatives","nakedsword-alternatives"]);
   for (const k of Object.keys(ALTERNATIVES_CONTENT)) {
     if (LEGACY.has(k)) urls.add(`${BASE_URL}/${k}`);
     else urls.add(`${BASE_URL}/alternatives/${k.replace(/-alternatives$/, "")}`);
+  }
+
+  // Compares: ONLY keep-worthy pairs. Every pair in the demotion plan is
+  // excluded regardless of tranche activation — asking Google to crawl a
+  // page we're about to 301 is worse than pointless.
+  const allDemotions = new Set(DEMOTION_TRANCHES.flatMap((t) => t.pairs.map((p) => p.pair)));
+  const keepPairs = getFeaturedComparePairsList().filter((p) => !allDemotions.has(p));
+  for (const pair of keepPairs.slice(0, 10)) {
+    urls.add(`${BASE_URL}/compare/${pair}`);
   }
 
   return [...urls];
