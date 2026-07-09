@@ -115,7 +115,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
     // Write the editorial review now so it's ready to flip to "ready".
     priority: 10,
     estimated_monthly_searches: 60500,
-    status: "queued",
+    status: "published",
     content_type: "review", editorial_mode: "research-only"},
 
   // ── Buddy Profits (pending) ─────────────────────────────────────────────
