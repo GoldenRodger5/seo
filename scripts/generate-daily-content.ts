@@ -986,9 +986,12 @@ function persistSupportingContent(entry: SupportingQueueEntry, generated: Record
 
   const bindings: Record<string, ContentBinding> = {
     comparison: {
+      // Persist under the CANONICAL (alphabetical) pair key regardless of
+      // queue order — the canonical URL is what's prerendered/sitemapped,
+      // and getComparisonBody resolves either order for legacy keys.
       file: COMPARISON_CONTENT_FILE,
-      keyFromSlug: (s) => s.replace(/^compare\//, ""),
-      frontendLookup: (s) => s.replace(/^compare\//, ""),
+      keyFromSlug: (s) => canonicalComparePairSlug(s.replace(/^compare\//, "")),
+      frontendLookup: (s) => canonicalComparePairSlug(s.replace(/^compare\//, "")),
       fileLabel: "comparison-content.ts",
     },
     alternatives: {
@@ -1097,7 +1100,13 @@ function markQueuePublished(slug: string, kind: "review" | "supporting") {
     writeFileSync(QUEUE_FILE, updated, "utf-8");
     log.info(`Marked queue entry ${kind}:${slug} as published`);
   } else {
-    log.warn(`Could not find queue row for ${slug} to mark published`);
+    // Programmatic entries (comparisons/isworthit/alternatives built by
+    // .map() in content-queue.ts) have no literal status text to flip —
+    // their published-state is DERIVED from the content file the persist
+    // step just wrote to. Expected, not an error. (Before this state model,
+    // the silent regex miss here re-picked the same comparison daily for
+    // two weeks.)
+    log.info(`Queue state for ${slug} is derived from its content file (no literal row to edit) — persist already made it published.`);
   }
 }
 
@@ -1363,13 +1372,22 @@ async function resolveTarget(
   // Fetch live GSC query data + build the cannibalization/duplication
   // index, then pick the highest-effective-priority candidate across
   // both queues. Falls back to static priority if Supabase is unreachable.
-  const { fetchGscQueriesNode } = await import("./lib/gsc-node-client.js");
-  const { aggregateGscQueries, buildIndex, pickHighestEffective } = await import(
+  const { fetchGscQueriesNode, fetchGscQueriesDirect } = await import("./lib/gsc-node-client.js");
+  const { aggregateGscQueries, buildIndex, rankAllCandidates } = await import(
     "../src/lib/contentRanker.js"
   );
-  const rawGsc = await fetchGscQueriesNode(28);
+  // Demand source order: Supabase mirror first (cheap), then DIRECT Search
+  // Console API (the mirror has two silent failure points — the gsc-sync
+  // cron and admin-only RLS vs the workflow's anon key — that starved the
+  // ranker of demand data for its entire life).
+  let rawGsc = await fetchGscQueriesNode(28);
+  let demandSource = "supabase-mirror";
+  if (rawGsc.length === 0) {
+    rawGsc = await fetchGscQueriesDirect(28);
+    demandSource = rawGsc.length > 0 ? "direct-gsc-api" : "none";
+  }
   const gscQueries = aggregateGscQueries(rawGsc);
-  log.info(`Ranker: loaded ${gscQueries.length} aggregated GSC queries${rawGsc.length === 0 ? " (none — falling back to static priority)" : ""}`);
+  log.info(`Ranker: loaded ${gscQueries.length} aggregated GSC queries (source: ${demandSource}${rawGsc.length === 0 ? " — falling back to static priority" : ""})`);
 
   // Build the existing-content index from sites.ts + already-published
   // queue entries (so we never re-rank a published item to the top).
@@ -1411,11 +1429,24 @@ async function resolveTarget(
   // picker returns the NEXT-best candidate instead of the one that just failed.
   const reviews = reviewCandidates().filter((r) => !exclude.has(r.slug));
   const supporting = supportingCandidates().filter((s) => !exclude.has(s.slug));
-  const picked = pickHighestEffective(reviews, supporting, index, {
+  const ranked = rankAllCandidates(reviews, supporting, index, {
     editorialOnlyCap,
     editorialOnlyCurrent,
   });
+  const picked = ranked[0] ?? null;
   if (!picked) return null;
+
+  // Leaderboard: top-5 candidates with score components, so it's visible in
+  // the run log whether demand data is flowing (+demand should be non-zero
+  // for pages matching real queries) and why the winner won.
+  for (const c of ranked.slice(0, 5)) {
+    const k = c.ranking;
+    log.info(
+      `  candidate ${c.kind}=${c.entry.slug} effective=${k.effective} ` +
+      `(static=${k.staticPriority} +demand=${k.demandBonus} -cann=${k.cannibalizationPenalty} ` +
+      `-noaff=${k.noAffiliatePenalty} -dup=${k.duplicationPenalty})`,
+    );
+  }
 
   // Log the decision for visibility.
   const r = picked.ranking;

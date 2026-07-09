@@ -7,7 +7,18 @@
  * `scripts/generate-daily-content.ts` reads this file each day, picks the
  * next item by priority + content-type rotation, generates the page, and
  * flips the row's `status` to "published" once the build succeeds.
+ *
+ * Published-state has TWO mechanisms:
+ *  - literal entries (reviews, backlog, guides, hubs): the engine text-edits
+ *    this file, flipping `status: "queued"` → `"published"`.
+ *  - programmatic entries (comparisons, isworthit, alternatives built via
+ *    .map()): status is DERIVED at load time from the presence of the
+ *    generated body in the corresponding content file — see the derived-state
+ *    block below. The engine does not (and cannot) text-edit these.
  */
+import { COMPARISON_CONTENT } from "./comparison-content";
+import { ALTERNATIVES_CONTENT } from "./alternatives-content";
+import { ISWORTHIT_CONTENT } from "./isworthit-content";
 
 export type ReviewQueueStatus = "queued" | "published" | "skipped";
 
@@ -274,6 +285,18 @@ const comparisonPairs: [string, string][] = [
   ["helix-studios", "sean-cody"],
 ];
 
+// ── Derived published-state for programmatic entries ────────────────────────
+// These entry groups are built by .map() at module load, so there is no
+// literal `status: "queued"` text in this file for the engine's
+// markQueuePublished() regex to flip. That mismatch left entries permanently
+// "queued": the engine re-picked compare/twinks-in-shorts-vs-southern-strokes
+// EVERY DAY from Jun 27–Jul 8 (12 no-op runs). The fix: for programmatic
+// entries, published-state is DERIVED from the content file itself — if the
+// generated body exists (under either slug order for comparisons), the page
+// is live, so the entry is published. The content file is the ground truth.
+const comparePublished = (a: string, b: string): boolean =>
+  Boolean(COMPARISON_CONTENT[`${a}-vs-${b}`] ?? COMPARISON_CONTENT[`${b}-vs-${a}`]);
+
 const comparisonEntries: SupportingQueueEntry[] = comparisonPairs.map(([a, b]) => ({
   title: `${SITE_NAME[a] || a} vs ${SITE_NAME[b] || b}`,
   slug: `compare/${a}-vs-${b}`,
@@ -281,27 +304,34 @@ const comparisonEntries: SupportingQueueEntry[] = comparisonPairs.map(([a, b]) =
   target_keyword: `${SITE_NAME[a] || a} vs ${SITE_NAME[b] || b}`.toLowerCase(),
   related_sites: [a, b],
   priority: 7,
-  status: "queued",
+  status: comparePublished(a, b) ? "published" : "queued",
 }));
 
+// Slug = bare site slug: WorthItPage reads getWorthItBody(site.slug) and the
+// engine persists under keyFromSlug identity, so the old "{slug}-worth-it"
+// form would have written keys the frontend can never look up (and pinged
+// /is-{slug}-worth-it-worth-it). Matches the backlog entries' convention.
 const isWorthItEntries: SupportingQueueEntry[] = TOP_10_SLUGS.map((slug) => ({
   title: `Is ${SITE_NAME[slug]} Worth It?`,
-  slug: `${slug}-worth-it`,
+  slug,
   content_type: "isworthit",
   target_keyword: `is ${SITE_NAME[slug].toLowerCase()} worth it`,
   related_sites: [slug],
   priority: 6,
-  status: "queued",
+  status: ISWORTHIT_CONTENT[slug] ? "published" : "queued",
 }));
 
+// Slug = "{site}-alternatives": matches the frontend lookup key and the
+// backlog convention (the old "alternatives-to-{slug}" form persisted keys
+// getAlternativesBody() can never resolve).
 const alternativesEntries: SupportingQueueEntry[] = TOP_10_SLUGS.map((slug) => ({
   title: `Best Alternatives To ${SITE_NAME[slug]}`,
-  slug: `alternatives-to-${slug}`,
+  slug: `${slug}-alternatives`,
   content_type: "alternatives",
   target_keyword: `${SITE_NAME[slug].toLowerCase()} alternatives`,
   related_sites: [slug],
   priority: 6,
-  status: "queued",
+  status: ALTERNATIVES_CONTENT[`${slug}-alternatives`] ? "published" : "queued",
 }));
 
 const pricingEntries: SupportingQueueEntry[] = TOP_10_SLUGS.map((slug) => ({
@@ -432,9 +462,28 @@ export function reviewCandidates(): ReviewQueueEntry[] {
   );
 }
 
+/**
+ * Content types the engine can actually persist AND the frontend can render.
+ * pricing/bestof/freetrial/awards/hub have NO persist binding in
+ * persistSupportingContent() and no route that reads their output — picking
+ * one burns the day's API call, logs the JSON to nowhere, and (for literal
+ * entries) marks it published while the content is lost. Excluded from
+ * candidacy until a data file + route exist for them.
+ */
+const PERSISTABLE_TYPES: ReadonlySet<SupportingContentType> = new Set([
+  "discount",
+  "comparison",
+  "alternatives",
+  "isworthit",
+  "guide",
+]);
+
 export function supportingCandidates(type?: SupportingContentType): SupportingQueueEntry[] {
   return supportingQueue.filter(
-    (s) => s.status === "queued" && (!type || s.content_type === type),
+    (s) =>
+      s.status === "queued" &&
+      PERSISTABLE_TYPES.has(s.content_type) &&
+      (!type || s.content_type === type),
   );
 }
 

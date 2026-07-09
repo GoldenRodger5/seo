@@ -9,7 +9,7 @@ import ScoreRing from "../components/ScoreRing";
 import CompareDataBlock from "../components/CompareDataBlock";
 import StarRating from "../components/StarRating";
 import { getSiteBySlug, sites, SiteData, getVisitUrl, isAffiliated } from "../data/sites";
-import { getComparisonBody } from "../data/comparison-content";
+import { getComparisonBody, alignComparisonBody } from "../data/comparison-content";
 import { isFeaturedComparePair } from "../data/featured-compare-pairs";
 import StickyMobileCTA from "../components/StickyMobileCTA";
 import { displayPillarScore } from "../lib/scoreFormatting";
@@ -523,7 +523,10 @@ const ComparePage = () => {
   //      score-based winner (resolves the contradiction where the AI body
   //      recommended Sean Cody but the cards declared Men.com the winner).
   //   3. Score-based fallback: higher overall_score wins; tiebreaker = siteA.
-  const aiBody = getComparisonBody(slug);
+  // Align a/b fields to the URL's siteA — stored bodies may be in generation
+  // order, and positional rendering without alignment swaps the site labels.
+  const rawAiBody = getComparisonBody(slug);
+  const aiBody = rawAiBody ? alignComparisonBody(rawAiBody, siteA.slug) : undefined;
   const tied = siteA.overall_score === siteB.overall_score;
   const aiPreferred: SiteData | null = (() => {
     if (!aiBody) return null;
@@ -739,7 +742,7 @@ const ComparePage = () => {
                 deterministic template when comparison-content.ts has an entry
                 for this slug. Falls through to the template below otherwise. */}
             {(() => {
-              const ai = getComparisonBody(slug);
+              const ai = aiBody; // already aligned to the URL's siteA
               if (!ai) return null;
               return (
                 <article className="mt-8 space-y-6 text-sm text-foreground/90 leading-relaxed">

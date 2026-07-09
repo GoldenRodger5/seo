@@ -16,7 +16,11 @@ try {
   const __dirname2 = dirname(fileURLToPath(import.meta.url));
   CONTENT_LASTMOD = JSON.parse(readFileSync(resolve(__dirname2, "..", "docs/content-lastmod.json"), "utf-8"));
 } catch { /* first run before any stamps */ }
-const lastmodFor = (path: string, fallback: string): string => CONTENT_LASTMOD[path] ?? fallback;
+// Only routes with a REAL content-change stamp get a <lastmod>. The old
+// fallback stamped every unstamped URL with the build date — and since the
+// engine deploys daily, the sitemap claimed ~399/409 URLs "changed today"
+// every single day, teaching Google to distrust the signal entirely.
+const lastmodFor = (path: string): string | undefined => CONTENT_LASTMOD[path];
 
 // ---------------------------------------------------------------------------
 // Config
@@ -66,7 +70,9 @@ function urlEntry({ loc, changefreq, priority, lastmod }: UrlEntry): string {
   return [
     "  <url>",
     `    <loc>${BASE_URL}${loc}</loc>`,
-    `    <lastmod>${lastmod ?? TODAY}</lastmod>`,
+    // <lastmod> only when we have a genuine content-change date — an
+    // omitted lastmod is honest; a fabricated one erodes sitemap trust.
+    ...(lastmod ? [`    <lastmod>${lastmod}</lastmod>`] : []),
     `    <changefreq>${changefreq}</changefreq>`,
     `    <priority>${priority}</priority>`,
     "  </url>",
@@ -237,7 +243,7 @@ for (const [a, b] of pairs) {
       loc: path,
       changefreq: "monthly",
       priority: "0.6",
-      lastmod: lastmodFor(path, TODAY),
+      lastmod: lastmodFor(path),
     })
   );
 }
@@ -251,15 +257,15 @@ for (const key of Object.keys(ALTERNATIVES_CONTENT)) {
   if (LEGACY_ALT_ROUTES.has(key)) continue;
   const siteSlug = key.replace(/-alternatives$/, "");
   const path = `/alternatives/${siteSlug}`;
-  urls.push(urlEntry({ loc: path, changefreq: "monthly", priority: "0.7", lastmod: lastmodFor(path, TODAY) }));
+  urls.push(urlEntry({ loc: path, changefreq: "monthly", priority: "0.7", lastmod: lastmodFor(path) }));
   altCount++;
 }
 // /guides hub — higher priority than individual guides (it's the index).
-urls.push(urlEntry({ loc: "/guides", changefreq: "weekly", priority: "0.8", lastmod: lastmodFor("/guides", TODAY) }));
+urls.push(urlEntry({ loc: "/guides", changefreq: "weekly", priority: "0.8", lastmod: lastmodFor("/guides") }));
 let guideCount = 0;
 for (const slug of Object.keys(GUIDE_CONTENT)) {
   const path = `/guide/${slug}`;
-  urls.push(urlEntry({ loc: path, changefreq: "monthly", priority: "0.6", lastmod: lastmodFor(path, TODAY) }));
+  urls.push(urlEntry({ loc: path, changefreq: "monthly", priority: "0.6", lastmod: lastmodFor(path) }));
   guideCount++;
 }
 
@@ -295,9 +301,11 @@ console.log(
 // each is referenced from robots.txt)
 // ---------------------------------------------------------------------------
 const blogUrls: string[] = [];
-blogUrls.push(urlEntry({ loc: "/blog", changefreq: "daily", priority: "0.9", lastmod: TODAY }));
+// Listing pages: no fabricated lastmod — they only truly change when a post
+// ships, and the per-post entries below carry the real updated_date.
+blogUrls.push(urlEntry({ loc: "/blog", changefreq: "daily", priority: "0.9" }));
 for (const cat of BLOG_CATEGORIES) {
-  blogUrls.push(urlEntry({ loc: `/blog/category/${cat.slug}`, changefreq: "weekly", priority: "0.7", lastmod: TODAY }));
+  blogUrls.push(urlEntry({ loc: `/blog/category/${cat.slug}`, changefreq: "weekly", priority: "0.7" }));
 }
 for (const post of BLOG_POSTS) {
   blogUrls.push(urlEntry({

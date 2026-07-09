@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-08T11:49:56.282Z",
+  "generated_at": "2026-07-09T00:33:28.609Z",
   "summary": {
     "routes": 419,
     "clientOnlyCount": 0,
@@ -146,8 +146,8 @@
     {
       "source": "src/data/comparison-content.ts",
       "entries": 8,
-      "totalWords": 11444,
-      "medianWordsPerEntry": 1430,
+      "totalWords": 11544,
+      "medianWordsPerEntry": 1443,
       "prerenderedToHtml": false,
       "comment": "Per-pair compare content (likely BLUF + reasoning). Same prerender problem — body never enters static HTML."
     },

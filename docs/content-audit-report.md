@@ -1,4 +1,4 @@
-# Content Audit Report — 2026-07-08
+# Content Audit Report — 2026-07-09
 
 ## Critical findings
 
@@ -17,7 +17,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | Source | Entries | Total words | Median words/entry |
 | --- | ---: | ---: | ---: |
 | `src/hooks/useAIReview.ts (reviewBodies map)` | 31 | 9,098 | 275 |
-| `src/data/comparison-content.ts` | 8 | 11,444 | 1,430 |
+| `src/data/comparison-content.ts` | 8 | 11,544 | 1,443 |
 | `src/data/blog-posts.ts` | 10 | 8,395 | 839 |
 | `src/data/alternatives-content.ts` | 7 | 6,456 | 922 |
 
@@ -56,7 +56,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 - **Page count:** 190
 - **Template source:** `src/pages/ComparePage.tsx` (runtime React component, hydrated client-side).
-- **Per-pair content source:** `src/data/comparison-content.ts` (~11,444 words across all pairs combined, never prerendered).
+- **Per-pair content source:** `src/data/comparison-content.ts` (~11,544 words across all pairs combined, never prerendered).
 - **All 190 compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.
 - **Kill-list recommendation:** until prerendering is fixed, the kill-list question is moot. Once Google can see content, then evaluate pairs by (a) neither site in top-10, (b) <5 GSC impressions/30d.
 

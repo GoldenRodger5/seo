@@ -73,3 +73,51 @@ export async function fetchGscQueriesNode(days = 28): Promise<GscQueryRow[]> {
     return [];
   }
 }
+
+/**
+ * Fetch query rows DIRECTLY from the Search Console API using the service
+ * account (GOOGLE_SERVICE_ACCOUNT_JSON — already present in the daily
+ * workflow env for the Indexing API ping).
+ *
+ * This exists because the Supabase-mirror path has two failure points the
+ * engine can't see: the nightly gsc-sync cron (which failed silently for
+ * weeks while the Search Console API was disabled) and RLS (gsc_queries is
+ * admin-only SELECT; the workflow only carries the anon key, so the engine's
+ * mirror reads return 0 rows even when the table is populated). Direct GSC
+ * needs neither. Returns [] gracefully on any failure — the picker falls back
+ * to static priority exactly as before.
+ */
+export async function fetchGscQueriesDirect(days = 28): Promise<GscQueryRow[]> {
+  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+  if (!raw) return [];
+  const siteUrl = sanitize(process.env.GSC_SITE_URL) || "https://twinkvault.com/";
+  try {
+    const { GoogleAuth } = await import("google-auth-library");
+    const decoded = raw.startsWith("{") ? raw : Buffer.from(raw, "base64").toString("utf-8");
+    const auth = new GoogleAuth({
+      credentials: JSON.parse(decoded),
+      scopes: ["https://www.googleapis.com/auth/webmasters.readonly"],
+    });
+    const client = await auth.getClient();
+    const endDate = new Date().toISOString().slice(0, 10);
+    const startDate = new Date(Date.now() - days * 86_400_000).toISOString().slice(0, 10);
+    const res = await client.request<{ rows?: { keys: string[]; clicks: number; impressions: number; ctr: number; position: number }[] }>({
+      url: `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`,
+      method: "POST",
+      data: { startDate, endDate, dimensions: ["query"], rowLimit: 5000 },
+    });
+    const rows = res.data.rows ?? [];
+    return rows.map((r) => ({
+      date: endDate,
+      query: r.keys[0],
+      page: null,
+      clicks: r.clicks,
+      impressions: r.impressions,
+      ctr: r.ctr,
+      position: r.position,
+    }));
+  } catch (e) {
+    console.warn(`[gsc-node] direct GSC fetch failed (falling back to static priority): ${(e as Error).message?.slice(0, 160)}`);
+    return [];
+  }
+}

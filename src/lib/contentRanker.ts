@@ -231,12 +231,21 @@ export function rankSupporting(
  * "editorial-only"). Once at the cap, research-only candidates are
  * filtered out before ranking.
  */
-export function pickHighestEffective(
+export type RankedCandidate =
+  | { kind: "review"; entry: ReviewQueueEntry; ranking: CandidateRanker }
+  | { kind: "supporting"; entry: SupportingQueueEntry; ranking: CandidateRanker };
+
+/**
+ * Rank the full candidate pool (reviews + supporting) by effective priority,
+ * descending. Exposed so callers can log the leaderboard — critical for
+ * seeing whether demand data is actually flowing (+demand=N per candidate).
+ */
+export function rankAllCandidates(
   reviews: ReviewQueueEntry[],
   supporting: SupportingQueueEntry[],
   index: { queries: GscQueryAggregate[]; routesByKeyword: Map<string, string[]>; existingSlugs: Set<string> },
   opts: { editorialOnlyCap: number; editorialOnlyCurrent: number },
-): { kind: "review"; entry: ReviewQueueEntry; ranking: CandidateRanker } | { kind: "supporting"; entry: SupportingQueueEntry; ranking: CandidateRanker } | null {
+): RankedCandidate[] {
   const atCap = opts.editorialOnlyCurrent >= opts.editorialOnlyCap;
   const eligibleReviews = atCap
     ? reviews.filter((r) => r.editorial_mode !== "research-only")
@@ -245,6 +254,14 @@ export function pickHighestEffective(
   const reviewRanked = eligibleReviews.map((r) => ({ kind: "review" as const, entry: r, ranking: rankReview(r, index) }));
   const suppRanked = supporting.map((s) => ({ kind: "supporting" as const, entry: s, ranking: rankSupporting(s, index) }));
 
-  const all = [...reviewRanked, ...suppRanked].sort((a, b) => b.ranking.effective - a.ranking.effective);
-  return all[0] ?? null;
+  return [...reviewRanked, ...suppRanked].sort((a, b) => b.ranking.effective - a.ranking.effective);
+}
+
+export function pickHighestEffective(
+  reviews: ReviewQueueEntry[],
+  supporting: SupportingQueueEntry[],
+  index: { queries: GscQueryAggregate[]; routesByKeyword: Map<string, string[]>; existingSlugs: Set<string> },
+  opts: { editorialOnlyCap: number; editorialOnlyCurrent: number },
+): RankedCandidate | null {
+  return rankAllCandidates(reviews, supporting, index, opts)[0] ?? null;
 }
