@@ -77,7 +77,9 @@ npx tsx scripts/generate-daily-content.ts --inspect              # full live E2E
 ANTHROPIC_API_KEY=sk-ant-… npx tsx scripts/generate-daily-content.ts --inspect
 ```
 
-`src/lib/contentRanker.ts` re-ranks the queue by layering GSC search-demand on top of static editorial priority (never publishes anything not queued — only re-orders). Full details in `docs/daily-content-pipeline.md` (quality gates, retry behavior, strict-audit flags).
+`src/lib/contentRanker.ts` re-ranks the queue by layering GSC search-demand on top of static editorial priority (never publishes anything not queued — only re-orders). The engine's objective is **create-or-improve**: a create must clear a value floor (effective ≥ 6 or real GSC demand), otherwise the day's slot substantively expands an existing weak page (`scripts/lib/improve.ts`, 14-day ledger in `docs/improvement-log.json`, material-change guardrail — never cosmetic freshness). Full details in `docs/daily-content-pipeline.md` (quality gates, retry behavior, strict-audit flags).
+
+**Compare-pair demotions (weekly op):** marginal featured compare pairs are being retired in staged tranches. Once a week: flip the next tranche's `active: true` in `src/data/compare-demotions.ts`, run `npm run compare-redirects` (regenerates vercel.json's 301 block), and commit both files. Active demotions leave the featured set automatically (sitemap + prerender + noindex all key off it). Never activate multiple tranches at once; spare any pair GSC shows real impressions for.
 
 ## Backend surfaces
 

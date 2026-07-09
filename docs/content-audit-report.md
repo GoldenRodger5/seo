@@ -2,7 +2,7 @@
 
 ## Critical findings
 
-**🚨 0 / 419 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 390 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -30,7 +30,7 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Page type | Count | Median body words (prerendered) | Min | Max | Verdict |
 | --- | ---: | ---: | ---: | ---: | --- |
-| compare | 190 | 743 | 659 | 1967 | HEALTHY |
+| compare | 161 | 753 | 667 | 1967 | HEALTHY |
 | discount | 64 | 835 | 774 | 889 | HEALTHY |
 | review | 64 | 1080 | 730 | 1334 | HEALTHY |
 | landing | 29 | 943 | 228 | 4244 | HEALTHY |
@@ -54,10 +54,10 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 ## Compare page deep-dive
 
-- **Page count:** 190
+- **Page count:** 161
 - **Template source:** `src/pages/ComparePage.tsx` (runtime React component, hydrated client-side).
 - **Per-pair content source:** `src/data/comparison-content.ts` (~11,544 words across all pairs combined, never prerendered).
-- **All 190 compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.
+- **All 161 compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.
 - **Kill-list recommendation:** until prerendering is fixed, the kill-list question is moot. Once Google can see content, then evaluate pairs by (a) neither site in top-10, (b) <5 GSC impressions/30d.
 
 ## Review page deep-dive
@@ -98,10 +98,10 @@ Sorted ascending by body word count. Top 30:
 | /best-daddy-twink-sites | landing | 640 | 67.8 |  |
 | /gay-dating-sites | utility | 645 | 27.2 |  |
 | / | homepage | 651 | 85.1 |  |
-| /compare/bigstr-vs-dirtyboyvideo | compare | 659 | 55.5 |  |
-| /compare/bigstr-vs-rawhole | compare | 664 | 55.4 |  |
 | /compare/bigstr-vs-twinktrade | compare | 667 | 55.7 |  |
 | /compare/alternadudes-vs-bigstr | compare | 668 | 55.9 |  |
+| /compare/bigstr-vs-trailertrashboys | compare | 669 | 56.1 |  |
+| /compare/dudesraw-vs-spicevidsgay | compare | 675 | 56.6 |  |
 
 ## Auto-generation pipeline assessment
 

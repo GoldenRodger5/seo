@@ -3,10 +3,16 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "crons": [
-    { "path": "/api/cron/gsc-sync", "schedule": "0 4 * * *" }
+    {
+      "path": "/api/cron/gsc-sync",
+      "schedule": "0 4 * * *"
+    }
   ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
     {
       "source": "/((?!api/|assets/|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/index.html"
@@ -16,74 +22,287 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), usb=(), payment=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), usb=(), payment=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+        }
       ]
     },
     {
       "source": "/robots.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
     },
     {
       "source": "/c9fb37c4b6764e2eb72063958d054828.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=300" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300"
+        }
       ]
     },
     {
       "source": "/sitemap.xml",
       "headers": [
-        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=86400" }
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=86400"
+        }
       ]
     },
     {
       "source": "/blog-sitemap.xml",
       "headers": [
-        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=86400" }
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=86400"
+        }
       ]
     },
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/sw.js",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
-        { "key": "Service-Worker-Allowed", "value": "/" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        }
       ]
     },
     {
       "source": "/workbox-(.*).js",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/manifest.webmanifest",
       "headers": [
-        { "key": "Content-Type", "value": "application/manifest+json" },
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
     },
     {
       "source": "/pwa-(.*).png",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=604800" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/compare/bigstr-vs-black-male-me",
+      "destination": "/reviews/black-male-me",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-prideflame",
+      "destination": "/reviews/bigstr",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bareback-that-hole-vs-bigstr",
+      "destination": "/reviews/bareback-that-hole",
+      "permanent": true
+    },
+    {
+      "source": "/compare/barebackcumpigs-vs-bigstr",
+      "destination": "/reviews/barebackcumpigs",
+      "permanent": true
+    },
+    {
+      "source": "/compare/barebackrtxxx-vs-bigstr",
+      "destination": "/reviews/barebackrtxxx",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bearchubs-vs-bigstr",
+      "destination": "/reviews/bearchubs",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-gaywire",
+      "destination": "/reviews/gaywire",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-swinginballs",
+      "destination": "/reviews/swinginballs",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-breed-me-raw",
+      "destination": "/reviews/breed-me-raw",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-bullyhim",
+      "destination": "/reviews/bullyhim",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-cumpigmen",
+      "destination": "/reviews/cumpigmen",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-dirtyboyvideo",
+      "destination": "/reviews/dirtyboyvideo",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-dudesraw",
+      "destination": "/reviews/dudesraw",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-hairyandraw",
+      "destination": "/reviews/hairyandraw",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-hard-brit-lads",
+      "destination": "/reviews/hard-brit-lads",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-hiroyaxxx",
+      "destination": "/reviews/hiroyaxxx",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-jawked",
+      "destination": "/reviews/jawked",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-reality-dudes",
+      "destination": "/reviews/reality-dudes",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-squirtstudios",
+      "destination": "/reviews/squirtstudios",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-wuboyz",
+      "destination": "/reviews/wuboyz",
+      "permanent": true
+    },
+    {
+      "source": "/compare/aussiesdoit-vs-bigstr",
+      "destination": "/reviews/aussiesdoit",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bearfilms-vs-bigstr",
+      "destination": "/reviews/bearfilms",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-boysatcamp",
+      "destination": "/reviews/boysatcamp",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-dadcreep",
+      "destination": "/reviews/dadcreep",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-icon-male",
+      "destination": "/reviews/icon-male",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-militarydick",
+      "destination": "/reviews/militarydick",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-rawhole",
+      "destination": "/reviews/rawhole",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-realmenfuck",
+      "destination": "/reviews/realmenfuck",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-sexjapantv",
+      "destination": "/reviews/sexjapantv",
+      "permanent": true
     }
   ]
 }

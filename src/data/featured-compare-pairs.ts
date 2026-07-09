@@ -14,6 +14,7 @@
 
 import { rankComparePairs } from "../lib/compareRanking";
 import { getSiteBySlug, isAffiliated } from "../data/sites";
+import { activeDemotedPairs } from "./compare-demotions";
 
 // Threshold-based selection rather than fixed top-N. Now that every site
 // has an AI review body (the +20 review-bonus is universal), the natural
@@ -70,9 +71,15 @@ export function getFeaturedComparePairs(): Set<string> {
   // Defense-in-depth: also drop any dynamic pair where both sides are
   // unaffiliated, so future scoring shifts can't sneak a zero-revenue
   // pair back into the featured set.
-  cached = new Set(
+  const featured = new Set(
     [...ranked, ...LEGACY_PRERENDERED_PAIRS].filter(hasAffiliateConversionPath),
   );
+  // Staged demotions (FIX 7): pairs in an ACTIVE demotion tranche leave the
+  // featured set — which removes them from the sitemap + prerender and flips
+  // the rendered page to noindex — while vercel.json 301s (kept in sync via
+  // `npm run compare-redirects`) send their traffic to the mapped review.
+  for (const demoted of activeDemotedPairs()) featured.delete(demoted);
+  cached = featured;
   return cached;
 }
 

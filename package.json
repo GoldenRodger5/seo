@@ -20,7 +20,8 @@
     "images:audit": "npx tsx scripts/audit-images.ts",
     "images:process": "npx tsx scripts/process-images.ts",
     "images:validate": "npx tsx scripts/validate-image.ts",
-    "images:check": "npm run images:audit && npm run images:validate"
+    "images:check": "npm run images:audit && npm run images:validate",
+    "compare-redirects": "npx tsx scripts/sync-compare-redirects.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.91.1",
