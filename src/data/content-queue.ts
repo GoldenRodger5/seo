@@ -130,7 +130,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
     // of the Falcon cluster (raging-stallion, hot-house, falcon-edge).
     priority: 10,
     estimated_monthly_searches: 49500,
-    status: "queued",
+    status: "published",
     content_type: "review", editorial_mode: "research-only"},
   {
     name: "Icon Male",
