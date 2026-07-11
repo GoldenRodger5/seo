@@ -154,7 +154,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
     // MONETIZABLE-SOON: Buddy Profits deal pending.
     priority: 10,
     estimated_monthly_searches: 33100,
-    status: "queued",
+    status: "published",
     content_type: "review", editorial_mode: "research-only"},
 
   // ── MONETIZABLE-SOON: Buddy Profits (pending) ───────────────────────────
