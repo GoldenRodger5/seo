@@ -160,7 +160,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
   // ── MONETIZABLE-SOON: Buddy Profits (pending) ───────────────────────────
   // Write the editorial review before the deal closes so it's ready to flip
   // to "ready". Kept in the high band alongside bromo/falcon-studios/active-duty.
-  { name: "Next Door Studios", slug: "next-door-studios", homepage_url: "https://www.nextdoorstudios.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 9, estimated_monthly_searches: 27100, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Next Door Studios", slug: "next-door-studios", homepage_url: "https://www.nextdoorstudios.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 9, estimated_monthly_searches: 27100, status: "published", content_type: "review", editorial_mode: "research-only" },
 
   // ── MONETIZABLE-SOON: AEC/Falcon network (active conversation) ──────────
   // Falcon cluster — falcon-studios is the flagship (above). These three
