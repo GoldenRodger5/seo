@@ -165,7 +165,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
   // ── MONETIZABLE-SOON: AEC/Falcon network (active conversation) ──────────
   // Falcon cluster — falcon-studios is the flagship (above). These three
   // share the same network deal, so they monetize together.
-  { name: "Raging Stallion", slug: "raging-stallion", homepage_url: "https://www.ragingstallion.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 9, estimated_monthly_searches: 22200, status: "queued", content_type: "review", editorial_mode: "research-only" },
+  { name: "Raging Stallion", slug: "raging-stallion", homepage_url: "https://www.ragingstallion.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 9, estimated_monthly_searches: 22200, status: "published", content_type: "review", editorial_mode: "research-only" },
   { name: "Hot House", slug: "hot-house", homepage_url: "https://www.hothouse.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 9, estimated_monthly_searches: 14800, status: "queued", content_type: "review", editorial_mode: "research-only" },
   { name: "Falcon Edge", slug: "falcon-edge", homepage_url: "https://www.falconedge.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 9, estimated_monthly_searches: 8100, status: "queued", content_type: "review", editorial_mode: "research-only" },
 
