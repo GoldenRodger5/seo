@@ -1335,6 +1335,38 @@ function commitAndPush(message: string): string {
 // ---------------------------------------------------------------------------
 // Indexing pings (Part 3I, 3J)
 // ---------------------------------------------------------------------------
+/**
+ * Resubmit the sitemap via the Search Console Sitemaps API after a publish.
+ * This is the RELIABLE discovery path for new URLs: Google only re-fetches
+ * sitemap.xml on its own schedule (observed gap: last download Jul 9 while
+ * three new money reviews shipped Jul 10–12 and sat "unknown to Google"),
+ * and the Indexing API ping below is officially scoped to JobPosting pages —
+ * a weak nudge for regular content. Resubmission triggers a prompt re-fetch,
+ * which is how each day's new page actually enters Google's discovery queue.
+ */
+async function resubmitSitemap(): Promise<boolean> {
+  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+  if (!raw) return false;
+  try {
+    const decoded = raw.startsWith("{") ? raw : Buffer.from(raw, "base64").toString("utf-8");
+    const auth = new GoogleAuth({
+      credentials: JSON.parse(decoded),
+      scopes: ["https://www.googleapis.com/auth/webmasters"],
+    });
+    const client = await auth.getClient();
+    const prop = encodeURIComponent(`${BASE_URL}/`);
+    await client.request({
+      url: `https://www.googleapis.com/webmasters/v3/sites/${prop}/sitemaps/${encodeURIComponent(`${BASE_URL}/sitemap.xml`)}`,
+      method: "PUT",
+    });
+    log.info("Sitemap resubmitted to Google (prompt re-fetch → new URL discovery)");
+    return true;
+  } catch (e) {
+    log.warn(`Sitemap resubmit failed: ${(e as Error).message?.slice(0, 140)}`);
+    return false;
+  }
+}
+
 async function pingGoogle(url: string): Promise<boolean> {
   const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
   if (!raw) {
@@ -1986,7 +2018,7 @@ async function runImproveMode(
     }
     const pageUrl = `${BASE_URL}${task.route}`;
     log.info(`Submitting improved page to crawlers: ${pageUrl}`);
-    await Promise.all([pingGoogle(pageUrl), pingBing(pageUrl)]);
+    await Promise.all([pingGoogle(pageUrl), pingBing(pageUrl), resubmitSitemap()]);
     log.info(`Done (improve). ${pageUrl}`);
     return true;
   }
@@ -2210,7 +2242,7 @@ async function main() {
   }
   const [googleOk, bingOk] = isNoindexComparison
     ? [false, false]
-    : (log.info(`Submitting to crawlers: ${pageUrl}`), await Promise.all([pingGoogle(pageUrl), pingBing(pageUrl)]));
+    : (log.info(`Submitting to crawlers: ${pageUrl}`), await Promise.all([pingGoogle(pageUrl), pingBing(pageUrl), resubmitSitemap()]).then((r) => [r[0], r[1]] as [boolean, boolean]));
 
   // ── Supabase log ──────────────────────────────────────────────────────
   await logToSupabase(buildLogRow({ generated, target, contentType, imageUrl, build, commitHash, googleOk, bingOk }));
