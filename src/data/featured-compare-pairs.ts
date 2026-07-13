@@ -51,13 +51,27 @@ const LEGACY_PRERENDERED_PAIRS = [
   "athletic-twinks-vs-southern-strokes",
 ] as const;
 
-/** A featured pair needs at least one affiliated side to be monetizable. */
+/**
+ * A featured pair needs at least one affiliated side to be monetizable, and
+ * NEITHER side may be editorial-only or pending-review. Featured compares are
+ * indexable commercial surfaces — the owner's standing constraint keeps
+ * non-commercial sites out of those. This is also the anti-reflood guard:
+ * when the engine published 4 editorial-only money reviews (Jul 9–12), the
+ * score-derived featured set silently regrew 161 → 344 pairs (183 templated
+ * compares against the new sites) — the exact flood the staged demotion is
+ * draining. Every future editorial-only publish would do the same without
+ * this exclusion.
+ */
 function hasAffiliateConversionPath(pairSlug: string): boolean {
   const m = pairSlug.match(/^(.+)-vs-(.+)$/);
   if (!m) return false;
   const a = getSiteBySlug(m[1]);
   const b = getSiteBySlug(m[2]);
-  return Boolean((a && isAffiliated(a)) || (b && isAffiliated(b)));
+  if (!a || !b) return false;
+  const nonCommercial = (s: typeof a) =>
+    s.editorial_status === "editorial-only" || s.editorial_status === "pending-review";
+  if (nonCommercial(a) || nonCommercial(b)) return false;
+  return isAffiliated(a) || isAffiliated(b);
 }
 
 let cached: Set<string> | null = null;
