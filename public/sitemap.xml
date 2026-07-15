@@ -611,6 +611,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://twinkvault.com/reviews/falcon-edge</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://twinkvault.com/discount/helix-studios</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -957,6 +962,11 @@
   </url>
   <url>
     <loc>https://twinkvault.com/discount/hot-house</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://twinkvault.com/discount/falcon-edge</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

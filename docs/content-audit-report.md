@@ -1,8 +1,8 @@
-# Content Audit Report — 2026-07-14
+# Content Audit Report — 2026-07-15
 
 ## Critical findings
 
-**🚨 0 / 402 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 404 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -31,18 +31,18 @@ The repo contains substantial editorial content in TS data files. None of it cur
 | Page type | Count | Median body words (prerendered) | Min | Max | Verdict |
 | --- | ---: | ---: | ---: | ---: | --- |
 | compare | 161 | 753 | 667 | 1967 | HEALTHY |
-| discount | 70 | 835 | 774 | 889 | HEALTHY |
-| review | 70 | 1118 | 730 | 1855 | HEALTHY |
-| landing | 29 | 943 | 228 | 5509 | HEALTHY |
+| discount | 71 | 835 | 774 | 889 | HEALTHY |
+| review | 71 | 1118 | 730 | 1872 | HEALTHY |
+| landing | 29 | 943 | 228 | 5770 | HEALTHY |
 | niche | 21 | 765 | 488 | 2691 | HEALTHY |
 | other | 16 | 904 | 382 | 2023 | HEALTHY |
 | guide | 7 | 2346 | 2129 | 2555 | HEALTHY |
 | legal | 6 | 761 | 360 | 1005 | HEALTHY |
 | blog | 6 | 1689 | 1490 | 1842 | HEALTHY |
-| category | 6 | 1537 | 531 | 2789 | HEALTHY |
-| utility | 5 | 275 | 233 | 12402 | HEALTHY |
+| category | 6 | 1537 | 531 | 2851 | HEALTHY |
+| utility | 5 | 275 | 233 | 12753 | HEALTHY |
 | alternatives | 4 | 731 | 719 | 751 | HEALTHY |
-| homepage | 1 | 653 | 653 | 653 | HEALTHY |
+| homepage | 1 | 651 | 651 | 651 | HEALTHY |
 
 ## Flag breakdown across all routes
 
@@ -62,9 +62,9 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 ## Review page deep-dive
 
-- **Page count:** 70
+- **Page count:** 71
 - **AI content rendering:** `AI_CONTENT_CLIENT_ONLY`. Static reviewBodies map exists with ~275 median words per site, but the prose only mounts into the DOM after `useAIReview` runs client-side.
-- **Prerendered body word counts:** every review page is in the 730–1855 word range (NoScript + page chrome only).
+- **Prerendered body word counts:** every review page is in the 730–1872 word range (NoScript + page chrome only).
 
 ## Worst-offender routes (smallest prerendered body)
 
@@ -90,14 +90,14 @@ Sorted ascending by body word count. Top 30:
 | /niche/latin | niche | 497 | 31.1 | WORD_COUNT_LOW |
 | /niche/big-dick | niche | 510 | 31.1 | WORD_COUNT_LOW |
 | /category/free-trials | category | 531 | 43.6 | WORD_COUNT_LOW |
-| /gay-porn-sites-ranked | other | 557 | 122.8 |  |
+| /gay-porn-sites-ranked | other | 561 | 123.8 |  |
 | /free-trial-twink-sites | landing | 573 | 43.2 |  |
 | /best-asian-gay-sites | landing | 611 | 66.9 |  |
 | /niche/solo | niche | 611 | 37.3 | WORD_COUNT_LOW |
 | /niche/uncut | niche | 612 | 37.0 | WORD_COUNT_LOW |
 | /best-daddy-twink-sites | landing | 640 | 67.1 |  |
 | /gay-dating-sites | utility | 645 | 27.0 |  |
-| / | homepage | 653 | 84.0 |  |
+| / | homepage | 651 | 84.0 |  |
 | /compare/bigstr-vs-twinktrade | compare | 667 | 55.7 |  |
 | /compare/alternadudes-vs-bigstr | compare | 668 | 55.9 |  |
 | /compare/bigstr-vs-trailertrashboys | compare | 669 | 56.1 |  |
