@@ -415,7 +415,7 @@ const backlogEntries: SupportingQueueEntry[] = [
 ];
 
 const guideEntries: SupportingQueueEntry[] = [
-  { title: "How To Choose A Gay Porn Site", slug: "how-to-choose-gay-porn-site", content_type: "guide", target_keyword: "how to choose gay porn site", related_sites: TOP_10_SLUGS, priority: 7, status: "queued" },
+  { title: "How To Choose A Gay Porn Site", slug: "how-to-choose-gay-porn-site", content_type: "guide", target_keyword: "how to choose gay porn site", related_sites: TOP_10_SLUGS, priority: 7, status: "published" },
   { title: "Gay Porn Memberships Explained", slug: "gay-porn-memberships-explained", content_type: "guide", target_keyword: "gay porn memberships", related_sites: TOP_10_SLUGS, priority: 6, status: "queued" },
   { title: "How To Cancel A Gay Porn Subscription", slug: "how-to-cancel-gay-porn-subscription", content_type: "guide", target_keyword: "cancel gay porn subscription", related_sites: TOP_10_SLUGS, priority: 6, status: "queued" },
   { title: "Best Gay Porn Sites For Beginners", slug: "best-gay-porn-sites-for-beginners", content_type: "guide", target_keyword: "gay porn sites for beginners", related_sites: ["next-door-world", "next-door-twink", "helix-studios", "twinks-in-shorts"], priority: 7, status: "queued" },
