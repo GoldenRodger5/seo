@@ -2,7 +2,7 @@
 
 ## Critical findings
 
-**🚨 0 / 405 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 388 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -30,12 +30,12 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Page type | Count | Median body words (prerendered) | Min | Max | Verdict |
 | --- | ---: | ---: | ---: | ---: | --- |
-| compare | 161 | 753 | 667 | 1967 | HEALTHY |
+| compare | 143 | 758 | 620 | 1967 | HEALTHY |
 | discount | 71 | 835 | 774 | 889 | HEALTHY |
-| review | 71 | 1118 | 730 | 1872 | HEALTHY |
+| review | 71 | 1100 | 730 | 1872 | HEALTHY |
 | landing | 29 | 943 | 228 | 5770 | HEALTHY |
 | niche | 21 | 765 | 488 | 2691 | HEALTHY |
-| other | 16 | 904 | 382 | 2023 | HEALTHY |
+| other | 17 | 904 | 382 | 2038 | HEALTHY |
 | guide | 8 | 2346 | 2129 | 2555 | HEALTHY |
 | legal | 6 | 761 | 360 | 1005 | HEALTHY |
 | blog | 6 | 1689 | 1490 | 1842 | HEALTHY |
@@ -54,10 +54,10 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 ## Compare page deep-dive
 
-- **Page count:** 161
+- **Page count:** 143
 - **Template source:** `src/pages/ComparePage.tsx` (runtime React component, hydrated client-side).
 - **Per-pair content source:** `src/data/comparison-content.ts` (~11,544 words across all pairs combined, never prerendered).
-- **All 161 compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.
+- **All 143 compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.
 - **Kill-list recommendation:** until prerendering is fixed, the kill-list question is moot. Once Google can see content, then evaluate pairs by (a) neither site in top-10, (b) <5 GSC impressions/30d.
 
 ## Review page deep-dive
@@ -95,13 +95,13 @@ Sorted ascending by body word count. Top 30:
 | /best-asian-gay-sites | landing | 611 | 66.9 |  |
 | /niche/solo | niche | 611 | 37.3 | WORD_COUNT_LOW |
 | /niche/uncut | niche | 612 | 37.0 | WORD_COUNT_LOW |
+| /compare/hard-brit-lads-vs-prideflame | compare | 620 | 53.4 |  |
 | /best-daddy-twink-sites | landing | 640 | 67.1 |  |
+| /compare/bareback-that-hole-vs-brothercrush | compare | 644 | 54.8 |  |
+| /compare/prideflame-vs-southern-strokes | compare | 644 | 54.5 |  |
 | /gay-dating-sites | utility | 645 | 27.0 |  |
 | / | homepage | 651 | 84.0 |  |
-| /compare/bigstr-vs-twinktrade | compare | 667 | 55.7 |  |
-| /compare/alternadudes-vs-bigstr | compare | 668 | 55.9 |  |
-| /compare/bigstr-vs-trailertrashboys | compare | 669 | 56.1 |  |
-| /compare/dudesraw-vs-spicevidsgay | compare | 675 | 56.6 |  |
+| /compare/barebackcumpigs-vs-militarydick | compare | 663 | 55.9 |  |
 
 ## Auto-generation pipeline assessment
 

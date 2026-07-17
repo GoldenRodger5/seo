@@ -1268,6 +1268,46 @@ function runBuild(): { passed: boolean; commitHash: string } {
 }
 
 /**
+ * Publish-integrity gate: after the build, before commit/push, verify the
+ * new page ACTUALLY EXISTS as served output. Catches the invisible-publish
+ * class of failure — on 2026-07-17 the engine generated isworthit content
+ * for a slug with no route; the build "succeeded", the sitemap gained the
+ * URL, Google was pinged… and the URL served the homepage via SPA fallback.
+ * A page that fails these checks must never ship: (1) prerendered HTML file
+ * exists for the route, (2) it carries a non-homepage <title>, (3) its
+ * canonical matches the route, (4) it is NOT noindex, (5) the route is in
+ * the generated sitemap.
+ */
+function verifyPublishIntegrity(routePath: string): { ok: boolean; problems: string[] } {
+  const problems: string[] = [];
+  const fileRel = routePath === "/" ? "index.html" : `${routePath.replace(/^\//, "")}/index.html`;
+  const distFile = resolve(ROOT, "dist", fileRel);
+  if (!existsSync(distFile)) {
+    problems.push(`no prerendered HTML at dist/${fileRel} — route missing from prerender (would serve the homepage shell)`);
+    return { ok: false, problems };
+  }
+  const html = readFileSync(distFile, "utf-8");
+  const title = (html.match(/<title>([^<]*)<\/title>/) ?? [])[1] ?? "";
+  if (!title || /^TwinkVault — Best Gay Twink Sites/.test(title)) {
+    problems.push(`prerendered <title> is missing or the homepage default ("${title.slice(0, 60)}") — page not actually rendered`);
+  }
+  const canonical = (html.match(/<link rel="canonical" href="([^"]*)"/) ?? [])[1] ?? "";
+  if (canonical !== `${BASE_URL}${routePath}`) {
+    problems.push(`canonical "${canonical}" ≠ expected "${BASE_URL}${routePath}"`);
+  }
+  if (/<meta name="robots" content="[^"]*noindex/.test(html)) {
+    problems.push("page renders noindex — published content would be excluded from the index");
+  }
+  try {
+    const sitemap = readFileSync(resolve(ROOT, "public/sitemap.xml"), "utf-8");
+    if (!sitemap.includes(`<loc>${BASE_URL}${routePath}</loc>`)) {
+      problems.push("route missing from generated sitemap.xml — Google has no discovery path");
+    }
+  } catch { problems.push("sitemap.xml unreadable"); }
+  return { ok: problems.length === 0, problems };
+}
+
+/**
  * Print a full inspection report for a freshly-generated page from its
  * prerendered HTML in dist/. Used by --inspect. Read-only on dist/.
  */
@@ -1987,6 +2027,20 @@ async function runImproveMode(
 
     const build = runBuild();
 
+    if (build.passed) {
+      const integrity = verifyPublishIntegrity(task.route);
+      if (!integrity.ok) {
+        log.err(`Publish integrity FAILED for improved ${task.route}:`);
+        for (const pr of integrity.problems) log.err(`  ✗ ${pr}`);
+        for (const [f, content] of snapshots) {
+          try { writeFileSync(f, content, "utf-8"); } catch { /* */ }
+        }
+        log.info("Rolled back improvement edits.");
+        return false;
+      }
+      log.info(`Publish integrity ✓ ${task.route}`);
+    }
+
     if (flags.inspect) {
       printInspectionReport(task.route, build.passed, generated);
       for (const [f, content] of snapshots) {
@@ -2145,8 +2199,39 @@ async function main() {
     markQueuePublished(entry.slug, "supporting");
   }
 
+  // Route this publish must serve at (also used for pings below).
+  const publishRoute = (() => {
+    if (target.kind === "review") return `/reviews/${target.entry.slug}`;
+    const slug = target.entry.slug;
+    switch (contentType) {
+      case "comparison": return `/compare/${canonicalComparePairSlug(slug.replace(/^compare\//, ""))}`;
+      case "alternatives":
+        return ["helix-studios-alternatives", "sean-cody-alternatives", "nakedsword-alternatives"].includes(slug)
+          ? `/${slug}` : `/alternatives/${slug.replace(/-alternatives$/, "")}`;
+      case "isworthit": return `/is-${slug}-worth-it`;
+      case "guide": return `/guide/${slug.replace(/^guide\//, "")}`;
+      case "discount": return `/discount/${slug}`;
+      default: return `/${slug}`;
+    }
+  })();
+
   // ── Build ─────────────────────────────────────────────────────────────
   const build = runBuild();
+
+  // ── Publish-integrity gate: the page must actually be served ──────────
+  if (build.passed) {
+    const integrity = verifyPublishIntegrity(publishRoute);
+    if (!integrity.ok) {
+      log.err(`Publish integrity FAILED for ${publishRoute} — refusing to ship invisible/broken content:`);
+      for (const pr of integrity.problems) log.err(`  ✗ ${pr}`);
+      for (const [f, content] of snapshots) {
+        try { writeFileSync(f, content, "utf-8"); } catch { /* */ }
+      }
+      log.info("Rolled back all edits. Queue unchanged; fix the route/prerender wiring before this item can publish.");
+      process.exit(0);
+    }
+    log.info(`Publish integrity ✓ ${publishRoute} (prerendered, titled, canonical, indexable, sitemapped)`);
+  }
 
   // ── Inspect mode: report from prerendered HTML, then restore everything ─
   // True end-to-end QA — live generation + real build/prerender — but leaves
@@ -2202,35 +2287,7 @@ async function main() {
   // URL construction must match the actual frontend route — IndexNow and
   // Google Indexing API both 404 silently on bad URLs, so getting this
   // right is the difference between a same-day crawl and a 2-week wait.
-  const pageUrl = (() => {
-    if (target.kind === "review") return `${BASE_URL}/reviews/${target.entry.slug}`;
-    const slug = target.entry.slug;
-    switch (contentType) {
-      case "comparison":
-        // Queue slugs are "compare/{a}-vs-{b}" in queue order, which may not be
-        // alphabetical. Canonicalize to the alphabetical form — that's the URL
-        // that's actually prerendered + in the sitemap + self-canonical, so it's
-        // the one crawlers should be pointed at (not the SPA-shell duplicate).
-        return `${BASE_URL}/compare/${canonicalComparePairSlug(slug.replace(/^compare\//, ""))}`;
-      case "alternatives":
-        // queue slugs are "{site}-alternatives". Three legacy hand-routed
-        // pages live at the bare path; everything else uses the generic
-        // /alternatives/{site} route. Both are honored — the daily engine
-        // pings the path that actually renders.
-        if (["helix-studios-alternatives", "sean-cody-alternatives", "nakedsword-alternatives"].includes(slug)) {
-          return `${BASE_URL}/${slug}`;
-        }
-        return `${BASE_URL}/alternatives/${slug.replace(/-alternatives$/, "")}`;
-      case "isworthit":
-        return `${BASE_URL}/is-${slug}-worth-it`;
-      case "guide":
-        return `${BASE_URL}/guide/${slug.replace(/^guide\//, "")}`;
-      case "discount":
-        return `${BASE_URL}/discount/${slug}`;
-      default:
-        return `${BASE_URL}/${slug}`;
-    }
-  })();
+  const pageUrl = `${BASE_URL}${publishRoute}`;
   // Don't ping crawlers for a comparison that renders noindex (non-featured
   // pairs are deliberately noindex to avoid near-duplicate flagging across the
   // combinatorial pair space). Telling Google/Bing to crawl a noindex URL is

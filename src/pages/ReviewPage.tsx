@@ -198,6 +198,19 @@ const ReviewPage = () => {
             description: site.short_description,
             brand: { "@type": "Brand", name: site.name },
             url: site.homepage_url,
+            // Google's Product validator wants aggregateRating/review on the
+            // nested Product too (GSC flagged "Missing field aggregateRating")
+            // — required for review-star snippet eligibility.
+            ...(site.overall_score > 0 ? {
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: site.overall_score,
+                bestRating: 5,
+                worstRating: 1,
+                reviewCount: 1,
+                ratingCount: 1,
+              },
+            } : {}),
             ...(annualPerMo > 0 ? {
               offers: {
                 "@type": "AggregateOffer",
