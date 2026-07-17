@@ -80,6 +80,8 @@ import {
   IsSayUncleWorthIt,
   IsRawHoleWorthIt,
   IsAthleticTwinksWorthIt,
+  dynamicWorthItSlugs,
+  DynamicWorthIt,
 } from "./pages/seo/WorthItRoutes";
 import NotFound from "./pages/NotFound";
 
@@ -207,6 +209,10 @@ export const AppRoutes = () => (
     <Route path="/is-sayuncle-worth-it" element={<IsSayUncleWorthIt />} />
     <Route path="/is-rawhole-worth-it" element={<IsRawHoleWorthIt />} />
     <Route path="/is-athletic-twinks-worth-it" element={<IsAthleticTwinksWorthIt />} />
+    {/* Auto-routed worth-it pages: any ISWORTHIT_CONTENT key beyond the hand-routed set. */}
+    {dynamicWorthItSlugs.map((slug) => (
+      <Route key={slug} path={`/is-${slug}-worth-it`} element={<DynamicWorthIt slug={slug} />} />
+    ))}
     <Route path="/admin/login" element={<Suspense fallback={<PageLoader />}><AdminLogin /></Suspense>} />
     <Route path="/admin/callback" element={<Suspense fallback={<PageLoader />}><AdminCallback /></Suspense>} />
     <Route path="/admin" element={<Suspense fallback={<PageLoader />}><RequireAdmin><AdminDashboard /></RequireAdmin></Suspense>} />

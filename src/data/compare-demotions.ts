@@ -38,7 +38,6 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
     active: true,
     pairs: [
       { pair: "bigstr-vs-black-male-me", dest: "/reviews/black-male-me" },
-      { pair: "bigstr-vs-prideflame", dest: "/reviews/bigstr" },
       { pair: "bareback-that-hole-vs-bigstr", dest: "/reviews/bareback-that-hole" },
       { pair: "barebackcumpigs-vs-bigstr", dest: "/reviews/barebackcumpigs" },
       { pair: "barebackrtxxx-vs-bigstr", dest: "/reviews/barebackrtxxx" },
@@ -56,7 +55,6 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
       { pair: "bigstr-vs-jawked", dest: "/reviews/jawked" },
       { pair: "bigstr-vs-reality-dudes", dest: "/reviews/reality-dudes" },
       { pair: "bigstr-vs-squirtstudios", dest: "/reviews/squirtstudios" },
-      { pair: "bigstr-vs-wuboyz", dest: "/reviews/wuboyz" },
       { pair: "aussiesdoit-vs-bigstr", dest: "/reviews/aussiesdoit" },
       { pair: "bearfilms-vs-bigstr", dest: "/reviews/bearfilms" },
       { pair: "bigstr-vs-boysatcamp", dest: "/reviews/boysatcamp" },
@@ -70,7 +68,7 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
   },
   {
     tranche: 2,
-    active: false,
+    active: true,
     pairs: [
       { pair: "bigstr-vs-touch-that-boy", dest: "/reviews/touch-that-boy" },
       { pair: "bigstr-vs-trailertrashboys", dest: "/reviews/trailertrashboys" },
@@ -220,7 +218,6 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
       { pair: "maleaccess-vs-sayuncle", dest: "/reviews/sayuncle" },
       { pair: "men-vs-spicevidsgay", dest: "/reviews/men" },
       { pair: "sean-cody-vs-spicevidsgay", dest: "/reviews/sean-cody" },
-      { pair: "maleaccess-vs-men", dest: "/reviews/men" },
       { pair: "maleaccess-vs-sean-cody", dest: "/reviews/sean-cody" },
       { pair: "bigstr-vs-twinks-in-shorts", dest: "/reviews/twinks-in-shorts" },
       { pair: "bigstr-vs-next-door-world", dest: "/reviews/bigstr" },

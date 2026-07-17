@@ -74,6 +74,29 @@ function hasAffiliateConversionPath(pairSlug: string): boolean {
   return isAffiliated(a) || isAffiliated(b);
 }
 
+/**
+ * Pairs PINNED into the featured set because GSC shows real impressions
+ * (≥10 in the trailing 3 months, Performance export 2026-07-17) — the
+ * demotion plan's standing rule is to spare earners. Score-drift had pushed
+ * most of these out of the threshold set (some were even orphan-redirected)
+ * while they were among the few pages Google actually served. Canonical
+ * order; still subject to the commercial guard below. Re-audit against GSC
+ * quarterly — drop any that stop earning.
+ */
+const PINNED_EARNING_PAIRS = [
+  "bareback-that-hole-vs-brothercrush", // 167 imp
+  "barebackcumpigs-vs-boysatcamp",      // 148 imp (GSC saw boysatcamp-first order)
+  "barebackcumpigs-vs-militarydick",    // 122 imp
+  "barebackrtxxx-vs-wuboyz",            // 120 imp
+  "boysatcamp-vs-yesfather",            // 78 imp
+  "prideflame-vs-southern-strokes",     // 15 imp
+  "bigstr-vs-wuboyz",                   // 15 imp (spared from tranche 1)
+  "barebackrtxxx-vs-cumpigmen",         // 11 imp
+  "hard-brit-lads-vs-prideflame",       // 10 imp
+  "bigstr-vs-prideflame",               // 10 imp (spared from tranche 1)
+  "familydick-vs-trailertrashboys",     // 10 imp
+];
+
 let cached: Set<string> | null = null;
 
 /** Returns the canonical featured-pairs Set (memoized). */
@@ -86,7 +109,7 @@ export function getFeaturedComparePairs(): Set<string> {
   // unaffiliated, so future scoring shifts can't sneak a zero-revenue
   // pair back into the featured set.
   const featured = new Set(
-    [...ranked, ...LEGACY_PRERENDERED_PAIRS].filter(hasAffiliateConversionPath),
+    [...ranked, ...LEGACY_PRERENDERED_PAIRS, ...PINNED_EARNING_PAIRS].filter(hasAffiliateConversionPath),
   );
   // Staged demotions (FIX 7): pairs in an ACTIVE demotion tranche leave the
   // featured set — which removes them from the sitemap + prerender and flips

@@ -55,8 +55,6 @@ export const ORPHANED_COMPARE_REDIRECTS: CompareDemotion[] = [
   { pair: "next-door-world-vs-bareback-that-hole", dest: "/reviews/bareback-that-hole" },
   { pair: "jawked-vs-squirtstudios", dest: "/reviews/jawked" },
   { pair: "squirtstudios-vs-jawked", dest: "/reviews/jawked" },
-  { pair: "barebackcumpigs-vs-boysatcamp", dest: "/reviews/boysatcamp" },
-  { pair: "boysatcamp-vs-barebackcumpigs", dest: "/reviews/boysatcamp" },
   { pair: "breed-me-raw-vs-japanboyz", dest: "/reviews/japanboyz" },
   { pair: "japanboyz-vs-breed-me-raw", dest: "/reviews/japanboyz" },
   { pair: "southern-strokes-vs-touch-that-boy", dest: "/reviews/southern-strokes" },

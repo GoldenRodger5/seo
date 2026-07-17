@@ -51,6 +51,7 @@ import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.
 import { BLOG_POSTS, BLOG_CATEGORIES } from "../src/data/blog-posts.js";
 import { ALTERNATIVES_CONTENT } from "../src/data/alternatives-content.js";
 import { GUIDE_CONTENT } from "../src/data/guide-content.js";
+import { ISWORTHIT_CONTENT } from "../src/data/isworthit-content.js";
 import { selectGuideHero } from "../src/lib/guideImagery.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -233,6 +234,30 @@ for (const key of Object.keys(ALTERNATIVES_CONTENT)) {
     path: `/alternatives/${siteSlug}`,
     title: `${site.name} Alternatives (${YEAR}) | TwinkVault`,
     description: `The best alternatives to ${site.name} — ranked by overlap on content style, pricing, library depth, and update frequency. Honest reviews, updated for ${YEAR}.`,
+  });
+}
+
+// Dynamic worth-it routes — ISWORTHIT_CONTENT keys beyond the 10 hand-routed
+// slugs (which are already in the static route list). Same title trim as
+// guides so prerendered <title> matches the hydrated Helmet output.
+const HAND_ROUTED_WORTHIT = new Set([
+  "nakedsword", "sean-cody", "helix-studios", "men", "twinks-in-shorts",
+  "southern-strokes", "peterfever", "sayuncle", "rawhole", "athletic-twinks",
+]);
+for (const slug of Object.keys(ISWORTHIT_CONTENT)) {
+  if (HAND_ROUTED_WORTHIT.has(slug)) continue;
+  const body = ISWORTHIT_CONTENT[slug];
+  const withSuffix = `${body.h1} | TwinkVault`;
+  const wTitle =
+    withSuffix.length <= 60 ? withSuffix
+    : body.h1.length <= 60 ? body.h1
+    : body.h1.slice(0, 57) + "…";
+  const wHero = selectGuideHero([slug]);
+  routes.push({
+    path: `/is-${slug}-worth-it`,
+    title: wTitle,
+    description: body.meta_description,
+    ogImage: wHero && wHero.hero_site_slug === slug ? `${BASE_URL}${wHero.hero_image}` : undefined,
   });
 }
 

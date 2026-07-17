@@ -6,6 +6,7 @@ import { getFeaturedComparePairsList } from "../src/data/featured-compare-pairs.
 import { BLOG_POSTS, BLOG_CATEGORIES } from "../src/data/blog-posts.js";
 import { ALTERNATIVES_CONTENT } from "../src/data/alternatives-content.js";
 import { GUIDE_CONTENT } from "../src/data/guide-content.js";
+import { ISWORTHIT_CONTENT } from "../src/data/isworthit-content.js";
 import { readFileSync } from "fs";
 
 // Per-route lastmod stamps written by generate-daily-content.ts whenever
@@ -260,6 +261,18 @@ for (const key of Object.keys(ALTERNATIVES_CONTENT)) {
   urls.push(urlEntry({ loc: path, changefreq: "monthly", priority: "0.7", lastmod: lastmodFor(path) }));
   altCount++;
 }
+// Dynamic worth-it pages (ISWORTHIT_CONTENT keys beyond the 10 static
+// corePages entries above).
+const STATIC_WORTHIT = new Set([
+  "nakedsword", "sean-cody", "helix-studios", "men", "twinks-in-shorts",
+  "southern-strokes", "peterfever", "sayuncle", "rawhole", "athletic-twinks",
+]);
+for (const slug of Object.keys(ISWORTHIT_CONTENT)) {
+  if (STATIC_WORTHIT.has(slug)) continue;
+  const path = `/is-${slug}-worth-it`;
+  urls.push(urlEntry({ loc: path, changefreq: "monthly", priority: "0.6", lastmod: lastmodFor(path) }));
+}
+
 // /guides hub — higher priority than individual guides (it's the index).
 urls.push(urlEntry({ loc: "/guides", changefreq: "weekly", priority: "0.8", lastmod: lastmodFor("/guides") }));
 let guideCount = 0;
