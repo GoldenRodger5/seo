@@ -103,7 +103,7 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
   },
   {
     tranche: 3,
-    active: false,
+    active: true,
     pairs: [
       { pair: "spicevidsgay-vs-swinginballs", dest: "/reviews/spicevidsgay" },
       { pair: "bareback-that-hole-vs-maleaccess", dest: "/reviews/maleaccess" },

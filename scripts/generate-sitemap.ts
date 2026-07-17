@@ -123,7 +123,6 @@ const corePages = [
   // Generic /alternatives/{slug} and /guide/{slug} routes are appended
   // dynamically below from the content data maps.
   "/best-gay-sites-for-beginners",
-  "/best-gay-twink-sites-2026",
   "/best-gay-sites-with-downloads",
   "/best-daddy-twink-sites",
   "/best-twink-porn-sites-with-free-trials",

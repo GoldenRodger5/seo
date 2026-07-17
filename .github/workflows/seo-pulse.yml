@@ -1,0 +1,55 @@
+name: Weekly SEO Pulse
+
+on:
+  schedule:
+    # Mondays 13:00 UTC (9am ET) — after the weekend's GSC data settles.
+    - cron: "0 13 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run SEO pulse
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: npx tsx scripts/seo-pulse.ts
+
+      - name: Commit report
+        run: |
+          git config user.email "isaac.m.builds@gmail.com"
+          git config user.name "TwinkVault SEO Pulse"
+          git add docs/seo-pulse-history.json docs/seo-pulse/ docs/seo-pulse-verdict.txt
+          git diff --cached --quiet || git commit -m "chore(seo-pulse): weekly report $(date -u +%F)"
+          git push
+
+      - name: Raise the alarm on a sustained stall
+        run: |
+          VERDICT=$(head -1 docs/seo-pulse-verdict.txt)
+          STREAK=$(grep -o 'stall_streak=[0-9]*' docs/seo-pulse-verdict.txt | cut -d= -f2)
+          echo "verdict=$VERDICT streak=$STREAK"
+          if [ "$VERDICT" = "STALLED" ] && [ "$STREAK" -ge 2 ]; then
+            gh issue create \
+              --title "🚨 SEO STALLED: no impression growth for $STREAK straight weeks" \
+              --body "$(cat docs/seo-pulse/$(ls docs/seo-pulse | tail -1))
+
+Two consecutive STALLED pulses. Per the recovery plan this triggers escalation: content-consolidation pass, backlink review, and a re-audit. Open the latest report above and act — do not wait another cycle." \
+              --label "seo" || true
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

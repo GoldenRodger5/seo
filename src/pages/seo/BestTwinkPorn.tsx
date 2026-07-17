@@ -19,7 +19,7 @@ const BestTwinkPorn = () => (
     closing={`Content quality and value usually correlate but not always. NakedSword wins on overall score but its breadth means twink content is one slice of a much larger library — if you only watch twink content, a focused studio like Twinks in Shorts or Twinkpop gets you better per-scene quality at the same price.\n\nThe ChargedCash family-fantasy sites (Family Dick, Brother Crush, Missionary Boys) consistently rank high on production quality for twink-focused content even though they're niche-specific.`}
     related={[
       { to: "/best-twink-sites", label: "Twink sites by value" },
-      { to: "/best-gay-twink-sites-2026", label: "2026 leaderboard" },
+      { to: "/best-twink-sites", label: "2026 leaderboard" },
     ]}
   />
 );

@@ -22,7 +22,8 @@
     "images:validate": "npx tsx scripts/validate-image.ts",
     "images:check": "npm run images:audit && npm run images:validate",
     "compare-redirects": "npx tsx scripts/sync-compare-redirects.ts",
-    "index-check": "npx tsx scripts/check-index-states.ts"
+    "index-check": "npx tsx scripts/check-index-states.ts",
+    "seo-pulse": "npx tsx scripts/seo-pulse.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.91.1",

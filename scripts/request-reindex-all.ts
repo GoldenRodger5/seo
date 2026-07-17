@@ -38,7 +38,7 @@ const SEO_LANDING_SLUGS = [
   "/top-sites","/reviews","/best-deals","/compare","/best-twink-sites",
   "/free-trial-twink-sites","/cheapest-twink-sites","/best-bareback-gay-sites",
   "/best-asian-gay-sites","/best-amateur-gay-sites","/best-premium-gay-sites",
-  "/best-daddy-twink-sites","/best-gay-sites-under-10","/best-gay-twink-sites-2026",
+  "/best-daddy-twink-sites","/best-gay-sites-under-10",
   "/best-gay-porn-sites","/best-twink-porn-sites","/best-value-gay-porn-sites",
   "/gay-porn-sites-ranked","/gay-porn-site-reviews",
 ];

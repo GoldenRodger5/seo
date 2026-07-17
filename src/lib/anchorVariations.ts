@@ -108,7 +108,7 @@ export const ANCHOR_VARIATIONS: Record<string, AnchorPool> = {
     "most content per dollar",
     "high-value gay porn picks",
   ],
-  "/best-gay-twink-sites-2026": [
+  "/best-twink-sites": [
     "best twink sites 2026 leaderboard",
     "top twink picks for 2026",
     "2026 twink rankings",
