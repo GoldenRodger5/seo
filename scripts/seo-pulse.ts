@@ -27,7 +27,7 @@ const HISTORY = resolve(ROOT, "docs/seo-pulse-history.json");
 const REPORT_DIR = resolve(ROOT, "docs/seo-pulse");
 
 /** Head terms the site historically ranked page-1 for — the recovery gauge. */
-const TRACKED_QUERIES = ["best twink sites", "twink sites", "best gay twink sites", "twink websites"];
+const TRACKED_QUERIES = ["best twink sites", "twink sites", "best gay twink sites", "twink websites", "twinktrade discount", "brothercrush review", "wuboyz", "militarydick review", "boysatcamp review"];
 
 /** Money pages whose index state we track (URL Inspection). */
 const TRACKED_PAGES = [
@@ -38,6 +38,7 @@ const TRACKED_PAGES = [
   "/reviews/bromo", "/reviews/falcon-studios", "/reviews/active-duty",
   "/reviews/next-door-studios", "/reviews/hot-house", "/reviews/falcon-edge",
   "/guide/gay-porn-billing-guide", "/guide/how-to-cancel-gay-porn-subscriptions", "/discount/twinktrade",
+  "/reviews/brothercrush", "/reviews/wuboyz", "/reviews/boysatcamp", "/reviews/militarydick", "/reviews/twinktrade", "/reviews/yesfather",
 ];
 
 interface Pulse {

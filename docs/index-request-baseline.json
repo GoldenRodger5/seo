@@ -1,6 +1,6 @@
 {
   "captured": "2026-07-08",
-  "note": "Baseline index states before manual GSC Request Indexing (batch 1: URLs 1-12 on 2026-07-08, batch 2: URLs 13-20 on 2026-07-09) + the 78-URL Indexing API/IndexNow reindex. Re-check with: npm run index-check",
+  "note": "Baseline index states before manual GSC Request Indexing (batch 1: URLs 1-12 on 2026-07-08, batch 2: URLs 13-20 on 2026-07-09) + the 78-URL Indexing API/IndexNow reindex. Re-check with: npm run index-check EXTENDED 2026-07-18: demand-batch (GSC-research brand queries) submitted in the GSC UI, baselines captured same day.",
   "urls": [
     {
       "rank": 1,
@@ -101,6 +101,36 @@
       "rank": 20,
       "path": "/guide/gay-porn-security-privacy",
       "baseline": "Discovered - currently not indexed"
+    },
+    {
+      "rank": 21,
+      "path": "/reviews/brothercrush",
+      "baseline": "Crawled - currently not indexed (lastCrawl 2026-07-18)"
+    },
+    {
+      "rank": 22,
+      "path": "/reviews/wuboyz",
+      "baseline": "Submitted and indexed (lastCrawl 2026-07-17)"
+    },
+    {
+      "rank": 23,
+      "path": "/reviews/boysatcamp",
+      "baseline": "Crawled - currently not indexed (lastCrawl 2026-07-18)"
+    },
+    {
+      "rank": 24,
+      "path": "/reviews/militarydick",
+      "baseline": "Crawled - currently not indexed (lastCrawl 2026-07-18)"
+    },
+    {
+      "rank": 25,
+      "path": "/reviews/twinktrade",
+      "baseline": "Crawled - currently not indexed (lastCrawl 2026-07-18)"
+    },
+    {
+      "rank": 26,
+      "path": "/reviews/yesfather",
+      "baseline": "Submitted and indexed (lastCrawl 2026-07-18)"
     }
   ]
 }
