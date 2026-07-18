@@ -198,7 +198,10 @@ for (const site of sites) {
   const hasDeal = pct > 0;
   // Title kept under 60 chars even for long names. Verification month
   // moved to the description to free up title characters.
-  const dealTitle = `${site.name}: ${pct}% Off (${YEAR}) | TwinkVault`;
+  // Exact-match "Discount" in the title — the demand queries are literally
+  // "{brand} discount" (200+ imp on twinktrade alone) and the old title
+  // omitted the word; Bing treats exact title matches as a direct signal.
+  const dealTitle = `${site.name} Discount: ${pct}% Off (${YEAR}) | TwinkVault`;
   const noDealTitle = `${site.name} Discount Code ${YEAR} | TwinkVault`;
   routes.push({
     path: `/discount/${site.slug}`,
@@ -206,7 +209,7 @@ for (const site of sites) {
       ? (dealTitle.length <= 60 ? dealTitle : `${site.name}: ${pct}% Off | TwinkVault`)
       : (noDealTitle.length <= 60 ? noDealTitle : `${site.name} Discount | TwinkVault`),
     description: hasDeal
-      ? `Get ${site.name} for ${site.price_annual} with our verified ${pct}% discount — deal confirmed ${DEAL_VERIFIED_DATE}. Click to activate the lowest verified price on annual membership.`
+      ? `${site.name} discount code ${YEAR}: ${site.price_annual} with our verified ${pct}% off — confirmed ${DEAL_VERIFIED_DATE}. Activate the lowest verified annual price.`
       : `Looking for a ${site.name} discount code? Get the lowest verified ${site.name} membership price. Updated ${DEAL_VERIFIED_DATE} — read pricing tiers and value verdict.`,
   });
 }
