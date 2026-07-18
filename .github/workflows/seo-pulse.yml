@@ -36,6 +36,8 @@ jobs:
           git config user.name "TwinkVault SEO Pulse"
           git add docs/seo-pulse-history.json docs/seo-pulse/ docs/seo-pulse-verdict.txt
           git diff --cached --quiet || git commit -m "chore(seo-pulse): weekly report $(date -u +%F)"
+          # Race-safe push: another commit may land while the pulse runs.
+          git pull --rebase origin main
           git push
 
       - name: Raise the alarm on a sustained stall
