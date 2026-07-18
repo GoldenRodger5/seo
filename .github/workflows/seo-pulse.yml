@@ -39,17 +39,16 @@ jobs:
           git push
 
       - name: Raise the alarm on a sustained stall
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERDICT=$(head -1 docs/seo-pulse-verdict.txt)
           STREAK=$(grep -o 'stall_streak=[0-9]*' docs/seo-pulse-verdict.txt | cut -d= -f2)
           echo "verdict=$VERDICT streak=$STREAK"
           if [ "$VERDICT" = "STALLED" ] && [ "$STREAK" -ge 2 ]; then
-            gh issue create \
-              --title "🚨 SEO STALLED: no impression growth for $STREAK straight weeks" \
-              --body "$(cat docs/seo-pulse/$(ls docs/seo-pulse | tail -1))
-
-Two consecutive STALLED pulses. Per the recovery plan this triggers escalation: content-consolidation pass, backlink review, and a re-audit. Open the latest report above and act — do not wait another cycle." \
-              --label "seo" || true
+            LATEST=$(ls docs/seo-pulse | tail -1)
+            cat "docs/seo-pulse/$LATEST" > /tmp/issue-body.md
+            echo "" >> /tmp/issue-body.md
+            echo "Two consecutive STALLED pulses. Per the recovery plan this triggers escalation: content-consolidation pass, backlink review, and a re-audit. Open the latest report above and act now - do not wait another cycle." >> /tmp/issue-body.md
+            gh issue create --title "SEO STALLED: no impression growth for $STREAK straight weeks" --body-file /tmp/issue-body.md --label seo || true
           fi
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
