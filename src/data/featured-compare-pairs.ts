@@ -95,6 +95,28 @@ const PINNED_EARNING_PAIRS = [
   "hard-brit-lads-vs-prideflame",       // 10 imp
   "bigstr-vs-prideflame",               // 10 imp (spared from tranche 1)
   "familydick-vs-trailertrashboys",     // 10 imp
+  // Long-tail earners (3-9 imp, Performance export 2026-07-18) — every pair
+  // Google chose to serve pre-blackout gets its page back:
+  "nakedsword-vs-sean-cody",
+  "maleaccess-vs-militarydick",
+  "hiroyaxxx-vs-realmenfuck",
+  "bareback-that-hole-vs-next-door-twink",
+  "guy-selector-vs-helix-studios",
+  "japanboyz-vs-peterfever",
+  "next-door-twink-vs-swinginballs",
+  "maleaccess-vs-southern-strokes",
+  "cumpigmen-vs-nakedsword",
+  "boysatcamp-vs-familydick",
+  "helix-studios-vs-touch-that-boy",
+  "barebackcumpigs-vs-twinktrade",
+  "hard-brit-lads-vs-hiroyaxxx",
+  "next-door-world-vs-reality-dudes",
+  "maleaccess-vs-reality-dudes",
+  "bearchubs-vs-familydick",
+  "next-door-world-vs-twinks-in-shorts",
+  "barebackrtxxx-vs-breed-me-raw",
+  "breed-me-raw-vs-japanboyz",
+  "dudesraw-vs-trailertrashboys",
 ];
 
 let cached: Set<string> | null = null;

@@ -1015,23 +1015,788 @@
       "permanent": true
     },
     {
-      "source": "/compare/maleaccess-vs-alternadudes",
-      "destination": "/compare/alternadudes-vs-maleaccess",
+      "source": "/compare/dudesraw-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-dudesraw",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/hairyandraw-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-hairyandraw",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/hard-brit-lads-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-hard-brit-lads",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/hiroyaxxx-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-hiroyaxxx",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/icon-male-vs-spicevidsgay",
+      "destination": "/reviews/icon-male",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-icon-male",
+      "destination": "/reviews/icon-male",
+      "permanent": true
+    },
+    {
+      "source": "/compare/jawked-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-jawked",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-squirtstudios",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/squirtstudios-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-wuboyz",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/wuboyz-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/militarydick-vs-spicevidsgay",
+      "destination": "/reviews/militarydick",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-militarydick",
+      "destination": "/reviews/militarydick",
+      "permanent": true
+    },
+    {
+      "source": "/compare/rawhole-vs-spicevidsgay",
+      "destination": "/reviews/rawhole",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-rawhole",
+      "destination": "/reviews/rawhole",
+      "permanent": true
+    },
+    {
+      "source": "/compare/realmenfuck-vs-spicevidsgay",
+      "destination": "/reviews/realmenfuck",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-realmenfuck",
+      "destination": "/reviews/realmenfuck",
+      "permanent": true
+    },
+    {
+      "source": "/compare/sexjapantv-vs-spicevidsgay",
+      "destination": "/reviews/sexjapantv",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-sexjapantv",
+      "destination": "/reviews/sexjapantv",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-touch-that-boy",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/touch-that-boy-vs-spicevidsgay",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-trailertrashboys",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/trailertrashboys-vs-spicevidsgay",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-yesfather",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/yesfather-vs-spicevidsgay",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-youngperps",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/youngperps-vs-spicevidsgay",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/alternadudes-vs-spicevidsgay",
+      "destination": "/reviews/alternadudes",
       "permanent": true
     },
     {
       "source": "/compare/spicevidsgay-vs-alternadudes",
-      "destination": "/compare/alternadudes-vs-spicevidsgay",
+      "destination": "/reviews/alternadudes",
+      "permanent": true
+    },
+    {
+      "source": "/compare/aussiesdoit-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-aussiesdoit",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bearfilms-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-bearfilms",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/boyfun-vs-spicevidsgay",
+      "destination": "/reviews/boyfun",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-boyfun",
+      "destination": "/reviews/boyfun",
+      "permanent": true
+    },
+    {
+      "source": "/compare/boysatcamp-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-boysatcamp",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/brothercrush-vs-spicevidsgay",
+      "destination": "/reviews/brothercrush",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-brothercrush",
+      "destination": "/reviews/brothercrush",
+      "permanent": true
+    },
+    {
+      "source": "/compare/dadcreep-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-dadcreep",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/daddy-on-twink-vs-spicevidsgay",
+      "destination": "/reviews/daddy-on-twink",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-daddy-on-twink",
+      "destination": "/reviews/daddy-on-twink",
+      "permanent": true
+    },
+    {
+      "source": "/compare/icon-male-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-icon-male",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/japanboyz-vs-spicevidsgay",
+      "destination": "/reviews/japanboyz",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-japanboyz",
+      "destination": "/reviews/japanboyz",
+      "permanent": true
+    },
+    {
+      "source": "/compare/latinleche-vs-spicevidsgay",
+      "destination": "/reviews/latinleche",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-latinleche",
+      "destination": "/reviews/latinleche",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-rawhole",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/rawhole-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-realmenfuck",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/realmenfuck-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-sexjapantv",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/sexjapantv-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-touch-that-boy",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/touch-that-boy-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-trailertrashboys",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/trailertrashboys-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-yesfather",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/yesfather-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-youngperps",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/youngperps-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/missionaryboys-vs-spicevidsgay",
+      "destination": "/reviews/missionaryboys",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-missionaryboys",
+      "destination": "/reviews/missionaryboys",
+      "permanent": true
+    },
+    {
+      "source": "/compare/noirmale-vs-spicevidsgay",
+      "destination": "/reviews/noirmale",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-noirmale",
+      "destination": "/reviews/noirmale",
+      "permanent": true
+    },
+    {
+      "source": "/compare/southern-strokes-vs-spicevidsgay",
+      "destination": "/reviews/southern-strokes",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-southern-strokes",
+      "destination": "/reviews/southern-strokes",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-twinktrade",
+      "destination": "/reviews/twinktrade",
+      "permanent": true
+    },
+    {
+      "source": "/compare/twinktrade-vs-spicevidsgay",
+      "destination": "/reviews/twinktrade",
+      "permanent": true
+    },
+    {
+      "source": "/compare/alternadudes-vs-maleaccess",
+      "destination": "/reviews/alternadudes",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-alternadudes",
+      "destination": "/reviews/alternadudes",
+      "permanent": true
+    },
+    {
+      "source": "/compare/boyfun-vs-maleaccess",
+      "destination": "/reviews/boyfun",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-boyfun",
+      "destination": "/reviews/boyfun",
+      "permanent": true
+    },
+    {
+      "source": "/compare/brothercrush-vs-maleaccess",
+      "destination": "/reviews/brothercrush",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-brothercrush",
+      "destination": "/reviews/brothercrush",
+      "permanent": true
+    },
+    {
+      "source": "/compare/daddy-on-twink-vs-maleaccess",
+      "destination": "/reviews/daddy-on-twink",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-daddy-on-twink",
+      "destination": "/reviews/daddy-on-twink",
+      "permanent": true
+    },
+    {
+      "source": "/compare/familydick-vs-spicevidsgay",
+      "destination": "/reviews/familydick",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-familydick",
+      "destination": "/reviews/familydick",
+      "permanent": true
+    },
+    {
+      "source": "/compare/gayasiannetwork-vs-spicevidsgay",
+      "destination": "/reviews/gayasiannetwork",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-gayasiannetwork",
+      "destination": "/reviews/gayasiannetwork",
+      "permanent": true
+    },
+    {
+      "source": "/compare/japanboyz-vs-maleaccess",
+      "destination": "/reviews/japanboyz",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-japanboyz",
+      "destination": "/reviews/japanboyz",
+      "permanent": true
+    },
+    {
+      "source": "/compare/latinleche-vs-maleaccess",
+      "destination": "/reviews/latinleche",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-latinleche",
+      "destination": "/reviews/latinleche",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-missionaryboys",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/missionaryboys-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-noirmale",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/noirmale-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-twinktrade",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/twinktrade-vs-maleaccess",
+      "destination": "/reviews/maleaccess",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-twinkpop",
+      "destination": "/reviews/twinkpop",
+      "permanent": true
+    },
+    {
+      "source": "/compare/twinkpop-vs-spicevidsgay",
+      "destination": "/reviews/twinkpop",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-yoshikawasakixxx",
+      "destination": "/reviews/yoshikawasakixxx",
+      "permanent": true
+    },
+    {
+      "source": "/compare/yoshikawasakixxx-vs-spicevidsgay",
+      "destination": "/reviews/yoshikawasakixxx",
+      "permanent": true
+    },
+    {
+      "source": "/compare/athletic-twinks-vs-spicevidsgay",
+      "destination": "/reviews/athletic-twinks",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-athletic-twinks",
+      "destination": "/reviews/athletic-twinks",
+      "permanent": true
+    },
+    {
+      "source": "/compare/familydick-vs-maleaccess",
+      "destination": "/reviews/familydick",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-familydick",
+      "destination": "/reviews/familydick",
+      "permanent": true
+    },
+    {
+      "source": "/compare/gayasiannetwork-vs-maleaccess",
+      "destination": "/reviews/gayasiannetwork",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-gayasiannetwork",
+      "destination": "/reviews/gayasiannetwork",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-twinkpop",
+      "destination": "/reviews/twinkpop",
+      "permanent": true
+    },
+    {
+      "source": "/compare/twinkpop-vs-maleaccess",
+      "destination": "/reviews/twinkpop",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-yoshikawasakixxx",
+      "destination": "/reviews/yoshikawasakixxx",
+      "permanent": true
+    },
+    {
+      "source": "/compare/yoshikawasakixxx-vs-maleaccess",
+      "destination": "/reviews/yoshikawasakixxx",
+      "permanent": true
+    },
+    {
+      "source": "/compare/peterfever-vs-spicevidsgay",
+      "destination": "/reviews/peterfever",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-peterfever",
+      "destination": "/reviews/peterfever",
+      "permanent": true
+    },
+    {
+      "source": "/compare/sayuncle-vs-spicevidsgay",
+      "destination": "/reviews/sayuncle",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-sayuncle",
+      "destination": "/reviews/sayuncle",
+      "permanent": true
+    },
+    {
+      "source": "/compare/athletic-twinks-vs-maleaccess",
+      "destination": "/reviews/athletic-twinks",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-athletic-twinks",
+      "destination": "/reviews/athletic-twinks",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-peterfever",
+      "destination": "/reviews/peterfever",
+      "permanent": true
+    },
+    {
+      "source": "/compare/peterfever-vs-maleaccess",
+      "destination": "/reviews/peterfever",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-sayuncle",
+      "destination": "/reviews/sayuncle",
+      "permanent": true
+    },
+    {
+      "source": "/compare/sayuncle-vs-maleaccess",
+      "destination": "/reviews/sayuncle",
+      "permanent": true
+    },
+    {
+      "source": "/compare/men-vs-spicevidsgay",
+      "destination": "/reviews/men",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-men",
+      "destination": "/reviews/men",
+      "permanent": true
+    },
+    {
+      "source": "/compare/sean-cody-vs-spicevidsgay",
+      "destination": "/reviews/sean-cody",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-sean-cody",
+      "destination": "/reviews/sean-cody",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-sean-cody",
+      "destination": "/reviews/sean-cody",
+      "permanent": true
+    },
+    {
+      "source": "/compare/sean-cody-vs-maleaccess",
+      "destination": "/reviews/sean-cody",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-twinks-in-shorts",
+      "destination": "/reviews/twinks-in-shorts",
+      "permanent": true
+    },
+    {
+      "source": "/compare/twinks-in-shorts-vs-bigstr",
+      "destination": "/reviews/twinks-in-shorts",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-next-door-world",
+      "destination": "/reviews/bigstr",
+      "permanent": true
+    },
+    {
+      "source": "/compare/next-door-world-vs-bigstr",
+      "destination": "/reviews/bigstr",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-nakedsword",
+      "destination": "/reviews/nakedsword",
+      "permanent": true
+    },
+    {
+      "source": "/compare/nakedsword-vs-bigstr",
+      "destination": "/reviews/nakedsword",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-next-door-twink",
+      "destination": "/reviews/bigstr",
+      "permanent": true
+    },
+    {
+      "source": "/compare/next-door-twink-vs-bigstr",
+      "destination": "/reviews/bigstr",
+      "permanent": true
+    },
+    {
+      "source": "/compare/bigstr-vs-helix-studios",
+      "destination": "/reviews/helix-studios",
+      "permanent": true
+    },
+    {
+      "source": "/compare/helix-studios-vs-bigstr",
+      "destination": "/reviews/helix-studios",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-twinks-in-shorts",
+      "destination": "/reviews/twinks-in-shorts",
+      "permanent": true
+    },
+    {
+      "source": "/compare/twinks-in-shorts-vs-spicevidsgay",
+      "destination": "/reviews/twinks-in-shorts",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-twinks-in-shorts",
+      "destination": "/reviews/twinks-in-shorts",
+      "permanent": true
+    },
+    {
+      "source": "/compare/twinks-in-shorts-vs-maleaccess",
+      "destination": "/reviews/twinks-in-shorts",
+      "permanent": true
+    },
+    {
+      "source": "/compare/next-door-world-vs-spicevidsgay",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-next-door-world",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/nakedsword-vs-spicevidsgay",
+      "destination": "/reviews/nakedsword",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-nakedsword",
+      "destination": "/reviews/nakedsword",
+      "permanent": true
+    },
+    {
+      "source": "/compare/next-door-twink-vs-spicevidsgay",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-next-door-twink",
+      "destination": "/reviews/spicevidsgay",
+      "permanent": true
+    },
+    {
+      "source": "/compare/biempire-vs-helix-studios",
+      "destination": "/reviews/helix-studios",
+      "permanent": true
+    },
+    {
+      "source": "/compare/helix-studios-vs-biempire",
+      "destination": "/reviews/helix-studios",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-nakedsword",
+      "destination": "/reviews/nakedsword",
+      "permanent": true
+    },
+    {
+      "source": "/compare/nakedsword-vs-maleaccess",
+      "destination": "/reviews/nakedsword",
+      "permanent": true
+    },
+    {
+      "source": "/compare/helix-studios-vs-spicevidsgay",
+      "destination": "/reviews/helix-studios",
+      "permanent": true
+    },
+    {
+      "source": "/compare/spicevidsgay-vs-helix-studios",
+      "destination": "/reviews/helix-studios",
+      "permanent": true
+    },
+    {
+      "source": "/compare/helix-studios-vs-maleaccess",
+      "destination": "/reviews/helix-studios",
+      "permanent": true
+    },
+    {
+      "source": "/compare/maleaccess-vs-helix-studios",
+      "destination": "/reviews/helix-studios",
       "permanent": true
     },
     {
       "source": "/compare/helix-studios-vs-athletic-twinks",
       "destination": "/compare/athletic-twinks-vs-helix-studios",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-athletic-twinks",
-      "destination": "/compare/athletic-twinks-vs-maleaccess",
       "permanent": true
     },
     {
@@ -1050,23 +1815,18 @@
       "permanent": true
     },
     {
-      "source": "/compare/spicevidsgay-vs-athletic-twinks",
-      "destination": "/compare/athletic-twinks-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
       "source": "/compare/twinks-in-shorts-vs-athletic-twinks",
       "destination": "/compare/athletic-twinks-vs-twinks-in-shorts",
       "permanent": true
     },
     {
-      "source": "/compare/maleaccess-vs-aussiesdoit",
-      "destination": "/compare/aussiesdoit-vs-maleaccess",
+      "source": "/compare/brothercrush-vs-bareback-that-hole",
+      "destination": "/compare/bareback-that-hole-vs-brothercrush",
       "permanent": true
     },
     {
-      "source": "/compare/brothercrush-vs-bareback-that-hole",
-      "destination": "/compare/bareback-that-hole-vs-brothercrush",
+      "source": "/compare/next-door-twink-vs-bareback-that-hole",
+      "destination": "/compare/bareback-that-hole-vs-next-door-twink",
       "permanent": true
     },
     {
@@ -1080,6 +1840,16 @@
       "permanent": true
     },
     {
+      "source": "/compare/twinktrade-vs-barebackcumpigs",
+      "destination": "/compare/barebackcumpigs-vs-twinktrade",
+      "permanent": true
+    },
+    {
+      "source": "/compare/breed-me-raw-vs-barebackrtxxx",
+      "destination": "/compare/barebackrtxxx-vs-breed-me-raw",
+      "permanent": true
+    },
+    {
       "source": "/compare/cumpigmen-vs-barebackrtxxx",
       "destination": "/compare/barebackrtxxx-vs-cumpigmen",
       "permanent": true
@@ -1090,33 +1860,8 @@
       "permanent": true
     },
     {
-      "source": "/compare/maleaccess-vs-bearfilms",
-      "destination": "/compare/bearfilms-vs-maleaccess",
-      "permanent": true
-    },
-    {
-      "source": "/compare/helix-studios-vs-biempire",
-      "destination": "/compare/biempire-vs-helix-studios",
-      "permanent": true
-    },
-    {
-      "source": "/compare/helix-studios-vs-bigstr",
-      "destination": "/compare/bigstr-vs-helix-studios",
-      "permanent": true
-    },
-    {
-      "source": "/compare/nakedsword-vs-bigstr",
-      "destination": "/compare/bigstr-vs-nakedsword",
-      "permanent": true
-    },
-    {
-      "source": "/compare/next-door-twink-vs-bigstr",
-      "destination": "/compare/bigstr-vs-next-door-twink",
-      "permanent": true
-    },
-    {
-      "source": "/compare/next-door-world-vs-bigstr",
-      "destination": "/compare/bigstr-vs-next-door-world",
+      "source": "/compare/familydick-vs-bearchubs",
+      "destination": "/compare/bearchubs-vs-familydick",
       "permanent": true
     },
     {
@@ -1125,28 +1870,13 @@
       "permanent": true
     },
     {
-      "source": "/compare/twinks-in-shorts-vs-bigstr",
-      "destination": "/compare/bigstr-vs-twinks-in-shorts",
-      "permanent": true
-    },
-    {
       "source": "/compare/wuboyz-vs-bigstr",
       "destination": "/compare/bigstr-vs-wuboyz",
       "permanent": true
     },
     {
-      "source": "/compare/maleaccess-vs-boyfun",
-      "destination": "/compare/boyfun-vs-maleaccess",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-boyfun",
-      "destination": "/compare/boyfun-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-boysatcamp",
-      "destination": "/compare/boysatcamp-vs-maleaccess",
+      "source": "/compare/familydick-vs-boysatcamp",
+      "destination": "/compare/boysatcamp-vs-familydick",
       "permanent": true
     },
     {
@@ -1155,33 +1885,13 @@
       "permanent": true
     },
     {
-      "source": "/compare/maleaccess-vs-brothercrush",
-      "destination": "/compare/brothercrush-vs-maleaccess",
+      "source": "/compare/japanboyz-vs-breed-me-raw",
+      "destination": "/compare/breed-me-raw-vs-japanboyz",
       "permanent": true
     },
     {
-      "source": "/compare/spicevidsgay-vs-brothercrush",
-      "destination": "/compare/brothercrush-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-dadcreep",
-      "destination": "/compare/dadcreep-vs-maleaccess",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-daddy-on-twink",
-      "destination": "/compare/daddy-on-twink-vs-maleaccess",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-daddy-on-twink",
-      "destination": "/compare/daddy-on-twink-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-dudesraw",
-      "destination": "/compare/dudesraw-vs-maleaccess",
+      "source": "/compare/nakedsword-vs-cumpigmen",
+      "destination": "/compare/cumpigmen-vs-nakedsword",
       "permanent": true
     },
     {
@@ -1190,8 +1900,8 @@
       "permanent": true
     },
     {
-      "source": "/compare/maleaccess-vs-familydick",
-      "destination": "/compare/familydick-vs-maleaccess",
+      "source": "/compare/trailertrashboys-vs-dudesraw",
+      "destination": "/compare/dudesraw-vs-trailertrashboys",
       "permanent": true
     },
     {
@@ -1200,18 +1910,8 @@
       "permanent": true
     },
     {
-      "source": "/compare/spicevidsgay-vs-familydick",
-      "destination": "/compare/familydick-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
       "source": "/compare/trailertrashboys-vs-familydick",
       "destination": "/compare/familydick-vs-trailertrashboys",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-gayasiannetwork",
-      "destination": "/compare/gayasiannetwork-vs-maleaccess",
       "permanent": true
     },
     {
@@ -1220,33 +1920,18 @@
       "permanent": true
     },
     {
-      "source": "/compare/spicevidsgay-vs-gayasiannetwork",
-      "destination": "/compare/gayasiannetwork-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
       "source": "/compare/helix-studios-vs-guy-selector",
       "destination": "/compare/guy-selector-vs-helix-studios",
       "permanent": true
     },
     {
-      "source": "/compare/maleaccess-vs-hairyandraw",
-      "destination": "/compare/hairyandraw-vs-maleaccess",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-hard-brit-lads",
-      "destination": "/compare/hard-brit-lads-vs-maleaccess",
+      "source": "/compare/hiroyaxxx-vs-hard-brit-lads",
+      "destination": "/compare/hard-brit-lads-vs-hiroyaxxx",
       "permanent": true
     },
     {
       "source": "/compare/prideflame-vs-hard-brit-lads",
       "destination": "/compare/hard-brit-lads-vs-prideflame",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-helix-studios",
-      "destination": "/compare/helix-studios-vs-maleaccess",
       "permanent": true
     },
     {
@@ -1270,8 +1955,8 @@
       "permanent": true
     },
     {
-      "source": "/compare/spicevidsgay-vs-helix-studios",
-      "destination": "/compare/helix-studios-vs-spicevidsgay",
+      "source": "/compare/touch-that-boy-vs-helix-studios",
+      "destination": "/compare/helix-studios-vs-touch-that-boy",
       "permanent": true
     },
     {
@@ -1280,43 +1965,13 @@
       "permanent": true
     },
     {
-      "source": "/compare/maleaccess-vs-hiroyaxxx",
-      "destination": "/compare/hiroyaxxx-vs-maleaccess",
+      "source": "/compare/realmenfuck-vs-hiroyaxxx",
+      "destination": "/compare/hiroyaxxx-vs-realmenfuck",
       "permanent": true
     },
     {
-      "source": "/compare/maleaccess-vs-icon-male",
-      "destination": "/compare/icon-male-vs-maleaccess",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-icon-male",
-      "destination": "/compare/icon-male-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-japanboyz",
-      "destination": "/compare/japanboyz-vs-maleaccess",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-japanboyz",
-      "destination": "/compare/japanboyz-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-jawked",
-      "destination": "/compare/jawked-vs-maleaccess",
-      "permanent": true
-    },
-    {
-      "source": "/compare/maleaccess-vs-latinleche",
-      "destination": "/compare/latinleche-vs-maleaccess",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-latinleche",
-      "destination": "/compare/latinleche-vs-spicevidsgay",
+      "source": "/compare/peterfever-vs-japanboyz",
+      "destination": "/compare/japanboyz-vs-peterfever",
       "permanent": true
     },
     {
@@ -1330,108 +1985,13 @@
       "permanent": true
     },
     {
-      "source": "/compare/missionaryboys-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-missionaryboys",
-      "permanent": true
-    },
-    {
-      "source": "/compare/nakedsword-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-nakedsword",
-      "permanent": true
-    },
-    {
-      "source": "/compare/noirmale-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-noirmale",
-      "permanent": true
-    },
-    {
-      "source": "/compare/peterfever-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-peterfever",
-      "permanent": true
-    },
-    {
-      "source": "/compare/rawhole-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-rawhole",
-      "permanent": true
-    },
-    {
       "source": "/compare/reality-dudes-vs-maleaccess",
       "destination": "/compare/maleaccess-vs-reality-dudes",
       "permanent": true
     },
     {
-      "source": "/compare/realmenfuck-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-realmenfuck",
-      "permanent": true
-    },
-    {
-      "source": "/compare/sayuncle-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-sayuncle",
-      "permanent": true
-    },
-    {
-      "source": "/compare/sean-cody-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-sean-cody",
-      "permanent": true
-    },
-    {
-      "source": "/compare/sexjapantv-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-sexjapantv",
-      "permanent": true
-    },
-    {
       "source": "/compare/southern-strokes-vs-maleaccess",
       "destination": "/compare/maleaccess-vs-southern-strokes",
-      "permanent": true
-    },
-    {
-      "source": "/compare/squirtstudios-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-squirtstudios",
-      "permanent": true
-    },
-    {
-      "source": "/compare/touch-that-boy-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-touch-that-boy",
-      "permanent": true
-    },
-    {
-      "source": "/compare/trailertrashboys-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-trailertrashboys",
-      "permanent": true
-    },
-    {
-      "source": "/compare/twinkpop-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-twinkpop",
-      "permanent": true
-    },
-    {
-      "source": "/compare/twinks-in-shorts-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-twinks-in-shorts",
-      "permanent": true
-    },
-    {
-      "source": "/compare/twinktrade-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-twinktrade",
-      "permanent": true
-    },
-    {
-      "source": "/compare/wuboyz-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-wuboyz",
-      "permanent": true
-    },
-    {
-      "source": "/compare/yesfather-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-yesfather",
-      "permanent": true
-    },
-    {
-      "source": "/compare/yoshikawasakixxx-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-yoshikawasakixxx",
-      "permanent": true
-    },
-    {
-      "source": "/compare/youngperps-vs-maleaccess",
-      "destination": "/compare/maleaccess-vs-youngperps",
       "permanent": true
     },
     {
@@ -1445,23 +2005,8 @@
       "permanent": true
     },
     {
-      "source": "/compare/spicevidsgay-vs-men",
-      "destination": "/compare/men-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-militarydick",
-      "destination": "/compare/militarydick-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-missionaryboys",
-      "destination": "/compare/missionaryboys-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-nakedsword",
-      "destination": "/compare/nakedsword-vs-spicevidsgay",
+      "source": "/compare/sean-cody-vs-nakedsword",
+      "destination": "/compare/nakedsword-vs-sean-cody",
       "permanent": true
     },
     {
@@ -1470,8 +2015,8 @@
       "permanent": true
     },
     {
-      "source": "/compare/spicevidsgay-vs-next-door-twink",
-      "destination": "/compare/next-door-twink-vs-spicevidsgay",
+      "source": "/compare/swinginballs-vs-next-door-twink",
+      "destination": "/compare/next-door-twink-vs-swinginballs",
       "permanent": true
     },
     {
@@ -1480,13 +2025,13 @@
       "permanent": true
     },
     {
-      "source": "/compare/southern-strokes-vs-next-door-world",
-      "destination": "/compare/next-door-world-vs-southern-strokes",
+      "source": "/compare/reality-dudes-vs-next-door-world",
+      "destination": "/compare/next-door-world-vs-reality-dudes",
       "permanent": true
     },
     {
-      "source": "/compare/spicevidsgay-vs-next-door-world",
-      "destination": "/compare/next-door-world-vs-spicevidsgay",
+      "source": "/compare/southern-strokes-vs-next-door-world",
+      "destination": "/compare/next-door-world-vs-southern-strokes",
       "permanent": true
     },
     {
@@ -1495,93 +2040,13 @@
       "permanent": true
     },
     {
-      "source": "/compare/spicevidsgay-vs-noirmale",
-      "destination": "/compare/noirmale-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-peterfever",
-      "destination": "/compare/peterfever-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
       "source": "/compare/southern-strokes-vs-prideflame",
       "destination": "/compare/prideflame-vs-southern-strokes",
       "permanent": true
     },
     {
-      "source": "/compare/spicevidsgay-vs-rawhole",
-      "destination": "/compare/rawhole-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-realmenfuck",
-      "destination": "/compare/realmenfuck-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-sayuncle",
-      "destination": "/compare/sayuncle-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-sean-cody",
-      "destination": "/compare/sean-cody-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-sexjapantv",
-      "destination": "/compare/sexjapantv-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
-      "source": "/compare/spicevidsgay-vs-southern-strokes",
-      "destination": "/compare/southern-strokes-vs-spicevidsgay",
-      "permanent": true
-    },
-    {
       "source": "/compare/twinks-in-shorts-vs-southern-strokes",
       "destination": "/compare/southern-strokes-vs-twinks-in-shorts",
-      "permanent": true
-    },
-    {
-      "source": "/compare/touch-that-boy-vs-spicevidsgay",
-      "destination": "/compare/spicevidsgay-vs-touch-that-boy",
-      "permanent": true
-    },
-    {
-      "source": "/compare/trailertrashboys-vs-spicevidsgay",
-      "destination": "/compare/spicevidsgay-vs-trailertrashboys",
-      "permanent": true
-    },
-    {
-      "source": "/compare/twinkpop-vs-spicevidsgay",
-      "destination": "/compare/spicevidsgay-vs-twinkpop",
-      "permanent": true
-    },
-    {
-      "source": "/compare/twinks-in-shorts-vs-spicevidsgay",
-      "destination": "/compare/spicevidsgay-vs-twinks-in-shorts",
-      "permanent": true
-    },
-    {
-      "source": "/compare/twinktrade-vs-spicevidsgay",
-      "destination": "/compare/spicevidsgay-vs-twinktrade",
-      "permanent": true
-    },
-    {
-      "source": "/compare/yesfather-vs-spicevidsgay",
-      "destination": "/compare/spicevidsgay-vs-yesfather",
-      "permanent": true
-    },
-    {
-      "source": "/compare/yoshikawasakixxx-vs-spicevidsgay",
-      "destination": "/compare/spicevidsgay-vs-yoshikawasakixxx",
-      "permanent": true
-    },
-    {
-      "source": "/compare/youngperps-vs-spicevidsgay",
-      "destination": "/compare/spicevidsgay-vs-youngperps",
       "permanent": true
     },
     {
@@ -1635,16 +2100,6 @@
       "permanent": true
     },
     {
-      "source": "/compare/hard-brit-lads-vs-hiroyaxxx",
-      "destination": "/reviews/hard-brit-lads",
-      "permanent": true
-    },
-    {
-      "source": "/compare/hiroyaxxx-vs-hard-brit-lads",
-      "destination": "/reviews/hard-brit-lads",
-      "permanent": true
-    },
-    {
       "source": "/compare/alternadudes-vs-yesfather",
       "destination": "/reviews/alternadudes",
       "permanent": true
@@ -1652,26 +2107,6 @@
     {
       "source": "/compare/yesfather-vs-alternadudes",
       "destination": "/reviews/alternadudes",
-      "permanent": true
-    },
-    {
-      "source": "/compare/next-door-world-vs-reality-dudes",
-      "destination": "/reviews/reality-dudes",
-      "permanent": true
-    },
-    {
-      "source": "/compare/reality-dudes-vs-next-door-world",
-      "destination": "/reviews/reality-dudes",
-      "permanent": true
-    },
-    {
-      "source": "/compare/next-door-twink-vs-swinginballs",
-      "destination": "/reviews/swinginballs",
-      "permanent": true
-    },
-    {
-      "source": "/compare/swinginballs-vs-next-door-twink",
-      "destination": "/reviews/swinginballs",
       "permanent": true
     },
     {
@@ -1705,16 +2140,6 @@
       "permanent": true
     },
     {
-      "source": "/compare/cumpigmen-vs-nakedsword",
-      "destination": "/reviews/nakedsword",
-      "permanent": true
-    },
-    {
-      "source": "/compare/nakedsword-vs-cumpigmen",
-      "destination": "/reviews/nakedsword",
-      "permanent": true
-    },
-    {
       "source": "/compare/hiroyaxxx-vs-swinginballs",
       "destination": "/reviews/hiroyaxxx",
       "permanent": true
@@ -1725,16 +2150,6 @@
       "permanent": true
     },
     {
-      "source": "/compare/bareback-that-hole-vs-next-door-twink",
-      "destination": "/reviews/bareback-that-hole",
-      "permanent": true
-    },
-    {
-      "source": "/compare/next-door-twink-vs-bareback-that-hole",
-      "destination": "/reviews/bareback-that-hole",
-      "permanent": true
-    },
-    {
       "source": "/compare/breed-me-raw-vs-southern-strokes",
       "destination": "/reviews/southern-strokes",
       "permanent": true
@@ -1742,16 +2157,6 @@
     {
       "source": "/compare/southern-strokes-vs-breed-me-raw",
       "destination": "/reviews/southern-strokes",
-      "permanent": true
-    },
-    {
-      "source": "/compare/helix-studios-vs-touch-that-boy",
-      "destination": "/reviews/helix-studios",
-      "permanent": true
-    },
-    {
-      "source": "/compare/touch-that-boy-vs-helix-studios",
-      "destination": "/reviews/helix-studios",
       "permanent": true
     },
     {
@@ -1795,16 +2200,6 @@
       "permanent": true
     },
     {
-      "source": "/compare/breed-me-raw-vs-japanboyz",
-      "destination": "/reviews/japanboyz",
-      "permanent": true
-    },
-    {
-      "source": "/compare/japanboyz-vs-breed-me-raw",
-      "destination": "/reviews/japanboyz",
-      "permanent": true
-    },
-    {
       "source": "/compare/southern-strokes-vs-touch-that-boy",
       "destination": "/reviews/southern-strokes",
       "permanent": true
@@ -1832,16 +2227,6 @@
     {
       "source": "/compare/touch-that-boy-vs-daddy-on-twink",
       "destination": "/reviews/daddy-on-twink",
-      "permanent": true
-    },
-    {
-      "source": "/compare/nakedsword-vs-sean-cody",
-      "destination": "/reviews/nakedsword",
-      "permanent": true
-    },
-    {
-      "source": "/compare/sean-cody-vs-nakedsword",
-      "destination": "/reviews/nakedsword",
       "permanent": true
     },
     {
@@ -1875,16 +2260,6 @@
       "permanent": true
     },
     {
-      "source": "/compare/boysatcamp-vs-familydick",
-      "destination": "/reviews/familydick",
-      "permanent": true
-    },
-    {
-      "source": "/compare/familydick-vs-boysatcamp",
-      "destination": "/reviews/familydick",
-      "permanent": true
-    },
-    {
       "source": "/compare/athletic-twinks-vs-barebackcumpigs",
       "destination": "/reviews/athletic-twinks",
       "permanent": true
@@ -1892,16 +2267,6 @@
     {
       "source": "/compare/barebackcumpigs-vs-athletic-twinks",
       "destination": "/reviews/athletic-twinks",
-      "permanent": true
-    },
-    {
-      "source": "/compare/japanboyz-vs-peterfever",
-      "destination": "/reviews/peterfever",
-      "permanent": true
-    },
-    {
-      "source": "/compare/peterfever-vs-japanboyz",
-      "destination": "/reviews/peterfever",
       "permanent": true
     },
     {
@@ -1942,26 +2307,6 @@
     {
       "source": "/compare/next-door-twink-vs-boyfun",
       "destination": "/reviews/boyfun",
-      "permanent": true
-    },
-    {
-      "source": "/compare/bearchubs-vs-familydick",
-      "destination": "/reviews/familydick",
-      "permanent": true
-    },
-    {
-      "source": "/compare/familydick-vs-bearchubs",
-      "destination": "/reviews/familydick",
-      "permanent": true
-    },
-    {
-      "source": "/compare/hiroyaxxx-vs-realmenfuck",
-      "destination": "/reviews/realmenfuck",
-      "permanent": true
-    },
-    {
-      "source": "/compare/realmenfuck-vs-hiroyaxxx",
-      "destination": "/reviews/realmenfuck",
       "permanent": true
     },
     {

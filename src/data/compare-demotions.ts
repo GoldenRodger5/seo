@@ -138,7 +138,7 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
   },
   {
     tranche: 4,
-    active: false,
+    active: true,
     pairs: [
       { pair: "dudesraw-vs-maleaccess", dest: "/reviews/maleaccess" },
       { pair: "hairyandraw-vs-maleaccess", dest: "/reviews/maleaccess" },
@@ -146,7 +146,6 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
       { pair: "hiroyaxxx-vs-maleaccess", dest: "/reviews/maleaccess" },
       { pair: "icon-male-vs-spicevidsgay", dest: "/reviews/icon-male" },
       { pair: "jawked-vs-maleaccess", dest: "/reviews/maleaccess" },
-      { pair: "maleaccess-vs-reality-dudes", dest: "/reviews/maleaccess" },
       { pair: "maleaccess-vs-squirtstudios", dest: "/reviews/maleaccess" },
       { pair: "maleaccess-vs-wuboyz", dest: "/reviews/maleaccess" },
       { pair: "militarydick-vs-spicevidsgay", dest: "/reviews/militarydick" },
@@ -168,12 +167,11 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
       { pair: "icon-male-vs-maleaccess", dest: "/reviews/maleaccess" },
       { pair: "japanboyz-vs-spicevidsgay", dest: "/reviews/japanboyz" },
       { pair: "latinleche-vs-spicevidsgay", dest: "/reviews/latinleche" },
-      { pair: "maleaccess-vs-militarydick", dest: "/reviews/maleaccess" },
     ],
   },
   {
     tranche: 5,
-    active: false,
+    active: true,
     pairs: [
       { pair: "maleaccess-vs-rawhole", dest: "/reviews/maleaccess" },
       { pair: "maleaccess-vs-realmenfuck", dest: "/reviews/maleaccess" },
@@ -196,7 +194,6 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
       { pair: "latinleche-vs-maleaccess", dest: "/reviews/latinleche" },
       { pair: "maleaccess-vs-missionaryboys", dest: "/reviews/maleaccess" },
       { pair: "maleaccess-vs-noirmale", dest: "/reviews/maleaccess" },
-      { pair: "maleaccess-vs-southern-strokes", dest: "/reviews/maleaccess" },
       { pair: "maleaccess-vs-twinktrade", dest: "/reviews/maleaccess" },
       { pair: "spicevidsgay-vs-twinkpop", dest: "/reviews/twinkpop" },
       { pair: "spicevidsgay-vs-yoshikawasakixxx", dest: "/reviews/yoshikawasakixxx" },
@@ -208,7 +205,7 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
   },
   {
     tranche: 6,
-    active: false,
+    active: true,
     pairs: [
       { pair: "maleaccess-vs-yoshikawasakixxx", dest: "/reviews/yoshikawasakixxx" },
       { pair: "peterfever-vs-spicevidsgay", dest: "/reviews/peterfever" },
@@ -224,7 +221,6 @@ export const DEMOTION_TRANCHES: DemotionTranche[] = [
       { pair: "bigstr-vs-nakedsword", dest: "/reviews/nakedsword" },
       { pair: "bigstr-vs-next-door-twink", dest: "/reviews/bigstr" },
       { pair: "bigstr-vs-helix-studios", dest: "/reviews/helix-studios" },
-      { pair: "guy-selector-vs-helix-studios", dest: "/reviews/helix-studios" },
       { pair: "spicevidsgay-vs-twinks-in-shorts", dest: "/reviews/twinks-in-shorts" },
       { pair: "maleaccess-vs-twinks-in-shorts", dest: "/reviews/twinks-in-shorts" },
       { pair: "next-door-world-vs-spicevidsgay", dest: "/reviews/spicevidsgay" },
