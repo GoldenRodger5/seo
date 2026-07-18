@@ -9,6 +9,7 @@ import InlineEmailCapture from "../components/InlineEmailCapture";
 import StarRating from "../components/StarRating";
 import LocalisedPrice from "../components/LocalisedPrice";
 import SmartImage from "../components/common/SmartImage";
+import LandingDataBlock from "../components/LandingDataBlock";
 import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import { sites, isAffiliated, isPendingReview, getTopDealPick, getRecentlyUpdatedPromotable } from "../data/sites";
 import type { SiteData } from "../data/sites";
@@ -522,6 +523,24 @@ const Index = () => {
       }) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": `Best Gay Twink Sites ${new Date().getFullYear()}`,
+        "description": "The top-ranked twink sites, scored from paid memberships on content, value, updates, and mobile.",
+        "itemListOrder": "https://schema.org/ItemListOrderDescending",
+        "numberOfItems": 10,
+        "itemListElement": [...sites]
+          .filter((x) => x.editorial_status !== "editorial-only" && x.editorial_status !== "pending-review")
+          .sort((a, b) => b.overall_score - a.overall_score)
+          .slice(0, 10)
+          .map((x, i) => ({
+            "@type": "ListItem",
+            "position": i + 1,
+            "name": x.name,
+            "url": `https://twinkvault.com/reviews/${x.slug}`,
+          })),
+      }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
         "@type": "Organization",
         "name": "TwinkVault",
         "url": "https://twinkvault.com",
@@ -539,6 +558,17 @@ const Index = () => {
             or above the Top 10 list (mobile/tablet). */}
         <FeaturedNiches />
         <TopTen />
+        {/* Data-driven depth for the head term: unique stats + comparison
+            table of the ranked commercial set (same proven block as niche
+            pages). The #1 "best twink sites" SERP rewards ranking pages with
+            real comparative substance — the homepage was 784 words. */}
+        <LandingDataBlock
+          sites={[...sites]
+            .filter((x) => x.editorial_status !== "editorial-only" && x.editorial_status !== "pending-review")
+            .sort((a, b) => b.overall_score - a.overall_score)
+            .slice(0, 10)}
+          label="top-ranked twink"
+        />
         <FeaturedDealBanner placement="homepage" />
         <LatestReviews />
         <UtilityRow />
