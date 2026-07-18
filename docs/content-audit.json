@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18T22:35:55.083Z",
+  "generated_at": "2026-07-18T22:46:03.439Z",
   "summary": {
     "routes": 296,
     "clientOnlyCount": 0,
@@ -124,9 +124,9 @@
       {
         "type": "homepage",
         "count": 1,
-        "median": 848,
-        "min": 848,
-        "max": 848,
+        "median": 861,
+        "min": 861,
+        "max": 861,
         "flagCounts": {},
         "allClientOnly": false
       }
@@ -14882,8 +14882,8 @@
     {
       "route": "/",
       "pageType": "homepage",
-      "fileSize": 93675,
-      "bodyWordCount": 848,
+      "fileSize": 93666,
+      "bodyWordCount": 861,
       "metaTitle": "TwinkVault — Best Gay Twink Sites 2026 Ranked & Reviewed",
       "metaDescription": "Honest reviews of the best gay twink sites — ranked by content quality, value, updates, and mobile UX. Real scores, real pricing, updated 2026.",
       "hasReviewSchema": false,

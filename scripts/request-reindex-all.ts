@@ -134,7 +134,7 @@ async function pingBing(urls: string[], dryRun: boolean): Promise<{ ok: number; 
   }
   // IndexNow accepts up to 10,000 URLs per request — single batch is fine.
   try {
-    const r = await fetch("https://www.bing.com/indexnow", {
+    const r = await fetch("https://api.indexnow.org/indexnow", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ host: "twinkvault.com", key, keyLocation: `https://twinkvault.com/${key}.txt`, urlList: urls }),

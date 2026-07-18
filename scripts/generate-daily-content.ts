@@ -1482,7 +1482,7 @@ async function pingBing(url: string): Promise<boolean> {
   // 403 we saw daily. Verify first, log precisely, and skip if not hosted.
   if (!(await verifyIndexNowKeyHosted(key, keyUrl))) return false;
   try {
-    const r = await fetch("https://www.bing.com/indexnow", {
+    const r = await fetch("https://api.indexnow.org/indexnow", {
       method: "POST",
       headers: { "content-type": "application/json" },
       // keyLocation is explicit (spec-recommended) so Bing fetches the exact

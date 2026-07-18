@@ -99,25 +99,18 @@ const Hero = () => (
   // double-pad and the gap balloons to 64px.
   <section className="pt-12 pb-0 md:pt-18 lg:pt-24 lg:min-h-[60vh] flex items-center">
     <div className="container max-w-6xl w-full">
-      <motion.h1
-        className="font-heading font-bold heading-gradient inline-block text-3xl leading-tight md:text-4xl lg:text-5xl xl:text-6xl"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-      >
-        Independent reviews of {sites.length} gay porn sites.
-      </motion.h1>
+      <h1 className="font-heading font-bold heading-gradient inline-block text-3xl leading-tight md:text-4xl lg:text-5xl xl:text-6xl">
+        The best gay twink sites, ranked &amp; reviewed.
+      </h1>
 
       {/* max-w-2xl (≈672px) keeps the paragraph readable — wider
-          would stretch into uncomfortably long line-length territory. */}
-      <motion.p
-        className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground md:mt-8 md:text-base lg:text-lg"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-      >
-        Every review is built from a paid membership and scored on the same four-pillar rubric. Updated monthly. No paid placements, ever.
-      </motion.p>
+          would stretch into uncomfortably long line-length territory.
+          Opening copy leads with the exact head term — on Bing,
+          exact-match in H1 + first paragraph is a direct ranking
+          signal (and the H1 had drifted off-keyword entirely). */}
+      <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground md:mt-8 md:text-base lg:text-lg">
+        We rank the best twink sites from independent reviews of {sites.length} gay porn sites — every one built from a paid membership and scored on the same four-pillar rubric. Updated monthly. No paid placements, ever.
+      </p>
 
       <motion.div
         className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center md:mt-10"
