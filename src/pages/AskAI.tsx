@@ -272,6 +272,14 @@ const AskAI = () => {
                                 Visit {primarySite.name} <ArrowRight size={13} />
                               </OutboundLink>
                             )}
+                            {primarySite.deal_discount > 0 && (
+                              <Link
+                                to={`/discount/${primarySite.slug}`}
+                                className="inline-flex items-center gap-1.5 rounded-button border border-emerald-400/50 bg-emerald-400/10 px-5 py-2.5 text-sm font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors"
+                              >
+                                Get {primarySite.deal_discount}% off <ArrowRight size={13} />
+                              </Link>
+                            )}
                             <Link
                               to={`/reviews/${primarySite.slug}`}
                               className="inline-flex items-center gap-1 rounded-button border border-primary px-5 py-2.5 text-sm font-semibold text-primary hover:bg-primary/10 transition-colors"
