@@ -8,7 +8,7 @@ import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import SiteCard from "../components/SiteCard";
 import LandingDataBlock from "../components/LandingDataBlock";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { sites } from "../data/sites";
+import { sites, isEditorialOnly, isPendingReview } from "../data/sites";
 import { getNiche } from "../data/niches";
 import { siteNicheMap } from "../data/site-niches";
 import { currentYear } from "../lib/dates";
@@ -23,6 +23,7 @@ const NicheCategoryPage = () => {
 
   const matching = sites
     .filter((s) => (siteNicheMap[s.slug] ?? []).includes(niche.slug))
+    .filter((s) => !isEditorialOnly(s) && !isPendingReview(s))
     .sort((a, b) => b.overall_score - a.overall_score);
 
   const related = niche.related
