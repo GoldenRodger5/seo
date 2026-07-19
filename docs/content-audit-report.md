@@ -2,7 +2,7 @@
 
 ## Critical findings
 
-**🚨 0 / 298 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
+**🚨 0 / 291 routes (0.0%) are `CLIENT_SIDE_ONLY`.** The prerendered HTML for these routes contains only meta tags and an empty `<div id="root"></div>`. Body content (review prose, comparison tables, FAQs, schema markup, internal links — everything below `<head>`) is rendered client-side after JS executes. **Google sees an empty page.**
 
 This is the single largest SEO problem on the site. It explains the GSC pattern of high impressions / low clicks: Google can't read the content the page actually shows to humans, so the page can't rank for queries that would match that content.
 
@@ -30,40 +30,40 @@ The repo contains substantial editorial content in TS data files. None of it cur
 
 | Page type | Count | Median body words (prerendered) | Min | Max | Verdict |
 | --- | ---: | ---: | ---: | ---: | --- |
-| discount | 71 | 895 | 829 | 948 | HEALTHY |
-| review | 71 | 1178 | 979 | 1941 | HEALTHY |
-| compare | 51 | 749 | 626 | 2216 | HEALTHY |
-| landing | 28 | 997 | 261 | 6095 | HEALTHY |
-| niche | 21 | 808 | 523 | 2818 | HEALTHY |
-| other | 20 | 1464 | 415 | 2514 | HEALTHY |
-| guide | 8 | 2379 | 2162 | 2588 | HEALTHY |
-| legal | 6 | 794 | 393 | 1038 | HEALTHY |
-| blog | 6 | 1722 | 1523 | 1875 | HEALTHY |
-| category | 6 | 1608 | 564 | 2884 | HEALTHY |
-| utility | 5 | 337 | 266 | 12786 | HEALTHY |
-| alternatives | 4 | 916 | 889 | 942 | HEALTHY |
-| homepage | 1 | 884 | 884 | 884 | HEALTHY |
+| discount | 71 | 894 | 828 | 947 | HEALTHY |
+| review | 71 | 1176 | 977 | 1940 | HEALTHY |
+| compare | 44 | 737 | 625 | 2215 | HEALTHY |
+| landing | 28 | 996 | 260 | 6092 | HEALTHY |
+| niche | 21 | 782 | 521 | 2770 | HEALTHY |
+| other | 20 | 1950 | 427 | 2513 | HEALTHY |
+| guide | 8 | 2378 | 2161 | 2587 | HEALTHY |
+| legal | 6 | 793 | 392 | 1037 | HEALTHY |
+| blog | 6 | 1721 | 1522 | 1874 | HEALTHY |
+| category | 6 | 1517 | 461 | 2568 | HEALTHY |
+| utility | 5 | 336 | 265 | 12785 | HEALTHY |
+| alternatives | 4 | 915 | 888 | 941 | HEALTHY |
+| homepage | 1 | 881 | 881 | 881 | HEALTHY |
 
 ## Flag breakdown across all routes
 
 | Flag | Count |
 | --- | ---: |
-| WORD_COUNT_LOW | 12 |
+| WORD_COUNT_LOW | 14 |
 | THIN_LANDING | 5 |
 
 ## Compare page deep-dive
 
-- **Page count:** 51
+- **Page count:** 44
 - **Template source:** `src/pages/ComparePage.tsx` (runtime React component, hydrated client-side).
 - **Per-pair content source:** `src/data/comparison-content.ts` (~13,153 words across all pairs combined, never prerendered).
-- **All 51 compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.
+- **All 44 compare pages render as CLIENT_SIDE_ONLY** — Google sees identical 3.7KB meta-only HTML for each pair.
 - **Kill-list recommendation:** until prerendering is fixed, the kill-list question is moot. Once Google can see content, then evaluate pairs by (a) neither site in top-10, (b) <5 GSC impressions/30d.
 
 ## Review page deep-dive
 
 - **Page count:** 71
 - **AI content rendering:** `AI_CONTENT_CLIENT_ONLY`. Static reviewBodies map exists with ~277 median words per site, but the prose only mounts into the DOM after `useAIReview` runs client-side.
-- **Prerendered body word counts:** every review page is in the 979–1941 word range (NoScript + page chrome only).
+- **Prerendered body word counts:** every review page is in the 977–1940 word range (NoScript + page chrome only).
 
 ## Worst-offender routes (smallest prerendered body)
 
@@ -71,36 +71,36 @@ Sorted ascending by body word count. Top 30:
 
 | Route | Type | Body words | File size (KB) | Flags |
 | --- | --- | ---: | ---: | --- |
-| /blog/category/industry | landing | 261 | 19.7 | THIN_LANDING |
-| /find-my-site | utility | 266 | 19.4 |  |
-| /contact | utility | 289 | 21.8 |  |
-| /ask-ai | utility | 337 | 20.6 |  |
-| /blog/category/money | landing | 366 | 22.4 | THIN_LANDING |
-| /blog/category/comparisons | landing | 388 | 24.1 | THIN_LANDING |
-| /2257 | legal | 393 | 19.7 |  |
-| /affiliate-disclosure | legal | 401 | 19.7 |  |
-| /is-athletic-twinks-worth-it | other | 415 | 32.1 |  |
-| /is-rawhole-worth-it | other | 428 | 32.4 |  |
-| /compare | landing | 448 | 32.2 | THIN_LANDING |
-| /is-sayuncle-worth-it | other | 457 | 32.5 |  |
-| /blog/category/guides | landing | 467 | 26.0 | THIN_LANDING |
-| /niche/military | niche | 523 | 32.0 | WORD_COUNT_LOW |
-| /blog | landing | 524 | 32.2 |  |
-| /niche/latin | niche | 532 | 31.9 | WORD_COUNT_LOW |
-| /niche/big-dick | niche | 545 | 32.0 | WORD_COUNT_LOW |
-| /category/free-trials | category | 564 | 44.3 | WORD_COUNT_LOW |
-| /gay-porn-sites-ranked | other | 603 | 127.6 |  |
-| /free-trial-twink-sites | landing | 606 | 43.9 |  |
-| /compare/dudesraw-vs-trailertrashboys | compare | 626 | 55.5 |  |
-| /compare/japanboyz-vs-peterfever | compare | 630 | 55.3 |  |
-| /best-asian-gay-sites | landing | 644 | 67.6 |  |
-| /niche/solo | niche | 648 | 38.3 | WORD_COUNT_LOW |
-| /niche/uncut | niche | 649 | 38.0 | WORD_COUNT_LOW |
-| /compare/hard-brit-lads-vs-prideflame | compare | 652 | 54.1 |  |
-| /compare/breed-me-raw-vs-japanboyz | compare | 657 | 55.3 |  |
-| /compare/hiroyaxxx-vs-realmenfuck | compare | 657 | 54.5 |  |
-| /compare/hard-brit-lads-vs-hiroyaxxx | compare | 665 | 54.6 |  |
-| /compare/bareback-that-hole-vs-brothercrush | compare | 671 | 54.5 |  |
+| /blog/category/industry | landing | 260 | 19.7 | THIN_LANDING |
+| /find-my-site | utility | 265 | 19.4 |  |
+| /contact | utility | 288 | 21.8 |  |
+| /ask-ai | utility | 336 | 20.6 |  |
+| /blog/category/money | landing | 365 | 22.3 | THIN_LANDING |
+| /blog/category/comparisons | landing | 387 | 24.1 | THIN_LANDING |
+| /2257 | legal | 392 | 19.7 |  |
+| /affiliate-disclosure | legal | 400 | 19.7 |  |
+| /is-rawhole-worth-it | other | 427 | 32.3 |  |
+| /compare | landing | 447 | 32.2 | THIN_LANDING |
+| /is-sayuncle-worth-it | other | 456 | 32.5 |  |
+| /category/free-trials | category | 461 | 34.0 | WORD_COUNT_LOW |
+| /blog/category/guides | landing | 466 | 26.0 | THIN_LANDING |
+| /niche/military | niche | 521 | 31.9 | WORD_COUNT_LOW |
+| /blog | landing | 523 | 32.2 |  |
+| /niche/latin | niche | 530 | 31.9 | WORD_COUNT_LOW |
+| /niche/big-dick | niche | 543 | 31.9 | WORD_COUNT_LOW |
+| /gay-porn-sites-ranked | other | 602 | 127.5 |  |
+| /free-trial-twink-sites | landing | 607 | 45.0 |  |
+| /compare/dudesraw-vs-trailertrashboys | compare | 625 | 55.5 |  |
+| /compare/japanboyz-vs-peterfever | compare | 629 | 55.2 |  |
+| /best-asian-gay-sites | landing | 643 | 67.6 |  |
+| /niche/solo | niche | 645 | 38.2 | WORD_COUNT_LOW |
+| /niche/uncut | niche | 646 | 37.9 | WORD_COUNT_LOW |
+| /category/mobile-friendly | category | 650 | 61.2 | WORD_COUNT_LOW |
+| /compare/hard-brit-lads-vs-prideflame | compare | 651 | 54.1 |  |
+| /compare/breed-me-raw-vs-japanboyz | compare | 656 | 55.3 |  |
+| /compare/hiroyaxxx-vs-realmenfuck | compare | 656 | 54.4 |  |
+| /compare/hard-brit-lads-vs-hiroyaxxx | compare | 664 | 54.5 |  |
+| /compare/bareback-that-hole-vs-brothercrush | compare | 670 | 54.5 |  |
 
 ## Auto-generation pipeline assessment
 
