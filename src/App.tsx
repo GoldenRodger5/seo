@@ -66,6 +66,7 @@ import BestTwinkPorn from "./pages/seo/BestTwinkPorn";
 import SitesWithFreeTrial from "./pages/seo/SitesWithFreeTrial";
 import BestValueGayPorn from "./pages/seo/BestValueGayPorn";
 import PricingIndex from "./pages/seo/PricingIndex";
+import Awards2026 from "./pages/seo/Awards2026";
 import GayPornReviews from "./pages/seo/GayPornReviews";
 import SitesRanked from "./pages/seo/SitesRanked";
 import {
@@ -197,6 +198,7 @@ export const AppRoutes = () => (
     <Route path="/gay-porn-sites-with-free-trial" element={<SitesWithFreeTrial />} />
     <Route path="/best-value-gay-porn-sites" element={<BestValueGayPorn />} />
     <Route path="/gay-porn-pricing-index" element={<PricingIndex />} />
+    <Route path="/gay-porn-awards-2026" element={<Awards2026 />} />
     <Route path="/gay-porn-site-reviews" element={<GayPornReviews />} />
     <Route path="/gay-porn-sites-ranked" element={<SitesRanked />} />
     <Route path="/is-nakedsword-worth-it" element={<IsNakedSwordWorthIt />} />

@@ -393,6 +393,7 @@ const PricingIndex = () => {
                 { to: "/best-gay-sites-under-10", label: "Every site under $10/month" },
                 { to: "/guide/gay-porn-billing-guide", label: "How gay porn billing actually works" },
                 { to: "/top-sites", label: "Full site rankings" },
+                { to: "/gay-porn-awards-2026", label: "Awards 2026 — category winners" },
               ].map((l) => (
                 <li key={l.to}>
                   <Link to={l.to} className="text-secondary hover:underline">{l.label} →</Link>

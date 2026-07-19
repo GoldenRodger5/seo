@@ -128,6 +128,7 @@ const corePages = [
   "/best-twink-porn-sites-with-free-trials",
   "/best-cheap-gay-porn-sites",
   "/gay-porn-pricing-index",
+  "/gay-porn-awards-2026",
   "/best-bareback-twink-sites",
   "/best-gay-porn-sites",
   "/best-gay-porn-subscription",

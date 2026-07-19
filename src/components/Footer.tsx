@@ -125,6 +125,7 @@ const Footer = () => (
             <li><Link to="/ask-ai" className={footerLink}>Site Recommender</Link></li>
             <li><Link to="/find-my-site" className={footerLink}>Site Finder Quiz</Link></li>
             <li><Link to="/gay-porn-pricing-index" className={footerLink}>Gay Porn Pricing Index</Link></li>
+            <li><Link to="/gay-porn-awards-2026" className={footerLink}>Awards 2026</Link></li>
             <li><Link to="/guides" className={footerLink}>Guides</Link></li>
             <li><Link to="/blog" className={footerLink}>Blog</Link></li>
             <li><Link to="/gay-dating-sites" className={footerLink}>Dating Sites Guide</Link></li>
