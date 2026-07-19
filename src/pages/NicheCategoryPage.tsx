@@ -151,8 +151,8 @@ const NicheCategoryPage = () => {
                   <SmartImage
                     src={NICHE_IMAGERY[niche.slug].image}
                     alt={NICHE_IMAGERY[niche.slug].alt}
-                    aspectRatio="16:9"
-                    customAspect="21 / 9"
+                    aspectRatio={NICHE_IMAGERY[niche.slug].wide ? "banner-wide" : "16:9"}
+                    customAspect={NICHE_IMAGERY[niche.slug].wide ? undefined : "21 / 9"}
                     fallbackLabel={niche.displayName}
                   />
                 </div>

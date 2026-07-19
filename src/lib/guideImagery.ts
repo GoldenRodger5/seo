@@ -22,6 +22,7 @@ import { siteImagery } from "../data/site-imagery";
 export interface GuideHero {
   /** Absolute-from-root path, e.g. "/site-banners/twinks-in-shorts-hero.jpg". */
   hero_image: string;
+  hero_wide?: boolean;
   /** SFW alt copy (brand identity, not content). */
   hero_alt: string;
   /** The site the hero depicts — used to link the hero to /reviews/{slug}. */
@@ -42,7 +43,7 @@ export const FAVICON_OG_IMAGE = "/pwa-512.png";
 function coverFor(slug: string): GuideHero | null {
   const img = siteImagery[slug];
   if (img && img.hero_image_url) {
-    return { hero_image: img.hero_image_url, hero_alt: img.banner_alt, hero_site_slug: slug };
+    return { hero_image: img.hero_image_url, hero_wide: img.hero_wide, hero_alt: img.banner_alt, hero_site_slug: slug };
   }
   return null;
 }

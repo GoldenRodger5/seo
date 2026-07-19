@@ -3,7 +3,7 @@
  * hub's own top-ranked member sites with a GLOBAL no-duplicates guarantee.
  * Regenerated 2026-07-19 (pass 3: designed billboards + tour art available).
  */
-export interface HubImage { image: string; alt: string; from: string }
+export interface HubImage { image: string; alt: string; from: string; wide?: boolean }
 
 export const CATEGORY_IMAGERY: Record<string, HubImage> = {
   "amateur-twinks": {
@@ -15,7 +15,9 @@ export const CATEGORY_IMAGERY: Record<string, HubImage> = {
   "image": "/site-banners/men-hero.jpg",
   "alt": "Men.com \u2014 premium gay porn network banner",
   "from": "Men.com"
-},
+,
+    "wide": true
+  },
   "best-value": {
     "image": "/site-banners/nakedsword-hero.jpg",
     "alt": "NakedSword — twink gay porn site banner",
@@ -30,11 +32,14 @@ export const CATEGORY_IMAGERY: Record<string, HubImage> = {
   "image": "/site-banners/sean-cody-hero.jpg",
   "alt": "Sean Cody \u2014 gay porn site banner",
   "from": "Sean Cody"
-},
+,
+    "wide": true
+  },
   "mobile-friendly": {
-    "image": "/site-banners/dudesraw-hero.jpg",
-    "alt": "DudesRaw — bareback gay porn site banner",
-    "from": "DudesRaw"
+    "image": "/site-banners/dudesraw-slider.jpg",
+    "alt": "DudesRaw — amateur gay porn site banner",
+    "from": "DudesRaw",
+    "wide": true
   }
 };
 
@@ -53,21 +58,28 @@ export const NICHE_IMAGERY: Record<string, HubImage> = {
     "image": "/site-banners/family-dick-hero.jpg",
     "alt": "Family Dick — daddy gay porn site banner",
     "from": "Family Dick"
+  ,
+    "wide": true
   },
   "bear": {
     "image": "/site-banners/bear-films-hero.jpg",
     "alt": "Bear Films — bear gay porn site banner",
     "from": "Bear Films"
+  ,
+    "wide": true
   },
   "asian": {
-    "image": "/site-banners/gay-asian-network-hero.jpg",
-    "alt": "GayAsianNetwork — asian gay porn site banner",
-    "from": "GayAsianNetwork"
+    "image": "/site-banners/peterfever-hero.jpg",
+    "alt": "PeterFever — asian gay porn site banner",
+    "from": "PeterFever",
+    "wide": true
   },
   "latin": {
     "image": "/site-banners/latin-leche-hero.jpg",
     "alt": "Latin Leche — latin gay porn site banner",
     "from": "Latin Leche"
+  ,
+    "wide": true
   },
   "amateur": {
     "image": "/site-banners/jawked-hero.gif",
@@ -75,8 +87,9 @@ export const NICHE_IMAGERY: Record<string, HubImage> = {
     "from": "Jawked"
   },
   "muscle": {
-    "image": "/site-banners/hiroyaxxx-hero.jpg",
-    "alt": "HiroyaXXX — japanese gay porn site banner",
-    "from": "HiroyaXXX"
+    "image": "/site-banners/real-men-fuck-hero.jpg",
+    "alt": "Real Men Fuck — muscle gay porn site banner",
+    "from": "RealMenFuck",
+    "wide": true
   }
 };

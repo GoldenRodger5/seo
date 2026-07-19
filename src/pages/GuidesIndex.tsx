@@ -107,7 +107,7 @@ const GuidesIndex = () => {
                   <SmartImage
                     src={hero?.hero_image ?? g.hero_image}
                     alt={hero?.hero_alt || g.hero_alt || g.h1}
-                    aspectRatio="16:10"
+                    aspectRatio={hero?.hero_wide ? "banner-wide" : "16:10"}
                     fallbackLabel={g.h1}
                     className="w-full"
                   />

@@ -292,10 +292,10 @@ const BlogPostPage = () => {
               <figure className="mt-8">
                 {hero.hero_site_slug ? (
                   <Link to={`/reviews/${hero.hero_site_slug}`} aria-label={`Read our ${hero.hero_alt || "site"} review`}>
-                    <SmartImage src={hero.hero_image} alt={hero.hero_alt || post.h1} aspectRatio="16:10" priority fallbackLabel={post.h1} className="w-full rounded-xl overflow-hidden" />
+                    <SmartImage src={hero.hero_image} alt={hero.hero_alt || post.h1} aspectRatio={hero.hero_wide ? "banner-wide" : "16:10"} priority fallbackLabel={post.h1} className="w-full rounded-xl overflow-hidden" />
                   </Link>
                 ) : (
-                  <SmartImage src={hero.hero_image} alt={hero.hero_alt || post.h1} aspectRatio="16:10" priority fallbackLabel={post.h1} className="w-full rounded-xl overflow-hidden" />
+                  <SmartImage src={hero.hero_image} alt={hero.hero_alt || post.h1} aspectRatio={hero.hero_wide ? "banner-wide" : "16:10"} priority fallbackLabel={post.h1} className="w-full rounded-xl overflow-hidden" />
                 )}
               </figure>
             )}

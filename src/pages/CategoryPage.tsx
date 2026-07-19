@@ -87,8 +87,8 @@ const CategoryPage = () => {
                   <SmartImage
                     src={CATEGORY_IMAGERY[category.slug].image}
                     alt={CATEGORY_IMAGERY[category.slug].alt}
-                    aspectRatio="16:9"
-                    customAspect="21 / 9"
+                    aspectRatio={CATEGORY_IMAGERY[category.slug].wide ? "banner-wide" : "16:9"}
+                    customAspect={CATEGORY_IMAGERY[category.slug].wide ? undefined : "21 / 9"}
                     fallbackLabel={category.name}
                   />
                 </div>
