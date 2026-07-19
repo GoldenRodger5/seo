@@ -88,7 +88,7 @@ const SitemapPage = () => (
                 <li><Link to="/best-twink-sites" className="text-sm text-muted-foreground hover:text-secondary transition-colors">Best Twink Sites</Link></li>
                 <li><Link to="/free-trial-twink-sites" className="text-sm text-muted-foreground hover:text-secondary transition-colors">Free Trial Sites</Link></li>
                 <li><Link to="/cheapest-twink-sites" className="text-sm text-muted-foreground hover:text-secondary transition-colors">Cheapest Sites</Link></li>
-                <li><Link to="/ask-ai" className="text-sm text-muted-foreground hover:text-secondary transition-colors">Site Recommender</Link></li>
+                <li><Link to="/ask-ai" className="text-sm text-muted-foreground hover:text-secondary transition-colors">Ask TwinkAI</Link></li>
                 <li><Link to="/find-my-site" className="text-sm text-muted-foreground hover:text-secondary transition-colors">Site Finder Quiz</Link></li>
               </ul>
             </div>

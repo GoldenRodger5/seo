@@ -11,7 +11,7 @@ const navLinks = [
   { label: "Pricing", to: "/gay-porn-pricing-index", gold: false },
   { label: "Guides", to: "/guides", gold: false },
   { label: "Blog", to: "/blog", gold: false },
-  { label: "Find a Site", to: "/find-my-site", gold: false },
+  { label: "Ask TwinkAI", to: "/ask-ai", gold: false },
   { label: "Best Deals", to: "/best-deals", gold: true },
 ];
 

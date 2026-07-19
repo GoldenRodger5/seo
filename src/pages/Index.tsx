@@ -448,7 +448,7 @@ const UtilityRow = () => (
           to="/ask-ai"
           className="inline-flex items-center gap-2 rounded-button gold-gradient px-5 py-2.5 text-sm font-semibold text-secondary-foreground"
         >
-          Try the Site Recommender
+          Ask TwinkAI
         </Link>
         <Link
           to="/find-my-site"
