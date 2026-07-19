@@ -298,7 +298,7 @@ const ReviewPage = () => {
                   <SmartImage
                     src={banner}
                     alt={imagery.banner_alt || `${site.name} banner`}
-                    aspectRatio="16:9"
+                    aspectRatio={imagery.hero_wide ? "banner-wide" : "16:9"}
                     fallbackLabel={site.name}
                     priority
                     objectPosition="center 20%"

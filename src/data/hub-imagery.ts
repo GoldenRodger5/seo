@@ -1,9 +1,7 @@
 /**
  * Hub-page hero art — one best image per category/niche, allocated from the
- * hub's own top-ranked member sites with a GLOBAL no-duplicates guarantee
- * (an image used by one hub is never reused by another). Regenerate via the
- * allocation script in the 2026-07-19 image-wiring session when imagery
- * changes materially.
+ * hub's own top-ranked member sites with a GLOBAL no-duplicates guarantee.
+ * Regenerated 2026-07-19 (pass 3: designed billboards + tour art available).
  */
 export interface HubImage { image: string; alt: string; from: string }
 
@@ -14,10 +12,10 @@ export const CATEGORY_IMAGERY: Record<string, HubImage> = {
     "from": "Aussies Do It"
   },
   "premium-studios": {
-    "image": "/site-banners/yoshi-kawasaki-xxx-hero.jpg",
-    "alt": "Yoshi Kawasaki XXX — japanese gay porn site banner",
-    "from": "Yoshi Kawasaki XXX"
-  },
+  "image": "/site-banners/men-hero.jpg",
+  "alt": "Men.com \u2014 premium gay porn network banner",
+  "from": "Men.com"
+},
   "best-value": {
     "image": "/site-banners/nakedsword-hero.jpg",
     "alt": "NakedSword — twink gay porn site banner",
@@ -28,6 +26,11 @@ export const CATEGORY_IMAGERY: Record<string, HubImage> = {
     "alt": "BoyFun — twink gay porn site banner",
     "from": "BoyFun"
   },
+  "free-trials": {
+  "image": "/site-banners/sean-cody-hero.jpg",
+  "alt": "Sean Cody \u2014 gay porn site banner",
+  "from": "Sean Cody"
+},
   "mobile-friendly": {
     "image": "/site-banners/dudesraw-hero.jpg",
     "alt": "DudesRaw — bareback gay porn site banner",
@@ -37,19 +40,24 @@ export const CATEGORY_IMAGERY: Record<string, HubImage> = {
 
 export const NICHE_IMAGERY: Record<string, HubImage> = {
   "twink": {
-    "image": "/site-banners/wuboyz-hero.jpg",
-    "alt": "WuBoyz — asian gay porn site banner",
-    "from": "WuBoyz"
-  },
+  "image": "/site-banners/twinks-in-shorts-hero.jpg",
+  "alt": "Twinks in Shorts \u2014 twink gay porn site banner",
+  "from": "Twinks in Shorts"
+},
   "bareback": {
-    "image": "/site-banners/southern-strokes-hero.jpg",
-    "alt": "Southern Strokes — twink gay porn site banner",
-    "from": "Southern Strokes"
+    "image": "/site-banners/squirt-studios-hero.jpg",
+    "alt": "Squirt Studios — amateur gay porn site banner",
+    "from": "Squirt Studios"
   },
   "daddy": {
     "image": "/site-banners/family-dick-hero.jpg",
     "alt": "Family Dick — daddy gay porn site banner",
     "from": "Family Dick"
+  },
+  "bear": {
+    "image": "/site-banners/bear-films-hero.jpg",
+    "alt": "Bear Films — bear gay porn site banner",
+    "from": "Bear Films"
   },
   "asian": {
     "image": "/site-banners/gay-asian-network-hero.jpg",
