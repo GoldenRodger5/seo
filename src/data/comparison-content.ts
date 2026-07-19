@@ -505,7 +505,66 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
       }
     ],
     "meta_description": "Twinks in Shorts vs Southern Strokes: we compare pricing, content depth, update frequency, and niche appeal to help you pick the right membership in 2026."
-  }
+  },
+  "athletic-twinks-vs-southern-strokes": {
+    "site_a_slug": "athletic-twinks",
+    "site_b_slug": "southern-strokes",
+    "h1": "Athletic Twinks vs Southern Strokes (2026)",
+    "intro": "Two different philosophies, one category. Athletic Twinks bets everything on a specific physical type: lean guys with visible muscle definition, gym-built bodies, and scenes that lean into sports and activewear aesthetics. Southern Strokes takes the opposite approach — relaxed, personality-forward content starring fresh-faced, naturally built guys with a distinctly American small-town feel. Both sites have loyal followings, and both occupy genuinely different corners of the twink niche. If you already know which body type and vibe you prefer, this comparison will confirm your instinct. If you're deciding between them cold, read on — because beyond performer type, the differences in library size, production polish, update cadence, and value proposition are significant enough to matter.",
+    "site_a_summary": "Athletic Twinks positions itself as the go-to destination if gym bodies and sportswear are your thing. Performers are visibly fit — think soccer builds and swimmer frames, not bodybuilders — and scenes routinely incorporate locker rooms, sports gear, and active-wear that actually gets worn before it comes off. Production quality is a step above the average indie twink site: lighting is deliberate, camerawork is multi-angle, and most content lands at 1080p. The site is a focused single-theme operation, which means the library is tighter than a general twink site but far more consistent. Fans who scroll through and get bored don't belong here; fans who've always wanted a site built around that exact body type will find it hard to leave.",
+    "site_b_summary": "Southern Strokes has been running long enough to accumulate one of the larger indie twink libraries online, with hundreds of scenes featuring performers who skew natural, unpolished, and genuinely enthusiastic. The all-American, Southern-casual branding isn't just aesthetics — the site consistently casts guys who look like they stumbled in from a college dorm rather than a casting agency. That authenticity is the whole draw. Pricing is competitive with the wider indie market, the back-catalogue is deep, and the update schedule has historically been more reliable than most sites at this price point. It's not flashy, but it doesn't need to be.",
+    "comparison_categories": [
+      {
+        "category": "Content Library",
+        "site_a_score": 7,
+        "site_b_score": 8,
+        "site_a_detail": "Athletic Twinks maintains a focused library built entirely around its sporty-guy concept. Scene count sits in the low-to-mid hundreds, which is respectable for a niche-specific indie site — you won't find content drift into unrelated territory. The consistency is the point: every scene delivers the specific aesthetic fans signed up for, and photo sets accompany most videos.",
+        "site_b_detail": "Southern Strokes has depth on its side. The site has been active for well over a decade, and that longevity translates into a back-catalogue that comfortably exceeds 500 scenes across various pairings — solo, duo, and occasional group content. New members frequently report burning through several days of content before feeling like they've scratched the surface, which is a strong endorsement of raw volume."
+      },
+      {
+        "category": "Pricing & Value",
+        "site_a_score": 7,
+        "site_b_score": 8,
+        "site_a_detail": "Athletic Twinks charges roughly in line with mid-tier indie gay sites: expect a monthly rate around $24.95–$29.95 and a discounted quarterly or annual option that drops the per-month cost noticeably. A short trial or discounted first-month offer appears periodically. Given the tighter library, value depends entirely on how hard you are on that specific niche — for the right fan, it's worth every dollar; for casual browsers, the per-scene cost feels high.",
+        "site_b_detail": "Southern Strokes prices are consistently competitive, typically around $19.95–$24.95 per month with meaningful discounts at three and twelve months. The volume of content relative to the monthly price is one of the better ratios in the indie twink space. Occasional sale pricing and recurring promotional rates have been reported by members, and the sheer size of the back-catalogue means new subscribers get immediate density of content for their first payment."
+      },
+      {
+        "category": "Site Design & UX",
+        "site_a_score": 7,
+        "site_b_score": 6,
+        "site_a_detail": "The Athletic Twinks member area is clean and modern without being over-engineered. Navigation is category-simple: browse by performer or scroll the scene grid, both of which work well on mobile. The embedded player handles 1080p without buffering issues on a standard broadband connection, and download options are available alongside streaming. Nothing about the interface will frustrate you.",
+        "site_b_detail": "Southern Strokes' site design shows its age in places. The member area functions reliably and content loads without major technical issues, but the layout reflects an earlier era of adult site design — pagination-heavy, with search functionality that is basic rather than powerful. On mobile the experience is acceptable but not optimized. Members who are there purely for the content typically overlook it; those who browse by tag or performer name may find the tools limiting."
+      },
+      {
+        "category": "Update Frequency",
+        "site_a_score": 7,
+        "site_b_score": 7,
+        "site_a_detail": "Athletic Twinks updates on roughly a weekly cadence, adding one full scene — typically 20 to 40 minutes of video — plus accompanying photo sets. The schedule is generally reliable, though production shutdowns can create occasional gaps of two weeks. For a niche-focused indie site, weekly new content is a solid baseline and keeps a membership feeling active rather than stale.",
+        "site_b_detail": "Southern Strokes historically updates one to two times per week, which has been consistent enough over the years to build trust with long-term members. The reliability matters here more than the raw frequency: members report the schedule rarely goes dark for more than a few weeks, and the site shows no signs of abandoning production. Given the existing library depth, even a temporary slowdown leaves plenty to watch."
+      },
+      {
+        "category": "Niche Focus",
+        "site_a_score": 9,
+        "site_b_score": 7,
+        "site_a_detail": "This is where Athletic Twinks is simply unmatched. The sportswear and gym-body niche is carved out with precision: performers are cast for visible fitness, activewear is integral to the scenes rather than incidental, and the overall fantasy is coherent from thumbnail to finish. If this specific combination is what you're searching for, no general twink site comes close to delivering it this consistently.",
+        "site_b_detail": "Southern Strokes' niche — natural, all-American twinks with a Southern collegiate feel — is real and distinct, though less tightly defined than a sportswear-themed site. The casting stays consistent: performers tend toward slim-to-average builds, untattooed, and genuinely young-looking. The 'Southern charm' framing translates mostly into an amateur warmth in performance style rather than geographic casting, but the overall identity is clear enough that fans of authentic, low-gloss twink content know exactly what they're getting."
+      }
+    ],
+    "verdict": "These sites don't really compete with each other in any meaningful way — they're serving different appetites. Athletic Twinks is a specialty site. It does one thing, it does it well, and if that one thing is your thing, you'll be paying for a membership long-term. The gym-body plus activewear combination is surprisingly hard to find executed with this level of consistency, and fans of that niche will find the tighter library forgivable because every scene hits the brief. The UX is modern, production quality is solid, and weekly updates keep things moving. The case against it is simple: if fit bodies in sportswear don't move the needle for you, there's nothing here to discover. Southern Strokes wins on depth, pricing, and accessibility. The back-catalogue alone justifies a one-month trial — you're unlikely to exhaust it before deciding whether to stay. The all-American casting is genuine rather than performed, the per-scene value at current pricing is among the better deals in the indie twink space, and the update reliability has been earned over years of operation. The dated site design is a real drawback, and the lack of a strong filtering system becomes genuinely annoying once you're a few months in and trying to find something specific. On balance: if you want volume, value, and authentic performer energy, Southern Strokes is the stronger overall pick. If you're hunting specifically for athletic bodies and sports aesthetics, Athletic Twinks is the correct choice and there's no close second.",
+    "who_should_choose_a": "Subscribe to Athletic Twinks if gym-built, sporty performers and activewear-driven scenes are a hard requirement — no other site in this price range owns that niche as cleanly.",
+    "who_should_choose_b": "Subscribe to Southern Strokes if you want the best volume-to-price ratio in the indie twink space, with a deep back-catalogue of natural, genuinely enthusiastic performers and a reliable update schedule.",
+    "faq": [
+      {
+        "q": "Is Athletic Twinks worth the membership price in 2026?",
+        "a": "For the right fan, yes. Athletic Twinks charges a mid-tier monthly rate (typically in the $24.95–$29.95 range) that is on the higher end for a library of its size. What justifies the price is specificity: every scene features visibly fit performers in sports or gym contexts, which is a genuinely uncommon combination in the indie gay market. If that's your niche, the consistency alone is worth paying for. If you're a general twink fan who doesn't particularly care about body type or sportswear, the scene count relative to cost won't feel like good value. A discounted trial or quarterly rate is the sensible way to test it before committing to annual billing."
+      },
+      {
+        "q": "How does Southern Strokes compare to other twink sites for sheer content volume?",
+        "a": "Southern Strokes competes well on volume against most independently operated twink sites. With a library that has grown over more than a decade of production, the scene count comfortably exceeds 500 videos — a depth that puts it ahead of most single-themed indie competitors and in the same conversation as some network-backed properties. The content skews toward duo scenes featuring natural, slim performers, with a consistent casting identity that runs throughout the catalogue. Update frequency of one to two scenes per week means the library keeps growing rather than sitting static. For a new subscriber arriving with no prior access, the existing back-catalogue alone represents weeks of content before the weekly updates even become relevant."
+      }
+    ],
+    "meta_description": "Athletic Twinks vs Southern Strokes: we compare pricing, scene counts, update frequency, and niche fit to help you pick the right site in 2026."
+  },
 };
 
 export const getComparisonBody = (slug: string): ComparisonBody | undefined => {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, ReactNode } from "react";
+import { useEffect, useRef, useState, ReactNode } from "react";
 
 /**
  * LCP guard (same rationale as MotionWrappers): this component used to render
@@ -16,6 +16,11 @@ const AnimateOnScroll = ({ children, className = "", id }: { children: ReactNode
   // Decided at render time: false during SSR and the first client render
   // (identical markup → no hydration mismatch), true for SPA navigations.
   const animate = hasHydrated;
+  // Reveal state must live in React state, not an imperatively-added class:
+  // the old classList.add("animate-fade-up") was wiped by the next re-render
+  // (React re-applies className), so any state change INSIDE the wrapper —
+  // e.g. selecting quiz options — snapped the content back to opacity-0.
+  const [inView, setInView] = useState(!animate);
 
   useEffect(() => {
     hasHydrated = true;
@@ -23,7 +28,7 @@ const AnimateOnScroll = ({ children, className = "", id }: { children: ReactNode
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("animate-fade-up");
+          setInView(true);
           observer.unobserve(entry.target);
         }
       },
@@ -34,7 +39,7 @@ const AnimateOnScroll = ({ children, className = "", id }: { children: ReactNode
   }, [animate]);
 
   return (
-    <div ref={ref} id={id} className={`${animate ? "opacity-0" : ""} ${className}`}>
+    <div ref={ref} id={id} className={`${animate && !inView ? "opacity-0" : ""} ${animate && inView ? "animate-fade-up" : ""} ${className}`}>
       {children}
     </div>
   );

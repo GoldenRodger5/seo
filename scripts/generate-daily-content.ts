@@ -961,7 +961,11 @@ function appendSiteEntry(entry: ReviewQueueEntry, generated: Record<string, unkn
   },
 `;
 
-  const updated = src.replace(/(\n\];\s*\n\nexport const categories)/, `\n${block}];\n\nexport const categories`);
+  // Function form is mandatory: string replacements treat `$` as a
+  // backreference prefix, and review prose contains prices — `$'` in the
+  // generated text expanded to "rest of file" and shipped an unterminated
+  // string (same class of bug as the upsertContentEntry fix above).
+  const updated = src.replace(/(\n\];\s*\n\nexport const categories)/, () => `\n${block}];\n\nexport const categories`);
   if (updated === src) {
     throw new Error("Failed to splice new site entry — sites.ts pattern not matched.");
   }
@@ -996,7 +1000,7 @@ function appendReviewBody(slug: string, generated: Record<string, unknown>, opts
     return;
   }
 
-  const updated = src.replace(/(\n};\n)/, `${block}};\n`);
+  const updated = src.replace(/(\n};\n)/, () => `${block}};\n`);
   if (updated === src) throw new Error("Failed to splice review body");
   writeFileSync(REVIEWS_FILE, updated, "utf-8");
   log.info(`Appended review body for ${slug}`);
@@ -1071,10 +1075,24 @@ function upsertContentEntry(file: string, key: string, body: unknown, opts: { ov
   if (/=\s*\{\s*\};/.test(src)) {
     updated = src.replace(/=\s*\{\s*\};/, () => `= {\n${literal}};`);
   } else {
-    // Preserve the leading newline that the regex consumes, otherwise the
-    // new entry joins the previous "}," on the same line — valid JS but
-    // visually broken (and fragile if anything later parses by line).
-    updated = src.replace(/\n};\s*$/m, () => `\n${literal}};\n`);
+    // Append before the record's closing `};`. Two hard-won rules:
+    //   1. Position-based, bounded to the record: the old /\n};\s*$/m regex
+    //      could match a helper function's closing `};` later in the file
+    //      (multiline $ = any line end). The record terminator is the FIRST
+    //      `\n};` after the record declaration — entry strings are
+    //      JSON.stringify output (newlines escaped), so no fake terminators
+    //      can occur inside the record.
+    //   2. Comma-heal: the previous last entry may legally lack a trailing
+    //      comma (that exact case shipped a syntax error and burned a run).
+    const recordStart = src.search(/=\s*\{/);
+    const endIdx = recordStart === -1 ? -1 : src.indexOf("\n};", recordStart);
+    if (endIdx === -1) {
+      log.warn(`upsert: could not find record terminator in ${file}`);
+      return;
+    }
+    const before = src.slice(0, endIdx);
+    const needsComma = /\}\s*$/.test(before) && !/,\s*$/.test(before);
+    updated = `${before}${needsComma ? "," : ""}\n${literal}};${src.slice(endIdx + 3)}`;
   }
 
   if (updated === src) {

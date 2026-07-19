@@ -79,6 +79,33 @@ export interface SupportingQueueEntry {
 // Ordered: sites with confirmed affiliate URLs first, then pending approvals.
 // ---------------------------------------------------------------------------
 export const reviewQueue: ReviewQueueEntry[] = [
+  // ── Adult Empire Cash + VisionX (partner links live, reviews overdue) ────
+  {
+    name: "TLA Gay Unlimited",
+    slug: "tla-gay-unlimited",
+    homepage_url: "https://www.tlagay.com/unlimited",
+    affiliate_url: "https://www.tlagay.com/unlimited?partner_ID=55760691",
+    affiliate_network: "Adult Empire Cash",
+    niche: ["premium-studios"],
+    priority: 10,
+    estimated_monthly_searches: 1900,
+    status: "published",
+    content_type: "review",
+    editorial_mode: "ready",
+  },
+  {
+    name: "VisionX Flix",
+    slug: "visionx-flix",
+    homepage_url: "https://www.visionxflix.com",
+    affiliate_url: "https://www.visionxflix.com/?partner_ID=45202227",
+    affiliate_network: "VisionX",
+    niche: ["amateur-twinks"],
+    priority: 10,
+    estimated_monthly_searches: 700,
+    status: "published",
+    content_type: "review",
+    editorial_mode: "ready",
+  },
   // ── AdultForce (URL pending) ─────────────────────────────────────────────
   {
     name: "Men.com",

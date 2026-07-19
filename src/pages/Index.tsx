@@ -151,7 +151,9 @@ const Hero = () => (
  * version is no longer rendered.
  */
 const TopTen = () => {
-  const top10 = [...sites].filter((s) => !isPendingReview(s)).sort((a, b) => b.overall_score - a.overall_score).slice(0, 10);
+  // Homepage is a promotional surface: the top-10 features partner sites only
+  // (the unfiltered editorial ranking lives at /top-sites). Owner call 2026-07-19.
+  const top10 = [...sites].filter((s) => !isPendingReview(s) && isAffiliated(s)).sort((a, b) => b.overall_score - a.overall_score).slice(0, 10);
 
   // Badge priority: editors-choice (rank #1) > best-value (lowest
   // price_monthly among top 10). Only ONE badge per row.

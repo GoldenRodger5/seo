@@ -1,67 +1,9 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { sites } from "../src/data/sites.js";
+import { VALID_SLUGS, SITE_CONTEXT, BLOCKED, makeRateLimiter } from "./_lib.js";
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
-// Simple in-memory rate limiter (resets on cold start, which is fine for serverless)
-const rateMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT = 10; // requests per window
-const RATE_WINDOW = 60_000; // 1 minute
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = rateMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW });
-    return false;
-  }
-  entry.count++;
-  return entry.count > RATE_LIMIT;
-}
-
-// Catalog built from the live site data at cold start — the old version
-// embedded a hand-written 12-site snapshot that went stale (it couldn't
-// recommend most of the monetized catalog). Only reviewed sites with an
-// affiliate path are recommendable.
-const RECOMMENDABLE = sites.filter(
-  (s) => s.affiliate_url && (s.editorial_status ?? "reviewed") === "reviewed"
-);
-const VALID_SLUGS = new Set(RECOMMENDABLE.map((s) => s.slug));
-const SITE_CONTEXT = RECOMMENDABLE.map((s) => {
-  const bits = [
-    `${s.name} (slug: ${s.slug})`,
-    `Score ${s.overall_score}/5`,
-    `${s.price_monthly}/mo or ${s.price_annual}/mo annual`,
-    s.has_free_trial ? "has trial" : "",
-    s.best_for ? `Best for: ${s.best_for}` : s.short_description,
-    s.pros?.slice(0, 2).join("; "),
-  ].filter(Boolean);
-  return bits.join(". ");
-}).join("\n");
-
-// Hard content screen. The public UI only sends structured chip phrases,
-// so this only ever fires on direct API calls. The line here is LEGALITY,
-// phrased as requests: explicit under-18 references, real-world
-// non-consent, covert recording, animals. Legal adult-category vocabulary
-// ("teen" meaning 18-19, step-fantasy, roleplay themes our own catalog
-// carries) is NOT blocked — the model prompt handles those with nuance.
-const BLOCKED = new RegExp(
-  [
-    // under-18: words and phrased ages ("15 yo", "16 year old", "under 18")
-    "minor|minors|underage|under.?age|under.?1[0-8]",
-    "child|children|preteen|pre.?teen|jail.?bait|loli|shota",
-    "\\b(?:1[0-7]|[1-9])\\s?(?:yo|y/o|yr|yrs|year.?old|years.?old)\\b",
-    "\\b(?:thirteen|fourteen|fifteen|sixteen|seventeen)\\b",
-    "school.?boy|high.?school|middle.?school",
-    // real-world non-consent and incapacitation
-    "rape|non.?consensual|against (?:his|her|their) will|drugged|unconscious|passed.?out|sleep(?:ing)? assault",
-    // covert recording of real people
-    "hidden.?cam|spy.?cam|secret(?:ly)? (?:filmed|recorded)|locker.?room cam",
-    // animals
-    "bestiality|zoophil|beast",
-  ].join("|"),
-  "i"
-);
+const isRateLimited = makeRateLimiter(10, 60_000);
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS
