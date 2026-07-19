@@ -1,0 +1,37 @@
+name: Weekly Price Snapshot
+
+on:
+  schedule:
+    # Mondays 12:00 UTC — an hour before the SEO pulse.
+    - cron: "0 12 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Snapshot prices
+        run: npx tsx scripts/snapshot-prices.ts
+
+      - name: Commit
+        run: |
+          git config user.email "isaac.m.builds@gmail.com"
+          git config user.name "TwinkVault Price Snapshot"
+          git add docs/price-history.json
+          git diff --cached --quiet || git commit -m "chore(prices): weekly snapshot $(date -u +%F)"
+          git pull --rebase origin main
+          git push

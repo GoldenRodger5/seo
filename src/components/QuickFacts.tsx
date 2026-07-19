@@ -65,6 +65,7 @@ const QuickFacts = ({ site }: { site: SiteData }) => {
             <span className="inline-flex items-center gap-1 text-muted-foreground"><XIcon size={13} /> Limited</span>
           )}
         </Row>
+        {site.library_size && <Row label="Library">{site.library_size}</Row>}
         <Row label="Update pace">{cadenceLabel(site.update_frequency)}</Row>
         <Row label="Our score">{site.overall_score}/5</Row>
       </dl>

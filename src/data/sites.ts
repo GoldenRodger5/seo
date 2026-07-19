@@ -25,6 +25,10 @@ export interface SiteData {
   is_featured: boolean;
   has_free_trial: boolean;
   has_hd: boolean;
+  /** Approximate library size as displayed ("4,000+ scenes"). Extracted from
+   *  our own editorial copy by scripts/extract-library-sizes (self-consistent
+   *  with review prose); omit rather than guess. Shown in QuickFacts. */
+  library_size?: string;
   best_for: string;
   deal_text: string;
   deal_discount: number;
@@ -156,6 +160,7 @@ export const sites: SiteData[] = [
     is_featured: true,
     has_free_trial: false,
     has_hd: true,
+    library_size: "4,000+ scenes",
     best_for: "Fans of premium cinematic content",
     deal_text: "66% off annual membership",
     deal_discount: 66,
@@ -186,6 +191,7 @@ export const sites: SiteData[] = [
     is_featured: true,
     has_free_trial: false,
     has_hd: true,
+    library_size: "12,500+ videos",
     best_for: "All-American content fans who want massive network access",
     deal_text: "56% off annual — just $10.95/mo",
     deal_discount: 56,
@@ -216,6 +222,7 @@ export const sites: SiteData[] = [
     is_featured: true,
     has_free_trial: false,
     has_hd: true,
+    library_size: "12,500+ videos",
     best_for: "Value hunters wanting maximum content for one price",
     deal_text: "56% off annual — just $10.95/mo",
     deal_discount: 56,
@@ -696,6 +703,7 @@ export const sites: SiteData[] = [
     is_featured: true,
     has_free_trial: false,
     has_hd: true,
+    library_size: "50,000+ scenes",
     best_for: "Members who want one subscription covering every niche",
     deal_text: "67% off annual — just $9.99/mo",
     deal_discount: 67,
@@ -1756,6 +1764,7 @@ export const sites: SiteData[] = [
     is_featured: false,
     has_free_trial: false,
     has_hd: true,
+    library_size: "8,000+ videos",
     best_for: "Fans of amateur multi-site networks who want download access and a large back catalog",
     deal_text: "67% off annual — $9.99/mo billed yearly",
     deal_discount: 67,
@@ -1876,6 +1885,7 @@ export const sites: SiteData[] = [
     is_featured: false,
     has_free_trial: false,
     has_hd: true,
+    library_size: "1,000+ scenes",
     best_for: "Fans of first-time and straight-guy fantasy scenarios who want variety across 7 sub-sites",
     deal_text: "72% off annual — $8.33/mo billed yearly",
     deal_discount: 72,
@@ -2111,6 +2121,7 @@ export const sites: SiteData[] = [
     is_featured: false,
     has_free_trial: true,
     has_hd: true,
+    library_size: "8,000+ scenes",
     best_for: "New subscribers who want to try before committing — the 7-day free trial is the strongest entry offer in the category",
     deal_text: "47% off annual — $7.99/mo billed yearly",
     deal_discount: 47,
@@ -2269,6 +2280,7 @@ export const sites: SiteData[] = [
     is_featured: false,
     has_free_trial: false,
     has_hd: true,
+    library_size: "1,700+ videos",
     best_for: "Gay men drawn to authentic military aesthetics, gay-for-pay casting, and bareback scene work who want a deep back-catalog rather than a boutique performer stable.",
     deal_text: "",
     deal_discount: 0,
@@ -2300,6 +2312,7 @@ export const sites: SiteData[] = [
     is_featured: false,
     has_free_trial: false,
     has_hd: true,
+    library_size: "12,500+ videos",
     best_for: "Gay men who prefer named, recurring performers in jock-and-twink scenarios and want a single subscription covering multiple sub-brand libraries rather than a niche single-site experience.",
     deal_text: "",
     deal_discount: 0,
@@ -2331,6 +2344,7 @@ export const sites: SiteData[] = [
     is_featured: false,
     has_free_trial: false,
     has_hd: true,
+    library_size: "2,000+ scenes",
     best_for: "Gay men who want large muscular and hairy performers in high-production bareback scenes with genuine narrative craft, and aren't remotely interested in twink aesthetics.",
     deal_text: "",
     deal_discount: 0,
