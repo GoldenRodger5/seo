@@ -530,6 +530,17 @@ const ComparePage = () => {
   // order, and positional rendering without alignment swaps the site labels.
   const rawAiBody = getComparisonBody(slug);
   const aiBody = rawAiBody ? alignComparisonBody(rawAiBody, siteA.slug) : undefined;
+  // Authored FAQ entries (engine-written, unique per pair) lead; templated
+  // compare FAQs top up the list with question-text near-dupes filtered out.
+  // Both the visible FAQ section and the FAQPage JSON-LD read from this one
+  // merged list so the schema always matches the rendered content.
+  const authoredFaqs = aiBody?.faq ?? [];
+  const compareFaqs = [
+    ...authoredFaqs,
+    ...generateCompareFaqs(siteA, siteB).filter(
+      (t) => !authoredFaqs.some((af) => af.q.trim().toLowerCase() === t.q.trim().toLowerCase())
+    ),
+  ].slice(0, 8);
   const tied = siteA.overall_score === siteB.overall_score;
   const aiPreferred: SiteData | null = (() => {
     if (!aiBody) return null;
@@ -703,7 +714,7 @@ const ComparePage = () => {
           const faqPage = {
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            mainEntity: generateCompareFaqs(siteA, siteB).map((f) => ({
+            mainEntity: compareFaqs.map((f) => ({
               "@type": "Question",
               name: f.q,
               acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -971,7 +982,7 @@ const ComparePage = () => {
                 {siteA.name} vs {siteB.name} — FAQ
               </h2>
               <div className="mt-6 space-y-3">
-                {generateCompareFaqs(siteA, siteB).map((item) => (
+                {compareFaqs.map((item) => (
                   <details key={item.q} className="glass-card group rounded-lg p-4">
                     <summary className="cursor-pointer list-none font-semibold flex items-center justify-between text-sm">
                       {item.q}

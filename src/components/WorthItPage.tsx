@@ -290,17 +290,50 @@ const WorthItPage = ({ site }: { site: SiteData }) => {
             {(() => {
               const ai = getWorthItBody(site.slug);
               if (!ai) return null;
+              const faqs = ai.faq ?? [];
               return (
-                <article className="space-y-5 text-sm text-foreground/90 leading-relaxed">
-                  <p className="text-base">{ai.intro}</p>
-                  {ai.sections.map((s) => (
-                    <section key={s.h2}>
-                      <h3 className="font-heading text-base font-bold">{s.h2}</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">{s.content}</p>
-                    </section>
-                  ))}
-                  <p className="text-sm text-muted-foreground">{ai.conclusion}</p>
-                </article>
+                <>
+                  <article className="space-y-5 text-sm text-foreground/90 leading-relaxed">
+                    <p className="text-base">{ai.intro}</p>
+                    {ai.sections.map((s) => (
+                      <section key={s.h2}>
+                        <h3 className="font-heading text-base font-bold">{s.h2}</h3>
+                        <p className="mt-2 text-sm text-muted-foreground">{s.content}</p>
+                      </section>
+                    ))}
+                    <p className="text-sm text-muted-foreground">{ai.conclusion}</p>
+                  </article>
+                  {faqs.length > 0 && (
+                    <div>
+                      <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{
+                          __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "FAQPage",
+                            mainEntity: faqs.map((f) => ({
+                              "@type": "Question",
+                              name: f.q,
+                              acceptedAnswer: { "@type": "Answer", text: f.a },
+                            })),
+                          }),
+                        }}
+                      />
+                      <h2 className="font-heading text-lg font-bold">Is {site.name} Worth It? — FAQ</h2>
+                      <div className="mt-4 space-y-3">
+                        {faqs.map((f) => (
+                          <details key={f.q} className="glass-card group rounded-lg p-4">
+                            <summary className="cursor-pointer list-none font-semibold flex items-center justify-between text-sm">
+                              {f.q}
+                              <span className="text-primary group-open:rotate-180 transition-transform">▾</span>
+                            </summary>
+                            <p className="mt-2 text-sm text-muted-foreground">{f.a}</p>
+                          </details>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
               );
             })()}
 

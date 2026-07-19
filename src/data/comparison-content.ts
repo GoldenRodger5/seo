@@ -83,12 +83,12 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     "who_should_choose_b": "Choose Sean Cody if clean-cut, exclusively-contracted athletic men are your specific type and you want a trustworthy, transparent membership with no upsell maze — especially on the annual plan.",
     "faq": [
       {
-        "question": "Do Men.com and Sean Cody share content or performers since they're in the same industry orbit?",
-        "answer": "Historically the two brands have operated as separate entities with distinct talent rosters — Sean Cody's strict exclusivity contracts mean its performers are not cross-posted to Men.com. While both sit within the broader MindGeek/Aylo ecosystem, the content libraries remain separate and a subscription to one does not grant access to the other."
+        "q": "Do Men.com and Sean Cody share content or performers since they're in the same industry orbit?",
+        "a": "Historically the two brands have operated as separate entities with distinct talent rosters — Sean Cody's strict exclusivity contracts mean its performers are not cross-posted to Men.com. While both sit within the broader MindGeek/Aylo ecosystem, the content libraries remain separate and a subscription to one does not grant access to the other."
       },
       {
-        "question": "Which site is better value if I only want to subscribe for one month?",
-        "answer": "Sean Cody wins the single-month value comparison clearly. Its $29.99 monthly rate comes with full library access and no documented paywalls on streaming resolution, while Men.com's base monthly membership has drawn repeated verified complaints about locked 1080p content and hidden add-on charges that inflate the real cost well beyond the headline price."
+        "q": "Which site is better value if I only want to subscribe for one month?",
+        "a": "Sean Cody wins the single-month value comparison clearly. Its $29.99 monthly rate comes with full library access and no documented paywalls on streaming resolution, while Men.com's base monthly membership has drawn repeated verified complaints about locked 1080p content and hidden add-on charges that inflate the real cost well beyond the headline price."
       }
     ],
     "meta_description": "Men.com vs Sean Cody compared in 2026 — pricing, content, UX, and update frequency reviewed honestly so you know where to spend your money."
@@ -142,12 +142,12 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     "who_should_choose_b": "Choose NakedSword if you want the closest thing to a complete gay porn streaming library — one login, hundreds of studios, thousands of performers, and daily new drops that will take years to exhaust.",
     "faq": [
       {
-        "question": "Does a NakedSword membership include Men.com content, or vice versa?",
-        "answer": "No — these are completely separate platforms with no cross-membership access. NakedSword aggregates content from Falcon Studios, Raging Stallion, Hot House, and 200+ other partner studios, but Men.com (owned by Aylo) is not among them. If you want both catalogs, you need two separate subscriptions."
+        "q": "Does a NakedSword membership include Men.com content, or vice versa?",
+        "a": "No — these are completely separate platforms with no cross-membership access. NakedSword aggregates content from Falcon Studios, Raging Stallion, Hot House, and 200+ other partner studios, but Men.com (owned by Aylo) is not among them. If you want both catalogs, you need two separate subscriptions."
       },
       {
-        "question": "Which site is safer to subscribe to from a billing standpoint?",
-        "answer": "NakedSword has a cleaner billing reputation. Men.com has accumulated consistent complaints about surprise premium-tier charges, paywalled HD streams on standard memberships, and difficult cancellation processes. If billing transparency matters to you — and it should — NakedSword is the lower-risk option, though always read checkout screens carefully on any adult subscription site."
+        "q": "Which site is safer to subscribe to from a billing standpoint?",
+        "a": "NakedSword has a cleaner billing reputation. Men.com has accumulated consistent complaints about surprise premium-tier charges, paywalled HD streams on standard memberships, and difficult cancellation processes. If billing transparency matters to you — and it should — NakedSword is the lower-risk option, though always read checkout screens carefully on any adult subscription site."
       }
     ],
     "meta_description": "NakedSword vs Men.com in 2026: we compare pricing, scene counts, update frequency, and billing reputation to find the better gay porn subscription."
@@ -201,12 +201,12 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     "who_should_choose_b": "Subscribe to Sean Cody if your preference runs firmly to muscular, athletic, freshly-recruited performers in long-form bareback scenes and you want the reliability of Aylo's platform infrastructure behind the experience.",
     "faq": [
       {
-        "question": "Does Helix Studios or Sean Cody offer better value for a short one-month trial?",
-        "answer": "Helix Studios is the stronger one-month proposition. At roughly $11.99 for a month on their annual rate — or a comparable short-term rate — versus Sean Cody's standard $29.99 monthly price, Helix gives you immediate access to a 4,000+ video library for significantly less upfront spend. Sean Cody's value proposition improves considerably on a 12-month commitment, dropping to around $9.99/month, but for a single month of exploration Helix wins on price-to-library ratio."
+        "q": "Does Helix Studios or Sean Cody offer better value for a short one-month trial?",
+        "a": "Helix Studios is the stronger one-month proposition. At roughly $11.99 for a month on their annual rate — or a comparable short-term rate — versus Sean Cody's standard $29.99 monthly price, Helix gives you immediate access to a 4,000+ video library for significantly less upfront spend. Sean Cody's value proposition improves considerably on a 12-month commitment, dropping to around $9.99/month, but for a single month of exploration Helix wins on price-to-library ratio."
       },
       {
-        "question": "Which site has more content available right now in 2026 — Helix Studios or Sean Cody?",
-        "answer": "Helix Studios has the larger accessible library in 2026. The catalogue exceeds 4,000 videos and has not undergone any significant removal events. Sean Cody's archive, while still substantial, was reduced by over 2,000 videos in 2021 when content from the 2001–2014 era was pulled to meet payment processor compliance standards. New Sean Cody production continues at a strong weekly pace, but in total accessible volume Helix currently holds the advantage."
+        "q": "Which site has more content available right now in 2026 — Helix Studios or Sean Cody?",
+        "a": "Helix Studios has the larger accessible library in 2026. The catalogue exceeds 4,000 videos and has not undergone any significant removal events. Sean Cody's archive, while still substantial, was reduced by over 2,000 videos in 2021 when content from the 2001–2014 era was pulled to meet payment processor compliance standards. New Sean Cody production continues at a strong weekly pace, but in total accessible volume Helix currently holds the advantage."
       }
     ],
     "meta_description": "Helix Studios vs Sean Cody in 2026: pricing, library size, update schedules, and niche focus compared so you can spend your membership money wisely."
@@ -260,12 +260,12 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     "who_should_choose_b": "Choose Twinks in Shorts if authentic performer chemistry and a candid, unpolished energy matter more to you than chiseled physiques and slick production.",
     "faq": [
       {
-        "question": "Do Twinks in Shorts and Athletic Twinks share any content or network access?",
-        "answer": "Based on available information, these appear to be independent sites with no shared network or cross-membership access — subscribing to one does not unlock the other. Always verify on the membership sign-up page before purchasing, as bundle arrangements can change."
+        "q": "Do Twinks in Shorts and Athletic Twinks share any content or network access?",
+        "a": "Based on available information, these appear to be independent sites with no shared network or cross-membership access — subscribing to one does not unlock the other. Always verify on the membership sign-up page before purchasing, as bundle arrangements can change."
       },
       {
-        "question": "Which site is better for someone who wants both amateur energy and athletic physiques?",
-        "answer": "Neither site is a perfect overlap of both qualities — Twinks in Shorts prioritises the amateur feel with naturally built performers, while Athletic Twinks prioritises physique and production structure. If you genuinely want both, Athletic Twinks is the closer fit, since its performers still read as young and accessible even with more defined bodies; Twinks in Shorts skews softer in build but warmer in chemistry."
+        "q": "Which site is better for someone who wants both amateur energy and athletic physiques?",
+        "a": "Neither site is a perfect overlap of both qualities — Twinks in Shorts prioritises the amateur feel with naturally built performers, while Athletic Twinks prioritises physique and production structure. If you genuinely want both, Athletic Twinks is the closer fit, since its performers still read as young and accessible even with more defined bodies; Twinks in Shorts skews softer in build but warmer in chemistry."
       }
     ],
     "meta_description": "Twinks in Shorts vs Athletic Twinks compared on content, pricing, niche focus & UX — find out which gay site is actually worth your money in 2026."
@@ -319,12 +319,12 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     "who_should_choose_b": "Choose PeterFever if you want a prestige, brand-consistent experience centered on muscular Asian men and cinematic production — and you're willing to pay a slight premium for it.",
     "faq": [
       {
-        "question": "Can I get both PeterFever and GayAsianNetwork content under one membership?",
-        "answer": "No — these are entirely separate memberships with no crossover. GayAsianNetwork bundles its own affiliated sub-sites, but PeterFever is an independent brand not included in any network pass. If you want both, you'll need two separate subscriptions. Most members pick one based on whether they prioritize aesthetic quality (PeterFever) or library breadth (GayAsianNetwork)."
+        "q": "Can I get both PeterFever and GayAsianNetwork content under one membership?",
+        "a": "No — these are entirely separate memberships with no crossover. GayAsianNetwork bundles its own affiliated sub-sites, but PeterFever is an independent brand not included in any network pass. If you want both, you'll need two separate subscriptions. Most members pick one based on whether they prioritize aesthetic quality (PeterFever) or library breadth (GayAsianNetwork)."
       },
       {
-        "question": "Which site has better video quality — PeterFever or GayAsianNetwork?",
-        "answer": "PeterFever wins this category without much debate. As a single boutique studio, it controls production end-to-end and consistently delivers well-lit, high-definition scenes with real production effort behind them. GayAsianNetwork's quality varies significantly across its sub-sites — some properties shoot professional HD content, while others lean more toward raw or amateur-style footage. If technical video quality is your deciding factor, PeterFever is the more reliable choice."
+        "q": "Which site has better video quality — PeterFever or GayAsianNetwork?",
+        "a": "PeterFever wins this category without much debate. As a single boutique studio, it controls production end-to-end and consistently delivers well-lit, high-definition scenes with real production effort behind them. GayAsianNetwork's quality varies significantly across its sub-sites — some properties shoot professional HD content, while others lean more toward raw or amateur-style footage. If technical video quality is your deciding factor, PeterFever is the more reliable choice."
       }
     ],
     "meta_description": "PeterFever vs GayAsianNetwork compared in 2026 — pricing, content libraries, UX, and niche focus reviewed side by side to help you choose."
@@ -378,12 +378,12 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     "who_should_choose_b": "Choose RawHole if you've exhausted DudesRaw's catalog and want a similarly-priced bareback alternative with a slightly more produced aesthetic.",
     "faq": [
       {
-        "question": "Are RawHole and DudesRaw part of the same network, and does that mean I'm paying for duplicate content?",
-        "answer": "Both sites operate under the zBuckz/WebMediaProz network, but they maintain separate content libraries rather than sharing scenes. Being on the same network means similar platform infrastructure, pricing structures, and promotional deals — not recycled videos. You'd join each as a separate membership to access their respective catalogs."
+        "q": "Are RawHole and DudesRaw part of the same network, and does that mean I'm paying for duplicate content?",
+        "a": "Both sites operate under the zBuckz/WebMediaProz network, but they maintain separate content libraries rather than sharing scenes. Being on the same network means similar platform infrastructure, pricing structures, and promotional deals — not recycled videos. You'd join each as a separate membership to access their respective catalogs."
       },
       {
-        "question": "Which site has more content for the same monthly price?",
-        "answer": "DudesRaw has the documented edge: 567+ videos, 436 photo sets, and 458 models on record. RawHole's library count is less publicly documented, but based on its 2019 launch date and update activity, DudesRaw's library appears meaningfully larger. At equivalent pricing, DudesRaw delivers more content per dollar on current evidence."
+        "q": "Which site has more content for the same monthly price?",
+        "a": "DudesRaw has the documented edge: 567+ videos, 436 photo sets, and 458 models on record. RawHole's library count is less publicly documented, but based on its 2019 launch date and update activity, DudesRaw's library appears meaningfully larger. At equivalent pricing, DudesRaw delivers more content per dollar on current evidence."
       }
     ],
     "meta_description": "RawHole vs DudesRaw: we compare both zBuckz bareback sites on content, pricing, and niche focus to help you decide where to spend in 2026."
@@ -437,12 +437,12 @@ export const COMPARISON_CONTENT: Record<string, ComparisonBody> = {
     "who_should_choose_b": "Choose Say Uncle if you want the broadest possible catalog across gay taboo subgenres for one competitive monthly price — it's the smarter long-term value play for any serious subscriber.",
     "faq": [
       {
-        "question": "If I subscribe to Say Uncle, do I get full access to Family Dick scenes too?",
-        "answer": "Yes. A Say Uncle network membership includes full access to Family Dick's entire catalog alongside all other series on the network — Brother Crush, Missionary Boys, Latin Leche, Young Perps, Black Godz, Yes Father, and more. There is no need to hold a separate Family Dick subscription if you're already a Say Uncle member."
+        "q": "If I subscribe to Say Uncle, do I get full access to Family Dick scenes too?",
+        "a": "Yes. A Say Uncle network membership includes full access to Family Dick's entire catalog alongside all other series on the network — Brother Crush, Missionary Boys, Latin Leche, Young Perps, Black Godz, Yes Father, and more. There is no need to hold a separate Family Dick subscription if you're already a Say Uncle member."
       },
       {
-        "question": "Is Family Dick worth paying for separately when Say Uncle costs roughly the same?",
-        "answer": "Only in niche circumstances. The standalone Family Dick sub makes sense if you want the single-brand browsing experience, have zero interest in the rest of the Say Uncle catalog, or want to take advantage of a short-term trial before committing to the full network. For anyone who thinks they might explore beyond one series, the Say Uncle network membership is the objectively better use of the same monthly spend."
+        "q": "Is Family Dick worth paying for separately when Say Uncle costs roughly the same?",
+        "a": "Only in niche circumstances. The standalone Family Dick sub makes sense if you want the single-brand browsing experience, have zero interest in the rest of the Say Uncle catalog, or want to take advantage of a short-term trial before committing to the full network. For anyone who thinks they might explore beyond one series, the Say Uncle network membership is the objectively better use of the same monthly spend."
       }
     ],
     "meta_description": "Say Uncle vs Family Dick in 2026 — pricing, scene counts, niche focus, and which membership actually delivers better value for gay subscribers."

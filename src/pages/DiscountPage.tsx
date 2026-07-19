@@ -18,7 +18,7 @@ import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import StarRating from "../components/StarRating";
 import VerifiedBadge from "../components/VerifiedBadge";
 import { currentYear, currentMonthLong, lastCheckedDate, DEAL_VERIFIED_DATE } from "../lib/dates";
-import { sites, getSiteBySlug, isAffiliated } from "../data/sites";
+import { sites, getSiteBySlug, isAffiliated, isPendingReview } from "../data/sites";
 import StickyMobileCTA from "../components/StickyMobileCTA";
 import { siteNicheMap } from "../data/site-niches";
 import { getNiche } from "../data/niches";
@@ -150,6 +150,7 @@ const DiscountPage = () => {
           <meta property="og:description" content={`Get ${site.deal_discount || "up to 67"}% off ${site.name} — the lowest verified price we've found. Deal confirmed ${DEAL_VERIFIED_DATE}.`} />
           <meta property="og:url" content={`https://twinkvault.com/discount/${site.slug}`} />
           <link rel="canonical" href={`https://twinkvault.com/discount/${site.slug}`} />
+          {isPendingReview(site) && <meta name="robots" content="noindex, follow" />}
           <script type="application/ld+json">
             {JSON.stringify({
               "@context": "https://schema.org",

@@ -160,6 +160,17 @@
   ],
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.twinkvault.com"
+        }
+      ],
+      "destination": "https://twinkvault.com/:path*",
+      "permanent": true
+    },
+    {
       "source": "/best-gay-twink-sites-2026",
       "destination": "/best-twink-sites",
       "permanent": true

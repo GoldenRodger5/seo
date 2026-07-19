@@ -181,26 +181,16 @@ const PENDING_REVIEW_SLUGS = new Set(
   sites.filter((s) => s.editorial_status === "pending-review").map((s) => s.slug)
 );
 for (const slug of SITE_SLUGS) {
-  const pending = PENDING_REVIEW_SLUGS.has(slug);
-  urls.push(
-    urlEntry({
-      loc: `/reviews/${slug}`,
-      changefreq: pending ? "monthly" : "weekly",
-      priority: pending ? "0.3" : "0.8",
-    })
-  );
+  // Pending-review pages are noindexed placeholders — keep them OUT of the
+  // sitemap entirely (a sitemap should only advertise indexable URLs).
+  if (PENDING_REVIEW_SLUGS.has(slug)) continue;
+  urls.push(urlEntry({ loc: `/reviews/${slug}`, changefreq: "weekly", priority: "0.8" }));
 }
 
 // Discount pages  /discount/:slug — same downgrade for pending-review.
 for (const slug of SITE_SLUGS) {
-  const pending = PENDING_REVIEW_SLUGS.has(slug);
-  urls.push(
-    urlEntry({
-      loc: `/discount/${slug}`,
-      changefreq: pending ? "monthly" : "weekly",
-      priority: pending ? "0.3" : "0.8",
-    })
-  );
+  if (PENDING_REVIEW_SLUGS.has(slug)) continue;
+  urls.push(urlEntry({ loc: `/discount/${slug}`, changefreq: "weekly", priority: "0.8" }));
 }
 
 // Category pages  /category/:slug

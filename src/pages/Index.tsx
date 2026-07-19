@@ -499,6 +499,7 @@ const Index = () => {
           content={`Independent reviews of ${sites.length} gay porn sites. Every review built from a paid membership, scored on the same four-pillar rubric, updated monthly.`}
         />
         <link rel="canonical" href="https://twinkvault.com" />
+        <meta property="og:image" content="https://twinkvault.com/site-banners/twinks-in-shorts-hero.jpg" />
       </Helmet>
 
       {/* JSON-LD in body (Helmet drops <script> server-side). */}

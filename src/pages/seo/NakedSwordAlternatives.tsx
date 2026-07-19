@@ -20,6 +20,7 @@ const NakedSwordAlternatives = () => (
       { to: "/best-premium-gay-sites", label: "All premium sites" },
     ]}
     aiBody={aiBody}
+    faqs={aiBody?.faq}
   />
 );
 

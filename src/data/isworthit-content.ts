@@ -52,24 +52,24 @@ export const ISWORTHIT_CONTENT: Record<string, WorthItBody> = {
     "meta_description": "Is NakedSword worth the subscription cost in 2025-2026? We break down pricing, the 40,000+ video library, performer quality, and honest cons.",
     "faq": [
       {
-        "question": "How much does a NakedSword membership cost?",
-        "answer": "NakedSword offers monthly, quarterly, and annual membership plans. Pricing generally ranges from around $20 to $60 depending on the plan length and any active promotions. Annual plans offer the best per-month value, and discounted trial offers appear periodically. Always check for active promo codes before signing up at standard rates."
+        "q": "How much does a NakedSword membership cost?",
+        "a": "NakedSword offers monthly, quarterly, and annual membership plans. Pricing generally ranges from around $20 to $60 depending on the plan length and any active promotions. Annual plans offer the best per-month value, and discounted trial offers appear periodically. Always check for active promo codes before signing up at standard rates."
       },
       {
-        "question": "How many videos does NakedSword have?",
-        "answer": "As of early 2024, NakedSword's catalog exceeds 40,000 videos, drawing from NakedSword Originals, Falcon Studios, Raging Stallion, Hot House, and curated third-party LGBTQ+ films added under the NakedSword Film Works (NSFW) banner. The library continues to expand with multiple new releases each month."
+        "q": "How many videos does NakedSword have?",
+        "a": "As of early 2024, NakedSword's catalog exceeds 40,000 videos, drawing from NakedSword Originals, Falcon Studios, Raging Stallion, Hot House, and curated third-party LGBTQ+ films added under the NakedSword Film Works (NSFW) banner. The library continues to expand with multiple new releases each month."
       },
       {
-        "question": "Does NakedSword include access to Falcon Studios and Raging Stallion content?",
-        "answer": "Yes. NakedSword operates as the network hub for Falcon | NakedSword, meaning a single membership provides access to content from NakedSword Originals, Falcon Studios, Raging Stallion, and Hot House Entertainment — all under one login without separate subscriptions."
+        "q": "Does NakedSword include access to Falcon Studios and Raging Stallion content?",
+        "a": "Yes. NakedSword operates as the network hub for Falcon | NakedSword, meaning a single membership provides access to content from NakedSword Originals, Falcon Studios, Raging Stallion, and Hot House Entertainment — all under one login without separate subscriptions."
       },
       {
-        "question": "Can you download videos from NakedSword or is it streaming only?",
-        "answer": "NakedSword supports both streaming and downloads, giving members the flexibility to watch online or save content for offline viewing. This is a practical advantage over platforms that restrict members to browser-based streaming only."
+        "q": "Can you download videos from NakedSword or is it streaming only?",
+        "a": "NakedSword supports both streaming and downloads, giving members the flexibility to watch online or save content for offline viewing. This is a practical advantage over platforms that restrict members to browser-based streaming only."
       },
       {
-        "question": "Does NakedSword offer refunds if you're not satisfied?",
-        "answer": "Generally, no. NakedSword's terms of service state that subscriptions are non-refundable once activated. There is no free-browse trial that lets you access the full library before committing. For this reason, it's worth timing your sign-up around a discounted promotional offer and using any available free preview content to set expectations first."
+        "q": "Does NakedSword offer refunds if you're not satisfied?",
+        "a": "Generally, no. NakedSword's terms of service state that subscriptions are non-refundable once activated. There is no free-browse trial that lets you access the full library before committing. For this reason, it's worth timing your sign-up around a discounted promotional offer and using any available free preview content to set expectations first."
       }
     ]
   },
@@ -102,24 +102,24 @@ export const ISWORTHIT_CONTENT: Record<string, WorthItBody> = {
     "meta_description": "Is Sean Cody worth it in 2025? We break down pricing, video quality, model types, the content library, and real cons before you subscribe.",
     "faq": [
       {
-        "question": "How much does Sean Cody cost per month in 2025?",
-        "answer": "A standard 30-day Sean Cody membership is $29.99. Opting for the 3-month plan brings the effective monthly cost down to around $19.99, while the 12-month annual plan drops it to approximately $9.99/month. A 2-day trial is also available for $1, which is a practical way to evaluate the current library before committing."
+        "q": "How much does Sean Cody cost per month in 2025?",
+        "a": "A standard 30-day Sean Cody membership is $29.99. Opting for the 3-month plan brings the effective monthly cost down to around $19.99, while the 12-month annual plan drops it to approximately $9.99/month. A 2-day trial is also available for $1, which is a practical way to evaluate the current library before committing."
       },
       {
-        "question": "Does Sean Cody offer a free trial?",
-        "answer": "Sean Cody doesn't offer a traditionally free trial, but there is a 2-day access pass available for $1 that functions as a low-cost trial. This auto-renews to the standard monthly rate afterward, so cancel before the trial period ends if you don't want to continue."
+        "q": "Does Sean Cody offer a free trial?",
+        "a": "Sean Cody doesn't offer a traditionally free trial, but there is a 2-day access pass available for $1 that functions as a low-cost trial. This auto-renews to the standard monthly rate afterward, so cancel before the trial period ends if you don't want to continue."
       },
       {
-        "question": "Why did Sean Cody delete thousands of old videos?",
-        "answer": "In January 2021, Sean Cody removed over 2,000 scenes produced between 2001 and 2014 because the studio was unable to retroactively verify performer ages and consent documentation to meet standards imposed by major payment processors. This was part of an industry-wide compliance response, not a decision unique to Sean Cody."
+        "q": "Why did Sean Cody delete thousands of old videos?",
+        "a": "In January 2021, Sean Cody removed over 2,000 scenes produced between 2001 and 2014 because the studio was unable to retroactively verify performer ages and consent documentation to meet standards imposed by major payment processors. This was part of an industry-wide compliance response, not a decision unique to Sean Cody."
       },
       {
-        "question": "Who owns Sean Cody now?",
-        "answer": "Sean Cody was founded in 2001 and sold to MindGeek in 2015. MindGeek was subsequently acquired by Ethical Capital Partners in 2023 and rebranded as Aylo. As of 2025 and 2026, Sean Cody operates under Aylo as part of their portfolio of gay adult studios, which also includes Men.com."
+        "q": "Who owns Sean Cody now?",
+        "a": "Sean Cody was founded in 2001 and sold to MindGeek in 2015. MindGeek was subsequently acquired by Ethical Capital Partners in 2023 and rebranded as Aylo. As of 2025 and 2026, Sean Cody operates under Aylo as part of their portfolio of gay adult studios, which also includes Men.com."
       },
       {
-        "question": "Can you download Sean Cody videos for offline viewing?",
-        "answer": "Some sources indicate a download option is available to members for offline viewing, while older member feedback has cited this as a limitation. The availability of downloads may depend on membership tier or may have changed with platform updates. It's best to confirm directly on the Sean Cody site or through their support team before subscribing if offline access is a priority for you."
+        "q": "Can you download Sean Cody videos for offline viewing?",
+        "a": "Some sources indicate a download option is available to members for offline viewing, while older member feedback has cited this as a limitation. The availability of downloads may depend on membership tier or may have changed with platform updates. It's best to confirm directly on the Sean Cody site or through their support team before subscribing if offline access is a priority for you."
       }
     ]
   },
@@ -152,24 +152,24 @@ export const ISWORTHIT_CONTENT: Record<string, WorthItBody> = {
     "meta_description": "Is Helix Studios worth it in 2025? We break down pricing, content quality, performers, and honest pros and cons to help you decide.",
     "faq": [
       {
-        "question": "How much does a Helix Studios membership cost?",
-        "answer": "Helix Studios offers both monthly and annual subscription plans. The month-to-month rate is the more expensive option. The annual plan works out to approximately $11.99 per month when billed as a lump sum, which represents around 42% off the standard recurring rate. A pay-per-view option also exists for purchasing individual films without a full subscription."
+        "q": "How much does a Helix Studios membership cost?",
+        "a": "Helix Studios offers both monthly and annual subscription plans. The month-to-month rate is the more expensive option. The annual plan works out to approximately $11.99 per month when billed as a lump sum, which represents around 42% off the standard recurring rate. A pay-per-view option also exists for purchasing individual films without a full subscription."
       },
       {
-        "question": "What type of content does Helix Studios produce?",
-        "answer": "Helix Studios specializes in gay twink pornography featuring young, lean male performers. Content is almost exclusively bareback, with a strong emphasis on narrative filmmaking — actual storylines and character development wrap around the explicit scenes. Productions range from solo scenes and duos to threesomes and group scenes, often packaged as multi-part series."
+        "q": "What type of content does Helix Studios produce?",
+        "a": "Helix Studios specializes in gay twink pornography featuring young, lean male performers. Content is almost exclusively bareback, with a strong emphasis on narrative filmmaking — actual storylines and character development wrap around the explicit scenes. Productions range from solo scenes and duos to threesomes and group scenes, often packaged as multi-part series."
       },
       {
-        "question": "Is Helix Studios still actively updating in 2025?",
-        "answer": "Yes. Helix Studios continues to produce and release new content on a regular basis. The studio has expanded internationally with Helix Studios Latin America and Helix Studios Europe, and IMDB cast listings confirm active performer involvement through 2024 and into 2025. The library continues to grow alongside its legacy archive."
+        "q": "Is Helix Studios still actively updating in 2025?",
+        "a": "Yes. Helix Studios continues to produce and release new content on a regular basis. The studio has expanded internationally with Helix Studios Latin America and Helix Studios Europe, and IMDB cast listings confirm active performer involvement through 2024 and into 2025. The library continues to grow alongside its legacy archive."
       },
       {
-        "question": "Can I watch Helix Studios without a full subscription?",
-        "answer": "Yes. Helix launched a pay-per-view service in 2022 that allows non-subscribers to purchase individual films outright. This is a good option if you're interested in a specific title rather than the full catalog. Some of their mainstream-cut productions (without explicit content) are also available through Amazon Prime Video."
+        "q": "Can I watch Helix Studios without a full subscription?",
+        "a": "Yes. Helix launched a pay-per-view service in 2022 that allows non-subscribers to purchase individual films outright. This is a good option if you're interested in a specific title rather than the full catalog. Some of their mainstream-cut productions (without explicit content) are also available through Amazon Prime Video."
       },
       {
-        "question": "How does Helix Studios compare to other gay twink sites?",
-        "answer": "Helix Studios sits at the premium end of the twink niche in terms of production quality, performer exclusivity, and filmmaking ambition. Studios like 8TeenBoy and BoyCrush operate in the same general space but without the same level of narrative investment or archive depth. For raw volume of content, some larger networks edge Helix out, but few match the brand consistency and talent recognition that Helix has built over two-plus decades."
+        "q": "How does Helix Studios compare to other gay twink sites?",
+        "a": "Helix Studios sits at the premium end of the twink niche in terms of production quality, performer exclusivity, and filmmaking ambition. Studios like 8TeenBoy and BoyCrush operate in the same general space but without the same level of narrative investment or archive depth. For raw volume of content, some larger networks edge Helix out, but few match the brand consistency and talent recognition that Helix has built over two-plus decades."
       }
     ]
   },
@@ -202,24 +202,24 @@ export const ISWORTHIT_CONTENT: Record<string, WorthItBody> = {
     "meta_description": "Is Men.com worth it in 2025? We break down pricing, performers, content access, billing issues, and what real members say. Read before you subscribe.",
     "faq": [
       {
-        "question": "How much does Men.com cost per month?",
-        "answer": "Men.com's standard monthly membership is approximately $32 USD (around £19.99–£34 in the UK depending on tier). A low-cost 2-day trial is available for around $1, but be aware that this trial only unlocks a limited selection of videos — not the full library. Higher-resolution streaming and download access require additional paid upgrades on top of the base membership fee."
+        "q": "How much does Men.com cost per month?",
+        "a": "Men.com's standard monthly membership is approximately $32 USD (around £19.99–£34 in the UK depending on tier). A low-cost 2-day trial is available for around $1, but be aware that this trial only unlocks a limited selection of videos — not the full library. Higher-resolution streaming and download access require additional paid upgrades on top of the base membership fee."
       },
       {
-        "question": "Does Men.com include downloads with a standard membership?",
-        "answer": "No. Downloads are not included in the base membership and must be purchased as a separate add-on. Multiple members have also reported that even after paying for download access, the feature fails intermittently without resolution from customer support. If offline access is important to you, factor this into your decision before subscribing."
+        "q": "Does Men.com include downloads with a standard membership?",
+        "a": "No. Downloads are not included in the base membership and must be purchased as a separate add-on. Multiple members have also reported that even after paying for download access, the feature fails intermittently without resolution from customer support. If offline access is important to you, factor this into your decision before subscribing."
       },
       {
-        "question": "Who are Men.com's most popular exclusive performers?",
-        "answer": "Men.com's flagship exclusives include Malik Delgaty, who was the most-searched gay performer on Pornhub for two consecutive years (2023 and 2024), Drake Von, who won multiple GayVN Awards in 2025, and Dom King. The studio also works with a rotating roster of guest performers across bareback, fantasy, and series-format content."
+        "q": "Who are Men.com's most popular exclusive performers?",
+        "a": "Men.com's flagship exclusives include Malik Delgaty, who was the most-searched gay performer on Pornhub for two consecutive years (2023 and 2024), Drake Von, who won multiple GayVN Awards in 2025, and Dom King. The studio also works with a rotating roster of guest performers across bareback, fantasy, and series-format content."
       },
       {
-        "question": "How do I cancel my Men.com membership?",
-        "answer": "Cancellation requires direct contact with Men.com's support team — there is no simple self-service cancellation button in your account panel. Members consistently report difficulty reaching live chat support and delays in processing cancellations, which can result in unwanted additional charges. If you intend to cancel, do so before your trial or billing period ends, save all correspondence, and consider disputing charges with your bank if access or cancellation issues persist."
+        "q": "How do I cancel my Men.com membership?",
+        "a": "Cancellation requires direct contact with Men.com's support team — there is no simple self-service cancellation button in your account panel. Members consistently report difficulty reaching live chat support and delays in processing cancellations, which can result in unwanted additional charges. If you intend to cancel, do so before your trial or billing period ends, save all correspondence, and consider disputing charges with your bank if access or cancellation issues persist."
       },
       {
-        "question": "Are there better alternatives to Men.com for gay adult content?",
-        "answer": "Yes, depending on what you're looking for. If studio-quality gay content is your priority, sites like NakedSword, Falcon Studios, and Helix Studios offer strong libraries with more transparent billing practices. If you're specifically interested in performers exclusive to Men.com, there may not be a direct substitute — but it's worth reading full reviews of competing memberships before committing, particularly given the billing complaints documented across Men.com's independent review profiles."
+        "q": "Are there better alternatives to Men.com for gay adult content?",
+        "a": "Yes, depending on what you're looking for. If studio-quality gay content is your priority, sites like NakedSword, Falcon Studios, and Helix Studios offer strong libraries with more transparent billing practices. If you're specifically interested in performers exclusive to Men.com, there may not be a direct substitute — but it's worth reading full reviews of competing memberships before committing, particularly given the billing complaints documented across Men.com's independent review profiles."
       }
     ]
   },
@@ -252,24 +252,24 @@ export const ISWORTHIT_CONTENT: Record<string, WorthItBody> = {
     "meta_description": "Wondering if Twinks in Shorts is worth the membership price? Our honest gay site review covers content quality, update frequency, pricing, and who should subscribe.",
     "faq": [
       {
-        "question": "Is Twinks in Shorts still being updated with new content?",
-        "answer": "Based on available evidence — including social media activity that went quiet around 2020 and IMDB records showing the series ran from 2015 to 2019 — it appears that active production may have wound down. Before subscribing, log in with a trial if available and check the upload dates on the most recent scenes in the members' area to confirm whether new content is still being added."
+        "q": "Is Twinks in Shorts still being updated with new content?",
+        "a": "Based on available evidence — including social media activity that went quiet around 2020 and IMDB records showing the series ran from 2015 to 2019 — it appears that active production may have wound down. Before subscribing, log in with a trial if available and check the upload dates on the most recent scenes in the members' area to confirm whether new content is still being added."
       },
       {
-        "question": "What kind of content does Twinks in Shorts feature?",
-        "answer": "The site focuses on slim, smooth, typically Central or Eastern European twink performers shot in shorts-themed scenarios with a heavy emphasis on massage-style buildup and sensual pacing before scenes escalate. It's a niche aesthetic with a consistent visual identity rather than a broad-spectrum twink site."
+        "q": "What kind of content does Twinks in Shorts feature?",
+        "a": "The site focuses on slim, smooth, typically Central or Eastern European twink performers shot in shorts-themed scenarios with a heavy emphasis on massage-style buildup and sensual pacing before scenes escalate. It's a niche aesthetic with a consistent visual identity rather than a broad-spectrum twink site."
       },
       {
-        "question": "How does Twinks in Shorts compare to larger twink network sites?",
-        "answer": "It doesn't compete on volume or variety — that's not what it's trying to do. Larger network memberships offer hundreds of scenes across multiple channels and consistent weekly updates. Twinks in Shorts offers a tightly focused aesthetic and a specific performer type. If the niche fits you precisely, it can be more satisfying than a generic aggregator; if you want diversity and fresh content, a network site will serve you better."
+        "q": "How does Twinks in Shorts compare to larger twink network sites?",
+        "a": "It doesn't compete on volume or variety — that's not what it's trying to do. Larger network memberships offer hundreds of scenes across multiple channels and consistent weekly updates. Twinks in Shorts offers a tightly focused aesthetic and a specific performer type. If the niche fits you precisely, it can be more satisfying than a generic aggregator; if you want diversity and fresh content, a network site will serve you better."
       },
       {
-        "question": "Is there a trial membership available for Twinks in Shorts?",
-        "answer": "We were unable to confirm a currently available trial option through our research. Niche sites of this type have historically offered limited trial access at a reduced rate, but availability changes. Check the site's current join page directly and look for any introductory pricing before committing to a full monthly or quarterly plan."
+        "q": "Is there a trial membership available for Twinks in Shorts?",
+        "a": "We were unable to confirm a currently available trial option through our research. Niche sites of this type have historically offered limited trial access at a reduced rate, but availability changes. Check the site's current join page directly and look for any introductory pricing before committing to a full monthly or quarterly plan."
       },
       {
-        "question": "What should I check before subscribing to Twinks in Shorts?",
-        "answer": "Three things: first, verify the date of the most recently uploaded scene in the members' area — this tells you immediately whether the site is still active. Second, read the cancellation and rebilling terms carefully before entering payment details. Third, check whether a trial or short-term option exists so you can assess the full catalogue before committing to a recurring charge."
+        "q": "What should I check before subscribing to Twinks in Shorts?",
+        "a": "Three things: first, verify the date of the most recently uploaded scene in the members' area — this tells you immediately whether the site is still active. Second, read the cancellation and rebilling terms carefully before entering payment details. Third, check whether a trial or short-term option exists so you can assess the full catalogue before committing to a recurring charge."
       }
     ]
   },
@@ -302,24 +302,24 @@ export const ISWORTHIT_CONTENT: Record<string, WorthItBody> = {
     "meta_description": "Wondering if Southern Strokes is worth the membership price? We break down content, pricing, update frequency, and honest pros and cons for gay men.",
     "faq": [
       {
-        "question": "What type of content does Southern Strokes specialize in?",
-        "answer": "Southern Strokes focuses on young, slim-to-athletic performers with a Southern American aesthetic, typically shot in rustic or rural settings. The content skews toward bareback duo scenes and has a natural, less-polished look compared to major studio productions."
+        "q": "What type of content does Southern Strokes specialize in?",
+        "a": "Southern Strokes focuses on young, slim-to-athletic performers with a Southern American aesthetic, typically shot in rustic or rural settings. The content skews toward bareback duo scenes and has a natural, less-polished look compared to major studio productions."
       },
       {
-        "question": "How much does a Southern Strokes membership cost?",
-        "answer": "Pricing fluctuates with promotions, but Southern Strokes has historically offered a low-cost trial (sometimes under $5 for a few days), a monthly recurring plan in the $24–$30 range, and discounted longer-term options. Always check the current join page for live pricing before committing."
+        "q": "How much does a Southern Strokes membership cost?",
+        "a": "Pricing fluctuates with promotions, but Southern Strokes has historically offered a low-cost trial (sometimes under $5 for a few days), a monthly recurring plan in the $24–$30 range, and discounted longer-term options. Always check the current join page for live pricing before committing."
       },
       {
-        "question": "Does Southern Strokes offer downloads or is it streaming only?",
-        "answer": "Southern Strokes has generally offered both streaming and download options for members, which is a meaningful advantage over streaming-only competitors. Downloads let you build a local library without depending on ongoing membership access."
+        "q": "Does Southern Strokes offer downloads or is it streaming only?",
+        "a": "Southern Strokes has generally offered both streaming and download options for members, which is a meaningful advantage over streaming-only competitors. Downloads let you build a local library without depending on ongoing membership access."
       },
       {
-        "question": "How often does Southern Strokes add new scenes?",
-        "answer": "At peak activity, updates have come roughly weekly. However, consistency has been a noted weak point — the site has gone through quieter periods between batches of new content. New members have a deep archive to explore, but returning members may notice slow stretches."
+        "q": "How often does Southern Strokes add new scenes?",
+        "a": "At peak activity, updates have come roughly weekly. However, consistency has been a noted weak point — the site has gone through quieter periods between batches of new content. New members have a deep archive to explore, but returning members may notice slow stretches."
       },
       {
-        "question": "Is Southern Strokes a good choice if I'm new to paid gay porn sites?",
-        "answer": "It depends on your taste. Southern Strokes is a strong fit if the niche — young Southern guys, bareback, amateur-adjacent energy — is specifically what you want. As a first-ever paid gay site, something with broader content variety might give you a better sense of the landscape before committing to a niche platform."
+        "q": "Is Southern Strokes a good choice if I'm new to paid gay porn sites?",
+        "a": "It depends on your taste. Southern Strokes is a strong fit if the niche — young Southern guys, bareback, amateur-adjacent energy — is specifically what you want. As a first-ever paid gay site, something with broader content variety might give you a better sense of the landscape before committing to a niche platform."
       }
     ]
   },
@@ -352,24 +352,24 @@ export const ISWORTHIT_CONTENT: Record<string, WorthItBody> = {
     "meta_description": "Is PeterFever worth it in 2025? We break down pricing, content quality, update frequency, and performer roster so you can decide before you pay.",
     "faq": [
       {
-        "question": "Is PeterFever a legitimate site or a scam?",
-        "answer": "PeterFever is a legitimate, long-running adult membership site that has been operating since 2008. It processes payments securely and delivers access to its content library as advertised. Like any subscription site, you should cancel before your renewal date if you do not wish to be rebilled, as charges are recurring by default."
+        "q": "Is PeterFever a legitimate site or a scam?",
+        "a": "PeterFever is a legitimate, long-running adult membership site that has been operating since 2008. It processes payments securely and delivers access to its content library as advertised. Like any subscription site, you should cancel before your renewal date if you do not wish to be rebilled, as charges are recurring by default."
       },
       {
-        "question": "What kind of performers appear on PeterFever?",
-        "answer": "The site is built around muscular, athletic Asian and Asian-mixed-heritage men. Peter Le, the founder and face of the brand, appears extensively throughout the catalog. Supporting performers tend to match the same physical aesthetic — built, charismatic, and predominantly Asian or mixed-race. Non-Asian co-stars appear in some interracial scenes but are not the focus of the site."
+        "q": "What kind of performers appear on PeterFever?",
+        "a": "The site is built around muscular, athletic Asian and Asian-mixed-heritage men. Peter Le, the founder and face of the brand, appears extensively throughout the catalog. Supporting performers tend to match the same physical aesthetic — built, charismatic, and predominantly Asian or mixed-race. Non-Asian co-stars appear in some interracial scenes but are not the focus of the site."
       },
       {
-        "question": "How often does PeterFever add new content?",
-        "answer": "Update frequency is one of the more common criticisms from long-term members. New scenes and photo sets are added on an ongoing basis, but the pace is inconsistent — the site does not appear to follow a rigid weekly release schedule. Members with access to the full back catalog tend to find more value than those joining primarily for fresh weekly drops."
+        "q": "How often does PeterFever add new content?",
+        "a": "Update frequency is one of the more common criticisms from long-term members. New scenes and photo sets are added on an ongoing basis, but the pace is inconsistent — the site does not appear to follow a rigid weekly release schedule. Members with access to the full back catalog tend to find more value than those joining primarily for fresh weekly drops."
       },
       {
-        "question": "Can you watch PeterFever on a phone or tablet?",
-        "answer": "Yes. The PeterFever site is optimized for mobile and tablet devices, and streaming works reliably across platforms. Downloads are also available for members who prefer offline viewing, which is useful for travel or low-connectivity situations."
+        "q": "Can you watch PeterFever on a phone or tablet?",
+        "a": "Yes. The PeterFever site is optimized for mobile and tablet devices, and streaming works reliably across platforms. Downloads are also available for members who prefer offline viewing, which is useful for travel or low-connectivity situations."
       },
       {
-        "question": "Is there a free trial for PeterFever?",
-        "answer": "PeterFever does not consistently offer a free trial membership. However, the public tour pages include preview clips and photo samples that give a genuine preview of content style and quality before you commit to a paid subscription. Occasional promotional pricing for new members does appear, so it is worth checking the join page directly for any current offers."
+        "q": "Is there a free trial for PeterFever?",
+        "a": "PeterFever does not consistently offer a free trial membership. However, the public tour pages include preview clips and photo samples that give a genuine preview of content style and quality before you commit to a paid subscription. Occasional promotional pricing for new members does appear, so it is worth checking the join page directly for any current offers."
       }
     ]
   },

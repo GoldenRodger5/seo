@@ -166,6 +166,9 @@ const ReviewPage = () => {
           return `${site.name} scored ${site.overall_score}/5 — twink site reviews you can trust. ${firstSentence} ${site.price_monthly}/mo — see the full breakdown.`;
         })()} />
         <link rel="canonical" href={`https://twinkvault.com/reviews/${site.slug}`} />
+        {/* Pending-review pages are placeholders — keep them out of the index
+            (and the quality calculus) until real coverage ships. */}
+        {isPendingReview(site) && <meta name="robots" content="noindex, follow" />}
       </Helmet>
 
       {/*

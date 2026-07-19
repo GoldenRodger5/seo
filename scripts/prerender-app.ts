@@ -67,6 +67,7 @@ interface RouteMeta {
   /** Absolute og:image/twitter:image URL. When set, injectMeta replaces the
    *  generic favicon default so the route ships a real social card image. */
   ogImage?: string;
+  noindex?: boolean;
 }
 
 const SITE_SLUGS = sites.map((s) => s.slug);
@@ -102,7 +103,7 @@ const NICHE_META: Record<string, { displayName: string; seoTitle: string; seoDes
 // Build the route list (same logic as the prior prerender-meta.ts)
 // ---------------------------------------------------------------------------
 const routes: RouteMeta[] = [
-  { path: "/", title: `TwinkVault — Best Gay Twink Sites ${YEAR} Ranked & Reviewed`, description: `Honest reviews of the best gay twink sites — ranked by content quality, value, updates, and mobile UX. Real scores, real pricing, updated ${YEAR}.` },
+  { path: "/", title: `TwinkVault — Best Gay Twink Sites ${YEAR} Ranked & Reviewed`, description: `Honest reviews of the best gay twink sites — ranked by content quality, value, updates, and mobile UX. Real scores, real pricing, updated ${YEAR}.`, ogImage: `${BASE_URL}/site-banners/twinks-in-shorts-hero.jpg` },
   { path: "/top-sites", title: `Gay Twink Site Rankings ${YEAR} — All Sites Scored | TwinkVault`, description: `Our ranked list of the best gay twink sites of ${YEAR}. Real scores, real pricing, paid membership reviews, updated monthly. Filter by HD, free trial, or value.` },
   { path: "/reviews", title: `All Twink Site Reviews ${YEAR} | TwinkVault`, description: `Browse every twink site review on TwinkVault. Honest scores, pricing breakdowns, pros and cons after a paid membership — sortable by value, score, or update cadence.` },
   { path: "/best-deals", title: `Best Gay Twink Site Deals & Discounts ${YEAR} | TwinkVault`, description: `The best current gay twink site deals and discounts for ${YEAR}. Verified offers updated weekly with annual savings, free trial info, and verdict on each.` },
@@ -177,6 +178,7 @@ for (const post of BLOG_POSTS) {
     ogImage: blogHero ? `${BASE_URL}${blogHero.hero_image}` : undefined,
   });
 }
+const PENDING_SLUGS = new Set(sites.filter((s) => s.editorial_status === "pending-review").map((s) => s.slug));
 for (const slug of SITE_SLUGS) {
   const name = SITE_NAMES[slug];
   // Title kept under 60 chars even for long names like "Yoshi Kawasaki XXX".
@@ -191,6 +193,7 @@ for (const slug of SITE_SLUGS) {
     title,
     description: `Is ${name} worth the membership? Honest ${YEAR} review — real scores on content, value, updates, mobile, plus pricing and pros/cons.`,
     ogImage: reviewHero && reviewHero.hero_site_slug === slug ? `${BASE_URL}${reviewHero.hero_image}` : undefined,
+    noindex: PENDING_SLUGS.has(slug),
   });
 }
 for (const site of sites) {
@@ -208,6 +211,7 @@ for (const site of sites) {
     title: hasDeal
       ? (dealTitle.length <= 60 ? dealTitle : `${site.name}: ${pct}% Off | TwinkVault`)
       : (noDealTitle.length <= 60 ? noDealTitle : `${site.name} Discount | TwinkVault`),
+    noindex: PENDING_SLUGS.has(site.slug),
     description: hasDeal
       ? `${site.name} discount code ${YEAR}: ${site.price_annual} with our verified ${pct}% off — confirmed ${DEAL_VERIFIED_DATE}. Activate the lowest verified annual price.`
       : `Looking for a ${site.name} discount code? Get the lowest verified ${site.name} membership price. Updated ${DEAL_VERIFIED_DATE} — read pricing tiers and value verdict.`,
@@ -355,6 +359,13 @@ function injectMeta(html: string, route: RouteMeta, helmetHtml: string): string 
     html = html.replace(/<meta property="og:image:width" content="[^"]*" \/>/, `<meta property="og:image:width" content="1200" />`);
     html = html.replace(/<meta property="og:image:height" content="[^"]*" \/>/, `<meta property="og:image:height" content="750" />`);
     html = html.replace(/<meta name="twitter:image" content="[^"]*" \/>/, `<meta name="twitter:image" content="${img}" />`);
+  }
+
+  // Pending-review placeholders: flip the template's default index,follow.
+  // (Helmet meta tags are NOT carried into prerendered HTML — only script/link
+  // are — so noindex MUST be applied here at the template level.)
+  if (route.noindex) {
+    html = html.replace(/<meta name="robots" content="[^"]*" \/>/, `<meta name="robots" content="noindex, follow" />`);
   }
 
   // Append helmet output (schema scripts, JSON-LD, etc.) just before </head>

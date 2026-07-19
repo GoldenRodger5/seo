@@ -50,6 +50,7 @@ const GenericAlternatives = () => {
         { to: "/reviews", label: "All reviews" },
       ]}
       aiBody={aiBody}
+      faqs={aiBody?.faq}
     />
   );
 };

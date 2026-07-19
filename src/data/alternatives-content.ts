@@ -51,12 +51,12 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
     "meta_description": "Looking beyond Helix Studios in 2026? We picked the 5 best alternatives for gay men who want great twink content without the compromises.",
     "faq": [
       {
-        "question": "Is there a site like Helix Studios but with more performer diversity?",
-        "answer": "Next Door World is your best bet — it spans a wider range of ages, body types, and scene dynamics under one membership while still including the lean, younger performers Helix is known for. Hard Brit Lads adds genuine international diversity if American-produced content feels repetitive."
+        "q": "Is there a site like Helix Studios but with more performer diversity?",
+        "a": "Next Door World is your best bet — it spans a wider range of ages, body types, and scene dynamics under one membership while still including the lean, younger performers Helix is known for. Hard Brit Lads adds genuine international diversity if American-produced content feels repetitive."
       },
       {
-        "question": "Which Helix Studios alternative offers the best value for money?",
-        "answer": "Next Door Twink and Next Door World both benefit from network access that multiplies available content under a single subscription, making the per-scene cost significantly lower than a standalone Helix membership — especially compared to Helix's annual plan, which is priced at a notable premium over many competitors."
+        "q": "Which Helix Studios alternative offers the best value for money?",
+        "a": "Next Door Twink and Next Door World both benefit from network access that multiplies available content under a single subscription, making the per-scene cost significantly lower than a standalone Helix membership — especially compared to Helix's annual plan, which is priced at a notable premium over many competitors."
       }
     ]
   },
@@ -89,12 +89,12 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
     "meta_description": "Looking for the best Sean Cody alternatives in 2026? We ranked the top 5 gay sites that match or beat it on content, value, and performer quality.",
     "faq": [
       {
-        "question": "Is Sean Cody still worth subscribing to in 2026?",
-        "answer": "It depends on what you're after. The archive is genuinely massive and production quality is high, but at $29/month for a rolling subscription, the value proposition has weakened. If you're a new subscriber mining the back catalog, a short-term plan makes sense. Long-term, sites like Helix Studios offer comparable quality with more consistent updates at a better price."
+        "q": "Is Sean Cody still worth subscribing to in 2026?",
+        "a": "It depends on what you're after. The archive is genuinely massive and production quality is high, but at $29/month for a rolling subscription, the value proposition has weakened. If you're a new subscriber mining the back catalog, a short-term plan makes sense. Long-term, sites like Helix Studios offer comparable quality with more consistent updates at a better price."
       },
       {
-        "question": "Which Sean Cody alternative is best if I want the same muscle-jock aesthetic?",
-        "answer": "Athletic Twinks covers the lean-athletic end of that spectrum well, while Next Door Twink gets closest to the 'handsome regular guy' vibe that Sean Cody built its early reputation on. If you specifically want the bigger, muscled look, Sean Cody itself still leads that niche — but the alternatives above all outperform it on value and personality."
+        "q": "Which Sean Cody alternative is best if I want the same muscle-jock aesthetic?",
+        "a": "Athletic Twinks covers the lean-athletic end of that spectrum well, while Next Door Twink gets closest to the 'handsome regular guy' vibe that Sean Cody built its early reputation on. If you specifically want the bigger, muscled look, Sean Cody itself still leads that niche — but the alternatives above all outperform it on value and personality."
       }
     ]
   },
@@ -127,12 +127,12 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
     "meta_description": "Looking to switch from NakedSword? We break down the 5 best alternatives in 2026 — better pricing, tighter niches, and no filler content.",
     "faq": [
       {
-        "question": "Is NakedSword worth the price compared to niche gay sites?",
-        "answer": "It depends on how diverse your tastes are. NakedSword's value proposition rests on breadth — access to content from multiple studios across many genres under one subscription. If you regularly browse twinks, muscle guys, kink, and bareback all in the same session, that breadth justifies the cost. But if your viewing habits stay in one lane — say, twinks or bareback specifically — you'll almost certainly get more for less money with a focused niche site. Most of the alternatives listed here run at a lower monthly rate and deliver deeper libraries within their specific niche."
+        "q": "Is NakedSword worth the price compared to niche gay sites?",
+        "a": "It depends on how diverse your tastes are. NakedSword's value proposition rests on breadth — access to content from multiple studios across many genres under one subscription. If you regularly browse twinks, muscle guys, kink, and bareback all in the same session, that breadth justifies the cost. But if your viewing habits stay in one lane — say, twinks or bareback specifically — you'll almost certainly get more for less money with a focused niche site. Most of the alternatives listed here run at a lower monthly rate and deliver deeper libraries within their specific niche."
       },
       {
-        "question": "What's the main reason members leave NakedSword for alternatives?",
-        "answer": "Pricing and catalog noise are the two most common reasons. At roughly $30–$40 per month at standard rates, NakedSword sits at the higher end of gay membership site pricing. Members who primarily want twink or bareback content often feel like they're paying for a large catalog they only use a fraction of. Billing and cancellation friction has also appeared in user complaints over the years, which pushes some members toward smaller, more straightforward operations where account management is easier to navigate."
+        "q": "What's the main reason members leave NakedSword for alternatives?",
+        "a": "Pricing and catalog noise are the two most common reasons. At roughly $30–$40 per month at standard rates, NakedSword sits at the higher end of gay membership site pricing. Members who primarily want twink or bareback content often feel like they're paying for a large catalog they only use a fraction of. Billing and cancellation friction has also appeared in user complaints over the years, which pushes some members toward smaller, more straightforward operations where account management is easier to navigate."
       }
     ]
   },
@@ -165,12 +165,12 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
     "meta_description": "Fed up with Men.com's billing traps and hidden paywalls? We pick the 5 best alternatives in 2026 — better value, cleaner billing, hotter content.",
     "faq": [
       {
-        "question": "Why do so many people want to leave Men.com?",
-        "answer": "The content itself gets relatively few complaints — the core issue is Men.com's billing and cancellation experience. Verified user reviews describe a 2-day trial that locks most content behind an additional paywall, automatic renewals that are difficult to stop without contacting support directly, and a customer service setup that members frequently find unresponsive. Some users also report that even a standard full-access membership doesn't include 1080p streaming or downloads without a further fee. The alternatives listed above all offer clearer, more honest membership structures."
+        "q": "Why do so many people want to leave Men.com?",
+        "a": "The content itself gets relatively few complaints — the core issue is Men.com's billing and cancellation experience. Verified user reviews describe a 2-day trial that locks most content behind an additional paywall, automatic renewals that are difficult to stop without contacting support directly, and a customer service setup that members frequently find unresponsive. Some users also report that even a standard full-access membership doesn't include 1080p streaming or downloads without a further fee. The alternatives listed above all offer clearer, more honest membership structures."
       },
       {
-        "question": "Which Men.com alternative is best if I specifically want twink content?",
-        "answer": "Helix Studios is the strongest pick for dedicated twink content. It has focused on 18–21-year-old performers since 2002, operates with a clean subscription model, and produces material with noticeably higher cinematographic care than most studios in the niche. Next Door Twink is a close second — slightly broader in its casting but with a larger network infrastructure behind it and an equally transparent billing setup. Either is a significant upgrade over navigating Men.com's tiered paywall structure."
+        "q": "Which Men.com alternative is best if I specifically want twink content?",
+        "a": "Helix Studios is the strongest pick for dedicated twink content. It has focused on 18–21-year-old performers since 2002, operates with a clean subscription model, and produces material with noticeably higher cinematographic care than most studios in the niche. Next Door Twink is a close second — slightly broader in its casting but with a larger network infrastructure behind it and an equally transparent billing setup. Either is a significant upgrade over navigating Men.com's tiered paywall structure."
       }
     ]
   },
@@ -203,12 +203,12 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
     "meta_description": "Looking for sites like PeterFever? We picked 5 gay membership sites that match the energy, performer types, and production quality — with more consistent updates.",
     "faq": [
       {
-        "question": "Is there another gay site with the same Asian-performer focus as PeterFever?",
-        "answer": "Honestly, PeterFever is the dominant English-language studio built specifically around Asian gay male performers, so there's no direct like-for-like replacement in the Western market. If you're open to broadening your search, sites like Helix Studios or Next Door Twink can match the production quality and performer archetypes, but the specific cultural identity PeterFever has built is genuinely its own."
+        "q": "Is there another gay site with the same Asian-performer focus as PeterFever?",
+        "a": "Honestly, PeterFever is the dominant English-language studio built specifically around Asian gay male performers, so there's no direct like-for-like replacement in the Western market. If you're open to broadening your search, sites like Helix Studios or Next Door Twink can match the production quality and performer archetypes, but the specific cultural identity PeterFever has built is genuinely its own."
       },
       {
-        "question": "Which PeterFever alternative is best for fans of the daddy-and-younger dynamic?",
-        "answer": "Daddy on Twink is the most purpose-built option — it's structured entirely around that pairing rather than treating it as one sub-category among many. If you want something with a higher overall score and broader content, Helix Studios also covers intergenerational scenes regularly within a much larger library."
+        "q": "Which PeterFever alternative is best for fans of the daddy-and-younger dynamic?",
+        "a": "Daddy on Twink is the most purpose-built option — it's structured entirely around that pairing rather than treating it as one sub-category among many. If you want something with a higher overall score and broader content, Helix Studios also covers intergenerational scenes regularly within a much larger library."
       }
     ]
   },
@@ -241,12 +241,12 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
     "meta_description": "Looking beyond Twinks in Shorts? We picked the 5 best gay sites that deliver more content, better production, and fresher faces in 2026.",
     "faq": [
       {
-        "question": "Is Twinks in Shorts still updating in 2026?",
-        "answer": "Based on our research, Twinks in Shorts has shown very limited update activity in recent years, with social media largely dormant since around 2020. The site appears to be maintained as a static archive rather than an actively updated membership. If regular new content is important to you — and it should be at these price points — any of the alternatives listed above will serve you significantly better on that front."
+        "q": "Is Twinks in Shorts still updating in 2026?",
+        "a": "Based on our research, Twinks in Shorts has shown very limited update activity in recent years, with social media largely dormant since around 2020. The site appears to be maintained as a static archive rather than an actively updated membership. If regular new content is important to you — and it should be at these price points — any of the alternatives listed above will serve you significantly better on that front."
       },
       {
-        "question": "Which alternative is best if I specifically liked the massage/seduction setup on Twinks in Shorts?",
-        "answer": "Touch That Boy is your closest match. It's built around exactly that slow-burn, tactile premise — hands-on scenarios with slim, young-looking performers — but executed with more production care and updated far more consistently. Next Door Twink also incorporates seduction-style setups within a broader content mix, so it's worth considering if you want variety beyond just one scenario type."
+        "q": "Which alternative is best if I specifically liked the massage/seduction setup on Twinks in Shorts?",
+        "a": "Touch That Boy is your closest match. It's built around exactly that slow-burn, tactile premise — hands-on scenarios with slim, young-looking performers — but executed with more production care and updated far more consistently. Next Door Twink also incorporates seduction-style setups within a broader content mix, so it's worth considering if you want variety beyond just one scenario type."
       }
     ]
   },
@@ -279,12 +279,12 @@ export const ALTERNATIVES_CONTENT: Record<string, AlternativesBody> = {
     "meta_description": "Looking for better options than Southern Strokes? We picked the 5 best alternatives for twink and boy-next-door content in 2026, ranked and reviewed honestly.",
     "faq": [
       {
-        "question": "Is Southern Strokes still worth joining in 2026?",
-        "answer": "Honestly, it's hard to recommend as a primary membership. The back-catalog has some charm, but update frequency has been a persistent complaint and the pricing doesn't reflect the value gap between Southern Strokes and more active competitors. If you're curious, wait for a discounted trial — don't commit to a long-term subscription before you've tested the current state of the site."
+        "q": "Is Southern Strokes still worth joining in 2026?",
+        "a": "Honestly, it's hard to recommend as a primary membership. The back-catalog has some charm, but update frequency has been a persistent complaint and the pricing doesn't reflect the value gap between Southern Strokes and more active competitors. If you're curious, wait for a discounted trial — don't commit to a long-term subscription before you've tested the current state of the site."
       },
       {
-        "question": "Which Southern Strokes alternative is best if I want the same type of guys?",
-        "answer": "Next Door Twink is the closest match on model type — lean, young, and conventionally attractive without being over-styled. Helix Studios is the better all-around value with a much larger library of similar performers. If a specific physical build (slim and lightly athletic) was your main draw, Athletic Twinks is worth bookmarking as well."
+        "q": "Which Southern Strokes alternative is best if I want the same type of guys?",
+        "a": "Next Door Twink is the closest match on model type — lean, young, and conventionally attractive without being over-styled. Helix Studios is the better all-around value with a much larger library of similar performers. If a specific physical build (slim and lightly athletic) was your main draw, Athletic Twinks is worth bookmarking as well."
       }
     ]
   },
