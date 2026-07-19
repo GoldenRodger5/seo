@@ -11,6 +11,7 @@ import {
 import Layout from "../components/Layout";
 import Breadcrumbs from "../components/Breadcrumbs";
 import RelatedGuides from "../components/RelatedGuides";
+import DealAlertSignup from "../components/DealAlertSignup";
 import LocalisedPrice from "../components/LocalisedPrice";
 import { PageTransition, MotionCard, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
 import VisitSiteButton from "../components/VisitSiteButton";
@@ -444,6 +445,13 @@ const DiscountPage = () => {
                 </AccordionItem>
               ))}
             </Accordion>
+
+            <DealAlertSignup
+              source="discount_page"
+              title={`Track the ${site.name} deal`}
+              blurb={`Deals change without notice. One email if the ${site.name} price drops below today's rate — nothing else.`}
+              className="mt-8"
+            />
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{

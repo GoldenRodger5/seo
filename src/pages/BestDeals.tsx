@@ -75,6 +75,7 @@ const DealsEmailCapture = () => {
       const { error } = await supabase.from("subscribers").insert({
         email: email.trim().toLowerCase(),
         source: "deals_page",
+        source_page: "deals_page",
       } as never);
       if (error) {
         setStatus("err");

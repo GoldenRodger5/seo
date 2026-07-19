@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { trackEvent } from "@/lib/analytics";
+import DealAlertSignup from "./DealAlertSignup";
 import { CRAK_URL, trackCrakClick, MANFINDER_URL, trackManfinderClick } from "@/lib/crak";
 import { getNiche } from "@/data/niches";
 import { getPopularComparisons } from "@/data/comparisons";
@@ -13,70 +11,6 @@ const footerLink = "text-sm text-muted-foreground hover:text-foreground transiti
 const FOOTER_NICHES = ["twink", "bareback", "daddy", "bear", "asian", "latin", "amateur", "muscle"] as const;
 
 const POPULAR_COMPARISONS = getPopularComparisons(5);
-
-/**
- * Compact price-drop alert capture. Same subscribers table as the
- * /best-deals form, different source tag. An owned email list is the one
- * distribution channel no algorithm controls — and "we alert you when a
- * price actually drops" is a reason to hand over an email that isn't
- * newsletter spam. Backed by the weekly price-history snapshots.
- */
-const DealAlertSignup = () => {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "busy" | "ok" | "err">("idle");
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (status === "busy") return;
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { setStatus("err"); return; }
-    setStatus("busy");
-    try {
-      const { error } = await supabase.from("subscribers").insert({
-        email: email.trim().toLowerCase(),
-        source: "footer",
-      } as never);
-      if (error && !error.message.includes("duplicate")) { setStatus("err"); return; }
-      setStatus("ok");
-      setEmail("");
-      trackEvent("email_signup", { source: "footer" });
-    } catch {
-      setStatus("err");
-    }
-  };
-
-  return (
-    <div className="mt-10 rounded-lg border border-border/50 bg-card/40 p-5 sm:flex sm:items-center sm:justify-between sm:gap-6">
-      <div className="max-w-md">
-        <p className="font-heading text-sm font-semibold">Price-drop alerts</p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          We track pricing across 60+ sites. Get one email when a deal genuinely drops — nothing else.
-        </p>
-      </div>
-      {status === "ok" ? (
-        <p className="mt-3 sm:mt-0 text-sm font-medium text-emerald-400">You're on the list.</p>
-      ) : (
-        <form onSubmit={submit} className="mt-3 sm:mt-0 flex w-full max-w-sm gap-2">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => { setEmail(e.target.value); if (status === "err") setStatus("idle"); }}
-            placeholder="you@email.com"
-            aria-label="Email for price-drop alerts"
-            className="min-w-0 flex-1 rounded-button border border-border/60 bg-background/60 px-3 py-2 text-sm outline-none focus:border-primary/60"
-          />
-          <button
-            type="submit"
-            disabled={status === "busy"}
-            className="shrink-0 rounded-button gold-gradient px-4 py-2 text-sm font-semibold text-secondary-foreground disabled:opacity-60"
-          >
-            {status === "busy" ? "…" : "Alert me"}
-          </button>
-        </form>
-      )}
-      {status === "err" && <p className="mt-2 text-xs text-destructive sm:mt-0">Enter a valid email.</p>}
-    </div>
-  );
-};
 
 const Footer = () => (
   <footer className="border-t border-border bg-card/50">
@@ -225,7 +159,7 @@ const Footer = () => (
         </div>
       </div>
 
-      <DealAlertSignup />
+      <DealAlertSignup source="footer" className="mt-10" />
 
       <div className="mt-10 flex items-center justify-center gap-2">
         <span className="rounded-button border border-destructive/30 bg-destructive/10 px-3 py-1 text-xs font-medium text-destructive">18+</span>

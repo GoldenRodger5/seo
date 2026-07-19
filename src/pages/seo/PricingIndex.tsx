@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { sites, isPendingReview, isEditorialOnly } from "../../data/sites";
 import { currentYear, currentMonthLong } from "../../lib/dates";
+import DealAlertSignup from "../../components/DealAlertSignup";
 
 /**
  * Gay Porn Pricing Index — original-data study computed live from the site
@@ -358,6 +359,12 @@ const PricingIndex = () => {
               </p>
             </div>
           </div>
+
+          <DealAlertSignup
+            source="pricing_index"
+            title="Get the next price drop"
+            blurb="This index re-verifies continuously. One email when a meaningful drop lands across the catalog."
+          />
 
           {/* FAQ */}
           <div>
