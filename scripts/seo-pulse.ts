@@ -31,7 +31,7 @@ const TRACKED_QUERIES = ["best twink sites", "twink sites", "best gay twink site
 
 /** Money pages whose index state we track (URL Inspection). */
 const TRACKED_PAGES = [
-  "/", "/top-sites", "/best-twink-sites", "/guides",
+  "/", "/top-sites", "/best-twink-sites", "/guides", "/gay-porn-pricing-index",
   "/niche/twink", "/niche/bareback", "/niche/amateur", "/niche/asian", "/niche/daddy",
   "/reviews/helix-studios", "/reviews/men", "/reviews/sean-cody", "/reviews/nakedsword",
   "/reviews/twinks-in-shorts", "/reviews/athletic-twinks", "/reviews/peterfever", "/reviews/sayuncle",

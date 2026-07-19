@@ -17,6 +17,7 @@ const BestValueGayPorn = () => (
     sites={filtered}
     closing={`SpiceVidsGay tops on raw price-per-scene because the parent SpiceVids platform aggregates 300,000+ scenes. NakedSword is the runner-up with 50,000+ scenes from 300+ studios. The MyGayCash network sites (Twinks in Shorts, Athletic Twinks) win on the annual rate alone — $9.95/mo for focused, well-produced content.\n\nA strong value score doesn't mean the site is the right fit. If you don't want pan-Asian content or athletic-twink aesthetic, those high-value sites become low-value to you. Use this list alongside the niche pages to find the intersection.`}
     related={[
+      { to: "/gay-porn-pricing-index", label: "Gay Porn Pricing Index — the full data" },
       { to: "/best-gay-sites-under-10", label: "Under $10/mo" },
       { to: "/cheapest-twink-sites", label: "Cheapest overall" },
     ]}

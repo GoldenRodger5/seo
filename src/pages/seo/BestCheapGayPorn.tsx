@@ -23,6 +23,7 @@ const BestCheapGayPorn = () => (
     sites={filtered}
     showPriceTable
     related={[
+      { to: "/gay-porn-pricing-index", label: "Gay Porn Pricing Index — the full data" },
       { to: "/best-twink-porn-sites", label: "Top-quality twink porn sites" },
       { to: "/best-twink-porn-sites-with-free-trials", label: "Sites with free trials" },
       { to: "/best-bareback-twink-sites", label: "Best bareback twink sites" },

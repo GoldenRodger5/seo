@@ -127,6 +127,7 @@ const corePages = [
   "/best-daddy-twink-sites",
   "/best-twink-porn-sites-with-free-trials",
   "/best-cheap-gay-porn-sites",
+  "/gay-porn-pricing-index",
   "/best-bareback-twink-sites",
   "/best-gay-porn-sites",
   "/best-gay-porn-subscription",
