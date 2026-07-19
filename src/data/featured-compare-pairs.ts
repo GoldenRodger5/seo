@@ -68,9 +68,14 @@ function hasAffiliateConversionPath(pairSlug: string): boolean {
   const a = getSiteBySlug(m[1]);
   const b = getSiteBySlug(m[2]);
   if (!a || !b) return false;
-  const nonCommercial = (s: typeof a) =>
-    s.editorial_status === "editorial-only" || s.editorial_status === "pending-review";
-  if (nonCommercial(a) || nonCommercial(b)) return false;
+  // Pending-review placeholders never feature (thin pages, anti-reflood).
+  const pending = (s: typeof a) => s.editorial_status === "pending-review";
+  if (pending(a) || pending(b)) return false;
+  // One monetized side is a real conversion path: the page's CTA routes to
+  // the affiliated site. Requiring BOTH sides commercial silently dropped
+  // five PINNED GSC earners when next-door-twink/world flipped to
+  // editorial-only (2026-07-19) — an editorial-only site may appear as
+  // comparison content as long as the page can still convert.
   return isAffiliated(a) || isAffiliated(b);
 }
 
