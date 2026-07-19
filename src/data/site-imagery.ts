@@ -43,8 +43,8 @@ export const siteImagery: Record<string, SiteImagery> = {
   "twinks-in-shorts": { hero_image_url: "/site-banners/twinks-in-shorts-hero.jpg", thumbnail_url: null, banner_alt: "Twinks in Shorts — twink gay porn site banner" },
   "athletic-twinks": { hero_wide: true, hero_image_url: "/site-banners/athletic-twinks-hero.jpg", thumbnail_url: "/site-banners/athletic-twinks-card.jpg", banner_alt: "Athletic Twinks — twink gay porn site banner" },
   "southern-strokes": { hero_image_url: "/site-banners/southern-strokes-hero.jpg", thumbnail_url: null, banner_alt: "Southern Strokes — twink gay porn site banner" },
-  "daddy-on-twink": { hero_wide: true, hero_image_url: "/site-banners/daddy-on-twink-hero.jpg", thumbnail_url: null, banner_alt: "Daddy on Twink — daddy gay porn site banner" },
-  "touch-that-boy": { hero_wide: true, hero_image_url: "/site-banners/touch-that-boy-hero.jpg", thumbnail_url: null, banner_alt: "Touch That Boy — twink gay porn site banner" },
+  "daddy-on-twink": { hero_image_url: "/site-banners/daddy-on-twink-hero.jpg", thumbnail_url: "/site-banners/daddy-on-twink-card.jpg", banner_alt: "Daddy on Twink — daddy gay porn site banner" },
+  "touch-that-boy": { hero_image_url: "/site-banners/touch-that-boy-hero.jpg", thumbnail_url: "/site-banners/touch-that-boy-card.jpg", banner_alt: "Touch That Boy — twink gay porn site banner" },
   "breed-me-raw": { hero_wide: true, hero_image_url: "/site-banners/breed-me-raw-hero.jpg", thumbnail_url: "/site-banners/breed-me-raw-card.jpg", banner_alt: "Breed Me Raw — bareback gay porn site banner" },
   "bareback-that-hole": { hero_wide: true, hero_image_url: "/site-banners/bareback-that-hole-hero.jpg", thumbnail_url: "/site-banners/bareback-that-hole-card.jpg", banner_alt: "Bareback That Hole — bareback gay porn site banner" },
   "hard-brit-lads": { hero_wide: true, hero_image_url: "/site-banners/hard-brit-lads-hero.jpg", thumbnail_url: "/site-banners/hard-brit-lads-card.jpg", banner_alt: "Hard Brit Lads — amateur gay porn site banner" },
@@ -152,11 +152,11 @@ export const getSiteImagery = (slug: string): SiteImagery =>
  * placeholder instead.
  */
 const STRIP_HERO_SLUGS = new Set([
-  "athletic-twinks", "daddy-on-twink", "touch-that-boy",
+  "athletic-twinks",
   "dadcreep", "sayuncle", "barebackcumpigs", "bullyhim", "militarydick",
   "bearfilms", "breed-me-raw", "bareback-that-hole",
   "hard-brit-lads", "boysatcamp", "twinktrade", "bearchubs", "hairyandraw",
-  "trailertrashboys", "blackgodz", "bottomgames", "brothercrush", "youngperps", "twinktrade",
+  "trailertrashboys", "blackgodz", "bottomgames", "brothercrush", "youngperps",
 ]);
 
 export function getCardImage(slug: string): string | null {
