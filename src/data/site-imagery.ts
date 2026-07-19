@@ -37,7 +37,7 @@ export interface SiteImagery {
 // in /public/site-banners/, and pasting the path here.
 export const siteImagery: Record<string, SiteImagery> = {
   // Premium twink studios
-  "helix-studios": { hero_image_url: null, thumbnail_url: null, banner_alt: "Helix Studios — twink gay porn site banner" },
+  "helix-studios": { hero_wide: true, hero_image_url: "/site-banners/helix-studios-hero.jpg", thumbnail_url: null, banner_alt: "Helix Studios — twink gay porn site banner" },
   "next-door-twink": { hero_image_url: null, thumbnail_url: null, banner_alt: "Next Door Twink — twink gay porn site banner" },
   "next-door-world": { hero_image_url: null, thumbnail_url: null, banner_alt: "Next Door World — twink gay porn site banner" },
   "twinks-in-shorts": { hero_image_url: "/site-banners/twinks-in-shorts-hero.jpg", thumbnail_url: null, banner_alt: "Twinks in Shorts — twink gay porn site banner" },
@@ -119,12 +119,20 @@ export const siteImagery: Record<string, SiteImagery> = {
   "next-door-studios": { hero_wide: true, hero_image_url: "/site-banners/next-door-studios-hero.jpg", thumbnail_url: null, banner_alt: "Next Door Studios — gay porn site banner" },
   "noirmale": { hero_wide: true, hero_image_url: "/site-banners/noirmale-hero.jpg", thumbnail_url: null, banner_alt: "Noir Male — gay porn site banner" },
   "pigbottoms": { hero_wide: true, hero_image_url: "/site-banners/pigbottoms-hero.jpg", thumbnail_url: null, banner_alt: "Pigbottoms — gay porn site banner" },
-  "reality-dudes": { hero_image_url: null, thumbnail_url: "/site-banners/reality-dudes-card.jpg", banner_alt: "Reality Dudes — gay porn site banner" },
+  "reality-dudes": { hero_image_url: "/site-banners/reality-dudes-hero.jpg", thumbnail_url: "/site-banners/reality-dudes-card.jpg", banner_alt: "Reality Dudes — gay porn site banner" },
   "sean-cody": { hero_wide: true, hero_image_url: "/site-banners/sean-cody-hero.jpg", thumbnail_url: null, banner_alt: "Sean Cody — gay porn site banner" },
   "spicevidsgay": { hero_wide: true, hero_image_url: "/site-banners/spicevidsgay-hero.jpg", thumbnail_url: null, banner_alt: "SpiceVids Gay — gay porn site banner" },
   "therapydick": { hero_wide: true, hero_image_url: "/site-banners/therapydick-hero.jpg", thumbnail_url: null, banner_alt: "Therapydick — gay porn site banner" },
   "varsitygrip": { hero_wide: true, hero_image_url: "/site-banners/varsitygrip-hero.jpg", thumbnail_url: null, banner_alt: "Varsitygrip — gay porn site banner" },
   "zvidz": { hero_wide: true, hero_image_url: "/site-banners/zvidz-hero.jpg", thumbnail_url: null, banner_alt: "Zvidz — gay porn site banner" },
+  "raging-stallion": { hero_wide: true, hero_image_url: "/site-banners/raging-stallion-hero.jpg", thumbnail_url: null, banner_alt: "Raging Stallion — gay porn site banner" },
+  "hot-house": { hero_wide: true, hero_image_url: "/site-banners/hot-house-hero.jpg", thumbnail_url: null, banner_alt: "Hot House — gay porn site banner" },
+  "active-duty": { hero_image_url: "/site-banners/active-duty-hero.jpg", thumbnail_url: "/site-banners/active-duty-card.png", banner_alt: "Active Duty — gay porn site banner" },
+  "falcon-studios": { hero_image_url: "/site-banners/falcon-studios-hero.jpg", thumbnail_url: "/site-banners/falcon-studios-card.jpg", banner_alt: "Falcon Studios — gay porn site banner" },
+  "icon-male": { hero_wide: true, hero_image_url: "/site-banners/icon-male-hero.jpg", thumbnail_url: null, banner_alt: "Icon Male — gay porn site banner" },
+  "twinkpop": { hero_wide: true, hero_image_url: "/site-banners/twinkpop-hero.jpg", thumbnail_url: null, banner_alt: "TwinkPop — gay porn site banner" },
+  "bigstr": { hero_wide: true, hero_image_url: "/site-banners/bigstr-hero.jpg", thumbnail_url: null, banner_alt: "BigStr — gay porn site banner" },
+  "guy-selector": { hero_wide: true, hero_image_url: "/site-banners/guy-selector-hero.jpg", thumbnail_url: null, banner_alt: "Guy Selector — gay porn site banner" },
 };
 
 const EMPTY_IMAGERY: SiteImagery = {
@@ -148,7 +156,7 @@ const STRIP_HERO_SLUGS = new Set([
   "dadcreep", "sayuncle", "barebackcumpigs", "bullyhim", "militarydick",
   "bearfilms", "breed-me-raw", "bareback-that-hole",
   "hard-brit-lads", "boysatcamp", "twinktrade", "bearchubs", "hairyandraw",
-  "trailertrashboys", "blackgodz", "bottomgames", "dadcreep", "brothercrush", "youngperps", "twinktrade",
+  "trailertrashboys", "blackgodz", "bottomgames", "brothercrush", "youngperps", "twinktrade",
 ]);
 
 export function getCardImage(slug: string): string | null {
