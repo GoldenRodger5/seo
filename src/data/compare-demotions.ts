@@ -3,7 +3,7 @@
  * redesign, owner-approved 2026-07-08).
  *
  * Each entry 301s to its most-relevant review (affiliated side preferred,
- * else higher overall score) and leaves the featured set — which removes it
+ * else higher overall score) and leaves the featured set, which removes it
  * from the sitemap + prerender and flips the rendered page to noindex — the
  * moment its tranche is activated.
  *

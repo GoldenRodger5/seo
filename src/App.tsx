@@ -8,10 +8,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import AgeVerification from "./components/AgeVerification";
-import EmailCapturePopup from "./components/EmailCapturePopup";
 import CookieConsent from "./components/CookieConsent";
 import ExitIntentDealPopup from "./components/ExitIntentDealPopup";
-import InstallPrompt from "./components/InstallPrompt";
 import ScrollProgressBar from "./components/ScrollProgressBar";
 
 // Public pages — eager imports. Switched from lazy() so server-side
@@ -249,10 +247,8 @@ const AppShell = () => {
   return (
     <ErrorBoundary locationKey={location.pathname}>
       <AgeVerification />
-      <EmailCapturePopup />
       <CookieConsent />
       <ScrollProgressBar />
-      <InstallPrompt />
       <ExitIntentDealPopup />
       <AppRoutes />
     </ErrorBoundary>

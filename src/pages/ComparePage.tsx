@@ -995,7 +995,7 @@ const ComparePage = () => {
             </div>
 
             {/* Other comparisons in primary niche.
-                Picks the strongest shared niche from a curated list of
+                Picks the strongest shared niche from a hand-picked list of
                 category-defining tags. Body-type tags like muscle/smooth/
                 hairy/jock are excluded as section headings — they read as
                 minor descriptors rather than primary site identities,

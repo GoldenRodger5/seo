@@ -42,19 +42,19 @@ export const generateSiteFaqs = (site: SiteData): FaqItem[] => {
   // 1. What's included
   items.push({
     q: `What's included in ${site.name}'s ${site.price_monthly} subscription?`,
-    a: `A ${site.name} membership unlocks the full content library — streaming and downloads on desktop and mobile${site.has_hd ? ", with HD video quality" : ""}. ${site.short_description} ${site.update_frequency >= 80 ? "Updates land regularly, so the catalogue grows during your subscription." : "Update cadence is moderate — check our review for the latest pace."} The ${annualPerMo}/mo annual plan is the better value if you're committing.`,
+    a: `A ${site.name} membership unlocks the full content library: streaming and downloads on desktop and mobile${site.has_hd ? ", with HD video quality" : ""}. ${site.short_description} ${site.update_frequency >= 80 ? "Updates land regularly, so the catalogue grows during your subscription." : "Update cadence is moderate; check our review for the latest pace."} The ${annualPerMo}/mo annual plan is the better value if you're committing.`,
   });
 
   // 2. Competitor comparison
   if (competitor) {
     items.push({
       q: `How does ${site.name} compare to ${competitor.name}?`,
-      a: `Both compete in the ${primaryNiche?.displayName.toLowerCase() ?? "same"} space. ${site.name} scores ${site.overall_score}/5 vs ${competitor.name}'s ${competitor.overall_score}/5. ${site.overall_score >= competitor.overall_score ? `${site.name} edges ahead` : `${competitor.name} edges ahead`} on overall quality, but pricing differs — ${site.name} runs ${site.price_monthly} monthly while ${competitor.name} is ${competitor.price_monthly}. Read the full side-by-side comparison for the breakdown across content depth, value, updates, and mobile UX.`,
+      a: `Both compete in the ${primaryNiche?.displayName.toLowerCase() ?? "same"} space. ${site.name} scores ${site.overall_score}/5 vs ${competitor.name}'s ${competitor.overall_score}/5. ${site.overall_score >= competitor.overall_score ? `${site.name} edges ahead` : `${competitor.name} edges ahead`} on overall quality, but pricing differs: ${site.name} runs ${site.price_monthly} monthly while ${competitor.name} is ${competitor.price_monthly}. Read the full side-by-side comparison for the breakdown across content depth, value, updates, and mobile UX.`,
     });
   } else {
     items.push({
       q: `Is ${site.name} worth subscribing to?`,
-      a: `At ${site.overall_score}/5, ${site.name} ${site.value_score >= 85 ? "is a strong value pick" : site.value_score >= 75 ? "earns its price tag if the niche fits you" : "is a niche-specific bet — value depends on whether the content matches your taste"}. The annual plan at ${annualPerMo}/mo is the way to subscribe; monthly at ${site.price_monthly} is a steep premium for the same library.`,
+      a: `At ${site.overall_score}/5, ${site.name} ${site.value_score >= 85 ? "is a strong value pick" : site.value_score >= 75 ? "earns its price tag if the niche fits you" : "is a niche-specific bet; value depends on whether the content matches your taste"}. The annual plan at ${annualPerMo}/mo is the way to subscribe; monthly at ${site.price_monthly} is a steep premium for the same library.`,
     });
   }
 
@@ -62,8 +62,8 @@ export const generateSiteFaqs = (site: SiteData): FaqItem[] => {
   items.push({
     q: `Does ${site.name} have a free trial or money-back guarantee?`,
     a: site.has_free_trial
-      ? `Yes — ${site.name} offers a trial period so you can browse the actual member area before committing. Use it to verify library depth, streaming quality, and whether the content matches what you saw in the trailer pages. Cancellations are processed through the standard billing portal.`
-      : `Not currently — there's no free trial on ${site.name} as of this update. The cheapest entry point is the ${annualPerMo}/mo annual plan. Cancellations are processed through the standard billing portal; check the site's terms for refund policy specifics. The ${site.deal_discount > 0 ? `${site.deal_discount}% discount` : "low monthly price"} reduces the risk of trying it.`,
+      ? `Yes. ${site.name} offers a trial period so you can browse the actual member area before committing. Use it to verify library depth, streaming quality, and whether the content matches what you saw in the trailer pages. Cancellations are processed through the standard billing portal.`
+      : `Not currently. There's no free trial on ${site.name} as of this update. The cheapest entry point is the ${annualPerMo}/mo annual plan. Cancellations are processed through the standard billing portal; check the site's terms for refund policy specifics. The ${site.deal_discount > 0 ? `${site.deal_discount}% discount` : "low monthly price"} reduces the risk of trying it.`,
   });
 
   // 4. Niche content
@@ -83,7 +83,7 @@ export const generateSiteFaqs = (site: SiteData): FaqItem[] => {
   if (site.deal_discount > 0) {
     items.push({
       q: `Is the ${site.name} ${site.deal_discount}% discount worth it vs. the regular price?`,
-      a: `Yes — ${site.deal_text}. That brings the effective rate down to ${annualPerMo}/mo on the annual plan vs. ${site.price_monthly} at the monthly rate. The discount auto-applies through our affiliate link — no promo code needed. ${site.deal_type === "limited" ? "This deal is currently flagged as limited time, so pricing may change." : site.deal_type === "flash" ? "This is a flash deal — pricing changes faster than usual." : "It's a standing discount, but the studio sets pricing and can change it without notice."}`,
+      a: `Yes: ${site.deal_text}. That brings the effective rate down to ${annualPerMo}/mo on the annual plan vs. ${site.price_monthly} at the monthly rate. The discount auto-applies through our affiliate link — no promo code needed. ${site.deal_type === "limited" ? "This deal is currently flagged as limited time, so pricing may change." : site.deal_type === "flash" ? "This is a flash deal, so pricing changes faster than usual." : "It's a standing discount, but the studio sets pricing and can change it without notice."}`,
     });
   } else {
     items.push({

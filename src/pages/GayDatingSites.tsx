@@ -109,7 +109,7 @@ const GayDatingSites = () => (
                 </div>
                 <h2 className="mt-4 font-heading text-2xl font-bold">Gay Dating & Hookup Sites</h2>
                 <p className="mt-2 text-muted-foreground">
-                  Not sure which gay dating site is right for you? Browse a curated selection of the top gay hookup and dating platforms. Filter by location, what you're looking for, and how fast you want to connect.
+                  Not sure which gay dating site is right for you? Browse a hand-picked lineup of the top gay hookup and dating platforms. Filter by location, what you're looking for, and how fast you want to connect.
                 </p>
                 <ul className="mt-4 space-y-2 flex-1">
                   {[

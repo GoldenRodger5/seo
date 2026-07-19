@@ -660,7 +660,7 @@ export const sites: SiteData[] = [
     homepage_url: "https://www.trailertrashboys.com",
     categories: ["amateur-twinks", "hd-quality"],
     pros: ["Unique blue-collar niche", "Raw authentic energy", "HD streaming", "Loyal dedicated audience", "NakedSword Cash network reliability"],
-    cons: ["Very specific aesthetic — not for everyone", "Smaller library than network bundles"],
+    cons: ["Very specific aesthetic, not for everyone", "Smaller library than network bundles"],
     rank: 20,
     badge: null,
     is_featured: false,
@@ -676,7 +676,7 @@ export const sites: SiteData[] = [
     name: "NakedSword",
     slug: "nakedsword",
     short_description: "The Netflix of gay porn. 50,000+ scenes from 300+ studios, including exclusive NakedSword Originals.",
-    description: "NakedSword is one of the largest gay streaming platforms, giving members access to over 50,000 scenes from more than 300 studios under a single subscription. The library spans every niche — twink, bear, muscle, bareback, and everything between — plus an ever-growing slate of NakedSword Originals produced in-house. HD and 4K streaming, a polished mobile experience, and regular weekly additions make it a compelling all-in-one option for anyone who wants breadth over specialization.",
+    description: "NakedSword is one of the largest gay streaming platforms, giving members access to over 50,000 scenes from more than 300 studios under a single subscription. The library spans every niche — twink, bear, muscle, bareback, and everything between, plus an ever-growing slate of NakedSword Originals produced in-house. HD and 4K streaming, a polished mobile experience, and regular weekly additions make it a compelling all-in-one option for anyone who wants breadth over specialization.",
     overall_score: 4.6,
     content_quality: 90,
     value_score: 92,
@@ -856,7 +856,7 @@ export const sites: SiteData[] = [
     name: "WuBoyz",
     slug: "wuboyz",
     short_description: "Gay Asian content centred on Chinese performers. Fills a specific gap in the Asian gay niche.",
-    description: "WuBoyz focuses on gay content featuring Chinese performers, filling a niche that even broad Asian gay networks tend to underserve. Part of the zBuckz network with HD streaming and a mobile-friendly player. The casting is specific and intentional — if Chinese performers are your preference, this is the most dedicated site in the space.",
+    description: "WuBoyz focuses on gay content featuring Chinese performers, filling a niche that even broad Asian gay networks tend to underserve. Part of the zBuckz network with HD streaming and a mobile-friendly player. The casting is specific and intentional, if Chinese performers are your preference, this is the most dedicated site in the space.",
     overall_score: 3.9,
     content_quality: 78,
     value_score: 82,
@@ -1096,7 +1096,7 @@ export const sites: SiteData[] = [
     name: "Dad Creep",
     slug: "dadcreep",
     short_description: "Taboo daddy-twink scenarios with strong chemistry and high production values from the ChargedCash network.",
-    description: "Dad Creep is one of the ChargedCash network's most popular taboo sites, pairing experienced older performers with younger twinks in scenarios built around tension and chemistry. Production values are consistently high, with HD streaming and a clean viewing experience. The niche is specific and the audience is loyal — if this is what you want, this is where to find it.",
+    description: "Dad Creep is one of the ChargedCash network's most popular taboo sites, pairing experienced older performers with younger twinks in scenarios built around tension and chemistry. Production values are consistently high, with HD streaming and a clean viewing experience. The niche is specific and the audience is loyal, if this is what you want, this is where to find it.",
     overall_score: 4.0,
     content_quality: 80,
     value_score: 82,
@@ -1276,7 +1276,7 @@ export const sites: SiteData[] = [
     name: "Military Dick",
     slug: "militarydick",
     short_description: "Military and uniform-themed gay content with fit performers and high-energy scenes.",
-    description: "Military Dick delivers military and uniform-themed gay content with fit jock performers and high-energy scenes. Part of the ChargedCash network with HD streaming and regular updates. The uniform aesthetic and disciplined scenarios give it a distinctive character that fans of military fantasy content specifically seek out — and that mainstream studios rarely produce well.",
+    description: "Military Dick delivers military and uniform-themed gay content with fit jock performers and high-energy scenes. Part of the ChargedCash network with HD streaming and regular updates. The uniform aesthetic and disciplined scenarios give it a distinctive character that fans of military fantasy content specifically seek out, and that mainstream studios rarely produce well.",
     overall_score: 4.0,
     content_quality: 81,
     value_score: 82,
@@ -1516,7 +1516,7 @@ export const sites: SiteData[] = [
     name: "Hairy and Raw",
     slug: "hairyandraw",
     short_description: "Hairy bear performers in raw bareback scenes. Combines the bear and bareback niches in one dedicated site.",
-    description: "Hairy and Raw sits at the intersection of two popular niches — hairy bear performers and raw bareback content — and serves that specific intersection better than any generalist site. Part of the MyGayCash network with HD streaming and regular updates. The production is honest rather than polished, which suits the brand: authentic hairy performers in uninhibited bareback scenes without studio artifice.",
+    description: "Hairy and Raw sits at the intersection of two popular niches — hairy bear performers and raw bareback content, and serves that specific intersection better than any generalist site. Part of the MyGayCash network with HD streaming and regular updates. The production is honest rather than polished, which suits the brand: authentic hairy performers in uninhibited bareback scenes without studio artifice.",
     overall_score: 3.9,
     content_quality: 77,
     value_score: 80,
@@ -1628,7 +1628,7 @@ export const sites: SiteData[] = [
     ],
     cons: [
       "1080p HD access requires higher-tier membership on some plans",
-      "Cancellation requires contacting support — no self-serve cancel button",
+      "Cancellation requires contacting support, no self-serve cancel button",
       "Two-day intro trial is restricted to limited content",
     ],
     rank: 50,
@@ -1741,7 +1741,7 @@ export const sites: SiteData[] = [
     categories: ["amateur-twinks", "hd-quality"],
     pros: [
       "~8,000 videos across multiple sub-sites on one membership",
-      "Download access included — not streaming-only",
+      "Download access included, not streaming-only",
       "One of the longest-running gay amateur networks",
       "Mix of full-length films and shorter clips",
       "HD streaming available",
@@ -1787,7 +1787,7 @@ export const sites: SiteData[] = [
       "Competitive annual pricing at $7.49/mo",
     ],
     cons: [
-      "All scenes involve female performers — not gay-only content",
+      "All scenes involve female performers, not gay-only content",
       "Smaller library than mainstream gay mega-sites",
       "Advanced search filters limited per reviewer accounts",
     ],
@@ -1905,7 +1905,7 @@ export const sites: SiteData[] = [
       "No long-term commitment required",
     ],
     cons: [
-      "Streaming only — no downloads",
+      "Streaming only, no downloads",
       "Content details and quality sparsely documented in third-party reviews",
       "HD quality not independently confirmed",
     ],
@@ -2062,7 +2062,7 @@ export const sites: SiteData[] = [
       "Competitive annual rate at $5.49/mo",
     ],
     cons: [
-      "Streaming only — no downloads",
+      "Streaming only, no downloads",
       "Gay-specific library size as a subset of parent platform is not separately documented",
       "Some content may be compilations rather than full original scenes",
     ],
@@ -2217,7 +2217,7 @@ export const sites: SiteData[] = [
     id: "66",
     name: "Falcon Studios",
     slug: "falcon-studios",
-    short_description: "Over half a century of big-budget gay porn — and still producing.",
+    short_description: "Over half a century of big-budget gay porn, and still producing.",
     description: "Few names carry as much weight in gay adult entertainment as Falcon Studios. Founded in 1971 by Chuck Holmes in San Francisco, the studio is publicly recognised as one of the longest-running and most decorated producers in the genre's history. What began as a physical-media production house evolved into a streaming-first membership platform that today operates under the Falcon | NakedSword umbrella — a conglomerate that also includes Raging Stallion, Hot House Entertainment, and NakedSword Originals under AEBN ownership following a 2010 acquisition.\n\nThe Falcon brand has always skewed toward a specific aesthetic: high-budget, cinematic productions featuring athletic and muscular performers rather than the slender-twink archetype that dominates studios like Helix or Next Door. Trade press has long noted the studio's Hollywood-adjacent production values — professional lighting, narrative framing, and a polish that distinguishes it from the click-and-stream competitors that rose alongside the tube-site era.\n\nFor viewers arriving from outside Falcon's traditional fanbase, the platform functions as a gateway to multiple studio libraries simultaneously. The site advertises cross-studio bonus access from Hot House, Raging Stallion, and NakedSword, making it less a single-label membership and more a networked vault. Who is this for? Gay men who value production craft, appreciate archive depth, and want a library that spans five decades of the genre's evolution — from pre-condom classics to current bareback releases.",
     overall_score: 7.4,
     content_quality: 82,
@@ -2311,7 +2311,7 @@ export const sites: SiteData[] = [
     name: "Raging Stallion",
     slug: "raging-stallion",
     short_description: "Twenty-five years of muscle, grit, and bareback cinematic ambition.",
-    description: "Raging Stallion Studios is one of the most recognisable names in gay adult film — a brand with genuine weight behind it, not just marketing noise. Founded in San Francisco in 1999 by Chris Ward and J.D. Slater, who brought deep industry experience from stints at Hot House Entertainment and Falcon Studios respectively, the studio carved out a distinctive identity almost immediately: masculine performers, brutal production craft, and a refusal to dilute its aesthetic for broader appeal. Michael Brandon later joined as co-owner, adding his own directorial lines to the roster. The studio's ethos — hyper-masculine men, muscular and often hairy physiques, rough-and-ready scenarios — set it apart from the smoother, younger-skewing competitors that dominated the early 2000s gay porn landscape. That positioning wasn't accidental; it was a deliberate bet on a sub-audience that wanted virility over polish, and it paid off handsomely. In 2009, Raging Stallion merged with AEBN/NakedSword, and Falcon Studios joined the group a year later. Today the studio operates under the Falcon | NakedSword umbrella — a conglomerate that also includes Hot House and Club Inferno Dungeon — which means a Raging Stallion membership sits within a much larger corporate ecosystem than its independent origins suggest. This review is aimed squarely at gay men who appreciate big bodies, bareback content, and production values that take narrative seriously — and who want an honest lay-of-the-land before they hand over their card details.",
+    description: "Raging Stallion Studios is one of the most recognisable names in gay adult film — a brand with genuine weight behind it, not just marketing noise. Founded in San Francisco in 1999 by Chris Ward and J.D. Slater, who brought deep industry experience from stints at Hot House Entertainment and Falcon Studios respectively, the studio carved out a distinctive identity almost immediately: masculine performers, brutal production craft, and a refusal to dilute its aesthetic for broader appeal. Michael Brandon later joined as co-owner, adding his own directorial lines to the roster. The studio's ethos — hyper-masculine men, muscular and often hairy physiques, rough-and-ready scenarios — set it apart from the smoother, younger-skewing competitors that dominated the early 2000s gay porn landscape. That positioning wasn't accidental; it was a deliberate bet on a sub-audience that wanted virility over polish, and it paid off handsomely. In 2009, Raging Stallion merged with AEBN/NakedSword, and Falcon Studios joined the group a year later. Today the studio operates under the Falcon | NakedSword umbrella — a conglomerate that also includes Hot House and Club Inferno Dungeon, which means a Raging Stallion membership sits within a much larger corporate ecosystem than its independent origins suggest. This review is aimed squarely at gay men who appreciate big bodies, bareback content, and production values that take narrative seriously, and who want an honest lay-of-the-land before they hand over their card details.",
     overall_score: 7.9,
     content_quality: 85,
     value_score: 70,
@@ -2331,7 +2331,7 @@ export const sites: SiteData[] = [
     is_featured: false,
     has_free_trial: false,
     has_hd: true,
-    best_for: "Gay men who want large muscular and hairy performers in high-production bareback scenes with genuine narrative craft — and aren't remotely interested in twink aesthetics.",
+    best_for: "Gay men who want large muscular and hairy performers in high-production bareback scenes with genuine narrative craft, and aren't remotely interested in twink aesthetics.",
     deal_text: "",
     deal_discount: 0,
     deal_type: "ongoing",
@@ -2342,7 +2342,7 @@ export const sites: SiteData[] = [
     name: "Hot House",
     slug: "hot-house",
     short_description: "Thirty years of masculine filmmaking, still actively shooting in 2024.",
-    description: "Hot House Entertainment is one of the genuine legacy names in gay adult film — not a passing brand, but a studio with three decades of documented output behind it. Founded in 1993 by director Steven Scarborough, who had previously spent six years directing for Falcon Studios, Hot House set out from a deliberate creative position: masculine men, cinematic production values, and content that leaned into fetish and physicality without being gratuitous about it. Publicly available information confirms that the studio is now part of the Falcon | NakedSword group of companies — one of the most recognizable ownership structures in the gay adult industry — alongside Falcon Studios, Raging Stallion, and NakedSword Originals. The site's own promotional language describes it as 'the iconic gay porn studio featuring masculine men,' and trade press coverage consistently frames it as the group's primary vehicle for content centered on muscular, assertive, older-skewing male performers rather than the twink or college-boy archetypes found elsewhere in the premium-studio tier. For readers who already subscribe to, say, Helix Studios or Next Door Twink and want something oriented toward grown men with evident physicality, Hot House occupies a clearly different lane. The studio's origins in San Francisco's Castro district give it a historical connection to the city's leather and gay-liberation scene that continues to shape its aesthetic identity, and that lineage is genuinely worth knowing before you subscribe.",
+    description: "Hot House Entertainment is one of the genuine legacy names in gay adult film, not a passing brand, but a studio with three decades of documented output behind it. Founded in 1993 by director Steven Scarborough, who had previously spent six years directing for Falcon Studios, Hot House set out from a deliberate creative position: masculine men, cinematic production values, and content that leaned into fetish and physicality without being gratuitous about it. Publicly available information confirms that the studio is now part of the Falcon | NakedSword group of companies — one of the most recognizable ownership structures in the gay adult industry — alongside Falcon Studios, Raging Stallion, and NakedSword Originals. The site's own promotional language describes it as 'the iconic gay porn studio featuring masculine men,' and trade press coverage consistently frames it as the group's primary vehicle for content centered on muscular, assertive, older-skewing male performers rather than the twink or college-boy archetypes found elsewhere in the premium-studio tier. For readers who already subscribe to, say, Helix Studios or Next Door Twink and want something oriented toward grown men with evident physicality, Hot House occupies a clearly different lane. The studio's origins in San Francisco's Castro district give it a historical connection to the city's leather and gay-liberation scene that continues to shape its aesthetic identity, and that lineage is genuinely worth knowing before you subscribe.",
     overall_score: 7.4,
     content_quality: 81,
     value_score: 65,
@@ -2372,7 +2372,7 @@ export const sites: SiteData[] = [
     id: "71",
     name: "Falcon Edge",
     slug: "falcon-edge",
-    short_description: "Studio pedigree runs deep — but the door may be closed.",
+    short_description: "Studio pedigree runs deep, but the door may be closed.",
     description: "Falcon Edge sits inside one of gay adult entertainment's most recognizable corporate families. Publicly available information — including membership-site descriptions from third-party pages referencing the Falcon Studios universe — identifies Falcon Edge as a distinct sub-label operating under the Falcon | NakedSword umbrella, the San Francisco-based conglomerate that owns Falcon Studios, Raging Stallion, Hot House, Mustang Studios, and Jocks Studios, among others. That parent company has been producing gay adult content since 1971, acquired by video-on-demand giant AEBN in 2010 in a deal that created what trade press described as the largest gay erotic production company in the United States at the time. Within that ecosystem, Falcon Edge appears to occupy a specialty niche: one membership-site description explicitly lists Falcon Edge alongside Falcon Str8 Men, Jocks Studios, Mustang Studios, and the Falcon International Collection as distinct brands inside the broader Falcon Studios library. This positions Falcon Edge as a curated channel rather than an independent standalone studio — a content vertical that draws its production infrastructure from the parent operation. The domain falconedge.com has shown as under maintenance during recent checks, making independent first-hand assessment of the live site impossible from the outside. Who it is likely built for, based on the Falcon family's established positioning, is the viewer who wants studio-quality production values and identifiable model archetypes rather than the lo-fi, solo-bedroom aesthetic that defines so much of the current independent gay content market.",
     overall_score: 6.1,
     content_quality: 72,
@@ -2455,7 +2455,7 @@ export function getRecentlyUpdatedPromotable(limit: number, exclude: SiteData[] 
  *
  * Selection weights site quality 60% and deal depth 40%. The earlier
  * pure-multiplicative rule ranked Sean Cody (4.4 score × 75% off) above
- * NakedSword (4.6 score × smaller deal) — but NakedSword is the
+ * NakedSword (4.6 score × smaller deal), but NakedSword is the
  * higher-converting destination overall, so optimizing the hero pick
  * for "biggest visible discount" leaves money on the table.
  *
@@ -2463,7 +2463,7 @@ export function getRecentlyUpdatedPromotable(limit: number, exclude: SiteData[] 
  * Example: NakedSword 4.6 + 40% → 4.6*0.6 + 0.4*0.4 = 2.76 + 0.16 = 2.92
  *          Sean Cody  4.4 + 75% → 4.4*0.6 + 0.75*0.4 = 2.64 + 0.30 = 2.94
  *          (Sean Cody still wins here narrowly; once deals normalize
- *           the higher-scored site rises to the top — which is the point.)
+ *           the higher-scored site rises to the top, which is the point.)
  *
  * TODO: replace the heuristic with CTR-weighted selection once
  * Phase 4 click + impression data accumulates per destination.

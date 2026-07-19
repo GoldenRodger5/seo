@@ -11,7 +11,7 @@ import { currentYear, currentMonthLong } from "../../lib/dates";
  * from our own hand-verified pricing dataset at build time, so it stays
  * current as the engine updates sites.ts, and it gives bloggers/forums a
  * citable source ("median gay porn site costs $X/mo — TwinkVault Pricing
- * Index"). Charts are pure CSS bars — no chart library, nothing hidden at
+ * Index"). Charts are pure CSS bars, no chart library, nothing hidden at
  * hydration, fully painted in the prerendered HTML.
  */
 
@@ -77,23 +77,23 @@ const biggestGap = [...commercial]
 const faqs = [
   {
     q: "How much does a gay porn site membership cost on average?",
-    a: `Across the ${sites.length} sites in our dataset, the median monthly sticker price is ${money(medianMonthly)}/month, and the average is ${money(meanMonthly)}. But almost nobody should pay that: on annual billing the median falls to ${money(medianAnnual)}/month. The sticker monthly rate is effectively a convenience surcharge — committing annually cuts the real cost by roughly ${avgGapPct}% on the average site.`,
+    a: `Across the ${sites.length} sites in our dataset, the median monthly sticker price is ${money(medianMonthly)}/month, and the average is ${money(meanMonthly)}. But almost nobody should pay that: on annual billing the median falls to ${money(medianAnnual)}/month. The sticker monthly rate is effectively a convenience surcharge. Committing annually cuts the real cost by roughly ${avgGapPct}% on the average site.`,
   },
   {
     q: "Why are monthly and annual prices so different?",
-    a: `The gap is deliberate pricing structure, not a sale. Sites price the monthly tier ${avgGapPct}% higher on average because a large share of subscribers stay for months without re-checking the rate. On the average site in our index, choosing annual over monthly billing saves about ${money(avgYearlySavings)} per year — and on the widest-gap site (${biggestGap.s.name}) the difference is ${money((biggestGap.m - biggestGap.a) * 12)}/year for identical access.`,
+    a: `The gap is deliberate pricing structure, not a sale. Sites price the monthly tier ${avgGapPct}% higher on average because a large share of subscribers stay for months without re-checking the rate. On the average site in our index, choosing annual over monthly billing saves about ${money(avgYearlySavings)} per year, and on the widest-gap site (${biggestGap.s.name}) the difference is ${money((biggestGap.m - biggestGap.a) * 12)}/year for identical access.`,
   },
   {
     q: `What is the cheapest good gay porn site in ${currentYear}?`,
-    a: `The cheapest annual rate among sites we score well is ${cheapestAnnual[0].name} at ${cheapestAnnual[0].price_annual}/month on annual billing. Cheap alone isn't the test, though — our best-value ranking divides each site's editorial score by its annual rate, and ${bestValue[0].site.name} currently leads that score-per-dollar table.`,
+    a: `The cheapest annual rate among sites we score well is ${cheapestAnnual[0].name} at ${cheapestAnnual[0].price_annual}/month on annual billing. Cheap alone isn't the test, though. Our best-value ranking divides each site's editorial score by its annual rate, and ${bestValue[0].site.name} currently leads that score-per-dollar table.`,
   },
   {
     q: "Do gay porn sites offer free trials?",
-    a: `${trialCount} of the ${sites.length} sites in our dataset (${Math.round((trialCount / sites.length) * 100)}%) offer some form of free or heavily discounted trial. Trials usually restrict streaming quality or downloads, and they auto-convert to the full monthly rate — which is the most expensive way to be billed — so set a reminder before the conversion date.`,
+    a: `${trialCount} of the ${sites.length} sites in our dataset (${Math.round((trialCount / sites.length) * 100)}%) offer some form of free or heavily discounted trial. Trials usually restrict streaming quality or downloads, and they auto-convert to the full monthly rate, which is the most expensive way to be billed, so set a reminder before the conversion date.`,
   },
   {
     q: "How is this pricing data collected?",
-    a: `Every price in the index comes from our own review process: we check each site's join page directly, record the published monthly, quarterly, and annual rates in USD, and re-verify on an ongoing cycle (last full verification pass: ${currentMonthLong} ${currentYear}). The dataset updates automatically as our catalog updates — numbers on this page are computed from the live dataset, not written by hand.`,
+    a: `Every price in the index comes from our own review process: we check each site's join page directly, record the published monthly, quarterly, and annual rates in USD, and re-verify on an ongoing cycle (last full verification pass: ${currentMonthLong} ${currentYear}). The dataset updates automatically as our catalog updates; numbers on this page are computed from the live dataset, not written by hand.`,
   },
 ];
 
@@ -125,7 +125,7 @@ const PricingIndex = () => {
         <title>{`Gay Porn Pricing Index ${currentYear}: Real Costs | TwinkVault`}</title>
         <meta
           name="description"
-          content={`How much does gay porn actually cost in ${currentYear}? Original pricing data from ${sites.length} membership sites — median prices, annual-vs-monthly gaps, and best value picks.`}
+          content={`How much does gay porn actually cost in ${currentYear}? Original pricing data from ${sites.length} membership sites: median prices, annual-vs-monthly gaps, and best value picks.`}
         />
         <link rel="canonical" href={url} />
         <meta property="og:url" content={url} />
@@ -144,7 +144,7 @@ const PricingIndex = () => {
           <p className="mt-4 text-base text-foreground/90 max-w-3xl">
             What does gay porn actually cost? We checked the join page of every one of the{" "}
             <strong className="text-foreground">{sites.length} membership sites</strong> in our review
-            catalog and recorded the real published rates — monthly, quarterly, and annual, all in USD.
+            catalog and recorded the real published rates: monthly, quarterly, and annual, all in USD.
             This page is computed directly from that dataset, so the numbers update as our catalog does.
             Cite it freely with a link; the data is original and licensed CC-BY.
           </p>
@@ -215,8 +215,8 @@ const PricingIndex = () => {
                 {priciest.price_monthly}/month.
               </p>
               <p>
-                Mean prices tell the same story as medians — {money(meanMonthly)} sticker versus {money(meanAnnual)} on
-                annual billing — so this isn't a few outliers skewing the average. It's how the entire category prices.
+                Mean prices tell the same story as medians: {money(meanMonthly)} sticker versus {money(meanAnnual)} on
+                annual billing, so this isn't a few outliers skewing the average. It's how the entire category prices.
                 If you take one thing from this page: never pay the monthly rate past your first month. Our{" "}
                 <Link to="/guide/gay-porn-billing-guide" className="text-secondary hover:underline">billing guide</Link>{" "}
                 covers how the rebill structures work, and the{" "}
@@ -234,7 +234,7 @@ const PricingIndex = () => {
               The 10 Cheapest Annual Rates We've Verified
             </h2>
             <p className="mt-3 text-sm text-muted-foreground max-w-3xl">
-              Effective monthly cost on annual billing, cheapest first. Every one links to our full hands-on review —
+              Effective monthly cost on annual billing, cheapest first. Every one links to our full hands-on review;
               cheap only matters if the site is worth joining at all.
             </p>
             <div className="mt-6 space-y-2" role="img" aria-label="Bar chart of the ten cheapest annual rates">
@@ -260,7 +260,7 @@ const PricingIndex = () => {
             <p className="mt-3 text-sm text-muted-foreground max-w-3xl">
               Price only means something relative to quality, so this table divides each site's editorial score
               (0–5, from our <Link to="/methodology" className="text-secondary hover:underline">scoring methodology</Link>)
-              by its effective annual rate. A high number means you're buying the most verified quality per dollar —
+              by its effective annual rate. A high number means you're buying the most verified quality per dollar;
               it's the closest thing to an objective "best deal" ranking we can compute.
             </p>
             <div className="mt-6 overflow-x-auto">

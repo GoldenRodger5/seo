@@ -29,7 +29,7 @@ import { MANFINDER_URL, trackManfinderClick } from "../lib/crak";
 // gracefully falls back to the site's short_description to keep it honest.
 const EDITOR_PICK_NOTE_SLUG = "nakedsword";
 const EDITOR_PICK_NOTE =
-  "NakedSword is the closest thing this category has to a default. The library is the largest I've personally subscribed to — 50,000+ scenes spanning Falcon, Hot House, Raging Stallion, and NakedSword Originals — and new scenes land daily. At $9.99/mo annual with the current 67% off, it undercuts Sean Cody's $7.49 and Men.com's $8.33 on per-scene math by a wider margin than either's headline discount suggests. If you only subscribe to one site, this is the one.";
+  "NakedSword is the closest thing this category has to a default. The library is the largest I've personally subscribed to — 50,000+ scenes spanning Falcon, Hot House, Raging Stallion, and NakedSword Originals, and new scenes land daily. At $9.99/mo annual with the current 67% off, it undercuts Sean Cody's $7.49 and Men.com's $8.33 on per-scene math by a wider margin than either's headline discount suggests. If you only subscribe to one site, this is the one.";
 
 // EDITOR_NOTE: niche tiles hand-curated. Hooks ≤90 chars. Verify against
 // siteNicheMap once a month and rewrite when site counts shift materially.
@@ -44,7 +44,7 @@ const ALL_NICHES: {
   badge?: string;
 }[] = [
   { slug: "twink",    name: "Twink",    siteCount: 41, image: "/site-banners/twinks-in-shorts-hero.jpg",
-    hook: "The core of TwinkVault — premium studios down to amateur networks.",
+    hook: "The core of TwinkVault: premium studios down to amateur networks.",
     badge: "Most reviewed" },
   { slug: "bareback", name: "Bareback", siteCount: 47, image: "/site-banners/bareback-that-hole-hero.jpg",
     hook: "The largest category here, all explicitly bareback-focused.",
@@ -85,7 +85,7 @@ function categoryTag(site: SiteData): string {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const Hero = () => (
-  // Short full-width text hero. The text IS the hero — no thumbnail
+  // Short full-width text hero. The text IS the hero, no thumbnail
   // contact-sheet on the right (deleted from prior sprint; tile sizes
   // were too small to deliver the "here's what we have" payoff). The
   // niche grid below now serves as the visual hook, sitting close
@@ -109,7 +109,7 @@ const Hero = () => (
           exact-match in H1 + first paragraph is a direct ranking
           signal (and the H1 had drifted off-keyword entirely). */}
       <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground md:mt-8 md:text-base lg:text-lg">
-        We rank the best twink sites from independent reviews of {sites.length} gay porn sites — every one built from a paid membership and scored on the same four-pillar rubric. Updated monthly. No paid placements, ever.
+        We rank the best twink sites from independent reviews of {sites.length} gay porn sites. Every one is built from a paid membership and scored on the same four-pillar rubric. Updated monthly. No paid placements, ever.
       </p>
 
       <motion.div
@@ -540,7 +540,7 @@ const Index = () => {
         "url": "https://twinkvault.com",
         "logo": "https://twinkvault.com/pwa-512.png",
         "foundingDate": "2024",
-        "description": "Independent gay site review project — paid memberships, transparent scoring, no commission-rigged rankings.",
+        "description": "Independent gay site review project: paid memberships, transparent scoring, no commission-rigged rankings.",
         "sameAs": [],
       }) }} />
 

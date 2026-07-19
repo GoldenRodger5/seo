@@ -134,8 +134,8 @@ export function getFeaturedComparePairs(): Set<string> {
     [...ranked, ...LEGACY_PRERENDERED_PAIRS, ...PINNED_EARNING_PAIRS].filter(hasAffiliateConversionPath),
   );
   // Staged demotions (FIX 7): pairs in an ACTIVE demotion tranche leave the
-  // featured set — which removes them from the sitemap + prerender and flips
-  // the rendered page to noindex — while vercel.json 301s (kept in sync via
+  // featured set, which removes them from the sitemap + prerender and flips
+  // the rendered page to noindex, while vercel.json 301s (kept in sync via
   // `npm run compare-redirects`) send their traffic to the mapped review.
   for (const demoted of activeDemotedPairs()) featured.delete(demoted);
   cached = featured;

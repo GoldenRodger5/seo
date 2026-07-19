@@ -333,6 +333,12 @@ CRITICAL OUTPUT RULES:
 
 VOICE:
 - First-person plural ("we tested...", "we logged in...") or third-person observation. Never "I" — this is a review project, not a personal blog post.
+
+STYLE (anti-AI-tell rules — these are hard requirements):
+- Em dashes: at most 2 per piece, total. Join clauses with periods, commas, colons, or semicolons instead. Never open an answer with "Yes —" or "No —".
+- Banned words/phrases (do not use, ever): "curated", "realm", "landscape" (figurative), "elevate", "unleash", "seamless", "meticulous", "treasure trove", "plethora", "myriad", "boasts", "delve", "dive into", "Whether you're", "look no further", "game-changer", "it's worth noting", "In today's", "isn't just", "more than just", "stands as", "testament to", "In conclusion".
+- Vary paragraph and sentence length. A piece where every section has the same shape reads machine-written.
+- Prefer plain verbs and concrete nouns over intensifiers. "The library is big: 4,000 scenes" beats "an impressively vast library".
 - Conversational but informed. No corporate fluff. No SEO keyword stuffing.
 - The reader has paid for memberships before and knows when they're being marketed to.
 `;

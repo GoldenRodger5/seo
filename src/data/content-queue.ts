@@ -170,7 +170,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
   { name: "Falcon Edge", slug: "falcon-edge", homepage_url: "https://www.falconedge.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios", "hd-quality"], priority: 9, estimated_monthly_searches: 8100, status: "published", content_type: "review", editorial_mode: "research-only" },
 
   // ── DE-PRIORITIZED: no affiliate path located ───────────────────────────
-  // Speculative SEO coverage only — no partner program found yet. Capped in
+  // Speculative SEO coverage only, no partner program found yet. Capped in
   // the ≤5 band so they never consume the editorial-only cap (or a publish
   // slot) ahead of a monetizable review. Bump any one of these into the high
   // band the moment a real affiliate path appears. Relative order among them
@@ -201,7 +201,7 @@ export const reviewQueue: ReviewQueueEntry[] = [
   { name: "BoyNapped", slug: "boy-napped", homepage_url: "https://www.boynapped.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks"], priority: 2, estimated_monthly_searches: 6600, status: "queued", content_type: "review", editorial_mode: "research-only" },
   { name: "SexuallyBroken", slug: "sexually-broken", homepage_url: "https://www.sexuallybroken.com", affiliate_url: null, affiliate_network: null, niche: ["premium-studios"], priority: 1, estimated_monthly_searches: 4400, status: "queued", content_type: "review", editorial_mode: "research-only" },
 
-  // Already published — not a candidate (status: published).
+  // Already published, not a candidate (status: published).
   { name: "TwinkPop", slug: "twinkpop", homepage_url: "https://www.twinkpop.com", affiliate_url: null, affiliate_network: null, niche: ["amateur-twinks", "hd-quality"], priority: 7, estimated_monthly_searches: 18100, status: "published", content_type: "review" },
 ];
 
@@ -292,7 +292,7 @@ const comparisonPairs: [string, string][] = [
 // markQueuePublished() regex to flip. That mismatch left entries permanently
 // "queued": the engine re-picked compare/twinks-in-shorts-vs-southern-strokes
 // EVERY DAY from Jun 27–Jul 8 (12 no-op runs). The fix: for programmatic
-// entries, published-state is DERIVED from the content file itself — if the
+// entries, published-state is DERIVED from the content file itself, if the
 // generated body exists (under either slug order for comparisons), the page
 // is live, so the entry is published. The content file is the ground truth.
 const comparePublished = (a: string, b: string): boolean =>

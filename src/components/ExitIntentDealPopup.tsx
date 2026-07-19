@@ -53,12 +53,18 @@ const ExitIntentDealPopup = () => {
   const deal = useMemo(() => pickDealForPath(location.pathname), [location.pathname]);
 
   useEffect(() => {
-    if (sessionStorage.getItem("tv_exit_popup_shown")) return;
+    // True exit-intent only, at most once a week. The old behavior (45s timer
+    // + once per session) interrupted people mid-read and re-fired every
+    // visit — the exact popup pattern review sites get roasted for.
+    const COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+    const last = Number(localStorage.getItem("tv_exit_popup_last") || 0);
+    if (Date.now() - last < COOLDOWN_MS) return;
     if (location.pathname === "/best-deals") return; // page already pushes deal-alert email
 
     const trigger = () => {
-      if (sessionStorage.getItem("tv_exit_popup_shown")) return;
-      sessionStorage.setItem("tv_exit_popup_shown", "1");
+      const lastNow = Number(localStorage.getItem("tv_exit_popup_last") || 0);
+      if (Date.now() - lastNow < COOLDOWN_MS) return;
+      localStorage.setItem("tv_exit_popup_last", String(Date.now()));
       setNeeded(true);
       requestOverlay("exitIntent");
       trackEvent("shown", { dealSlug: deal.slug });
@@ -80,13 +86,10 @@ const ExitIntentDealPopup = () => {
       }
     };
 
-    const timer = setTimeout(trigger, 45000);
-
     document.addEventListener("mouseleave", handleMouseLeave);
     document.addEventListener("touchstart", handleTouchStart, { passive: true });
     document.addEventListener("touchmove", handleTouchMove, { passive: true });
     return () => {
-      clearTimeout(timer);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("touchstart", handleTouchStart);
       document.removeEventListener("touchmove", handleTouchMove);

@@ -8,15 +8,15 @@
  */
 export const siteVerdicts: Record<string, string> = {
   "helix-studios":
-    "The strongest premium twink studio we've tested — cinematic production, exclusive performers, and a 4,000-scene catalog. Skip it if you want amateur or POV content; the polish is the point.",
+    "The strongest premium twink studio we've tested. Cinematic production, exclusive performers, and a 4,000-scene catalog. Skip it if you want amateur or POV content; the polish is the point.",
   "next-door-twink":
-    "The best value play in the category — $10.95/mo annual gets you the full 45+ channel ASGmax network. Skip it only if you want a single tightly-curated studio rather than a sprawling library.",
+    "The best value play in the category. $10.95/mo annual gets you the full 45+ channel ASGmax network. Skip it only if you want a single tightly-focused studio rather than a sprawling library.",
   "next-door-world":
-    "Effectively an all-access pass to ASGmax — same 45+ channel library, broader content beyond just twinks. Pick this over Next Door Twink if you want the wider net.",
+    "Effectively an all-access pass to ASGmax. Same 45+ channel library, broader content beyond just twinks. Pick this over Next Door Twink if you want the wider net.",
   "twinks-in-shorts":
     "The best pick for natural, unscripted amateur scenes with real chemistry. Skip it if you want studio gloss or hyper-stylized production.",
   "athletic-twinks":
-    "The go-to for fit, gym-body performers — a niche the bigger studios largely ignore. Skip it if athletic builds aren't specifically what you're after.",
+    "The go-to for fit, gym-body performers. A niche the bigger studios largely ignore. Skip it if athletic builds aren't specifically what you're after.",
   "southern-strokes":
     "Strong value at $9.95/mo annual with a friendly, natural roster. Skip it if you need weekly drops; updates run slower than network sites.",
   "daddy-on-twink":
@@ -28,15 +28,15 @@ export const siteVerdicts: Record<string, string> = {
   "bareback-that-hole":
     "High-intensity raw scenes for fans of authentic, uninhibited content. Skip it if production polish ranks higher for you than performer energy.",
   "hard-brit-lads":
-    "The leading British membership site — exclusively UK performers and a strong European following. Skip it if you specifically want American casting.",
+    "The leading British membership site. Exclusively UK performers and a strong European following. Skip it if you specifically want American casting.",
   "prideflame":
-    "Diverse and inclusive content with strong Latino representation that fills a real gap. Updates and library depth are still maturing — manage expectations.",
+    "Diverse and inclusive content with strong Latino representation that fills a real gap. Updates and library depth are still maturing. Manage expectations.",
   "rawhole":
     "A dedicated bareback site with consistent updates and zBuckz-network production reliability. Skip it if you want a wider niche mix in one membership.",
   "peterfever":
-    "The premier gay Asian site — cinematic production, exclusive Asian and mixed performers, and the strongest catalog in the niche. Skip it if Asian casting isn't a priority.",
+    "The premier gay Asian site. Cinematic production, exclusive Asian and mixed performers, and the strongest catalog in the niche. Skip it if Asian casting isn't a priority.",
   "gayasiannetwork":
-    "A multi-site Asian network on a single membership, with broader variety than any single Asian-focused studio. Production styles vary more than on PeterFever — that's the trade-off.",
+    "A multi-site Asian network on a single membership, with broader variety than any single Asian-focused studio. Production styles vary more than on PeterFever. That's the trade-off.",
   "alternadudes":
     "The leading site for tattooed, pierced, and alt performers. Skip it if you prefer clean-cut casting.",
   "dirtyboyvideo":
@@ -44,7 +44,7 @@ export const siteVerdicts: Record<string, string> = {
   "trailertrashboys":
     "The clearest pick for raunchy, blue-collar, rough-around-the-edges scenes. Skip it if that aesthetic isn't already what you're searching for.",
   "nakedsword":
-    "Effectively the Netflix of gay porn — 50,000+ scenes from 300+ studios on one membership. Skip it only if you want a tightly-focused single-niche site instead of a mega-library.",
+    "Effectively the Netflix of gay porn. 50,000+ scenes from 300+ studios on one membership. Skip it only if you want a tightly-focused single-niche site instead of a mega-library.",
   "dudesraw":
     "Real-guy bareback chemistry without studio overproduction. Skip it if you want curated, scene-of-the-month polish.",
   "japanboyz":
@@ -52,15 +52,15 @@ export const siteVerdicts: Record<string, string> = {
   "sexjapantv":
     "Japanese gay content with a reality-TV feel and high update cadence. Skip it if you prefer the more studio-cinematic angle of Japanboyz.",
   "hiroyaxxx":
-    "The exclusive home for Japanese performer Hiroya — single-performer fans get the full catalog here. Skip it if you want roster variety.",
+    "The exclusive home for Japanese performer Hiroya. Single-performer fans get the full catalog here. Skip it if you want roster variety.",
   "yoshikawasakixxx":
     "The official Yoshi Kawasaki catalog with curated exclusives that aren't on the network sites. Skip it if you're not specifically a fan of his work.",
   "wuboyz":
-    "One of the few sites focused on Chinese performers. The library is narrower than pan-Asian sites — that's the niche, not a flaw.",
+    "One of the few sites focused on Chinese performers. The library is narrower than pan-Asian sites. That's the niche, not a flaw.",
   "barebackrtxxx":
     "Raw, unscripted bareback with a deliberately gritty feel. Skip it if production value matters more than performer energy.",
   "cumpigmen":
-    "Fetish-forward and intentionally intense — built for a specific audience. Skip it if you're after softer-edged content.",
+    "Fetish-forward and intentionally intense. Built for a specific audience. Skip it if you're after softer-edged content.",
   "realmenfuck":
     "Masculine, no-pretense scenes with confident performers. Skip it if you're specifically looking for twink-style casting.",
   "swinginballs":
@@ -76,7 +76,7 @@ export const siteVerdicts: Record<string, string> = {
   "brothercrush":
     "Step-brother taboo content with real chemistry and polished production. Skip it if you prefer non-roleplay scenes.",
   "familydick":
-    "Premium taboo family-fantasy content from the Say Uncle network — top-tier production in this genre. Skip it if you want simpler, untheatrical content.",
+    "Premium taboo family-fantasy content from the Say Uncle network. Top-tier production in this genre. Skip it if you want simpler, untheatrical content.",
   "sayuncle":
     "The network hub — one membership unlocks Family Dick, Brother Crush, Missionary Boys, and the rest. The right pick if any one of those interests you, since the bundle costs barely more.",
   "boysatcamp":
@@ -86,7 +86,7 @@ export const siteVerdicts: Record<string, string> = {
   "militarydick":
     "Fit performers in uniform-themed scenarios with high-energy scenes. Skip it if uniform aesthetics don't move you.",
   "latinleche":
-    "Authentic street-cast amateur Latin twink content — a standout in the Latino niche. Skip it if you specifically want studio-polished Latino casting instead.",
+    "Authentic street-cast amateur Latin twink content. A standout in the Latino niche. Skip it if you specifically want studio-polished Latino casting instead.",
   "yesfather":
     "Religious-authority taboo with a daddy-twink focus that distinguishes it from Missionary Boys. Skip it if you're not into roleplay setups.",
   "bullyhim":
@@ -96,41 +96,41 @@ export const siteVerdicts: Record<string, string> = {
   "barebackcumpigs":
     "Explicit bareback with cumshot and pig-play focus on the MyGayCash network. Skip it if explicit fetish framing isn't what you're after.",
   "bearchubs":
-    "A dedicated home for chubby and larger bear performers — a niche the bigger studios consistently underserve. Skip it if you specifically want lean or twink builds.",
+    "A dedicated home for chubby and larger bear performers. A niche the bigger studios consistently underserve. Skip it if you specifically want lean or twink builds.",
   "bearfilms":
     "MyGayCash's flagship bear site, with above-average production for the niche. Skip it if you want hairy-and-raw style content rather than polished bear scenes.",
   "hairyandraw":
-    "Hairy bear performers in raw bareback scenes — the cleanest combination of those two niches in one site. Skip it if you want trimmed or smooth casting.",
+    "Hairy bear performers in raw bareback scenes. The cleanest combination of those two niches in one site. Skip it if you want trimmed or smooth casting.",
   "boyfun":
-    "European twink studio with strong production from a dedicated Czech team — slim, smooth, natural casting. Skip it if you specifically want American performers.",
+    "European twink studio with strong production from a dedicated Czech team. Slim, smooth, natural casting. Skip it if you specifically want American performers.",
   "jawked":
-    "Amateur jock and college-guy content with no studio gloss — real guys, real chemistry. Skip it if you want professional production over real-guy energy.",
+    "Amateur jock and college-guy content with no studio gloss. Real guys, real chemistry. Skip it if you want professional production over real-guy energy.",
   "men":
-    "The flagship of the MEN Network — 9 sub-sites, award-winning production, and a consistent update cadence for fans who want variety within one ecosystem. Skip it if you want a tightly-focused single studio rather than a network subscription.",
+    "The flagship of the MEN Network. 9 sub-sites, award-winning production, and a consistent update cadence for fans who want variety within one ecosystem. Skip it if you want a tightly-focused single studio rather than a network subscription.",
   "sean-cody":
-    "One of the most recognised names in gay adult content — 20+ years of exclusive athletic performers in an organised, searchable archive. Skip it if you want diversity of body types or ethnicities; the aesthetic is intentionally consistent.",
+    "One of the most recognised names in gay adult content. 20+ years of exclusive athletic performers in an organised, searchable archive. Skip it if you want diversity of body types or ethnicities; the aesthetic is intentionally consistent.",
   "icon-male":
-    "The go-to for scripted older/younger and daddy/son content with genuine narrative framing. Skip it if you're outside the age-gap niche — the catalog doesn't venture far from that dynamic.",
+    "The go-to for scripted older/younger and daddy/son content with genuine narrative framing. Skip it if you're outside the age-gap niche. The catalog doesn't venture far from that dynamic.",
   "gaywire":
     "A solid pick for fans who want download access and a large amateur network library in one subscription. Skip it if you want premium studio production or a tightly focused content niche.",
   "biempire":
-    "The leading dedicated bisexual studio — XBIZ award-winning with 4K production and a genuine focus on bi threesome and group content. Skip it entirely if you're looking for gay-only scenes; female performers are central to every scene.",
+    "The leading dedicated bisexual studio. XBIZ award-winning with 4K production and a genuine focus on bi threesome and group content. Skip it entirely if you're looking for gay-only scenes; female performers are central to every scene.",
   "twinkpop":
-    "MEN Network production quality pointed at a dedicated twink aesthetic — and your membership covers the entire 9-site network. Skip it if you want a standalone site; this is a channel within a larger subscription.",
+    "MEN Network production quality pointed at a dedicated twink aesthetic, and your membership covers the entire 9-site network. Skip it if you want a standalone site; this is a channel within a larger subscription.",
   "reality-dudes":
     "The clearest pick for straight-guy and first-time fantasy scenarios across 7 sub-sites on one membership. Skip it if you need a large back catalog; the combined library is relatively modest at around 1,000 scenes.",
   "bigstr":
-    "The budget option in the category at $9.99/mo — a 4-site network pass for viewers who want access over quality. Skip it if production standards or confirmed HD video matter to you.",
+    "The budget option in the category at $9.99/mo. A 4-site network pass for viewers who want access over quality. Skip it if production standards or confirmed HD video matter to you.",
   "black-male-me":
-    "A dedicated Black gay performer site for viewers who want niche representation that mainstream sites rarely provide at this depth. Production details are limited in public reviews — manage expectations accordingly.",
+    "A dedicated Black gay performer site for viewers who want niche representation that mainstream sites rarely provide at this depth. Production details are limited in public reviews. Manage expectations accordingly.",
   "noirmale":
-    "The premium option for Black gay content — Falcon | NakedSword production values, cinematic framing, and HD/4K delivery. Skip it if budget is a priority; you're paying for Falcon-level quality.",
+    "The premium option for Black gay content. Falcon | NakedSword production values, cinematic framing, and HD/4K delivery. Skip it if budget is a priority; you're paying for Falcon-level quality.",
   "guy-selector":
     "An interactive-format gay content site in the AdultForce network with limited independent review coverage. Approach as an exploratory option rather than a proven recommendation.",
   "spicevidsgay":
-    "Exceptional value for volume-seekers — access to content from 1,700+ studios at $5.49/mo annual with 4K streaming included. Skip it if you want exclusive studio content or downloads; this is an aggregator, streaming only.",
+    "Exceptional value for volume-seekers. Access to content from 1,700+ studios at $5.49/mo annual with 4K streaming included. Skip it if you want exclusive studio content or downloads; this is an aggregator, streaming only.",
   "maleaccess":
-    "The best free trial in the category — 7 full days to evaluate 8,000+ scenes across 6 partner sites before committing. Skip it if knowing exactly which partner sites are included matters to your decision.",
+    "The best free trial in the category. 7 full days to evaluate 8,000+ scenes across 6 partner sites before committing. Skip it if knowing exactly which partner sites are included matters to your decision.",
 };
 
 export const getVerdict = (slug: string): string | undefined => siteVerdicts[slug];

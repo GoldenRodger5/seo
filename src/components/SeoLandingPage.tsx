@@ -198,7 +198,7 @@ const SeoLandingPage = ({
                             to={`/discount/${site.slug}`}
                             className="text-center text-[10px] font-medium text-secondary hover:underline"
                           >
-                            {site.deal_discount}% off — see deal →
+                            {site.deal_discount}% off · see deal →
                           </Link>
                         )}
                       </div>

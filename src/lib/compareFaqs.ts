@@ -55,7 +55,7 @@ export function generateCompareFaqs(a: SiteData, b: SiteData): CompareFaq[] {
   if (priceGap > 10) {
     faqs.push({
       q: `Is ${cheaper.name} worth choosing over ${pricier.name} just for the price?`,
-      a: `${cheaper.name} is ${priceGap.toFixed(0)} cheaper per month at ${cheaper.price_monthly} vs ${pricier.price_monthly}. ${cheaper.overall_score >= pricier.overall_score ? `It also scores higher (${cheaper.overall_score}/5 vs ${pricier.overall_score}/5), so the savings come with no quality trade-off — easy pick.` : `${pricier.name} scores higher (${pricier.overall_score}/5 vs ${cheaper.overall_score}/5), so the savings come with a real quality gap. Choose ${cheaper.name} if budget is the primary constraint.`}`,
+      a: `${cheaper.name} is ${priceGap.toFixed(0)} cheaper per month at ${cheaper.price_monthly} vs ${pricier.price_monthly}. ${cheaper.overall_score >= pricier.overall_score ? `It also scores higher (${cheaper.overall_score}/5 vs ${pricier.overall_score}/5), so the savings come with no quality trade-off. Easy pick.` : `${pricier.name} scores higher (${pricier.overall_score}/5 vs ${cheaper.overall_score}/5), so the savings come with a real quality gap. Choose ${cheaper.name} if budget is the primary constraint.`}`,
     });
   }
 
@@ -65,7 +65,7 @@ export function generateCompareFaqs(a: SiteData, b: SiteData): CompareFaq[] {
     const noTrialSite = trialSite === a ? b : a;
     faqs.push({
       q: `Does ${a.name} or ${b.name} let you try before buying?`,
-      a: `Only ${trialSite.name} currently offers a trial — ${noTrialSite.name} doesn't have one listed. If you want to test the content before committing, start with ${trialSite.name}, then decide whether to add ${noTrialSite.name} later.`,
+      a: `Only ${trialSite.name} currently offers a trial; ${noTrialSite.name} doesn't have one listed. If you want to test the content before committing, start with ${trialSite.name}, then decide whether to add ${noTrialSite.name} later.`,
     });
   }
 
@@ -73,7 +73,7 @@ export function generateCompareFaqs(a: SiteData, b: SiteData): CompareFaq[] {
   if (shared.length > 0 && aPrimary && bPrimary && aPrimary === bPrimary) {
     const niche = nicheLabel(aPrimary);
     faqs.push({
-      q: `Both ${a.name} and ${b.name} focus on ${niche} content — which does it better?`,
+      q: `Both ${a.name} and ${b.name} focus on ${niche} content. Which does it better?`,
       a: `${winner.name} edges ahead with a ${winner.overall_score}/5 overall score, but the gap is narrower in the ${niche} niche specifically. ${winner.name} wins on ${winner.content_quality >= winner.value_score ? "production polish" : "value-per-scene"}, while ${loser.name} ${loser.content_quality >= loser.value_score ? "delivers tighter casting" : "has the better annual price"}.`,
     });
   }
@@ -81,7 +81,7 @@ export function generateCompareFaqs(a: SiteData, b: SiteData): CompareFaq[] {
   // ── DIFFERENT PRIMARY NICHES: which fits what you want ─────────────────
   if (aPrimary && bPrimary && aPrimary !== bPrimary && !shared.includes(aPrimary) && !shared.includes(bPrimary)) {
     faqs.push({
-      q: `${a.name} focuses on ${nicheLabel(aPrimary)}, ${b.name} on ${nicheLabel(bPrimary)} — which fits what I'm looking for?`,
+      q: `${a.name} focuses on ${nicheLabel(aPrimary)}, ${b.name} on ${nicheLabel(bPrimary)}. Which fits what I'm looking for?`,
       a: `These two sites serve genuinely different audiences. Pick ${a.name} if ${nicheLabel(aPrimary)} content is your primary interest; pick ${b.name} if you specifically want ${nicheLabel(bPrimary)} content. There's limited overlap between the catalogs.`,
     });
   }
@@ -92,14 +92,14 @@ export function generateCompareFaqs(a: SiteData, b: SiteData): CompareFaq[] {
     const otherSite = dealSite === a ? b : a;
     faqs.push({
       q: `Is the ${dealSite.name} discount worth it vs paying full price for ${otherSite.name}?`,
-      a: `${dealSite.name}'s ${dealSite.deal_discount}% discount drops the annual rate to ${dealSite.price_annual} — meaningful savings versus ${otherSite.name}'s standard pricing. If both sites would otherwise fit your taste, the discount tips the value math toward ${dealSite.name} for the first year.`,
+      a: `${dealSite.name}'s ${dealSite.deal_discount}% discount drops the annual rate to ${dealSite.price_annual}, meaningful savings versus ${otherSite.name}'s standard pricing. If both sites would otherwise fit your taste, the discount tips the value math toward ${dealSite.name} for the first year.`,
     });
   }
 
   // ── ALWAYS-INCLUDED: can I subscribe to both ───────────────────────────
   faqs.push({
     q: `Can I subscribe to both ${a.name} and ${b.name}?`,
-    a: `Yes — and many subscribers do. Both bill discreetly and let you cancel anytime. If you're undecided, start with the higher-scored option (${winner.name}) on the annual plan and add the other later if you want broader coverage.`,
+    a: `Yes, and many subscribers do. Both bill discreetly and let you cancel anytime. If you're undecided, start with the higher-scored option (${winner.name}) on the annual plan and add the other later if you want broader coverage.`,
   });
 
   // Cap at 6 to keep page weight reasonable.

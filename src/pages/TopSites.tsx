@@ -51,7 +51,7 @@ const TopSites = () => {
       <PageTransition>
         <Helmet>
           <title>{`Gay Twink Site Rankings ${currentYear} — All Sites Scored | TwinkVault`}</title>
-          <meta name="description" content="Every major twink site ranked by content quality, value, update frequency and mobile experience. Paid memberships tested, honest scores — no sponsored rankings." />
+          <meta name="description" content="Every major twink site ranked by content quality, value, update frequency and mobile experience. Paid memberships tested, honest scores, no sponsored rankings." />
           <link rel="canonical" href="https://twinkvault.com/top-sites" />
         </Helmet>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
