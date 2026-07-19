@@ -217,6 +217,16 @@ const AskAI = () => {
                 </motion.p>
               )}
 
+              {hasSearched && !loading && !error && recs.length === 0 && (
+                <motion.p
+                  key="empty"
+                  className="mt-6 text-center text-sm text-muted-foreground"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                >
+                  No clean match for that combination. Try fewer filters or a different priority.
+                </motion.p>
+              )}
+
               {recs.length > 0 && (() => {
                 const primaryRec = recs[0];
                 const primarySite = sites.find((s) => s.slug === primaryRec.slug);
