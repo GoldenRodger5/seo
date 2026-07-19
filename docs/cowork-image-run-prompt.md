@@ -6,12 +6,23 @@ Copy everything below the line into Claude Cowork (Opus, browser + computer cont
 
 You are doing a creative-asset collection run for TwinkVault (twinkvault.com), an adult affiliate review site owned by the person at this computer. Everything here is the owner's own affiliate accounts and the task is to download promotional images those programs explicitly provide to affiliates for exactly this purpose. All performers on all sites are 18+ professional content.
 
-## Environment
+## Environment & tools
 
-- Google Chrome is open and ALREADY LOGGED IN to seven affiliate dashboards, one per tab: ChargerCash, MyGayCash (WoofCash), zBUCKz, XXXRewards, Adult Empire Cash console, NakedSword Cash, AdultForce.
+- Use **browser control on Google Chrome** for all dashboard navigation, and **computer control** (Finder / filesystem) for saving, renaming, unzipping, moving files into the repo folders, and cleaning up download debris. You have full permission to use both throughout.
+- Chrome is open and ALREADY LOGGED IN to seven affiliate dashboards, one per tab: ChargerCash, MyGayCash (WoofCash), zBUCKz, XXXRewards, Adult Empire Cash console, NakedSword Cash, AdultForce.
 - Do not log out of anything, do not change any account setting, do not touch payout/linking configuration. Your access is read-and-download only.
 - If a session has expired, pause and ask the owner to re-login, then continue.
 - Work portal by portal in the order given. It is a long run; keep a running scratch note of what you've completed so you can resume if interrupted.
+
+## How to operate: be intelligent and persistent
+
+The playbooks below describe where assets USUALLY live, but every dashboard has quirks. You have standing permission to **explore anywhere inside these logged-in dashboards until you find what you need**: click through every nav menu, submenus, per-site subpages, "promo tools", "creatives", "media", search boxes, help/FAQ pages that reveal where assets live — whatever it takes. A public tour page of the site itself (linked from the dashboard) is also fair game for grabbing promo stills if the dashboard's own assets are inadequate.
+
+Rules of persistence:
+- Never declare "nothing usable" after one failed path. Exhaust the plausible routes first — a miss in the report must mean the portal genuinely doesn't offer it, not that the first menu was empty.
+- Balance persistence with progress: if a single SITE resists after a genuinely thorough hunt (~10 minutes of real attempts), log exactly where you looked and what you saw, move on, and revisit at the end if time allows.
+- Think before clicking download: check the dimensions shown in listings first so you pull the right file once, instead of downloading everything.
+- If a dashboard surprises you with something better than the playbook expects (a "site covers" pack, a media library, a photo browser), use it — the playbook is a floor, not a ceiling.
 
 ## Mission
 
@@ -107,7 +118,7 @@ Ignore the Karups sites (not ours).
 We already have 2000×800 / 2000×500 heroes for both — only grab gallery stills for card art (`-card-1/2`), skip banners unless you spot something bigger/cleaner.
 
 ### 6) Adult Empire Cash — adultempirecash.com console → folder `adultempirecash/`
-Different platform (not NATS). The open tab is on Assets → Stores ("None") — wrong section. Explore the **Assets** dropdown and the rest of the console nav for banners/creatives/galleries for **TLA Gay Unlimited** (`tla-gay-unlimited`). If the console genuinely has no image assets for it, note that in the report and move on — do not spend more than ~10 minutes here.
+Different platform (not NATS). The open tab is on Assets → Stores ("None") — wrong section. Explore the **Assets** dropdown and the entire console nav (Dashboard, Account, Assets, Reports, Help) for banners/creatives/galleries covering **TLA Gay Unlimited** (`tla-gay-unlimited`) — hunt persistently per the operating rules above; the Help section may document where creatives live. If after a genuine exhaustive search the console offers no image assets, grab promo stills from the TLA Gay Unlimited public tour page instead, and record exactly what the console does and doesn't offer.
 
 ### 7) AdultForce — adultforce.com → folder `adultforce/`
 Modern UI: left nav **Tools → Marketing Assets** (already open) shows a Banners section gated by **Niche + Size filter dropdowns**.
