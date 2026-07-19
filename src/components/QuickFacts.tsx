@@ -38,7 +38,7 @@ const QuickFacts = ({ site }: { site: SiteData }) => {
             <span>
               <s className="text-muted-foreground/70 font-normal mr-1.5">{site.price_monthly}</s>
               <LocalisedPrice usd={site.price_annual} />
-              <span className="text-muted-foreground font-normal">/mo annual</span>
+              <span className="text-muted-foreground font-normal"> annual</span>
             </span>
           ) : (
             <LocalisedPrice usd={site.price_monthly} />

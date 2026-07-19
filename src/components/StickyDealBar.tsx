@@ -19,8 +19,8 @@ const StickyDealBar = () => {
       {/* py-1 on the outer band; the dismiss button below grows the
           tap area to 44×44 (WCAG min) without inflating the bar height. */}
       <div className="container flex items-center justify-center gap-2 py-2 pr-12 text-xs font-semibold text-secondary-foreground sm:text-sm">
-        <span className="hidden sm:inline">Active Deal: TwinkTrade — 67% off, just $9.95/mo on annual</span>
-        <span className="sm:hidden">TwinkTrade — 67% off, $9.95/mo</span>
+        <span className="hidden sm:inline">Active Deal: TwinkTrade, 67% off. Just $9.95/mo on annual</span>
+        <span className="sm:hidden">TwinkTrade: 67% off, $9.95/mo</span>
         <Link
           to="/discount/twinktrade"
           className="inline-flex items-center gap-1 underline underline-offset-2 hover:opacity-80"

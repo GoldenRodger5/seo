@@ -21,4 +21,6 @@ export const lastCheckedDate = `${MONTH_NAMES[MONTH]} ${now.getDate()}, ${YEAR}`
  * Manually-curated verification stamp shown on deal cards.
  * Update this string once a month after the deals sweep — single source of truth.
  */
-export const DEAL_VERIFIED_DATE = "May 2026";
+// Derived, not hand-set: a stale month here rendered "Deal verified May
+// 2026" under a "Verified July 2026" badge on the same screen.
+export const DEAL_VERIFIED_DATE = `${MONTH_NAMES[MONTH]} ${YEAR}`;

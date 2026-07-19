@@ -182,7 +182,6 @@ const SiteCard = ({
             <span className="text-base font-bold">
               <s className="mr-1.5 text-sm font-normal text-muted-foreground/70"><LocalisedPrice usd={site.price_monthly} /></s>
               <LocalisedPrice usd={site.price_annual} />
-              <span className="text-xs font-normal text-muted-foreground">/mo</span>
             </span>
           ) : (
             <LocalisedPrice usd={site.price_monthly} className="text-base font-bold" />
