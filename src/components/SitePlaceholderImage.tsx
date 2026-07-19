@@ -1,10 +1,13 @@
 import { SiteData } from "../data/sites";
-import { getSiteImagery } from "../data/site-imagery";
+import { getSiteImagery, getCardImage } from "../data/site-imagery";
 import SmartImage from "./common/SmartImage";
 
 const SitePlaceholderImage = ({ site, className = "" }: { site: SiteData; className?: string }) => {
   const imagery = getSiteImagery(site.slug);
-  const heroImg = imagery.hero_image_url ?? imagery.thumbnail_url;
+  // Strip-guarded: a leaderboard hero center-cropped to 3:2 renders as a
+  // random zoomed body part. No art beats bad art — SmartImage's branded
+  // fallbackLabel takes over when nothing card-safe exists.
+  const heroImg = getCardImage(site.slug);
 
   return (
     <SmartImage

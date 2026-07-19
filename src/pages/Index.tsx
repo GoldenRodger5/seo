@@ -13,7 +13,7 @@ import LandingDataBlock from "../components/LandingDataBlock";
 import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import { sites, isAffiliated, isPendingReview, getTopDealPick, getRecentlyUpdatedPromotable } from "../data/sites";
 import type { SiteData } from "../data/sites";
-import { getSiteImagery } from "../data/site-imagery";
+import { getSiteImagery, getCardImage } from "../data/site-imagery";
 import { currentYear, currentMonthLong, currentMonthShort } from "../lib/dates";
 import { parseMonthlyPrice } from "../lib/dealMath";
 import { MANFINDER_URL, trackManfinderClick } from "../lib/crak";
@@ -218,7 +218,7 @@ const TopTen = () => {
           <div className="lg:order-1 min-w-0">
             <ul className="divide-y divide-border/60 border-y border-border/60">
               {top10.map((site, i) => {
-                const heroImg = getSiteImagery(site.slug).hero_image_url;
+                const heroImg = getCardImage(site.slug);
                 const isEditorsChoice = i === 0;
                 const isBestValue = !isEditorsChoice && i === bestValueIdx;
                 return (

@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import OutboundLink from "../components/OutboundLink";
 import { ArrowRight, Star } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { CATEGORY_IMAGERY } from "@/data/hub-imagery";
+import SmartImage from "@/components/common/SmartImage";
 import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import AnimateOnScroll from "../components/AnimateOnScroll";
@@ -80,6 +82,17 @@ const CategoryPage = () => {
               <Star size={36} className="text-primary mx-auto" />
               <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">{category.name}</h1>
               <p className="mt-3 text-muted-foreground">{category.description}</p>
+              {CATEGORY_IMAGERY[category.slug] && (
+                <div className="mx-auto mt-6 max-w-3xl rounded-lg overflow-hidden border border-border/40">
+                  <SmartImage
+                    src={CATEGORY_IMAGERY[category.slug].image}
+                    alt={CATEGORY_IMAGERY[category.slug].alt}
+                    aspectRatio="16:9"
+                    customAspect="21 / 9"
+                    fallbackLabel={category.name}
+                  />
+                </div>
+              )}
               <div className="mt-3 flex items-center justify-center gap-4">
                 <span className="rounded-button bg-muted px-3 py-1 text-xs text-muted-foreground">
                   {sorted.length} Sites Reviewed

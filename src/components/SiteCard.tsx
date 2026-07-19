@@ -9,7 +9,7 @@ import type { SiteData } from "@/data/sites";
 import { getBrandPalette } from "@/data/site-brands";
 import { siteNicheMap } from "@/data/site-niches";
 import { getNiche } from "@/data/niches";
-import { getSiteImagery } from "@/data/site-imagery";
+import { getSiteImagery, getCardImage } from "@/data/site-imagery";
 import SmartImage from "./common/SmartImage";
 
 interface SiteCardProps {
@@ -51,7 +51,8 @@ const SiteCard = ({
   const watermarkLetter = site.name.charAt(0).toUpperCase();
   const niches = (siteNicheMap[site.slug] ?? []).slice(0, 3);
   const imagery = getSiteImagery(site.slug);
-  const heroImg = imagery.hero_image_url ?? imagery.thumbnail_url;
+  // Card slot (3:2): strip-safe resolver (placeholder beats a mangled crop).
+  const heroImg = getCardImage(site.slug);
 
   // Hover tooltip (desktop) + long-press tooltip (mobile, 1.5s timeout)
   const [showTip, setShowTip] = useState(false);

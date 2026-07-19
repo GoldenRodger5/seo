@@ -7,6 +7,8 @@ import Layout from "../components/Layout";
 import StarRating from "../components/StarRating";
 import ScoreRing from "../components/ScoreRing";
 import SitePlaceholderImage from "../components/SitePlaceholderImage";
+import SmartImage from "../components/common/SmartImage";
+import { getSiteImagery, getCardImage } from "../data/site-imagery";
 import OutboundLink from "../components/OutboundLink";
 import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
 import LocalisedPrice from "../components/LocalisedPrice";
@@ -146,7 +148,18 @@ const TopSites = () => {
                     <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
                       {/* Image + Rank on mobile/desktop */}
                       <div className="flex flex-col gap-4 lg:w-48">
-                        <SitePlaceholderImage site={site} />
+                        {(() => {
+                          // Real card art when we have it; branded placeholder otherwise.
+                          const im = getSiteImagery(site.slug);
+                          const img = getCardImage(site.slug);
+                          return img ? (
+                            <div className="rounded-lg overflow-hidden border border-border/40">
+                              <SmartImage src={img} alt={im.banner_alt || `${site.name} banner`} aspectRatio="3:2" fallbackLabel={site.name} />
+                            </div>
+                          ) : (
+                            <SitePlaceholderImage site={site} />
+                          );
+                        })()}
                         <div className="flex items-center justify-center gap-2">
                           {site.rank === 1 && <Crown size={20} className="text-secondary" />}
                           <span className="font-heading text-3xl font-bold text-muted-foreground/40">#{site.rank}</span>

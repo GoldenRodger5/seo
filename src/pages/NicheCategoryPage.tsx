@@ -2,6 +2,8 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { NICHE_IMAGERY } from "@/data/hub-imagery";
+import SmartImage from "@/components/common/SmartImage";
 import Layout from "../components/Layout";
 import { PageTransition, StaggerContainer, StaggerChild } from "../components/MotionWrappers";
 import FeaturedDealBanner from "../components/common/FeaturedDealBanner";
@@ -144,6 +146,17 @@ const NicheCategoryPage = () => {
               <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
                 {niche.heroTagline}
               </p>
+              {NICHE_IMAGERY[niche.slug] && (
+                <div className="mx-auto mt-6 max-w-3xl rounded-lg overflow-hidden border border-border/40">
+                  <SmartImage
+                    src={NICHE_IMAGERY[niche.slug].image}
+                    alt={NICHE_IMAGERY[niche.slug].alt}
+                    aspectRatio="16:9"
+                    customAspect="21 / 9"
+                    fallbackLabel={niche.displayName}
+                  />
+                </div>
+              )}
             </motion.div>
           </div>
         </section>

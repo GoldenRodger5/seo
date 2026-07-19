@@ -1,0 +1,22 @@
+{
+  "slug": "bearchubs",
+  "savedRoles": [
+    {
+      "role": "hero",
+      "dims": "900x150",
+      "size": 95257
+    },
+    {
+      "role": "card-1",
+      "dims": "800x800",
+      "size": 173977
+    }
+  ],
+  "sampleTrackingURL": "https://join.bearchubs.com/banner/MzEwMDAwMDMyNC4yLjg3LjIzOS4wLjI2NDcxLjAuMC4w",
+  "allTrackingSamples": [
+    "https://join.bearchubs.com/banner/MzEwMDAwMDMyNC4yLjg3LjIzOS4wLjI2NDcxLjAuMC4w",
+    "https://join.bearchubs.com/banner/MzEwMDAwMDMyNC4yLjg3LjIzOS4wLjI2NDcyLjAuMC4w",
+    "https://join.bearchubs.com/banner/MzEwMDAwMDMyNC4yLjg3LjIzOS4wLjI2NDY5LjAuMC4w"
+  ],
+  "pageTotal": "Showing Ad Tools 1 - 25 of 25"
+}
