@@ -907,7 +907,13 @@ function appendSiteEntry(entry: ReviewQueueEntry, generated: Record<string, unkn
   const scores = generated.scores as Record<string, number>;
   const pros = generated.pros as string[];
   const cons = generated.cons as string[];
-  const overall = scores.overall;
+  // The generator scores on a 1-10 scale; SiteData.overall_score is 0-5.
+  // (Raw pass-through here shipped seven sites displaying "7.4/5" — caught
+  // by the 2026-07-19 data-validation sweep. Halve + hard-gate.)
+  const overall = scores.overall / 2;
+  if (!(overall > 0 && overall <= 5)) {
+    throw new Error(`overall_score out of range after scaling: ${overall} (raw ${scores.overall})`);
+  }
 
   // Map 1-10 scores to existing 0-100 fields used by ReviewPage.
   const round = (n: number) => Math.round(n * 10);
