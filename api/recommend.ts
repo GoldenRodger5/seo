@@ -133,7 +133,7 @@ Rules:
     // If the model refused (adversarial input) it may answer in prose
     // instead of JSON. That's a valid outcome, not a server error — treat
     // it as "no recommendations".
-    let parsed: unknown;
+    let parsed: { recommendations?: unknown };
     try {
       parsed = JSON.parse(clean);
     } catch {
