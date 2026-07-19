@@ -1,4 +1,4 @@
-import { getSiteImagery } from "./site-imagery";
+import { getSiteImagery } from "./site-imagery.js";
 
 export interface SiteData {
   id: string;

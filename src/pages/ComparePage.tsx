@@ -75,7 +75,7 @@ const CompareColumn = ({ site }: { site: SiteData }) => (
         >
           Visit Site <ArrowRight size={14} />
         </OutboundLink>
-        <p className="mt-1 text-center text-[9px] text-muted-foreground">Opens in new tab · Partner link</p>
+        <p className="mt-1 text-center text-[10px] text-muted-foreground">Opens in new tab · Partner link</p>
       </>
     ) : (
       <Link

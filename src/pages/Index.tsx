@@ -246,12 +246,12 @@ const TopTen = () => {
                           {site.name}
                         </Link>
                         {isEditorsChoice && (
-                          <span className="rounded-button gold-gradient px-1.5 py-0.5 text-[9px] font-bold text-secondary-foreground uppercase tracking-wider whitespace-nowrap">
+                          <span className="rounded-button gold-gradient px-1.5 py-0.5 text-[10px] font-bold text-secondary-foreground uppercase tracking-wider whitespace-nowrap">
                             Editor's Choice
                           </span>
                         )}
                         {isBestValue && (
-                          <span className="rounded-button border border-emerald-500/40 bg-emerald-500/5 px-1.5 py-0.5 text-[9px] font-semibold text-emerald-400 uppercase tracking-wider whitespace-nowrap">
+                          <span className="rounded-button border border-emerald-500/40 bg-emerald-500/5 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-400 uppercase tracking-wider whitespace-nowrap">
                             Best Value
                           </span>
                         )}

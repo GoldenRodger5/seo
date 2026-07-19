@@ -150,7 +150,7 @@ const CategoryPage = () => {
                       Visit Site <ArrowRight size={12} />
                     </OutboundLink>
                   </div>
-                  <p className="mt-1 text-[9px] text-muted-foreground">Opens in new tab · Partner link</p>
+                  <p className="mt-1 text-[10px] text-muted-foreground">Opens in new tab · Partner link</p>
                 </div>
               </AnimateOnScroll>
             ))}
