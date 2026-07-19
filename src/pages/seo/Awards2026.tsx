@@ -19,7 +19,10 @@ import { getVerdict } from "../../data/site-verdicts";
  */
 
 const parsePrice = (s: string) => parseFloat((s || "").replace(/[^0-9.]/g, "")) || 0;
-const commercial = sites.filter((s) => !isPendingReview(s) && !isEditorialOnly(s));
+// Award-eligible = fully reviewed AND a working partner path. Promotional
+// surfaces only feature sites we can send buyers to; the editorial
+// rankings (/top-sites, /reviews) remain unfiltered.
+const commercial = sites.filter((s) => !isPendingReview(s) && !isEditorialOnly(s) && isAffiliated(s));
 const inNiche = (slug: string, niche: string) => (siteNicheMap[slug] ?? []).includes(niche);
 const topBy = (pool: SiteData[], key: (s: SiteData) => number) =>
   [...pool].sort((a, b) => key(b) - key(a))[0];

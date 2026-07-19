@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Layout from "../../components/Layout";
 import Breadcrumbs from "../../components/Breadcrumbs";
-import { sites, isPendingReview, isEditorialOnly } from "../../data/sites";
+import { sites, isPendingReview, isEditorialOnly, isAffiliated } from "../../data/sites";
 import { currentYear, currentMonthLong } from "../../lib/dates";
 import DealAlertSignup from "../../components/DealAlertSignup";
 
@@ -57,12 +57,12 @@ const histMax = Math.max(...histogram.map((h) => h.count));
 
 // Cheapest annual rates + best score-per-dollar — commercial sites only.
 const cheapestAnnual = [...commercial]
-  .filter((s) => parsePrice(s.price_annual) > 0)
+  .filter((s) => isAffiliated(s) && parsePrice(s.price_annual) > 0)
   .sort((a, b) => parsePrice(a.price_annual) - parsePrice(b.price_annual))
   .slice(0, 10);
 const cheapMax = Math.max(...cheapestAnnual.map((s) => parsePrice(s.price_annual)));
 const bestValue = [...commercial]
-  .filter((s) => parsePrice(s.price_annual) > 0)
+  .filter((s) => isAffiliated(s) && parsePrice(s.price_annual) > 0)
   .map((s) => ({ site: s, ratio: s.overall_score / parsePrice(s.price_annual) }))
   .sort((a, b) => b.ratio - a.ratio)
   .slice(0, 8);
