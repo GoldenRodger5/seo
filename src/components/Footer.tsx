@@ -121,7 +121,7 @@ const Footer = () => (
         <div>
           <h3 className="font-heading text-sm font-semibold mb-3">Tools</h3>
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
-            <li><Link to="/ask-ai" className={footerLink}>Ask TwinkAI</Link></li>
+            <li><Link to="/ask-ai" className={footerLink}>Site Recommender</Link></li>
             <li><Link to="/find-my-site" className={footerLink}>Site Finder Quiz</Link></li>
             <li><Link to="/gay-porn-pricing-index" className={footerLink}>Gay Porn Pricing Index</Link></li>
             <li><Link to="/guides" className={footerLink}>Guides</Link></li>

@@ -57,7 +57,7 @@ interface LinkOut {
 }
 
 const ASK_AI_LINKS = (sourceSlug: string): LinkOut[] => [
-  { to: "/ask-ai", label: getAnchor("/ask-ai", sourceSlug, "Ask TwinkAI") },
+  { to: "/ask-ai", label: getAnchor("/ask-ai", sourceSlug, "Site Recommender") },
   { to: "/find-my-site", label: getAnchor("/find-my-site", sourceSlug, "Site finder quiz") },
 ];
 
