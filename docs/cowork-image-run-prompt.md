@@ -126,11 +126,49 @@ Modern UI: left nav **Tools → Marketing Assets** (already open) shows a Banner
 2. Also check the **Offers** section: open the offer pages for Men / Sean Cody / and if present: GayWire (`gaywire`), BiEmpire (`biempire`), TwinkPop (`twinkpop`), Reality Dudes (`reality-dudes`), BigStr (`bigstr`), Black Male Me (`black-male-me`), Noir Male (`noirmale`), Guy Selector (`guy-selector`), SpiceVids Gay (`spicevidsgay`), Male Access (`maleaccess`) — some offers carry their own creative packs.
 3. If per-site creatives simply don't exist for the smaller offers, record that finding; do not force it.
 
+## Expansion sites: grab AFFILIATE LINKING CODES (required) + one hero (nice-to-have)
+
+These sites exist in the dashboards but are NOT yet on TwinkVault. For EACH one: find its
+affiliate linking code in the dashboard (NATS: the site's linkcode page — often reached from
+the Ad Tools banner listing itself, where each creative shows its full tracking URL, or via a
+"Linkcodes" section; the default plain link is what we want) and copy the **full tracking URL
+verbatim** into the report under "New site linking codes". While you're in the site's row,
+also save its best hero image using the slug shown (same rules as above) — required only if
+quick, the LINK is the must-have.
+
+ChargerCash expansion targets (folder `chargercash/`):
+- Black Godz → `blackgodz`
+- BottomGames → `bottomgames`
+- BoysDoPorn → `boysdoporn`
+- Dick Rides → `dickrides`
+- DoctorTapes → `doctortapes`
+- Pig Bottoms → `pigbottoms`
+- Therapy Dick → `therapydick`
+- VarsityGrip → `varsitygrip`
+- SKIP: Mormon Girlz (female content — off-brand for TwinkVault).
+
+zBUCKz expansion targets (folder `zbuckz/`):
+- AttilaPictures → `attilapictures`
+- AxelAbysse → `axelabysse`
+- DamianXDragon → `damianxdragon`
+- DamonDoggXXX → `damondoggxxx`
+- Dickbank → `dickbank`
+- FrockTheWorld → `frocktheworld`
+- PitsAndPubes → `pitsandpubes`
+- RetroMales → `retromales`
+- StraightBoysFucking → `straightboysfucking`
+- zVidz.com → `zvidz`
+- PissJapanTV → `pissjapantv` (fetish — grab the link, note content type, owner decides)
+- SKIP: NothingButCurves, SocialGlamour (female), Venus-Lux (trans — note in report for owner's call, link optional).
+
+For every expansion site also note in the report: one-line content description (niche,
+performer type) so the owner can prioritize which get reviews first.
+
 ## Bonus intel to collect along the way (goes in the report, no downloads needed)
 
 1. **Prideflame linking code** (WoofCash) — full tracking URL, verbatim.
 2. **Payment status per portal** — note every warning like the W9 "Unable to Receive Payments" banners visible on XXXRewards and NakedSword Cash. Check My Account → payment info status on each NATS portal and note anything pending/missing.
-3. **Sites they offer that we don't review yet** — list dashboard site names per portal that are NOT in the slug lists above (e.g., ChargerCash showed BoysDoPorn, Therapy Dick, Pig Bottoms, Dick Rides, DoctorTapes; zBUCKz showed AttilaPictures, AxelAbysse, Dickbank, RetroMales, PissJapanTV…). These are future review candidates.
+3. **Any OTHER unlisted sites** beyond the expansion lists above — if a dashboard shows a site not named anywhere in this prompt, add it to the report with its content type.
 4. **Special intro offers** — while on banner/offer pages, note any "$1 trial", "50% off first month" style promos per site that differ from what a normal join page shows.
 5. **Video embed availability** — most NATS portals list "Video Embeds" per site. Just note which of our sites have embeds available (yes/no per site) — we may use trailers on review pages later.
 
@@ -149,6 +187,7 @@ containing:
 ## Done criteria
 
 - Every slug listed above has either a `-hero` file on disk or an explicit "nothing usable" line in the report.
+- Every expansion site has its affiliate linking code captured verbatim in the report (or a line explaining why it couldn't be found).
 - No animated files, no HTML5 zips left behind, no leaderboard strips saved as heroes.
 - Downloads folder cleaned of leftover zip debris (extracted picks live in the repo folders).
 - REPORT.md written.
