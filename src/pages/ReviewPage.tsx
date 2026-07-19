@@ -30,6 +30,7 @@ import { getSimilarSites } from "@/lib/similarSites";
 import { getVerdict } from "@/data/site-verdicts";
 import SiteCard from "../components/SiteCard";
 import Breadcrumbs from "../components/Breadcrumbs";
+import QuickFacts from "../components/QuickFacts";
 import { stripMonthlyUnit, parseMonthlyPrice } from "@/lib/dealMath";
 import { getSiteImagery } from "@/data/site-imagery";
 import { generateSiteFaqs } from "@/lib/faqGenerator";
@@ -310,12 +311,20 @@ const ReviewPage = () => {
               <div className="stagger-in">
                 <div className="flex flex-wrap items-center gap-3">
                   <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">{site.name}</h1>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Reviewed by the TwinkVault editorial team from a paid membership · verified {currentMonthLong} {currentYear} ·{" "}
+                  <Link to="/methodology" className="text-secondary hover:underline">how we score</Link>
+                </p>
                   <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-xs text-emerald-400">✓ Reviewed</span>
                   <span className="inline-flex items-center gap-1 rounded-button bg-muted px-2 py-0.5 text-xs text-muted-foreground">{`Updated ${currentMonthShort} ${currentYear}`}</span>
                 </div>
                 <div className="mt-3 flex flex-wrap items-center gap-4">
                   <StarRating score={site.overall_score} size={20} />
                   <span className="text-sm text-muted-foreground">Expert review</span>
+                </div>
+
+                <div className="mt-6">
+                  <QuickFacts site={site} />
                 </div>
 
                 {/* Score Breakdown */}

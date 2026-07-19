@@ -18,7 +18,7 @@ import { currentYear, currentMonthLong } from "../lib/dates";
 import { TOTAL_SITES } from "../lib/siteStats";
 import { parseMonthlyPrice } from "../lib/dealMath";
 
-const sortOptions = ["Top Rated", "Newest", "Alphabetical"];
+const sortOptions = ["Top Rated", "Best Value", "Most Active", "Newest", "Alphabetical"];
 
 // Pills retained from the categories list. HD Quality and Mobile Friendly
 // were removed — in 2026 nearly every site qualifies, so the pills filter
@@ -126,6 +126,8 @@ const ReviewsIndex = () => {
   }
 
   if (sort === "Top Rated") filtered.sort((a, b) => a.rank - b.rank);
+  else if (sort === "Best Value") filtered.sort((a, b) => b.value_score - a.value_score);
+  else if (sort === "Most Active") filtered.sort((a, b) => b.update_frequency - a.update_frequency);
   else if (sort === "Newest") filtered.sort((a, b) => parseInt(b.id) - parseInt(a.id));
   else if (sort === "Alphabetical") filtered.sort((a, b) => a.name.localeCompare(b.name));
 

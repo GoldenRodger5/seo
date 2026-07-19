@@ -291,6 +291,19 @@ const AskAI = () => {
                       </div>
                     )}
 
+                    {recs.length >= 2 && (() => {
+                      const a = sites.find((s) => s.slug === recs[0].slug);
+                      const b = sites.find((s) => s.slug === recs[1].slug);
+                      if (!a || !b) return null;
+                      return (
+                        <p className="text-center text-sm">
+                          <Link to={`/compare?sites=${a.slug},${b.slug}`} className="text-secondary hover:underline">
+                            Compare {a.name} vs {b.name} side by side →
+                          </Link>
+                        </p>
+                      );
+                    })()}
+
                     {/* Secondary recommendations — compact */}
                     {secondaryRecs.length > 0 && (
                       <div>

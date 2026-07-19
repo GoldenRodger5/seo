@@ -178,7 +178,15 @@ const SiteCard = ({
 
         {/* Pricing strip */}
         <div className="flex items-baseline gap-2 mt-1">
-          <LocalisedPrice usd={site.price_monthly} className="text-base font-bold" />
+          {site.deal_discount > 0 ? (
+            <span className="text-base font-bold">
+              <s className="mr-1.5 text-sm font-normal text-muted-foreground/70"><LocalisedPrice usd={site.price_monthly} /></s>
+              <LocalisedPrice usd={site.price_annual} />
+              <span className="text-xs font-normal text-muted-foreground">/mo</span>
+            </span>
+          ) : (
+            <LocalisedPrice usd={site.price_monthly} className="text-base font-bold" />
+          )}
           {site.deal_discount > 0 && (
             <span className="rounded-button bg-emerald-500/15 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-400">
               Save {site.deal_discount}%
