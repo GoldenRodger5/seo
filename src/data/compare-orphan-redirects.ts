@@ -13,6 +13,22 @@
 import type { CompareDemotion } from "./compare-demotions";
 
 export const ORPHANED_COMPARE_REDIRECTS: CompareDemotion[] = [
+  // NDT/NDW editorial-only demotion (2026-07-19): zero-impression featured
+  // pairs leaving the set 308 to the affiliated side's review.
+  { pair: "athletic-twinks-vs-next-door-twink", dest: "/reviews/athletic-twinks" },
+  { pair: "next-door-twink-vs-athletic-twinks", dest: "/reviews/athletic-twinks" },
+  { pair: "athletic-twinks-vs-next-door-world", dest: "/reviews/athletic-twinks" },
+  { pair: "next-door-world-vs-athletic-twinks", dest: "/reviews/athletic-twinks" },
+  { pair: "helix-studios-vs-next-door-twink", dest: "/reviews/helix-studios" },
+  { pair: "next-door-twink-vs-helix-studios", dest: "/reviews/helix-studios" },
+  { pair: "helix-studios-vs-next-door-world", dest: "/reviews/helix-studios" },
+  { pair: "next-door-world-vs-helix-studios", dest: "/reviews/helix-studios" },
+  { pair: "next-door-twink-vs-southern-strokes", dest: "/reviews/southern-strokes" },
+  { pair: "southern-strokes-vs-next-door-twink", dest: "/reviews/southern-strokes" },
+  { pair: "next-door-twink-vs-twinks-in-shorts", dest: "/reviews/twinks-in-shorts" },
+  { pair: "twinks-in-shorts-vs-next-door-twink", dest: "/reviews/twinks-in-shorts" },
+  { pair: "next-door-world-vs-southern-strokes", dest: "/reviews/southern-strokes" },
+  { pair: "southern-strokes-vs-next-door-world", dest: "/reviews/southern-strokes" },
   { pair: "daddy-on-twink-vs-next-door-twink", dest: "/reviews/daddy-on-twink" },
   { pair: "next-door-twink-vs-daddy-on-twink", dest: "/reviews/daddy-on-twink" },
   { pair: "athletic-twinks-vs-youngperps", dest: "/reviews/athletic-twinks" },

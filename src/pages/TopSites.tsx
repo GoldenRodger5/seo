@@ -41,7 +41,10 @@ const TopSites = () => {
 
   // Pending-review sites are excluded from any ranked list — they have no
   // score yet. They surface only on /reviews and their own review page.
-  const rankable = sites.filter((s) => !isPendingReview(s));
+  // Rank order, not file order: sites.ts array order predates rank
+  // renumbering, and sentinel-ranked (900+) editorial-only sites must sink
+  // to the bottom of both the visible list and the ItemList schema.
+  const rankable = [...sites].filter((s) => !isPendingReview(s)).sort((a, b) => a.rank - b.rank);
   const filtered = active === "All"
     ? rankable
     : rankable.filter((s) => s.categories.includes(filterMap[active]!));
