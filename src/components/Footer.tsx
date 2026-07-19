@@ -93,7 +93,7 @@ const Footer = () => (
         <div>
           <h3 className="font-heading text-sm font-semibold mb-3">Popular Lists</h3>
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
-            <li><Link to="/discount/twinktrade" className={`${footerLink} gold-gradient-text`}>Featured Deal: TwinkTrade — 67% Off</Link></li>
+            <li><Link to="/discount/twinktrade" className={`${footerLink} gold-gradient-text`}>Featured Deal: TwinkTrade · 67% Off</Link></li>
             <li><Link to="/best-gay-sites-under-10" className={footerLink}>Best Sites Under $10</Link></li>
             <li><Link to="/best-cheap-gay-porn-sites" className={footerLink}>Best Cheap Gay Porn Sites</Link></li>
             <li><Link to="/best-bareback-gay-sites" className={footerLink}>Best Bareback Sites</Link></li>
@@ -109,9 +109,9 @@ const Footer = () => (
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
             <li><Link to="/best-gay-porn-sites" className={footerLink}>Best Gay Porn Sites</Link></li>
             <li><Link to="/best-gay-porn-subscription" className={footerLink}>Best Subscription</Link></li>
-            <li><Link to="/gay-porn-site-reviews" className={footerLink}>All Reviews</Link></li>
+            <li><Link to="/gay-porn-site-reviews" className={footerLink}>Review Directory</Link></li>
             <li><Link to="/best-value-gay-porn-sites" className={footerLink}>Best Value</Link></li>
-            <li><Link to="/gay-porn-sites-ranked" className={footerLink}>Sites Ranked</Link></li>
+            <li><Link to="/gay-porn-sites-ranked" className={footerLink}>Sortable Rankings</Link></li>
           </ul>
         </div>
       </div>
@@ -123,6 +123,7 @@ const Footer = () => (
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
             <li><Link to="/ask-ai" className={footerLink}>Ask TwinkAI</Link></li>
             <li><Link to="/find-my-site" className={footerLink}>Site Finder Quiz</Link></li>
+            <li><Link to="/gay-porn-pricing-index" className={footerLink}>Gay Porn Pricing Index</Link></li>
             <li><Link to="/guides" className={footerLink}>Guides</Link></li>
             <li><Link to="/blog" className={footerLink}>Blog</Link></li>
             <li><Link to="/gay-dating-sites" className={footerLink}>Dating Sites Guide</Link></li>
