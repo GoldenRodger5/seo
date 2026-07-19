@@ -39,9 +39,14 @@ interface Award {
 const buildAwards = (): Award[] => {
   const byScore = [...commercial].sort((a, b) => b.overall_score - a.overall_score);
   const awards: Award[] = [];
+  // One win per site: category order sets priority, and each subsequent
+  // category excludes prior winners. More distinct winners = every badge
+  // lands on a different site's press page.
+  const won = new Set<string>();
   const push = (category: string, criteria: string, pool: SiteData[], key: (s: SiteData) => number) => {
-    const sorted = [...pool].sort((a, b) => key(b) - key(a));
+    const sorted = [...pool].filter((s) => !won.has(s.slug)).sort((a, b) => key(b) - key(a));
     if (sorted.length === 0) return;
+    won.add(sorted[0].slug);
     awards.push({ category, criteria, winner: sorted[0], runnersUp: sorted.slice(1, 3) });
   };
 
@@ -102,7 +107,8 @@ const Awards2026 = () => {
           <p className="mt-4 text-base text-foreground/90 max-w-3xl">
             No jury, no sponsorships, no pay-to-win. Every award below is computed from our published
             scoring of {sites.length} membership sites, with the exact criterion stated under each
-            category. Disagree with a winner? The <Link to="/methodology" className="text-secondary hover:underline">methodology</Link> and
+            category, and no site can win twice. Disagree with a winner? The{" "}
+            <Link to="/methodology" className="text-secondary hover:underline">methodology</Link> and
             the <Link to="/gay-porn-pricing-index" className="text-secondary hover:underline">pricing dataset</Link> are
             public — check our math.
           </p>
