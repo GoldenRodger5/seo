@@ -1,0 +1,22 @@
+{
+  "slug": "nakedsword",
+  "savedRoles": [
+    {
+      "role": "hero",
+      "dims": "2000x800",
+      "size": 769765
+    },
+    {
+      "role": "card-1",
+      "dims": "2000x1125",
+      "size": 1007338
+    }
+  ],
+  "sampleTrackingURL": "https://join.nakedsword.com/banner/MTA2ODg5LjEuMS4xLjAuODcwOS4wLjAuMA",
+  "allTrackingSamples": [
+    "https://join.nakedsword.com/banner/MTA2ODg5LjEuMS4xLjAuODcwOS4wLjAuMA",
+    "https://join.nakedsword.com/banner/MTA2ODg5LjEuMS4xLjAuNjEwMC4wLjAuMA",
+    "https://join.nakedsword.com/banner/MTA2ODg5LjEuMS4xLjAuNTg0NC4wLjAuMA"
+  ],
+  "pageTotal": "Showing Ad Tools 1 - 25 of 1350"
+}

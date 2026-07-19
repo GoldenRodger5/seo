@@ -106,6 +106,18 @@ export const reviewQueue: ReviewQueueEntry[] = [
     content_type: "review",
     editorial_mode: "ready",
   },
+  // ── ChargerCash expansion (links captured by the 2026-07-19 Cowork creative
+  //    run — see public/source-creative/REPORT.md; heroes already staged in
+  //    public/source-creative/chargercash/) ──────────────────────────────────
+  { name: "DoctorTapes", slug: "doctortapes", homepage_url: "https://www.doctortapes.com", affiliate_url: "https://join.doctortapes.com/track/MzAwMDgzOS4xLjM3LjE1OC4wLjk3MDcuMC4wLjA", affiliate_network: "ChargerCash", niche: ["premium-studios"], priority: 8, estimated_monthly_searches: 2400, status: "queued", content_type: "review", editorial_mode: "ready" },
+  { name: "Black Godz", slug: "blackgodz", homepage_url: "https://www.blackgodz.com", affiliate_url: "https://join.blackgodz.com/track/MzAwMDgzOS4xLjEyLjc5LjAuNDIyOS4wLjAuMA", affiliate_network: "ChargerCash", niche: ["premium-studios"], priority: 8, estimated_monthly_searches: 2900, status: "queued", content_type: "review", editorial_mode: "ready" },
+  { name: "BottomGames", slug: "bottomgames", homepage_url: "https://www.bottomgames.com", affiliate_url: "https://join.bottomgames.com/track/MzAwMDgzOS4xLjIwLjk4LjAuNjk5NC4wLjAuMA", affiliate_network: "ChargerCash", niche: ["amateur-twinks"], priority: 8, estimated_monthly_searches: 1900, status: "queued", content_type: "review", editorial_mode: "ready" },
+  { name: "BoysDoPorn", slug: "boysdoporn", homepage_url: "https://www.boysdoporn.com", affiliate_url: "https://join.boysdoporn.com/track/MzAwMDgzOS4xLjYxLjIwNC4wLjk2NDMuMC4wLjA", affiliate_network: "ChargerCash", niche: ["amateur-twinks"], priority: 7, estimated_monthly_searches: 2100, status: "queued", content_type: "review", editorial_mode: "ready" },
+  { name: "Therapy Dick", slug: "therapydick", homepage_url: "https://www.therapydick.com", affiliate_url: "https://join.therapydick.com/track/MzAwMDgzOS4xLjU3LjE5NC4wLjk2NDMuMC4wLjA", affiliate_network: "ChargerCash", niche: ["premium-studios"], priority: 7, estimated_monthly_searches: 1700, status: "queued", content_type: "review", editorial_mode: "ready" },
+  { name: "Dick Rides", slug: "dickrides", homepage_url: "https://www.dickrides.com", affiliate_url: "https://join.dickrides.com/track/MzAwMDgzOS4xLjY4LjIyNC4wLjk2NDMuMC4wLjA", affiliate_network: "ChargerCash", niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 1200, status: "queued", content_type: "review", editorial_mode: "ready" },
+  { name: "Pig Bottoms", slug: "pigbottoms", homepage_url: "https://www.pigbottoms.com", affiliate_url: "https://join.pigbottoms.com/track/MzAwMDgzOS4xLjY3LjIyMy4wLjk2NDMuMC4wLjA", affiliate_network: "ChargerCash", niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 1100, status: "queued", content_type: "review", editorial_mode: "ready" },
+  { name: "VarsityGrip", slug: "varsitygrip", homepage_url: "https://www.varsitygrip.com", affiliate_url: "https://join.varsitygrip.com/track/MzAwMDgzOS4xLjU5LjIwMC4wLjk2NDMuMC4wLjA", affiliate_network: "ChargerCash", niche: ["amateur-twinks"], priority: 6, estimated_monthly_searches: 900, status: "queued", content_type: "review", editorial_mode: "ready" },
+
   // ── AdultForce (URL pending) ─────────────────────────────────────────────
   {
     name: "Men.com",

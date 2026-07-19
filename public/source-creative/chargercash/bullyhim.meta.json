@@ -1,0 +1,17 @@
+{
+  "slug": "bullyhim",
+  "staticSizes": [
+    "970x90",
+    "770x76",
+    "728x90",
+    "600x350",
+    "305x99",
+    "300x250"
+  ],
+  "sampleTrackingURL": "https://join.bullyhim.com/track/MzAwMDgzOS4xLjQ3LjE3OC4wLjk3MTIuMC4wLjA",
+  "allTrackingSamples": [
+    "https://join.bullyhim.com/track/MzAwMDgzOS4xLjQ3LjE3OC4wLjk3MTIuMC4wLjA",
+    "https://join.bullyhim.com/track/MzAwMDgzOS4xLjQ3LjE3OC4wLjk3MTYuMC4wLjA",
+    "https://join.bullyhim.com/track/MzAwMDgzOS4xLjQ3LjE3OC4wLjk3MTcuMC4wLjA"
+  ]
+}

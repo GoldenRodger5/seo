@@ -1,0 +1,22 @@
+{
+  "slug": "bottomgames",
+  "savedRoles": [
+    {
+      "role": "hero",
+      "dims": "900x250",
+      "size": 169031
+    },
+    {
+      "role": "card-1",
+      "dims": "600x350",
+      "size": 138743
+    }
+  ],
+  "sampleTrackingURL": "https://join.bottomgames.com/track/MzAwMDgzOS4xLjIwLjk4LjAuNjk5NC4wLjAuMA",
+  "allTrackingSamples": [
+    "https://join.bottomgames.com/track/MzAwMDgzOS4xLjIwLjk4LjAuNjk5NC4wLjAuMA",
+    "https://join.bottomgames.com/track/MzAwMDgzOS4xLjIwLjk4LjAuOTA3Ni4wLjAuMA",
+    "https://join.bottomgames.com/track/MzAwMDgzOS4xLjIwLjk4LjAuODk5Mi4wLjAuMA"
+  ],
+  "pageTotal": "Showing Ad Tools 1 - 25 of 200"
+}

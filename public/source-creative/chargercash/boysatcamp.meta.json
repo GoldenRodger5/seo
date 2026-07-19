@@ -1,0 +1,18 @@
+{
+  "slug": "boysatcamp",
+  "staticSizes": [
+    "900x250",
+    "770x76",
+    "728x90",
+    "600x350",
+    "370x570",
+    "315x300",
+    "305x99"
+  ],
+  "sampleTrackingURL": "https://join.boysatcamp.com/track/MzAwMDgzOS4xLjM0LjE1MC4wLjg4OTcuMC4wLjA",
+  "allTrackingSamples": [
+    "https://join.boysatcamp.com/track/MzAwMDgzOS4xLjM0LjE1MC4wLjg4OTcuMC4wLjA",
+    "https://join.boysatcamp.com/track/MzAwMDgzOS4xLjM0LjE1MC4wLjkxMTEuMC4wLjA",
+    "https://join.boysatcamp.com/track/MzAwMDgzOS4xLjM0LjE1MC4wLjk3MjcuMC4wLjA"
+  ]
+}

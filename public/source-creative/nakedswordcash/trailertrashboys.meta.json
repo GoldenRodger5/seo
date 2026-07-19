@@ -1,0 +1,22 @@
+{
+  "slug": "trailertrashboys",
+  "savedRoles": [
+    {
+      "role": "hero",
+      "dims": "2000x500",
+      "size": 810052
+    },
+    {
+      "role": "card-1",
+      "dims": "900x900",
+      "size": 736584
+    }
+  ],
+  "sampleTrackingURL": "https://secure.trailertrashboys.com/banner/MTA2ODg5LjEuMzAuMTQ4LjAuODgzNS4wLjAuMA",
+  "allTrackingSamples": [
+    "https://secure.trailertrashboys.com/banner/MTA2ODg5LjEuMzAuMTQ4LjAuODgzNS4wLjAuMA",
+    "https://secure.trailertrashboys.com/banner/MTA2ODg5LjEuMzAuMTQ4LjAuODk0Ni4wLjAuMA",
+    "https://secure.trailertrashboys.com/banner/MTA2ODg5LjEuMzAuMTQ4LjAuODk0NC4wLjAuMA"
+  ],
+  "pageTotal": "Showing Ad Tools 1 - 25 of 35"
+}

@@ -1,0 +1,22 @@
+{
+  "slug": "doctortapes",
+  "savedRoles": [
+    {
+      "role": "hero",
+      "dims": "2000x500",
+      "size": 239065
+    },
+    {
+      "role": "card-1",
+      "dims": "600x350",
+      "size": 134329
+    }
+  ],
+  "sampleTrackingURL": "https://join.doctortapes.com/track/MzAwMDgzOS4xLjM3LjE1OC4wLjk3MDcuMC4wLjA",
+  "allTrackingSamples": [
+    "https://join.doctortapes.com/track/MzAwMDgzOS4xLjM3LjE1OC4wLjk3MDcuMC4wLjA",
+    "https://join.doctortapes.com/track/MzAwMDgzOS4xLjM3LjE1OC4wLjk3MDUuMC4wLjA",
+    "https://join.doctortapes.com/track/MzAwMDgzOS4xLjM3LjE1OC4wLjk3MDQuMC4wLjA"
+  ],
+  "pageTotal": "Showing Ad Tools 1 - 25 of 171"
+}

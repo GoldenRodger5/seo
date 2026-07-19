@@ -1,0 +1,22 @@
+{
+  "slug": "twinktrade",
+  "savedRoles": [
+    {
+      "role": "hero",
+      "dims": "900x250",
+      "size": 177402
+    },
+    {
+      "role": "card-1",
+      "dims": "600x350",
+      "size": 134329
+    }
+  ],
+  "sampleTrackingURL": "https://join.twinktrade.com/track/MzAwMDgzOS4xLjMyLjE0MC4wLjk2ODguMC4wLjA",
+  "allTrackingSamples": [
+    "https://join.twinktrade.com/track/MzAwMDgzOS4xLjMyLjE0MC4wLjk2ODguMC4wLjA",
+    "https://join.twinktrade.com/track/MzAwMDgzOS4xLjMyLjE0MC4wLjg2ODYuMC4wLjA",
+    "https://join.twinktrade.com/track/MzAwMDgzOS4xLjMyLjE0MC4wLjgwMzAuMC4wLjA"
+  ],
+  "pageTotal": "Showing Ad Tools 1 - 25 of 240"
+}
