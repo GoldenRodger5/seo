@@ -68,14 +68,28 @@ function hasAffiliateConversionPath(pairSlug: string): boolean {
   const a = getSiteBySlug(m[1]);
   const b = getSiteBySlug(m[2]);
   if (!a || !b) return false;
-  // Pending-review placeholders never feature (thin pages, anti-reflood).
+  const nonCommercial = (s: typeof a) =>
+    s.editorial_status === "editorial-only" || s.editorial_status === "pending-review";
+  if (nonCommercial(a) || nonCommercial(b)) return false;
+  return isAffiliated(a) || isAffiliated(b);
+}
+
+/**
+ * Softer rule for PINNED pairs only: GSC-proven earners stay featured as
+ * long as ONE side monetizes (the page's CTA routes there) and neither
+ * side is a pending placeholder. Applying this rule to the DYNAMIC set
+ * regrew the compare flood to 639 routes within one build (2026-07-19) —
+ * editorial-only sites pair with every affiliated site — so the strict
+ * both-sides rule above stays in force for ranked/legacy pairs.
+ */
+function pinnedStillConverts(pairSlug: string): boolean {
+  const m = pairSlug.match(/^(.+)-vs-(.+)$/);
+  if (!m) return false;
+  const a = getSiteBySlug(m[1]);
+  const b = getSiteBySlug(m[2]);
+  if (!a || !b) return false;
   const pending = (s: typeof a) => s.editorial_status === "pending-review";
   if (pending(a) || pending(b)) return false;
-  // One monetized side is a real conversion path: the page's CTA routes to
-  // the affiliated site. Requiring BOTH sides commercial silently dropped
-  // five PINNED GSC earners when next-door-twink/world flipped to
-  // editorial-only (2026-07-19) — an editorial-only site may appear as
-  // comparison content as long as the page can still convert.
   return isAffiliated(a) || isAffiliated(b);
 }
 
@@ -135,9 +149,10 @@ export function getFeaturedComparePairs(): Set<string> {
   // Defense-in-depth: also drop any dynamic pair where both sides are
   // unaffiliated, so future scoring shifts can't sneak a zero-revenue
   // pair back into the featured set.
-  const featured = new Set(
-    [...ranked, ...LEGACY_PRERENDERED_PAIRS, ...PINNED_EARNING_PAIRS].filter(hasAffiliateConversionPath),
-  );
+  const featured = new Set([
+    ...[...ranked, ...LEGACY_PRERENDERED_PAIRS].filter(hasAffiliateConversionPath),
+    ...PINNED_EARNING_PAIRS.filter(pinnedStillConverts),
+  ]);
   // Staged demotions (FIX 7): pairs in an ACTIVE demotion tranche leave the
   // featured set, which removes them from the sitemap + prerender and flips
   // the rendered page to noindex, while vercel.json 301s (kept in sync via
