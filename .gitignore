@@ -33,3 +33,9 @@ dist-server/
 twinkvault-*.json
 *-service-account.json
 *-credentials.json
+
+# GSC exports, working screenshots, scratch prompt notes (untracked 2026-07-20)
+*.zip
+docs/19thpic/
+site pic/
+july17/

@@ -507,6 +507,7 @@ Existing reviewed sites you can link to as comparisons: ${(p.existing_slugs as s
 
 HARD CONSTRAINTS — these are not suggestions:
 - The four review_body fields MUST total >= 900 words combined. Count before returning. If under, expand with specifics (scene examples, performer types, head-to-head comparisons), not filler.
+- Do NOT recite the numeric pillar scores in the prose (e.g. "content quality at 84/100", "mobile scores 82/100"). The scores render in a separate Score Breakdown UI component; quoting them in the body reads auto-generated. Describe quality qualitatively ("cinematic", "a step below premium", "steady weekly updates") instead.
 - meta_description MUST be 145-155 characters. Count characters (NOT words) before returning. Include the site name. End with a hook.
 
 Return JSON with fields:
@@ -555,6 +556,7 @@ TwinkVault has NOT subscribed to this site and is NOT affiliated. This review is
 
 HARD CONSTRAINTS — these are not suggestions:
 - The four review_body fields MUST total >= 900 words combined.
+- Do NOT recite the numeric pillar scores in the prose ("content quality at 84/100", "mobile scores 82/100"). They render in a separate Score Breakdown UI; quoting them in the body reads auto-generated. Describe quality qualitatively instead.
 - BANNED phrases: "we tested", "we logged in", "we subscribed", "during our membership", "we paid for", "TwinkVault members get", "use our discount", "exclusive offer", "save XX%", "sign up here", "limited time".
 - INSTEAD use: "publicly available scenes suggest", "the site advertises", "member reports indicate", "trade press has noted".
 - review_body_p4 (verdict) must include a sentence noting we have not yet partnered with this site and the review is based on public information.
