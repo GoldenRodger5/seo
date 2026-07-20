@@ -5,7 +5,7 @@ import { PageTransition } from "../components/MotionWrappers";
 import Breadcrumbs from "../components/Breadcrumbs";
 import SmartImage from "../components/common/SmartImage";
 import { GUIDE_CONTENT } from "../data/guide-content";
-import { selectGuideHero } from "../lib/guideImagery";
+import { assignGuideHeroes } from "../lib/guideImagery";
 
 /**
  * /guides index. Until now guides lived only at /guide/{slug} and were
@@ -17,6 +17,7 @@ const BASE_URL = "https://twinkvault.com";
 const GuidesIndex = () => {
   const url = `${BASE_URL}/guides`;
   const slugs = Object.keys(GUIDE_CONTENT);
+  const heroMap = assignGuideHeroes(slugs.map((s) => ({ slug: s, related_sites: GUIDE_CONTENT[s].related_sites })));
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -97,7 +98,7 @@ const GuidesIndex = () => {
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {slugs.map((slug) => {
               const g = GUIDE_CONTENT[slug];
-              const hero = selectGuideHero(g.related_sites ?? [], slug);
+              const hero = heroMap[slug];
               return (
                 <Link
                   key={slug}

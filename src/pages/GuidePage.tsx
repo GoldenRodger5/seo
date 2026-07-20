@@ -6,8 +6,8 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import RelatedGuides from "../components/RelatedGuides";
 import LinkedProse from "../components/LinkedProse";
 import SmartImage from "../components/common/SmartImage";
-import { getGuideBody } from "../data/guide-content";
-import { selectGuideHero } from "../lib/guideImagery";
+import { getGuideBody, GUIDE_CONTENT } from "../data/guide-content";
+import { assignGuideHeroes } from "../lib/guideImagery";
 import { sites } from "../data/sites";
 import { currentYear } from "../lib/dates";
 
@@ -50,7 +50,8 @@ const GuidePage = () => {
   // Hero chosen at render time, seeded by the guide slug, so each guide gets a
   // distinct cover from its related sites (single source of truth; no stored
   // value to drift). Falls back to any stored hero_image for safety.
-  const hero = selectGuideHero(body.related_sites ?? [], slug ?? "")
+  const heroMap = assignGuideHeroes(Object.keys(GUIDE_CONTENT).map((s) => ({ slug: s, related_sites: GUIDE_CONTENT[s].related_sites })));
+  const hero = heroMap[slug ?? ""]
     ?? (body.hero_image ? { hero_image: body.hero_image, hero_alt: body.hero_alt ?? body.h1, hero_site_slug: body.hero_site_slug ?? "" } : null);
   const heroAbs = hero ? `${BASE_URL}${hero.hero_image}` : null;
   const articleSchema = {

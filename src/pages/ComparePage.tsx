@@ -117,11 +117,18 @@ const CompareIndex = () => {
     [selected]
   );
 
+  // Editorial-only sites (Next Door Twink/World) are excluded from the picker —
+  // a comparison involving them renders the not-found state (owner decision),
+  // so offering them here would only lead to a dead end.
+  const pickable = useMemo(
+    () => sites.filter((s) => s.editorial_status !== "editorial-only" && s.editorial_status !== "pending-review"),
+    []
+  );
   const visibleSites = useMemo(() => {
-    if (!filter) return sites.slice(0, 18);
+    if (!filter) return pickable.slice(0, 18);
     const f = filter.toLowerCase();
-    return sites.filter((s) => s.name.toLowerCase().includes(f) || s.slug.includes(f)).slice(0, 18);
-  }, [filter]);
+    return pickable.filter((s) => s.name.toLowerCase().includes(f) || s.slug.includes(f)).slice(0, 18);
+  }, [filter, pickable]);
 
   const toggleSite = (slug: string) => {
     setSelected((cur) => {
@@ -164,14 +171,15 @@ const CompareIndex = () => {
         .filter((x): x is { a: SiteData; b: SiteData } => x !== null);
       if (expanded.length) return expanded.slice(0, 18);
     }
-    // Default: top-8 site cross-product
-    return sites
+    // Default: top-8 cross-product from `pickable` (excludes editorial-only),
+    // so Popular Comparisons never links to a pair that renders not-found.
+    return pickable
       .slice(0, 8)
       .flatMap((a, i) =>
-        sites.slice(i + 1, 8).map((b) => ({ a, b }))
+        pickable.slice(i + 1, 8).map((b) => ({ a, b }))
       )
       .slice(0, 12);
-  }, [nicheFilter]);
+  }, [nicheFilter, pickable]);
 
   return (
     <Layout>
@@ -1046,12 +1054,14 @@ const ComparePage = () => {
                       (s) =>
                         s.slug !== siteA.slug &&
                         s.slug !== siteB.slug &&
+                        s.editorial_status !== "editorial-only" &&
+                        s.editorial_status !== "pending-review" &&
                         (siteNicheMap[s.slug] ?? []).includes(sharedNiche)
                     )
                     .sort((a, b) => b.overall_score - a.overall_score)
                     .slice(0, 3)
                 : sites
-                    .filter((s) => s.slug !== siteA.slug && s.slug !== siteB.slug)
+                    .filter((s) => s.slug !== siteA.slug && s.slug !== siteB.slug && s.editorial_status !== "editorial-only" && s.editorial_status !== "pending-review")
                     .sort((a, b) => b.overall_score - a.overall_score)
                     .slice(0, 3);
               if (otherSites.length === 0) return null;

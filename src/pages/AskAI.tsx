@@ -104,7 +104,7 @@ const AskAI = () => {
             Ask us anything
           </h1>
           <p className="mt-3 text-muted-foreground">
-            We've paid for and scored {sites.length} gay membership sites. Ask which one fits you,
+            We've reviewed and scored {sites.length} gay membership sites hands-on. Ask which one fits you,
             how two compare, or where the real deals are — answers come with links so you can check
             our work. Prefer multiple choice? <Link to="/find-my-site" className="text-secondary hover:underline">Take the 30-second quiz</Link>.
           </p>
