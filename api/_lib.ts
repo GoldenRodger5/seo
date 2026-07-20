@@ -43,6 +43,89 @@ export const SITE_CONTEXT = RECOMMENDABLE.map((s) => {
   return bits.join(". ");
 }).join("\n");
 
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6";
+const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
+
+export type LLMMessage = { role: "user" | "assistant"; content: string };
+
+/** True if at least one LLM provider is configured. */
+export const HAS_LLM_KEY = Boolean(ANTHROPIC_API_KEY || OPENAI_API_KEY);
+
+/**
+ * Calls the primary LLM (Anthropic) and transparently falls back to OpenAI
+ * when Anthropic is unconfigured, errors (5xx / 429 / overloaded), throws, or
+ * returns empty content. Both providers get the same system + messages; OpenAI
+ * takes the system prompt as its first message. Returns the text and which
+ * provider answered (useful for logging). Throws "all_llm_failed" only if every
+ * configured provider fails — callers should map that to a 502.
+ */
+export async function callLLM(opts: {
+  system: string;
+  messages: LLMMessage[];
+  maxTokens: number;
+}): Promise<{ text: string; provider: "anthropic" | "openai" }> {
+  const { system, messages, maxTokens } = opts;
+
+  if (ANTHROPIC_API_KEY) {
+    try {
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": ANTHROPIC_API_KEY,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({ model: ANTHROPIC_MODEL, max_tokens: maxTokens, system, messages }),
+      });
+      if (r.ok) {
+        const data = await r.json();
+        const text = (data.content ?? [])
+          .filter((b: { type: string }) => b.type === "text")
+          .map((b: { text: string }) => b.text)
+          .join("")
+          .trim();
+        if (text) return { text, provider: "anthropic" };
+        console.error("Anthropic returned empty content; falling back to OpenAI");
+      } else {
+        console.error("Anthropic API error:", r.status, (await r.text().catch(() => "")).slice(0, 300));
+      }
+    } catch (e) {
+      console.error("Anthropic request threw; falling back to OpenAI:", e);
+    }
+  }
+
+  if (OPENAI_API_KEY) {
+    try {
+      const r = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: OPENAI_MODEL,
+          max_tokens: maxTokens,
+          messages: [{ role: "system", content: system }, ...messages],
+        }),
+      });
+      if (r.ok) {
+        const data = await r.json();
+        const text = String(data.choices?.[0]?.message?.content ?? "").trim();
+        if (text) return { text, provider: "openai" };
+        console.error("OpenAI returned empty content");
+      } else {
+        console.error("OpenAI API error:", r.status, (await r.text().catch(() => "")).slice(0, 300));
+      }
+    } catch (e) {
+      console.error("OpenAI request threw:", e);
+    }
+  }
+
+  throw new Error("all_llm_failed");
+}
+
 export function makeRateLimiter(limit: number, windowMs: number) {
   const map = new Map<string, { count: number; resetAt: number }>();
   return (ip: string): boolean => {

@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { BLOCKED, SITE_CONTEXT, makeRateLimiter, sanitizeLinks } from "./_lib.js";
+import { BLOCKED, SITE_CONTEXT, makeRateLimiter, sanitizeLinks, callLLM, HAS_LLM_KEY } from "./_lib.js";
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const isRateLimited = makeRateLimiter(8, 60_000);
 
 const SYSTEM = `You are the TwinkVault site guide: a sharp, funny gay friend who has actually paid for and tested every gay membership site in the catalog below, and helps guys pick where their money goes. All performers on every site are 18+.
@@ -50,37 +49,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.warn("chat: declined query", { ip, snippet: message.slice(0, 80) });
     return res.status(400).json({ error: "Request declined." });
   }
-  if (!ANTHROPIC_API_KEY) return res.status(500).json({ error: "API key not configured" });
+  if (!HAS_LLM_KEY) return res.status(500).json({ error: "API key not configured" });
 
+  let raw: string;
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 500,
-        system: SYSTEM,
-        messages: [...past, { role: "user", content: message }],
-      }),
+    const out = await callLLM({
+      system: SYSTEM,
+      messages: [...past, { role: "user", content: message }],
+      maxTokens: 500,
     });
-    if (!response.ok) {
-      console.error("Anthropic API error:", response.status, await response.text());
-      return res.status(502).json({ error: "The guide's asleep — try again in a minute." });
-    }
-    const data = await response.json();
-    const raw = (data.content ?? [])
-      .filter((b: { type: string }) => b.type === "text")
-      .map((b: { text: string }) => b.text)
-      .join("")
-      .trim();
-    if (!raw) return res.status(200).json({ reply: "Hm, blanked on that one. Ask me again?" });
-    return res.status(200).json({ reply: sanitizeLinks(raw).slice(0, 2000) });
+    raw = out.text;
   } catch (err) {
-    console.error("Chat error:", err);
-    return res.status(500).json({ error: "Something broke — try again." });
+    console.error("Chat LLM error:", err);
+    return res.status(502).json({ error: "The guide's asleep — try again in a minute." });
   }
+  if (!raw) return res.status(200).json({ reply: "Hm, blanked on that one. Ask me again?" });
+  return res.status(200).json({ reply: sanitizeLinks(raw).slice(0, 2000) });
 }
