@@ -37,44 +37,44 @@ const BANNER_SEEDS: BannerSeed[] = [
   { src: "/site-banners/breed-me-raw-hero.jpg", siteSlug: "breed-me-raw", brandName: "Breed Me Raw", width: 1920, height: 500, qualityScore: 5 },
   { src: "/site-banners/hairy-and-raw-hero.jpg", siteSlug: "hairyandraw", brandName: "Hairy and Raw", width: 1920, height: 500, qualityScore: 5 },
   { src: "/site-banners/hard-brit-lads-hero.jpg", siteSlug: "hard-brit-lads", brandName: "Hard Brit Lads", width: 1920, height: 500, qualityScore: 5 },
-  { src: "/site-banners/southern-strokes-hero.jpg", siteSlug: "southern-strokes", brandName: "Southern Strokes", width: 1920, height: 500, qualityScore: 5 },
+  { src: "/site-banners/southern-strokes-hero.jpg", siteSlug: "southern-strokes", brandName: "Southern Strokes", width: 1800, height: 1200, qualityScore: 5 },
   // 2000-wide
   { src: "/site-banners/trailer-trash-boys-hero.jpg", siteSlug: "trailertrashboys", brandName: "Trailer Trash Boys", width: 2000, height: 500, qualityScore: 4 },
-  { src: "/site-banners/nakedsword-hero.jpg", siteSlug: "nakedsword", brandName: "NakedSword", width: 2000, height: 800, qualityScore: 4 },
+  { src: "/site-banners/nakedsword-hero.jpg", siteSlug: "nakedsword", brandName: "NakedSword", width: 2000, height: 1125, qualityScore: 4 },
   // 900×250 half-banners
-  { src: "/site-banners/boys-at-camp-hero.jpg", siteSlug: "boysatcamp", brandName: "Boys at Camp", width: 900, height: 250, qualityScore: 4 },
-  { src: "/site-banners/brother-crush-hero.jpg", siteSlug: "brothercrush", brandName: "Brother Crush", width: 900, height: 250, qualityScore: 4 },
-  { src: "/site-banners/dad-creep-hero.jpg", siteSlug: "dadcreep", brandName: "Dad Creep", width: 900, height: 250, qualityScore: 4 },
-  { src: "/site-banners/family-dick-hero.jpg", siteSlug: "familydick", brandName: "Family Dick", width: 900, height: 250, qualityScore: 4 },
-  { src: "/site-banners/latin-leche-hero.jpg", siteSlug: "latinleche", brandName: "Latin Leche", width: 900, height: 250, qualityScore: 4 },
-  { src: "/site-banners/missionary-boys-hero.jpg", siteSlug: "missionaryboys", brandName: "Missionary Boys", width: 900, height: 250, qualityScore: 4 },
-  { src: "/site-banners/say-uncle-hero.jpg", siteSlug: "sayuncle", brandName: "Say Uncle", width: 900, height: 250, qualityScore: 4 },
-  { src: "/site-banners/yes-father-hero.jpg", siteSlug: "yesfather", brandName: "Yes Father", width: 900, height: 250, qualityScore: 4 },
-  { src: "/site-banners/young-perps-hero.jpg", siteSlug: "youngperps", brandName: "Young Perps", width: 900, height: 250, qualityScore: 4 },
+  { src: "/site-banners/boys-at-camp-hero.jpg", siteSlug: "boysatcamp", brandName: "Boys at Camp", width: 2000, height: 500, qualityScore: 4 },
+  { src: "/site-banners/brother-crush-hero.jpg", siteSlug: "brothercrush", brandName: "Brother Crush", width: 1080, height: 1080, qualityScore: 4 },
+  { src: "/site-banners/dad-creep-hero.jpg", siteSlug: "dadcreep", brandName: "Dad Creep", width: 2000, height: 500, qualityScore: 4 },
+  { src: "/site-banners/family-dick-hero.jpg", siteSlug: "familydick", brandName: "Family Dick", width: 2000, height: 500, qualityScore: 4 },
+  { src: "/site-banners/latin-leche-hero.jpg", siteSlug: "latinleche", brandName: "Latin Leche", width: 2000, height: 500, qualityScore: 4 },
+  { src: "/site-banners/missionary-boys-hero.jpg", siteSlug: "missionaryboys", brandName: "Missionary Boys", width: 2000, height: 500, qualityScore: 4 },
+  { src: "/site-banners/say-uncle-hero.jpg", siteSlug: "sayuncle", brandName: "Say Uncle", width: 2000, height: 500, qualityScore: 4 },
+  { src: "/site-banners/yes-father-hero.jpg", siteSlug: "yesfather", brandName: "Yes Father", width: 2000, height: 500, qualityScore: 4 },
+  { src: "/site-banners/young-perps-hero.jpg", siteSlug: "youngperps", brandName: "Young Perps", width: 1080, height: 1080, qualityScore: 4 },
   // 970×250
-  { src: "/site-banners/alternadudes-hero.jpg", siteSlug: "alternadudes", brandName: "AlternaDudes", width: 970, height: 250, qualityScore: 3 },
-  { src: "/site-banners/swingin-balls-hero.jpg", siteSlug: "swinginballs", brandName: "Swingin Balls", width: 970, height: 250, qualityScore: 3 },
+  { src: "/site-banners/alternadudes-hero.jpg", siteSlug: "alternadudes", brandName: "AlternaDudes", width: 1920, height: 600, qualityScore: 3 },
+  { src: "/site-banners/swingin-balls-hero.jpg", siteSlug: "swinginballs", brandName: "Swingin Balls", width: 1920, height: 600, qualityScore: 3 },
   // Mid-aspect
-  { src: "/site-banners/daddy-on-twink-hero.jpg", siteSlug: "daddy-on-twink", brandName: "Daddy on Twink", width: 950, height: 200, qualityScore: 4 },
-  { src: "/site-banners/twinks-in-shorts-hero.jpg", siteSlug: "twinks-in-shorts", brandName: "Twinks in Shorts", width: 1200, height: 250, qualityScore: 4 },
-  { src: "/site-banners/japanboyz-hero.jpg", siteSlug: "japanboyz", brandName: "Japanboyz", width: 1323, height: 270, qualityScore: 4 },
-  { src: "/site-banners/peterfever-hero.jpg", siteSlug: "peterfever", brandName: "PeterFever", width: 1323, height: 270, qualityScore: 4 },
+  { src: "/site-banners/daddy-on-twink-hero.jpg", siteSlug: "daddy-on-twink", brandName: "Daddy on Twink", width: 1920, height: 1080, qualityScore: 4 },
+  { src: "/site-banners/twinks-in-shorts-hero.jpg", siteSlug: "twinks-in-shorts", brandName: "Twinks in Shorts", width: 1280, height: 720, qualityScore: 4 },
+  { src: "/site-banners/japanboyz-hero.jpg", siteSlug: "japanboyz", brandName: "Japanboyz", width: 960, height: 540, qualityScore: 4 },
+  { src: "/site-banners/peterfever-hero.jpg", siteSlug: "peterfever", brandName: "PeterFever", width: 1920, height: 600, qualityScore: 4 },
   // Leaderboards
-  { src: "/site-banners/boyfun-hero.jpg", siteSlug: "boyfun", brandName: "BoyFun", width: 980, height: 170, qualityScore: 3 },
+  { src: "/site-banners/boyfun-hero.jpg", siteSlug: "boyfun", brandName: "BoyFun", width: 3000, height: 2250, qualityScore: 3 },
   { src: "/site-banners/bareback-cum-pigs-hero.jpg", siteSlug: "barebackcumpigs", brandName: "Bareback Cum Pigs", width: 984, height: 170, qualityScore: 3 },
   { src: "/site-banners/athletic-twinks-hero.jpg", siteSlug: "athletic-twinks", brandName: "Athletic Twinks", width: 900, height: 150, qualityScore: 3 },
   { src: "/site-banners/bear-chubs-hero.jpg", siteSlug: "bearchubs", brandName: "Bear Chubs", width: 900, height: 150, qualityScore: 3 },
-  { src: "/site-banners/touch-that-boy-hero.jpg", siteSlug: "touch-that-boy", brandName: "Touch That Boy", width: 900, height: 150, qualityScore: 3 },
-  { src: "/site-banners/rawhole-hero.jpg", siteSlug: "rawhole", brandName: "RawHole", width: 1600, height: 240, qualityScore: 4 },
-  { src: "/site-banners/real-men-fuck-hero.jpg", siteSlug: "realmenfuck", brandName: "Real Men Fuck", width: 1000, height: 150, qualityScore: 3 },
-  { src: "/site-banners/squirt-studios-hero.jpg", siteSlug: "squirtstudios", brandName: "Squirt Studios", width: 2000, height: 300, qualityScore: 4 },
+  { src: "/site-banners/touch-that-boy-hero.jpg", siteSlug: "touch-that-boy", brandName: "Touch That Boy", width: 1920, height: 1080, qualityScore: 3 },
+  { src: "/site-banners/rawhole-hero.jpg", siteSlug: "rawhole", brandName: "RawHole", width: 1200, height: 798, qualityScore: 4 },
+  { src: "/site-banners/real-men-fuck-hero.jpg", siteSlug: "realmenfuck", brandName: "Real Men Fuck", width: 1920, height: 600, qualityScore: 3 },
+  { src: "/site-banners/squirt-studios-hero.jpg", siteSlug: "squirtstudios", brandName: "Squirt Studios", width: 1920, height: 1080, qualityScore: 4 },
   // Skyscrapers (excluded from placeable pool but kept for site-page pinning)
-  { src: "/site-banners/bully-him-hero.jpg", siteSlug: "bullyhim", brandName: "Bully Him", width: 970, height: 90, qualityScore: 2 },
-  { src: "/site-banners/dirty-boy-video-hero.jpg", siteSlug: "dirtyboyvideo", brandName: "DirtyBoyVideo", width: 970, height: 90, qualityScore: 2 },
+  { src: "/site-banners/bully-him-hero.jpg", siteSlug: "bullyhim", brandName: "Bully Him", width: 2000, height: 500, qualityScore: 2 },
+  { src: "/site-banners/dirty-boy-video-hero.jpg", siteSlug: "dirtyboyvideo", brandName: "DirtyBoyVideo", width: 1920, height: 600, qualityScore: 2 },
   { src: "/site-banners/twinktrade-hero.jpg", siteSlug: "twinktrade", brandName: "TwinkTrade", width: 970, height: 90, qualityScore: 2 },
-  { src: "/site-banners/yoshi-kawasaki-xxx-hero.jpg", siteSlug: "yoshikawasakixxx", brandName: "Yoshi Kawasaki XXX", width: 970, height: 90, qualityScore: 2 },
-  { src: "/site-banners/gay-asian-network-hero.jpg", siteSlug: "gayasiannetwork", brandName: "GayAsianNetwork", width: 1130, height: 69, qualityScore: 1 },
-  { src: "/site-banners/sexjapantv-hero.jpg", siteSlug: "sexjapantv", brandName: "SexJapanTV", width: 1130, height: 69, qualityScore: 1 },
+  { src: "/site-banners/yoshi-kawasaki-xxx-hero.jpg", siteSlug: "yoshikawasakixxx", brandName: "Yoshi Kawasaki XXX", width: 2560, height: 1440, qualityScore: 2 },
+  { src: "/site-banners/gay-asian-network-hero.jpg", siteSlug: "gayasiannetwork", brandName: "GayAsianNetwork", width: 960, height: 540, qualityScore: 1 },
+  { src: "/site-banners/sexjapantv-hero.jpg", siteSlug: "sexjapantv", brandName: "SexJapanTV", width: 1920, height: 600, qualityScore: 1 },
 ];
 
 function classify(aspect: number): BannerAspectClass {
@@ -130,6 +130,13 @@ export function pickBanner(opts: {
   }
 
   if (pool.length === 0) return null;
+
+  // Prefer crisp banners. This slot renders banner-wide (~1250px, ×2 on
+  // retina = ~2500px needed), so anything under ~1400px native upscales and
+  // looks blurry (e.g. the 900×150 leaderboard strips). Only fall back to a
+  // smaller banner when a niche/compare pool has no crisp option at all.
+  const crisp = pool.filter((b) => b.width >= 1400);
+  if (crisp.length > 0) pool = crisp;
 
   // Rank by quality, take top 5 for rotation
   const ranked = [...pool].sort((x, y) => y.qualityScore - x.qualityScore);

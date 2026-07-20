@@ -46,7 +46,7 @@ const ALL_NICHES: {
   { slug: "twink",    name: "Twink",    siteCount: 41, image: "/site-banners/twinks-in-shorts-hero.jpg",
     hook: "The core of TwinkVault: premium studios down to amateur networks.",
     badge: "Most reviewed" },
-  { slug: "bareback", name: "Bareback", siteCount: 47, image: "/site-banners/breed-me-raw-hero.jpg",
+  { slug: "bareback", name: "Bareback", siteCount: 47, image: "/site-banners/dudesraw-hero.jpg",
     hook: "The largest category here, all explicitly bareback-focused.",
     badge: "Largest" },
   { slug: "amateur",  name: "Amateur",  siteCount: 40, image: "/site-banners/aussiesdoit-card.jpg",
@@ -388,17 +388,17 @@ const LatestReviews = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              {/* Fixed 16:10 aspect ratio — source image dimensions vary
-                  across the catalog (some 16:10, some 1:1, some 16:9);
-                  object-cover crops to consistent shape so the 6-card
-                  grid renders uniformly. */}
+              {/* Use the 3:2 card crop (getCardImage), not the raw hero:
+                  wide heroes (e.g. 2000×500) cover-cropped to 16:10 showed
+                  only ~40% of the image (zoomed body parts). The card crops
+                  sit close to 16:10, so this stays a clean uniform grid. */}
               <SmartImage
-                src={getSiteImagery(site.slug).hero_image_url}
+                src={getCardImage(site.slug)}
                 alt={getSiteImagery(site.slug).banner_alt || `${site.name} cover`}
                 aspectRatio="16:10"
                 fallbackLabel={site.name}
                 className="mb-3 rounded-lg"
-                objectPosition="center 25%"
+                objectPosition="center 30%"
               />
 
               <h3 className="font-heading text-lg font-semibold">{site.name}</h3>
