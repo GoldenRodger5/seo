@@ -130,7 +130,7 @@ const DiscountPage = () => {
   const faqs = [
     {
       q: `Does ${site.name} have a discount code?`,
-      a: `Yes. ${site.name} currently offers: ${site.deal_text}. This deal is verified and active as of ${lastCheckedDate}. Click our link above to activate the discount automatically — no coupon code required.`,
+      a: `Yes. ${site.name} currently offers: ${site.deal_text}. This pricing comes from our live pricing dataset, last refreshed ${lastCheckedDate}. Click our link above to activate the discount automatically — no coupon code required.`,
     },
     {
       q: `How much can I save on ${site.name}?`,
@@ -138,7 +138,7 @@ const DiscountPage = () => {
     },
     {
       q: `Is the ${site.name} discount code legit?`,
-      a: `Absolutely. Every deal listed on TwinkVault is verified by our team. This ${site.name} offer was last confirmed working on ${lastCheckedDate}. We never list expired or fake discount codes.`,
+      a: `The pricing here is pulled from our live pricing dataset rather than pasted once and forgotten — the ${site.name} figures reflect our last dataset refresh (${lastCheckedDate}). We don't invent coupon codes; the saving comes from the site's own annual plan through our link.`,
     },
     {
       q: `What's the cheapest ${site.name} plan?`,
@@ -146,7 +146,7 @@ const DiscountPage = () => {
     },
     {
       q: `How long is the ${site.name} discount valid?`,
-      a: `The discounted rate applies to your first billing period when you sign up through our link. After that, standard pricing applies on renewal unless you cancel before the renewal date. We re-verify all listed deals monthly — last verified ${lastCheckedDate}.`,
+      a: `The discounted rate applies to your first billing period when you sign up through our link. After that, standard pricing applies on renewal unless you cancel before the renewal date. Our pricing dataset is refreshed regularly — last refreshed ${lastCheckedDate}.`,
     },
     {
       q: `Does ${site.name} offer a free trial?`,
@@ -256,7 +256,7 @@ const DiscountPage = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              {site.deal_text} — verified and working for {currentMonthLong} {currentYear}.
+              {site.deal_text} — current in our {currentMonthLong} {currentYear} pricing data.
               Save up to {site.deal_discount}% on your {site.name} membership.
             </motion.p>
             <motion.div
@@ -571,8 +571,8 @@ const DiscountPage = () => {
                   : ""}
               </p>
               <p>
-                We verify every deal listed on TwinkVault on a weekly basis, so you can trust that the{" "}
-                {site.name} discount shown above is current and working. Our team last confirmed this offer on{" "}
+                TwinkVault's pricing dataset refreshes regularly, so the{" "}
+                {site.name} figures shown above reflect our last dataset refresh on{" "}
                 {lastCheckedDate}. If you spot a deal that isn't working, <Link to="/contact" className="text-secondary hover:underline">let us know</Link>{" "}
                 and we'll update it immediately. For more options, check out our{" "}
                 <Link to="/best-deals" className="text-secondary hover:underline">full deals page</Link> or read

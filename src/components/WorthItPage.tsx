@@ -27,11 +27,10 @@ import { currentYear } from "../lib/dates";
  *     overlaps significantly with Helix's twink-leaning casting
  *   - Active 75% deal (vs Helix's 66%) actually makes Sean Cody
  *     a stronger value when factoring discount
- *   - HelixCash affiliate program confirmed dormant 2026-05-15
- *     after multiple bounce-backs from their mail server.
  */
 const HARDCODED_ALTERNATIVES: Record<string, string> = {
-  "helix-studios": "sean-cody",
+  // Empty: affiliated sites (including Helix) link directly, so no override
+  // is needed. Only genuinely non-referable sites fall back to pickAlternative.
 };
 
 function pickAlternative(site: SiteData): SiteData | null {

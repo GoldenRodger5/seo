@@ -88,8 +88,12 @@ function pinnedStillConverts(pairSlug: string): boolean {
   const a = getSiteBySlug(m[1]);
   const b = getSiteBySlug(m[2]);
   if (!a || !b) return false;
-  const pending = (s: typeof a) => s.editorial_status === "pending-review";
-  if (pending(a) || pending(b)) return false;
+  // Owner decision (2026-07-20): editorial-only sites (Next Door Twink/World)
+  // must not appear on ranked/compare surfaces even when GSC-pinned. Exclude
+  // both editorial-only and pending-review from the pinned set.
+  const nonCommercial = (s: typeof a) =>
+    s.editorial_status === "editorial-only" || s.editorial_status === "pending-review";
+  if (nonCommercial(a) || nonCommercial(b)) return false;
   return isAffiliated(a) || isAffiliated(b);
 }
 
