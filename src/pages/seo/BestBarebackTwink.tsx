@@ -71,7 +71,7 @@ const BestBarebackTwink = () => (
     faqs={[
       {
         q: "What's the best bareback twink site overall?",
-        a: "NakedSword (4.6/5) wins on library breadth — 50,000+ scenes from 300+ studios with strong bareback twink representation throughout. For a focused single-studio experience, Twinks in Shorts (4.4/5) at $9.95/month annual is the best per-dollar pick. For premium production specifically, Helix Studios sits at the top of the niche but isn't currently affiliated with us so it doesn't appear in this ranking.",
+        a: "NakedSword (4.6/5) wins on library breadth — 50,000+ scenes from 300+ studios with strong bareback twink representation throughout. For a focused single-studio experience, Twinks in Shorts (4.4/5) at $9.95/month annual is the best per-dollar pick. For premium production specifically, Helix Studios sits at the top of the twink niche overall, but it isn't primarily a bareback studio, so it isn't ranked on this bareback-focused list — see our full Helix Studios review for the complete picture.",
       },
       {
         q: "What's the cheapest good bareback twink site?",

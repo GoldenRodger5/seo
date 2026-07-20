@@ -168,7 +168,7 @@ const Footer = () => (
       </div>
 
       <p className="mt-4 text-center text-xs leading-relaxed text-muted-foreground/70">
-        <Link to="/" className="hover:text-foreground underline-offset-2 hover:underline">TwinkVault ranks the best twink sites</Link> from paid memberships. TwinkVault.com is an adult content review site. All sites reviewed contain content intended for adults 18+. TwinkVault uses partner links — commissions never influence our rankings.
+        <Link to="/" className="hover:text-foreground underline-offset-2 hover:underline">TwinkVault ranks the best twink sites</Link> from hands-on review. TwinkVault.com is an adult content review site. All sites reviewed contain content intended for adults 18+. TwinkVault uses partner links — commissions never influence our rankings.
       </p>
       <p className="mt-2 text-center text-xs text-muted-foreground/50">
         &copy; {new Date().getFullYear()} TwinkVault. All rights reserved.

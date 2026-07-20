@@ -16,7 +16,6 @@ import { selectGuideHero } from "../lib/guideImagery";
 import StarRating from "../components/StarRating";
 import OutboundLink from "../components/OutboundLink";
 import { getVerdict } from "../data/site-verdicts";
-import { ArrowRight } from "lucide-react";
 
 const BASE_URL = "https://twinkvault.com";
 

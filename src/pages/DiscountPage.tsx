@@ -74,6 +74,28 @@ const DiscountPage = () => {
 
   const affiliated = isAffiliated(site);
 
+  // Editorial-only / unpriced sites have no deal and price_* === "n/a", which
+  // previously rendered "$NaN" everywhere on this page. There's no discount to
+  // show — point readers to the editorial review instead.
+  if (site.editorial_status === "editorial-only" || site.price_annual === "n/a" || site.price_monthly === "n/a") {
+    return (
+      <Layout>
+        <div className="container py-32 text-center">
+          <h1 className="font-heading text-3xl font-bold">No current deal for {site.name}</h1>
+          <p className="mt-4 text-muted-foreground">
+            We don't have an active discount for {site.name} right now. Read our full review for scores, pricing, and pros and cons.
+          </p>
+          <Link
+            to={`/reviews/${site.slug}`}
+            className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-secondary hover:underline"
+          >
+            Read the {site.name} review <ArrowRight size={14} />
+          </Link>
+        </div>
+      </Layout>
+    );
+  }
+
   // Parse raw monthly price number for schema markup
   const monthlyPriceNum = parseFloat(site.price_monthly.replace(/[^0-9.]/g, ""));
   const annualPriceNum = parseFloat(site.price_annual.replace(/[^0-9.]/g, ""));

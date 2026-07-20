@@ -14,7 +14,7 @@ import { sites, isPendingReview } from "../data/sites";
 import { currentYear, currentMonthLong } from "../lib/dates";
 import { sitesCountLabel, TOTAL_SITES } from "../lib/siteStats";
 
-const sorted = [...sites].filter((s) => !isPendingReview(s)).sort((a, b) => a.rank - b.rank);
+const sorted = [...sites].filter((s) => !isPendingReview(s) && s.editorial_status !== "editorial-only").sort((a, b) => a.rank - b.rank);
 
 const BestTwinkSites = () => (
   <Layout>
@@ -132,7 +132,7 @@ const BestTwinkSites = () => (
             viewport={{ once: true }}
           >
             <h2 className="font-heading text-2xl font-bold text-foreground">How We Actually Score Twink Porn Sites</h2>
-            <p>We don't trust trailers. Every twink porn site on this list was tested with a paid membership — we browsed the member area, tested search, streamed on mobile, and checked if the "weekly updates" claim was real. Most gay porn site review aggregators just look at the tour page. We log in.</p>
+            <p>We don't trust trailers. The sites on this list are reviewed hands-on — for the ones we've subscribed to, we browse the member area, test search, stream on mobile, and check whether the "weekly updates" claim is real; the rest we research closely from publisher materials, scene samples, and member reports. Most aggregators just look at the tour page.</p>
             <p>Scores are based on four things: content quality (are scenes well-lit, well-shot, with performers who seem into it?), value (what do you get per dollar?), update frequency (does the site actually release new content regularly?), and mobile (does it work on your phone without being painful?). Each is scored out of 100. The overall rating is a weighted average.</p>
             <p>No site has paid us to rank higher. We earn affiliate commissions on some links, but the scores are entirely ours. When sites raise prices or stop updating, we drop their scores the same month.</p>
             <h2 className="font-heading text-2xl font-bold text-foreground">What Separates the Best Twink Porn Sites From the Worst</h2>

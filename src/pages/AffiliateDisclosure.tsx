@@ -15,7 +15,7 @@ const AffiliateDisclosure = () => (
         <AnimateOnScroll>
           <div className="stagger-in">
             <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">Affiliate Disclosure</h1>
-            <p className="mt-2 text-sm text-muted-foreground">Last updated: March 2025</p>
+            <p className="mt-2 text-sm text-muted-foreground">Last updated: July 2026</p>
 
             <div className="mt-8 glass-card rounded-lg p-8 space-y-6 text-muted-foreground leading-relaxed">
               <p className="text-foreground font-semibold text-lg">
@@ -34,7 +34,7 @@ const AffiliateDisclosure = () => (
                 <li>We earn a commission when you sign up for a site through our links.</li>
                 <li>The commission comes from the site, not from you — you pay the same price regardless.</li>
                 <li>Commission rates vary by site but never influence our rankings or scores.</li>
-                <li>We pay for our own memberships to test and review each site independently.</li>
+                <li>We pay for memberships where we subscribe, and research the rest closely — either way, the review is independent.</li>
                 <li>Affiliate revenue funds our operations, allowing us to continue providing free, honest reviews.</li>
               </ul>
 
@@ -43,7 +43,7 @@ const AffiliateDisclosure = () => (
               </p>
 
               <p>
-                If you have any questions about our affiliate relationships, please don't hesitate to contact us.
+                We earn affiliate commissions through the adult networks behind the sites we review — among them zBuckz, MyGayCash, Gamma/Buddy Profits, CrakRevenue, NakedSword Cash, and Adult Empire Cash. Commissions fund the memberships and keep the site running, but they never influence a site's score or ranking. If you have any questions about our affiliate relationships, email us at <a href="mailto:hello@twinkvault.com" className="text-secondary hover:underline">hello@twinkvault.com</a>.
               </p>
             </div>
           </div>

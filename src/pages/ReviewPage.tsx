@@ -312,7 +312,9 @@ const ReviewPage = () => {
                 <div className="flex flex-wrap items-center gap-3">
                   <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">{site.name}</h1>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  Reviewed by the TwinkVault editorial team from a paid membership · verified {currentMonthLong} {currentYear} ·{" "}
+                  {site.review_depth === "subscription"
+                    ? `Reviewed by TwinkVault from a paid membership · verified ${currentMonthLong} ${currentYear} · `
+                    : `Researched and scored by TwinkVault from publisher materials, scene samples, and member reports · updated ${currentMonthLong} ${currentYear} · `}
                   <Link to="/methodology" className="text-secondary hover:underline">how we score</Link>
                 </p>
                   <span className="inline-flex items-center gap-1 rounded-button bg-muted/50 px-2 py-0.5 text-xs text-emerald-400">✓ Reviewed</span>

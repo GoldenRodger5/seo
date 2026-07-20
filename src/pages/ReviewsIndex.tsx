@@ -135,7 +135,7 @@ const ReviewsIndex = () => {
     <Layout>
       <Helmet>
         <title>{`All reviews — ${TOTAL_SITES} gay porn sites scored | TwinkVault`}</title>
-        <meta name="description" content={`${TOTAL_SITES} gay porn sites reviewed. Every site tested with a paid membership. Same four-pillar rubric, updated monthly.`} />
+        <meta name="description" content={`${TOTAL_SITES} gay porn sites reviewed hands-on — paid memberships and close research. Same four-pillar rubric, updated monthly.`} />
         <link rel="canonical" href="https://twinkvault.com/reviews" />
       </Helmet>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -173,7 +173,7 @@ const ReviewsIndex = () => {
                 All reviews
               </h1>
               <p className="mt-4 text-muted-foreground max-w-2xl">
-                {TOTAL_SITES} reviews. Every site tested with a paid membership. Same rubric, every time. Last updated {currentMonthLong} {currentYear}.
+                {TOTAL_SITES} reviews, hands-on — paid memberships and close research. Same rubric, every time. Last updated {currentMonthLong} {currentYear}.
               </p>
             </div>
           </AnimateOnScroll>

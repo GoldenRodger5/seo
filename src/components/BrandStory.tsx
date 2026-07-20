@@ -9,7 +9,7 @@ const BrandStory = ({ collapsible = false }: { collapsible?: boolean }) => {
           Tired of subscribing to sites based on misleading previews and fake review blogs that rank whatever pays them the most? Same. TwinkVault exists because we got burned one too many times.
         </p>
         <p>
-          We're a small independent team. We pay for every membership ourselves. We write every review from real experience. And we update them when things change — because a great site from 2022 might be a disappointment today.
+          We're independent. We pay for memberships where we subscribe, and research the rest closely — publisher materials, scene samples, and member reports. We write every review from hands-on work, and update them when things change — because a great site from 2022 might be a disappointment today.
         </p>
         <p className="font-medium text-foreground">
           No sponsorships. No paid placements. Just honest rankings from people who actually care about this content.

@@ -14,10 +14,10 @@ import { sites } from "../data/sites";
 import { currentYear } from "../lib/dates";
 
 const FOUNDED_YEAR = 2024;
-const CONTACT_EMAIL = "isaac.m.builds@gmail.com";
+const CONTACT_EMAIL = "hello@twinkvault.com";
 
 const faqs = [
-  { q: "Who actually writes these reviews?", a: "Me — Isaac, an out gay guy in my mid-twenties who's been a paying member of gay sites for years. I started TwinkVault because every \"top 10\" list I found ranked whichever site paid the highest commission rather than the one I actually enjoyed using. Every score on this site comes from a paid membership I've used personally." },
+  { q: "Who actually writes these reviews?", a: "Me — Isaac, an out gay guy in my mid-twenties who's been a paying member of gay sites for years. I started TwinkVault because every \"top 10\" list I found ranked whichever site paid the highest commission rather than the one I actually enjoyed using. Scores come from real hands-on review: paid memberships where I've subscribed and used the site, and close research from publisher materials, scene samples, and member reports where I haven't yet — each review says which." },
   { q: "How do you score sites?", a: "Four pillars, each scored 0–100, then weighted into the overall score: content quality (scene count, exclusivity, resolution, performer roster), value for money (price-to-content ratio, trial options, ease of cancellation), site design (UI, search, streaming, mobile experience), and update frequency (how often new content actually drops). The full methodology is on our /methodology page if you want the granular breakdown." },
   { q: "Do sites pay you to rank them higher?", a: "No. Affiliate commissions fund the memberships and keep the lights on, but they don't move scores. A site offering 70% commission stays at whatever score the testing produces. If a network paying us 30% beats a network paying 70% on actual content, the lower-commission site ranks higher. Period." },
   { q: "How often do you update reviews?", a: "Pricing and trial availability get re-checked monthly. Full reviews get rewritten when something material changes — a network rebrand, a meaningful library expansion, a price hike, or a noticeable drop in update cadence. Every page shows the last-updated date so you can see how fresh it is." },
@@ -31,7 +31,7 @@ const About = () => (
     <PageTransition>
       <Helmet>
         <title>About TwinkVault — Independent Gay Site Reviews</title>
-        <meta name="description" content={`TwinkVault is an independent gay site review project, founded ${FOUNDED_YEAR}. Currently ${sites.length} reviewed sites — scored from real, paid memberships.`} />
+        <meta name="description" content={`TwinkVault is an independent gay site review project, founded ${FOUNDED_YEAR}. Currently ${sites.length} reviewed sites — scored from hands-on paid memberships and close research.`} />
         <link rel="canonical" href="https://twinkvault.com/about" />
       </Helmet>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -68,7 +68,7 @@ const About = () => (
 
             <div className="mt-8 glass-card rounded-lg p-8 space-y-6 text-muted-foreground leading-relaxed">
               <p>I started TwinkVault because I got tired of "top 10 gay sites" lists that ranked whichever site paid the highest affiliate commission rather than the one anyone actually wanted to subscribe to. The same names showed up everywhere, in the same order, with the same vague compliments. None of it told you whether a site was worth $9.95 a month, let alone $34.95.</p>
-              <p>So I started paying for memberships myself and writing scores I'd actually trust. That's the whole pitch. There are <Link to="/reviews" className="text-secondary hover:underline">{sites.length} reviews on this site</Link>, every one of them written from a paid login. No freelancer farm, no AI-generated review mills, no commission-rigged rankings. One person, real subscriptions, honest scores.</p>
+              <p>So I started paying for memberships myself and writing scores I'd actually trust. That's the whole pitch. There are <Link to="/reviews" className="text-secondary hover:underline">{sites.length} reviews on this site</Link>, each one written from real hands-on review — a paid membership where I've subscribed, honest research from publisher materials and member reports where I haven't yet. No freelancer farm, no commission-rigged rankings. One person, one consistent rubric, honest scores.</p>
               <p>I'm a gay guy in my mid-twenties. I built this because the existing "best gay sites" lists were obviously written by people who'd never logged in — same five names, same vague compliments, no real opinions about whether anything was worth the price. I do log in. I know the difference between a site that genuinely updates weekly and one that recycles archives. I know which networks share content across "different" brands. I know which sites cancel cleanly and which ones make you fight to leave. That's the lens these reviews are written through.</p>
             </div>
           </motion.div>
@@ -123,7 +123,7 @@ const About = () => (
           </motion.div>
 
           <p className="mt-10 text-center text-xs text-muted-foreground/60">
-            Last updated {currentYear}. All scores reflect first-hand testing on paid memberships.
+            Last updated {currentYear}. Scores reflect hands-on review — paid memberships and close research, scored on the same rubric.
           </p>
         </div>
       </section>

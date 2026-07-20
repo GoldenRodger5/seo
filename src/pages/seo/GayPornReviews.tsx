@@ -27,7 +27,7 @@ const NICHE_GROUPS: { slug: string; label: string }[] = [
 
 const path = "/gay-porn-site-reviews";
 const url = `https://twinkvault.com${path}`;
-const fullTitle = `Gay Porn Site Reviews — ${TOTAL_SITES} Sites Tested & Scored (${currentYear}) | TwinkVault`;
+const fullTitle = `Gay Porn Site Reviews — ${TOTAL_SITES} Sites Reviewed & Scored (${currentYear}) | TwinkVault`;
 const description = `Honest reviews of ${TOTAL_SITES} gay porn sites — paid memberships only, scored on content quality, value, updates, and mobile UX. Browse by niche.`;
 
 const breadcrumb = {
@@ -59,10 +59,10 @@ const GayPornReviews = () => (
               {TOTAL_SITES} Sites · {currentYear}
             </span>
             <h1 className="mt-4 hero-heading font-heading font-bold heading-gradient inline-block">
-              Gay Porn Site Reviews — {TOTAL_SITES} Sites Tested & Scored
+              Gay Porn Site Reviews — {TOTAL_SITES} Sites Reviewed & Scored
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Every review on TwinkVault is based on a paid membership. We score sites on four pillars — content quality, value-for-money, update frequency, and mobile experience — and re-verify every score monthly. Browse by niche below or jump to the full ranked list.
+              Every review on TwinkVault is hands-on: paid memberships where we've subscribed, close research from publisher materials and member reports where we haven't yet — each review says which. We score sites on four pillars — content quality, value-for-money, update frequency, and mobile experience — and re-verify pricing monthly. Browse by niche below or jump to the full ranked list.
             </p>
             <nav aria-label="Breadcrumb" className="mt-4 text-xs text-muted-foreground">
               <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
@@ -78,7 +78,7 @@ const GayPornReviews = () => (
           <div className="mb-10 glass-card rounded-lg p-6 border-l-4 border-l-secondary">
             <h2 className="font-heading text-lg font-bold">How TwinkVault Scoring Works</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              We pay for every membership. Each site is scored 1–100 across four pillars and the average becomes the headline 1–5 score. No ranking is sold. Affiliate revenue funds the operation but never determines placement — sites without affiliate programs are still reviewed and listed honestly.
+              We pay for memberships where we subscribe and research the rest closely. Each site is scored 1–100 across four pillars and the average becomes the headline 1–5 score. No ranking is sold. Affiliate revenue funds the operation but never determines placement — sites without affiliate programs are still reviewed and listed honestly.
             </p>
             <Link to="/methodology" className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-secondary hover:underline">
               Read the full methodology <ArrowRight size={12} />

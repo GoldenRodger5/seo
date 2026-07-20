@@ -569,7 +569,12 @@ const ComparePage = () => {
     if (bHits > aHits) return siteB;
     return null;
   })();
-  const winner = aiPreferred ?? (siteA.overall_score >= siteB.overall_score ? siteA : siteB);
+  // Winner must match the visible scorecard/table/FAQ. The higher overall_score
+  // always wins; the editorial (AI-verdict) preference only breaks a genuine tie,
+  // so we never crown a lower-scored site "OVERALL WINNER" against its own scores.
+  const winner = tied
+    ? (aiPreferred ?? siteA)
+    : (siteA.overall_score > siteB.overall_score ? siteA : siteB);
   const runnerUp = winner.id === siteA.id ? siteB : siteA;
   const budgetPick = parseFloat(siteA.price_annual.replace(/[^0-9.]/g, "")) <= parseFloat(siteB.price_annual.replace(/[^0-9.]/g, "")) ? siteA : siteB;
 

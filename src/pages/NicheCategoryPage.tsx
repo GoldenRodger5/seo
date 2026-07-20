@@ -93,7 +93,7 @@ const NicheCategoryPage = () => {
                 name: `What are the best ${niche.displayName.toLowerCase()} gay sites in ${currentYear}?`,
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: `Our top picks are ${matching.slice(0, 3).map((s) => s.name).join(", ")}. Each was scored on content quality, value, update frequency, and mobile UX after a paid membership.`,
+                  text: `Our top picks are ${matching.slice(0, 3).map((s) => s.name).join(", ")}. Each was scored on content quality, value, update frequency, and mobile UX from hands-on review.`,
                 },
               },
               {
@@ -101,7 +101,7 @@ const NicheCategoryPage = () => {
                 name: `How do you rank ${niche.displayName.toLowerCase()} gay sites?`,
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "We pay for every membership, log in, browse the actual library, test the player on mobile and desktop, and re-check pricing monthly. Scores are 1–5 across four pillars: content quality, value, update frequency, and mobile experience.",
+                  text: "We review hands-on — paying for memberships where we subscribe and researching the rest closely — logging in where we can, browsing the library, testing the player on mobile and desktop, and re-checking pricing monthly. Scores are 1–5 across four pillars: content quality, value, update frequency, and mobile experience.",
                 },
               },
               {
@@ -217,12 +217,12 @@ const NicheCategoryPage = () => {
                 {
                   q: `What are the best ${niche.displayName.toLowerCase()} gay sites in ${currentYear}?`,
                   a: matching.length
-                    ? `Our top picks are ${matching.slice(0, 3).map((s) => s.name).join(", ")}. Each was scored on content quality, value, update frequency, and mobile UX after a paid membership.`
+                    ? `Our top picks are ${matching.slice(0, 3).map((s) => s.name).join(", ")}. Each was scored on content quality, value, update frequency, and mobile UX from hands-on review.`
                     : "We're still expanding coverage in this niche — check back soon.",
                 },
                 {
                   q: `How do you rank ${niche.displayName.toLowerCase()} gay sites?`,
-                  a: "We pay for every membership, log in, browse the actual library, test the player on mobile and desktop, and re-check pricing monthly. Scores are 1–5 across four pillars: content quality, value, update frequency, and mobile experience.",
+                  a: "We review hands-on — paying for memberships where we subscribe and researching the rest closely — logging in where we can, browsing the library, testing the player on mobile and desktop, and re-checking pricing monthly. Scores are 1–5 across four pillars: content quality, value, update frequency, and mobile experience.",
                 },
                 {
                   q: `Are these ${niche.displayName.toLowerCase()} sites safe to subscribe to?`,

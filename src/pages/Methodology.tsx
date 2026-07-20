@@ -116,7 +116,7 @@ const Methodology = () => (
             </p>
 
             <div className="mt-8 glass-card rounded-lg p-6 text-muted-foreground leading-relaxed">
-              <p>Every TwinkVault review is built from a paid membership. I subscribe, I use the site for at least two billing cycles, then I score four pillars individually before combining them into a single overall score.</p>
+              <p>Most TwinkVault reviews are built from a paid membership: I subscribe, use the site for at least two billing cycles, then score four pillars individually before combining them into a single overall score. Sites I haven't subscribed to yet are scored from close research — publisher materials, scene samples, and member reports — and clearly labeled as such (see below).</p>
               <p className="mt-3">The pillars and their weights are <strong className="text-foreground">fixed</strong> across all reviews — every site is scored against the same rubric, and that rubric doesn't shift based on affiliate relationships, niche, or how new the site is.</p>
             </div>
           </motion.div>
@@ -175,8 +175,8 @@ const Methodology = () => (
           <motion.div className="mt-10 glass-card rounded-lg p-6" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Who writes these reviews</h2>
             <p className="mt-3 text-muted-foreground leading-relaxed">
-              TwinkVault is written and operated by Isaac, an independent reviewer based in the US. No team, no co-writers — every review on this site is the result of one person's time and a paid subscription. Reach me at{" "}
-              <a href="mailto:isaac.m.builds@gmail.com" className="text-secondary hover:underline underline-offset-4">isaac.m.builds@gmail.com</a>{" "}
+              TwinkVault is written and operated by Isaac, an independent reviewer based in the US. No team, no co-writers — every review on this site is one person's work: a paid subscription where I have one, close research where I don't. Reach me at{" "}
+              <a href="mailto:hello@twinkvault.com" className="text-secondary hover:underline underline-offset-4">hello@twinkvault.com</a>{" "}
               if you spot something I got wrong, want to suggest a site, or work in the industry and want to share context I should know.
             </p>
           </motion.div>

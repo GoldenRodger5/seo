@@ -58,7 +58,7 @@ const LandingDataBlock = ({ sites, label }: LandingDataBlockProps) => {
           .{cheapest && <> Monthly pricing starts at <strong>{fmtPrice(cheapest)}</strong> with {cheapest.name}.</>}
           {trials > 0 && <> {trials} of them offer a free or discounted trial</>}
           {hd > 0 && <>{trials > 0 ? ", and " : " "}{hd} stream in full HD</>}
-          {(trials > 0 || hd > 0) && <>.</>} Every score below comes from a real paid membership, re-checked monthly.
+          {(trials > 0 || hd > 0) && <>.</>} Every score below comes from hands-on review — paid memberships and close research — re-checked monthly.
         </p>
 
         <div className="mt-6 overflow-x-auto">

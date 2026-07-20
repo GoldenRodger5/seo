@@ -221,7 +221,7 @@ const WorthItPage = ({ site }: { site: SiteData }) => {
                     </Link>
                   </div>
                   <p className="mt-4 text-[11px] text-muted-foreground italic leading-relaxed">
-                    We rank {site.name} #{site.rank} in our reviews — if you can subscribe directly that's the best option. We just can't track affiliate referrals to {site.name} specifically, so we surface our next-best pick for visitors who want to subscribe through our link.
+                    {site.name} is one of our reviewed picks — if you can subscribe directly that's the best option. We just can't track affiliate referrals to {site.name} specifically, so we surface our next-best pick for visitors who want to subscribe through our link.
                   </p>
                 </MotionCard>
               );

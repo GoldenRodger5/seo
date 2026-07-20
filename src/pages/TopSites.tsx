@@ -71,7 +71,7 @@ const TopSites = () => {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: `${TOTAL_SITES} Best Gay Twink Sites Ranked`,
-          description: `The top-ranked twink sites — scored on content quality, value, update frequency, and mobile experience after a paid membership.`,
+          description: `The top-ranked twink sites — scored on content quality, value, update frequency, and mobile experience from hands-on review.`,
           url: "https://twinkvault.com/top-sites",
           mainEntity: {
             "@type": "ItemList",
@@ -94,7 +94,7 @@ const TopSites = () => {
               animate={{ opacity: 1, y: 0 }}
             >
               <h1 className="hero-heading font-heading font-bold heading-gradient inline-block">
-                {TOTAL_SITES} Sites. All Tested. Ranked Honestly.
+                {TOTAL_SITES} Sites. All Reviewed. Ranked Honestly.
               </h1>
               <p className="mt-4 text-muted-foreground">
                 We researched and scored every site, and ranked the ones actually worth your money. Scored on content, value, updates, and mobile UX. No site paid us to be here.
@@ -133,7 +133,7 @@ const TopSites = () => {
                 re-fires and child variants transition to "visible" again. Without this,
                 filtered children mount in "hidden" state (opacity:0) and stay invisible. */}
             <StaggerContainer key={active} className="mt-10 space-y-4">
-              {filtered.map((site) => (
+              {filtered.map((site, i) => (
                 <StaggerChild key={site.id}>
                   <motion.div
                     className={`glass-card rounded-lg p-6 ${
@@ -161,8 +161,8 @@ const TopSites = () => {
                           );
                         })()}
                         <div className="flex items-center justify-center gap-2">
-                          {site.rank === 1 && <Crown size={20} className="text-secondary" />}
-                          <span className="font-heading text-3xl font-bold text-muted-foreground/40">#{site.rank}</span>
+                          {i === 0 && <Crown size={20} className="text-secondary" />}
+                          <span className="font-heading text-3xl font-bold text-muted-foreground/40">#{i + 1}</span>
                           <ScoreRing score={site.overall_score} size={50} />
                         </div>
                       </div>
@@ -282,7 +282,7 @@ const TopSites = () => {
                   <tbody>
                     {filtered.map((site, i) => (
                       <tr key={site.id} className={`border-b border-border/30 transition-colors hover:bg-primary/5 ${i % 2 === 0 ? "bg-transparent" : "bg-muted/20"}`}>
-                        <td className="px-4 py-3 font-heading font-bold text-muted-foreground">{site.rank}</td>
+                        <td className="px-4 py-3 font-heading font-bold text-muted-foreground">{i + 1}</td>
                         <td className="px-4 py-3 font-semibold">
                           <Link to={`/reviews/${site.slug}`} className="hover:text-secondary transition-colors">{site.name}</Link>
                         </td>
