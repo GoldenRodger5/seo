@@ -46,22 +46,22 @@ const ALL_NICHES: {
   { slug: "twink",    name: "Twink",    siteCount: 41, image: "/site-banners/twinks-in-shorts-hero.jpg",
     hook: "The core of TwinkVault: premium studios down to amateur networks.",
     badge: "Most reviewed" },
-  { slug: "bareback", name: "Bareback", siteCount: 47, image: "/site-banners/bareback-that-hole-hero.jpg",
+  { slug: "bareback", name: "Bareback", siteCount: 47, image: "/site-banners/breed-me-raw-hero.jpg",
     hook: "The largest category here, all explicitly bareback-focused.",
     badge: "Largest" },
-  { slug: "amateur",  name: "Amateur",  siteCount: 40, image: "/site-banners/southern-strokes-hero.jpg",
+  { slug: "amateur",  name: "Amateur",  siteCount: 40, image: "/site-banners/aussiesdoit-card.jpg",
     hook: "Real performers, no studio polish. Casting feels found, not cast." },
-  { slug: "muscle",   name: "Muscle",   siteCount: 14, image: "/site-banners/athletic-twinks-hero.jpg",
+  { slug: "muscle",   name: "Muscle",   siteCount: 14, image: "/site-banners/men-card.jpg",
     hook: "Built physiques, gym aesthetics. Heavy crossover with premium studios." },
   { slug: "daddy",    name: "Daddy",    siteCount: 7,  image: "/site-banners/daddy-on-twink-hero.jpg",
     hook: "Older-younger pairings. Mostly bareback, mostly mature studios." },
-  { slug: "asian",    name: "Asian",    siteCount: 7,  image: "/site-banners/peterfever-hero.jpg",
+  { slug: "asian",    name: "Asian",    siteCount: 7,  image: "/site-banners/peterfever-card.jpg",
     hook: "Asian performers and studios. Limited but growing selection." },
-  { slug: "jock",     name: "Jock",     siteCount: 6,  image: "/site-banners/athletic-twinks-hero.jpg",
+  { slug: "jock",     name: "Jock",     siteCount: 6,  image: "/site-banners/sean-cody-card.jpg",
     hook: "Athletic builds, sports themes. Crossover with college and amateur." },
-  { slug: "college",  name: "College",  siteCount: 5,  image: "/site-banners/boys-at-camp-hero.jpg",
+  { slug: "college",  name: "College",  siteCount: 5,  image: "/site-banners/helix-studios-card.jpg",
     hook: "Casting that skews 18–22, often dorm-themed or amateur networks." },
-  { slug: "bear",     name: "Bear",     siteCount: 4,  image: "/site-banners/bear-films-hero.jpg",
+  { slug: "bear",     name: "Bear",     siteCount: 4,  image: "/site-banners/bearfilms-card.jpg",
     hook: "Heavier, hairier, more masculine. Smaller but distinct catalog." },
 ];
 
@@ -97,7 +97,7 @@ const Hero = () => (
   // Hero pb is intentionally 0 — the niche grid's own py-8 produces the
   // 32px gap to the next section. Don't add bottom padding here, you'll
   // double-pad and the gap balloons to 64px.
-  <section className="pt-12 pb-0 md:pt-18 lg:pt-24 lg:min-h-[60vh] flex items-center">
+  <section className="pt-8 pb-0 md:pt-10 lg:pt-12">
     <div className="container max-w-6xl w-full">
       <h1 className="font-heading font-bold heading-gradient inline-block text-3xl leading-tight md:text-4xl lg:text-5xl xl:text-6xl">
         The best gay twink sites, ranked &amp; reviewed.
@@ -170,7 +170,7 @@ const TopTen = () => {
     // Bottom padding reduced (lg:pb-12 = 48px desktop, pb-8 = 32px mobile)
     // so the sidecar height doesn't open up a ~200px dead space before
     // the Latest reviews H2. Top padding unchanged.
-    <section className="border-t border-border/40 pt-12 pb-8 md:pt-16 md:pb-10 lg:pt-20 lg:pb-12">
+    <section className="border-t border-border/40 pt-8 pb-8 md:pt-10 md:pb-10 lg:pt-12 lg:pb-12">
       <div className="container max-w-6xl">
         <h2 className="font-heading text-2xl md:text-3xl font-bold">The Top 10</h2>
         <p className="mt-2 text-sm text-muted-foreground">Ranked by overall score, updated monthly.</p>
@@ -316,7 +316,7 @@ const TopTen = () => {
  * (last row contains the lone 9th tile, left-aligned).
  */
 const FeaturedNiches = () => (
-  <section className="py-8 md:py-12 lg:py-14">
+  <section className="pt-4 pb-8 md:pt-6 md:pb-10 lg:pt-6 lg:pb-12">
     <div className="container max-w-6xl">
       <h2 className="font-heading text-2xl md:text-3xl font-bold">Browse by niche</h2>
 
