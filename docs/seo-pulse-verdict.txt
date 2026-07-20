@@ -1,2 +1,2 @@
-FLAT
+IMPROVING
 stall_streak=0
