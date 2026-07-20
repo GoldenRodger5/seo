@@ -519,6 +519,21 @@ const ComparePage = () => {
     );
   }
 
+  // Editorial-only sites (Next Door Twink/World) are kept off compare surfaces
+  // per owner decision. These pairs aren't prerendered or in the sitemap; if
+  // one is typed directly, render the not-found state instead of a full page.
+  if (siteA.editorial_status === "editorial-only" || siteB.editorial_status === "editorial-only") {
+    return (
+      <Layout>
+        <div className="container py-32 text-center">
+          <h1 className="font-heading text-2xl font-bold">Comparison not available</h1>
+          <p className="mt-2 text-muted-foreground">One of these sites is editorial-only and isn't part of our ranked comparisons.</p>
+          <Link to="/compare" className="mt-4 inline-block text-secondary">View all comparisons →</Link>
+        </div>
+      </Layout>
+    );
+  }
+
   // Verdict logic. Three signals get composed:
   //   1. Score parity: tied → use neutral "TOP PICK" labels and "evenly matched" BLUF
   //   2. AI preference: when AI body exists, count site-name mentions in the
