@@ -79,33 +79,6 @@ export const comparisonPairs: ComparisonPair[] = [
     "priority": 4
   },
   {
-    "slug": "latinleche-vs-next-door-twink",
-    "siteA": "latinleche",
-    "siteB": "next-door-twink",
-    "primaryNiche": "twink",
-    "suggestedWinner": "next-door-twink",
-    "suggestedRunnerUp": "latinleche",
-    "priority": 4
-  },
-  {
-    "slug": "next-door-twink-vs-trailertrashboys",
-    "siteA": "next-door-twink",
-    "siteB": "trailertrashboys",
-    "primaryNiche": "amateur",
-    "suggestedWinner": "next-door-twink",
-    "suggestedRunnerUp": "trailertrashboys",
-    "priority": 4
-  },
-  {
-    "slug": "boysatcamp-vs-next-door-twink",
-    "siteA": "boysatcamp",
-    "siteB": "next-door-twink",
-    "primaryNiche": "twink",
-    "suggestedWinner": "next-door-twink",
-    "suggestedRunnerUp": "boysatcamp",
-    "priority": 4
-  },
-  {
     "slug": "nakedsword-vs-rawhole",
     "siteA": "nakedsword",
     "siteB": "rawhole",

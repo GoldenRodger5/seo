@@ -45,7 +45,7 @@ const LandingDataBlock = ({ sites, label }: LandingDataBlockProps) => {
     <section className="py-8 border-b border-border">
       <div className="container max-w-4xl">
         <p className="text-muted-foreground leading-relaxed">
-          We've paid for and scored <strong>{sites.length}</strong> {label} sites, rated {lo}–{hi} out of 5.
+          We've reviewed and scored <strong>{sites.length}</strong> {label} sites hands-on, rated {lo}–{hi} out of 5.
           The highest-scored is{" "}
           <Link to={`/reviews/${top.slug}`} className="text-secondary hover:underline">{top.name}</Link>{" "}
           ({top.overall_score.toFixed(1)}/5)

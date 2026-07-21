@@ -189,9 +189,14 @@ for (const slug of SITE_SLUGS) {
   urls.push(urlEntry({ loc: `/reviews/${slug}`, changefreq: "weekly", priority: "0.8" }));
 }
 
-// Discount pages  /discount/:slug — same downgrade for pending-review.
+// Discount pages  /discount/:slug — excluded for pending AND editorial-only:
+// editorial-only sites have no deal/price, so the page renders a no-deal
+// fallback (it isn't prerendered). Advertising it would be a sitemap soft-404.
+const EDITORIAL_ONLY_SLUGS = new Set(
+  sites.filter((s) => s.editorial_status === "editorial-only").map((s) => s.slug)
+);
 for (const slug of SITE_SLUGS) {
-  if (PENDING_REVIEW_SLUGS.has(slug)) continue;
+  if (PENDING_REVIEW_SLUGS.has(slug) || EDITORIAL_ONLY_SLUGS.has(slug)) continue;
   urls.push(urlEntry({ loc: `/discount/${slug}`, changefreq: "weekly", priority: "0.8" }));
 }
 

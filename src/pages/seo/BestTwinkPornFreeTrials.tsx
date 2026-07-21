@@ -28,7 +28,6 @@ const BestTwinkPornFreeTrials = () => (
       { to: "/best-cheap-gay-porn-sites", label: "Best cheap picks" },
       { to: "/best-bareback-twink-sites", label: "Best bareback twink sites" },
       { to: "/compare/men-vs-sean-cody", label: "Men.com vs Sean Cody (both have trials)" },
-      { to: "/compare/helix-studios-vs-next-door-twink", label: "Helix vs Next Door Twink" },
       { to: "/reviews/maleaccess", label: "MaleAccess review (7-day free trial)" },
       { to: "/reviews/next-door-twink", label: "Next Door Twink review ($2.95 trial)" },
     ]}

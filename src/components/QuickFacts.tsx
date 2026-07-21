@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Check, X as XIcon, Tag } from "lucide-react";
-import { SiteData } from "../data/sites";
+import { SiteData, isEditorialOnly } from "../data/sites";
 import LocalisedPrice from "./LocalisedPrice";
 
 /**
@@ -26,7 +26,9 @@ const Row = ({ label, children }: { label: string; children: React.ReactNode }) 
 );
 
 const QuickFacts = ({ site }: { site: SiteData }) => {
-  const hasDeal = site.deal_discount > 0;
+  // Editorial-only / unpriced sites have no linkable affiliate deal — showing a
+  // "56% off" row + strikethrough price for them would route to a no-deal page.
+  const hasDeal = site.deal_discount > 0 && !isEditorialOnly(site) && site.price_annual !== "n/a";
   return (
     <div className="glass-card rounded-lg p-5">
       <h3 className="font-heading text-sm font-semibold uppercase tracking-wide text-muted-foreground">

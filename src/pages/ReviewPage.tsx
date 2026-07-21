@@ -59,7 +59,9 @@ const InlineReviewCTA = ({
   position: CtaPosition;
 }) => {
   if (!site || !isAffiliated(site)) return null;
-  const showDeal = site.deal_discount > 0;
+  // A real, linkable deal: editorial-only / unpriced sites route to the
+  // no-deal discount fallback, so don't surface a discount CTA for them.
+  const showDeal = site.deal_discount > 0 && !isEditorialOnly(site) && site.price_annual !== "n/a";
   return (
     <div className="my-8 rounded-lg border border-secondary/30 bg-gradient-to-br from-secondary/[0.08] to-card/40 p-5 sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -156,6 +158,14 @@ const ReviewPage = () => {
 
   // Niche-overlap-weighted similar sites (60% niche / 20% score / 10% affil / 10% network diversity)
   const similar = getSimilarSites(site.slug, 3);
+  // Compare links only work between commercial sites — an editorial-only side
+  // renders the compare not-found state. Drop those so no pair link dead-ends.
+  const compareSims = isEditorialOnly(site)
+    ? []
+    : similar.filter((s) => !isEditorialOnly(s) && !isPendingReview(s));
+  // A real, linkable deal (editorial-only / unpriced sites route to the
+  // no-deal discount fallback, so they get no discount CTA).
+  const hasDeal = site.deal_discount > 0 && !isEditorialOnly(site) && site.price_annual !== "n/a";
 
   return (
     <Layout>
@@ -369,7 +379,7 @@ const ReviewPage = () => {
 
                 <div className="mt-6 flex flex-wrap gap-3">
                   <VisitSiteButton site={site} label={`Visit ${site.name}`} ctaPosition="hero" />
-                  {site.deal_discount > 0 && (
+                  {hasDeal && (
                     <Link
                       to={`/discount/${site.slug}`}
                       className="inline-flex items-center gap-2 rounded-button border border-emerald-400/50 bg-emerald-400/10 px-8 py-3 text-sm font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors"
@@ -731,7 +741,7 @@ const ReviewPage = () => {
             <AnimateOnScroll className="mt-10">
               <h2 className="font-heading text-lg font-bold">Compare {site.name} Against Others</h2>
               <div className="mt-3 flex flex-wrap gap-2">
-                {similar.map((s) => (
+                {compareSims.map((s) => (
                   <Link
                     key={s.id}
                     to={`/compare/${site.slug}-vs-${s.slug}`}
@@ -774,7 +784,7 @@ const ReviewPage = () => {
                 or <LocalisedPrice usd={site.price_annual} /> billed annually
               </p>
               <VisitSiteButton site={site} className="mt-4" ctaPosition="sidebar" />
-              {site.deal_discount > 0 && (
+              {hasDeal && (
                 <Link
                   to={`/discount/${site.slug}`}
                   className="mt-3 block text-center rounded-button border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-xs font-semibold text-emerald-400 hover:bg-emerald-400/20 transition-colors"

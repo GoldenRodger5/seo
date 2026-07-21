@@ -108,6 +108,8 @@ const DiscountPage = () => {
         (s) =>
           s.id !== site.id &&
           s.deal_discount > 0 &&
+          s.editorial_status !== "editorial-only" &&
+          s.price_annual !== "n/a" &&
           (siteNicheMap[s.slug] ?? []).includes(primaryNiche)
       )
     : [];
@@ -119,6 +121,8 @@ const DiscountPage = () => {
           (s) =>
             s.id !== site.id &&
             s.deal_discount > 0 &&
+            s.editorial_status !== "editorial-only" &&
+            s.price_annual !== "n/a" &&
             !sameNicheSites.includes(s)
         ),
       ]

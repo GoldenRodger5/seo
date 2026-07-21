@@ -383,7 +383,25 @@ function injectMeta(html: string, route: RouteMeta, helmetHtml: string): string 
 }
 
 function injectBody(html: string, body: string): string {
-  return html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+  const marker = '<div id="root"></div>';
+  // Fail loudly rather than silently shipping the template's existing body.
+  // A plain .replace() that finds no match returns the string UNCHANGED — so
+  // if the empty root marker is absent (e.g. build:prerender was run without a
+  // fresh `vite build` first, leaving dist/index.html holding a previously
+  // injected body), every route would ship a byte-identical homepage clone
+  // with only its <head> meta swapped. The strict audit does NOT catch this
+  // (titles are injected separately so they stay unique; the root isn't empty
+  // so the "no empty roots" check passes), which makes it a silent SEO
+  // catastrophe. Convert it into a hard build failure instead.
+  if (!html.includes(marker)) {
+    throw new Error(
+      `injectBody: template is missing an empty '${marker}'. The SSR body cannot be ` +
+      `injected, so every route would ship the template's existing <div id="root"> ` +
+      `content. This usually means build:prerender ran without a preceding 'vite build' ` +
+      `(build:client) — run the full 'npm run build' pipeline.`
+    );
+  }
+  return html.replace(marker, `<div id="root">${body}</div>`);
 }
 
 async function main() {

@@ -50,8 +50,12 @@ const haveSharedNicheOrCategory = (a: SiteData, b: SiteData): boolean => {
 
 export function rankComparePairs(sites: SiteData[] = allSites): RankedPair[] {
   const reviewed = new Set(Object.keys(reviewBodies));
-  // Only pairs where BOTH sites have AI review content are eligible.
-  const eligible = sites.filter((s) => reviewed.has(s.slug));
+  // Only pairs where BOTH sites have AI review content AND are commercial are
+  // eligible. Editorial-only sites (Next Door Twink/World) render the compare
+  // not-found state, so they must never seed a compare link.
+  const eligible = sites.filter(
+    (s) => reviewed.has(s.slug) && s.editorial_status !== "editorial-only" && s.editorial_status !== "pending-review"
+  );
 
   const pairs: RankedPair[] = [];
   const seen = new Set<string>();
