@@ -621,6 +621,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://twinkvault.com/reviews/doctortapes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://twinkvault.com/discount/helix-studios</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -927,6 +932,11 @@
   </url>
   <url>
     <loc>https://twinkvault.com/discount/visionx-flix</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://twinkvault.com/discount/doctortapes</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
