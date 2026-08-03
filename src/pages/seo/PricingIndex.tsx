@@ -6,6 +6,7 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import { sites, isPendingReview, isEditorialOnly, isAffiliated, type SiteData } from "../../data/sites";
 import { currentYear, currentMonthLong } from "../../lib/dates";
 import DealAlertSignup from "../../components/DealAlertSignup";
+import priceHistory from "../../../docs/price-history.json";
 
 /**
  * Gay Porn Pricing Index — original-data study computed live from the site
@@ -76,6 +77,43 @@ const biggestGap = [...commercial]
   .filter(({ m, a }) => m > 0 && a > 0)
   .sort((x, y) => (y.m - y.a) * 12 - (x.m - x.a) * 12)[0];
 
+// ── Price movement, computed from the weekly snapshot ledger (docs/price-history.json,
+// written by scripts/snapshot-prices.ts). This is what turns the page from a snapshot
+// into an actual index: it surfaces what has changed since we started tracking, and
+// grows richer with every weekly snapshot. All framing is honest — if nothing moved in
+// a period, we say so rather than inventing drama.
+type Snap = Record<string, { m: string; a: string; d: number }>;
+const history = priceHistory as Record<string, Snap>;
+const histDates = Object.keys(history).sort();
+const firstSnap: Snap = history[histDates[0]] ?? {};
+const lastSnap: Snap = history[histDates[histDates.length - 1]] ?? {};
+const siteBySlug = new Map(sites.map((s) => [s.slug, s]));
+const isTracked = (slug: string) => siteBySlug.has(slug);
+// Sites that entered the index since the first snapshot.
+const newlyTracked = Object.keys(lastSnap)
+  .filter((slug) => !(slug in firstSnap) && isTracked(slug))
+  .map((slug) => siteBySlug.get(slug)!);
+// Annual-rate changes among sites present across the window.
+const priceMoves = Object.keys(lastSnap)
+  .filter((slug) => firstSnap[slug] && isTracked(slug) && firstSnap[slug].a !== lastSnap[slug].a)
+  .map((slug) => {
+    const site = siteBySlug.get(slug)!;
+    const from = firstSnap[slug].a;
+    const to = lastSnap[slug].a;
+    const fromN = parsePrice(from);
+    const toN = parsePrice(to);
+    const kind = fromN <= 0 ? "priced" : toN < fromN ? "drop" : "rise";
+    return { site, from, to, kind };
+  });
+const medianAnnualAt = (snap: Snap): number => {
+  const vals = Object.values(snap).map((v) => parsePrice(v.a)).filter((n) => n > 0).sort((a, b) => a - b);
+  return vals.length ? median(vals) : 0;
+};
+const medAnnualFirst = medianAnnualAt(firstSnap);
+const medAnnualLast = medianAnnualAt(lastSnap);
+const trackedCount = Object.keys(lastSnap).length;
+const trackingSince = histDates[0];
+
 const faqs = [
   {
     q: "How much does a gay porn site membership cost on average?",
@@ -103,7 +141,7 @@ const faqs = [
 // (by annual rate, ascending) during SSR so the prerendered HTML holds every row
 // for crawlers; sort headers and the filter box activate on hydration. Nothing is
 // hidden before hydration — this is progressive enhancement, not a client-only view.
-type SortKey = "name" | "monthly" | "annual" | "total" | "gap" | "trial";
+type SortKey = "name" | "monthly" | "quarterly" | "annual" | "total" | "gap" | "trial";
 const PricingTable = ({ rows }: { rows: SiteData[] }) => {
   const [sortKey, setSortKey] = useState<SortKey>("annual");
   const [asc, setAsc] = useState(true);
@@ -115,6 +153,7 @@ const PricingTable = ({ rows }: { rows: SiteData[] }) => {
     switch (k) {
       case "name": return s.name.toLowerCase();
       case "monthly": return m;
+      case "quarterly": return parsePrice(s.price_quarterly);
       case "annual": return a;
       case "total": return a * 12;
       case "gap": return m > 0 ? (m - a) / m : 0;
@@ -139,6 +178,7 @@ const PricingTable = ({ rows }: { rows: SiteData[] }) => {
   const cols: { k: SortKey; label: string; cls?: string }[] = [
     { k: "name", label: "Site" },
     { k: "monthly", label: "Monthly" },
+    { k: "quarterly", label: "Quarterly" },
     { k: "annual", label: "Annual (per mo)" },
     { k: "total", label: "Total/yr" },
     { k: "gap", label: "Gap" },
@@ -158,7 +198,7 @@ const PricingTable = ({ rows }: { rows: SiteData[] }) => {
         <span className="shrink-0 text-xs text-muted-foreground">{shown.length} of {rows.length}</span>
       </div>
       <div className="mt-3 overflow-x-auto">
-        <table className="w-full min-w-[640px] text-sm">
+        <table className="w-full min-w-[720px] text-sm">
           <thead>
             <tr className="border-b border-border/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
               {cols.map((c) => (
@@ -185,6 +225,7 @@ const PricingTable = ({ rows }: { rows: SiteData[] }) => {
                     <Link to={`/reviews/${s.slug}`} className="text-secondary hover:underline">{s.name}</Link>
                   </td>
                   <td className="py-2 pr-3">{s.price_monthly}</td>
+                  <td className="py-2 pr-3">{s.price_quarterly}</td>
                   <td className="py-2 pr-3">{s.price_annual}</td>
                   <td className="py-2 pr-3 font-medium">{money(a * 12)}</td>
                   <td className="py-2 pr-3 text-muted-foreground">{gap}%</td>
@@ -193,7 +234,7 @@ const PricingTable = ({ rows }: { rows: SiteData[] }) => {
               );
             })}
             {shown.length === 0 && (
-              <tr><td colSpan={6} className="py-6 text-center text-sm text-muted-foreground">No site matches "{q}".</td></tr>
+              <tr><td colSpan={7} className="py-6 text-center text-sm text-muted-foreground">No site matches "{q}".</td></tr>
             )}
           </tbody>
         </table>
@@ -226,6 +267,64 @@ const CiteBox = () => {
           {copied ? "Copied ✓" : "Copy"}
         </button>
       </div>
+    </div>
+  );
+};
+
+// Interactive break-even tool. Uses the median site (not a specific one) so it
+// stays honest and self-updates with the dataset. Answers the one question this
+// whole page is really about: given how long you'll actually use a site, does the
+// 12-month annual commitment beat paying month to month?
+const BreakEvenCalculator = () => {
+  const monthlyRate = medianMonthly;
+  const annualPerMo = medianAnnual;
+  const annualYear = annualPerMo * 12;
+  const breakeven = Math.max(1, Math.ceil(annualYear / monthlyRate));
+  const [months, setMonths] = useState(6);
+  const monthlyTotal = months * monthlyRate;
+  const annualCost = annualYear;
+  const annualWins = annualCost < monthlyTotal;
+  const diff = Math.abs(monthlyTotal - annualCost);
+  const scale = Math.max(monthlyTotal, annualCost, 1);
+  return (
+    <div className="glass-card rounded-lg p-5">
+      <h3 className="font-heading text-base font-bold">Annual vs monthly: run your own numbers</h3>
+      <p className="mt-1 text-xs text-muted-foreground">
+        Based on the typical site in the index ({money(monthlyRate)}/mo sticker, {money(annualPerMo)}/mo on the
+        annual plan, which is a 12-month commitment).
+      </p>
+      <label htmlFor="be-months" className="mt-4 block text-sm font-medium">
+        How many months will you actually use it? <span className="text-secondary font-bold">{months}</span>
+      </label>
+      <input
+        id="be-months"
+        type="range"
+        min={1}
+        max={12}
+        value={months}
+        onChange={(e) => setMonths(Number(e.target.value))}
+        className="mt-2 w-full accent-primary"
+      />
+      <div className="mt-4 space-y-3">
+        <div>
+          <div className="flex justify-between text-xs"><span>Paying monthly</span><span className="font-semibold">{money(monthlyTotal)}</span></div>
+          <div className="mt-1 h-5 rounded bg-muted/40 overflow-hidden"><div className="h-full rounded bg-primary/70" style={{ width: `${(monthlyTotal / scale) * 100}%` }} /></div>
+        </div>
+        <div>
+          <div className="flex justify-between text-xs"><span>Annual plan (full year)</span><span className="font-semibold">{money(annualCost)}</span></div>
+          <div className="mt-1 h-5 rounded bg-muted/40 overflow-hidden"><div className="h-full rounded gold-gradient" style={{ width: `${(annualCost / scale) * 100}%` }} /></div>
+        </div>
+      </div>
+      <p className="mt-4 text-sm">
+        {diff < 0.5 ? (
+          <>At {months} months it is basically a wash.</>
+        ) : annualWins ? (
+          <>At {months} months, the <strong className="text-emerald-400">annual plan saves {money(diff)}</strong>, even though you commit to a full year.</>
+        ) : (
+          <>At {months} months, <strong className="text-foreground">paying monthly is {money(diff)} cheaper</strong> because you would not use the full annual year.</>
+        )}{" "}
+        On the typical site, annual overtakes monthly after <strong className="text-foreground">{breakeven} months</strong>.
+      </p>
     </div>
   );
 };
@@ -301,6 +400,63 @@ const PricingIndex = () => {
             ))}
           </div>
 
+          {/* Price movement — the part that makes this an index, not a snapshot */}
+          <div>
+            <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
+              What's Moved Since We Started Tracking
+            </h2>
+            <p className="mt-3 text-sm text-muted-foreground max-w-3xl">
+              We snapshot every site's join-page pricing on a weekly cycle. The ledger runs back to{" "}
+              {trackingSince} and now covers {trackedCount} sites, so this shows what has actually changed
+              rather than a one-time reading. The median annual rate has{" "}
+              {medAnnualFirst === medAnnualLast ? (
+                <>held steady at <strong className="text-foreground">{money(medAnnualLast)}/mo</strong> across every snapshot</>
+              ) : (
+                <>moved from <strong className="text-foreground">{money(medAnnualFirst)}/mo</strong> to <strong className="text-foreground">{money(medAnnualLast)}/mo</strong></>
+              )}.
+            </p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="glass-card rounded-lg p-4">
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">Added to the index</p>
+                {newlyTracked.length ? (
+                  <ul className="mt-2 space-y-1 text-sm">
+                    {newlyTracked.map((s) => (
+                      <li key={s.slug}>
+                        <Link to={`/reviews/${s.slug}`} className="text-secondary hover:underline">{s.name}</Link>
+                        <span className="text-muted-foreground"> · {s.price_annual} annual</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-2 text-sm text-muted-foreground">No new sites since {trackingSince}.</p>
+                )}
+              </div>
+              <div className="glass-card rounded-lg p-4">
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">Price changes</p>
+                {priceMoves.length ? (
+                  <ul className="mt-2 space-y-1 text-sm">
+                    {priceMoves.map(({ site, from, to, kind }) => (
+                      <li key={site.slug}>
+                        <Link to={`/reviews/${site.slug}`} className="text-secondary hover:underline">{site.name}</Link>{" "}
+                        <span className="text-muted-foreground">
+                          {kind === "priced" ? (
+                            <>now priced at <strong className="text-foreground">{to}</strong></>
+                          ) : kind === "drop" ? (
+                            <>dropped to <strong className="text-emerald-400">{to}</strong> (was {from})</>
+                          ) : (
+                            <>rose to <strong className="text-foreground">{to}</strong> (was {from})</>
+                          )}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-2 text-sm text-muted-foreground">No annual-rate changes this period. Stable pricing is the norm here; the first real move shows up here.</p>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* Price distribution */}
           <div>
             <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
@@ -360,6 +516,9 @@ const PricingIndex = () => {
                 </Link>{" "}
                 shows how to exit cleanly before a renewal.
               </p>
+            </div>
+            <div className="mt-6">
+              <BreakEvenCalculator />
             </div>
           </div>
 
@@ -439,8 +598,9 @@ const PricingIndex = () => {
               Full Pricing Table — Every Reviewed Site
             </h2>
             <p className="mt-3 text-sm text-muted-foreground max-w-3xl">
-              All {priceTable.length} reviewed sites, sorted by effective annual rate. "Total/yr" is the annual rate
-              × 12 — what a year actually costs on the plan we'd recommend. Deals move; the{" "}
+              All {priceTable.length} reviewed sites with their monthly, quarterly, and annual rates. Sort any column
+              or filter by name. "Total/yr" is the annual rate times 12, what a year actually costs on the plan we'd
+              recommend. Deals move; the{" "}
               <Link to="/best-deals" className="text-secondary hover:underline">deals page</Link> tracks the current
               verified discounts.
             </p>
