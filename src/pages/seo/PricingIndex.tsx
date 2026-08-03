@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Layout from "../../components/Layout";
 import Breadcrumbs from "../../components/Breadcrumbs";
-import { sites, isPendingReview, isEditorialOnly, isAffiliated } from "../../data/sites";
+import { sites, isPendingReview, isEditorialOnly, isAffiliated, type SiteData } from "../../data/sites";
 import { currentYear, currentMonthLong } from "../../lib/dates";
 import DealAlertSignup from "../../components/DealAlertSignup";
 
@@ -86,17 +87,148 @@ const faqs = [
   },
   {
     q: `What is the cheapest good gay porn site in ${currentYear}?`,
-    a: `The cheapest annual rate among sites we score well is ${cheapestAnnual[0].name} at ${cheapestAnnual[0].price_annual}/month on annual billing. Cheap alone isn't the test, though. Our best-value ranking divides each site's editorial score by its annual rate, and ${bestValue[0].site.name} currently leads that score-per-dollar table.`,
+    a: `The cheapest annual rate among sites we score well is ${cheapestAnnual[0].name} at ${cheapestAnnual[0].price_annual} on annual billing. Cheap alone isn't the test, though. Our best-value ranking divides each site's editorial score by its annual rate, and ${bestValue[0].site.name} currently leads that score-per-dollar table.`,
   },
   {
     q: "Do gay porn sites offer free trials?",
-    a: `${trialCount} of the ${sites.length} sites in our dataset (${Math.round((trialCount / sites.length) * 100)}%) offer some form of free or heavily discounted trial. Trials usually restrict streaming quality or downloads, and they auto-convert to the full monthly rate, which is the most expensive way to be billed, so set a reminder before the conversion date.`,
+    a: `Genuinely free trials are rare in this space. Only ${trialCount} of the ${sites.length} sites in our dataset ${trialCount === 1 ? "offers" : "offer"} a true no-charge trial. Most other "trials" are cheap paid intros, roughly $1 to $3 for one to three days, that auto-convert to the full monthly rate, which is the most expensive way to be billed. Whichever you use, set a reminder before the conversion date and cancel if you are not staying.`,
   },
   {
     q: "How is this pricing data collected?",
     a: `Every price in the index comes from our own review process: we check each site's join page directly, record the published monthly, quarterly, and annual rates in USD, and re-verify on an ongoing cycle (last full verification pass: ${currentMonthLong} ${currentYear}). The dataset updates automatically as our catalog updates; numbers on this page are computed from the live dataset, not written by hand.`,
   },
 ];
+
+// Interactive, sortable + filterable full pricing table. Renders default-sorted
+// (by annual rate, ascending) during SSR so the prerendered HTML holds every row
+// for crawlers; sort headers and the filter box activate on hydration. Nothing is
+// hidden before hydration — this is progressive enhancement, not a client-only view.
+type SortKey = "name" | "monthly" | "annual" | "total" | "gap" | "trial";
+const PricingTable = ({ rows }: { rows: SiteData[] }) => {
+  const [sortKey, setSortKey] = useState<SortKey>("annual");
+  const [asc, setAsc] = useState(true);
+  const [q, setQ] = useState("");
+
+  const val = (s: SiteData, k: SortKey): number | string => {
+    const m = parsePrice(s.price_monthly);
+    const a = parsePrice(s.price_annual);
+    switch (k) {
+      case "name": return s.name.toLowerCase();
+      case "monthly": return m;
+      case "annual": return a;
+      case "total": return a * 12;
+      case "gap": return m > 0 ? (m - a) / m : 0;
+      case "trial": return s.has_free_trial ? 1 : 0;
+    }
+  };
+  const query = q.trim().toLowerCase();
+  const shown = [...rows]
+    .filter((s) => !query || s.name.toLowerCase().includes(query))
+    .sort((x, y) => {
+      const vx = val(x, sortKey), vy = val(y, sortKey);
+      const cmp = typeof vx === "string" ? vx.localeCompare(vy as string) : (vx as number) - (vy as number);
+      return asc ? cmp : -cmp;
+    });
+  const setSort = (k: SortKey) => {
+    if (k === sortKey) setAsc(!asc);
+    else { setSortKey(k); setAsc(k === "name"); }
+  };
+  const Arrow = ({ k }: { k: SortKey }) => (
+    <span className="text-primary">{sortKey === k ? (asc ? " ▲" : " ▼") : ""}</span>
+  );
+  const cols: { k: SortKey; label: string; cls?: string }[] = [
+    { k: "name", label: "Site" },
+    { k: "monthly", label: "Monthly" },
+    { k: "annual", label: "Annual (per mo)" },
+    { k: "total", label: "Total/yr" },
+    { k: "gap", label: "Gap" },
+    { k: "trial", label: "Trial" },
+  ];
+  return (
+    <div>
+      <div className="mt-4 flex items-center gap-3">
+        <input
+          type="search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Filter by site name…"
+          aria-label="Filter pricing table by site name"
+          className="w-full max-w-xs rounded-md border border-border/60 bg-muted/30 px-3 py-2 text-sm outline-none focus:border-primary/60"
+        />
+        <span className="shrink-0 text-xs text-muted-foreground">{shown.length} of {rows.length}</span>
+      </div>
+      <div className="mt-3 overflow-x-auto">
+        <table className="w-full min-w-[640px] text-sm">
+          <thead>
+            <tr className="border-b border-border/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
+              {cols.map((c) => (
+                <th key={c.k} className="py-2 pr-3" aria-sort={sortKey === c.k ? (asc ? "ascending" : "descending") : "none"}>
+                  <button
+                    type="button"
+                    onClick={() => setSort(c.k)}
+                    className="inline-flex items-center gap-0.5 uppercase tracking-wide hover:text-foreground transition-colors"
+                  >
+                    {c.label}<Arrow k={c.k} />
+                  </button>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {shown.map((s) => {
+              const m = parsePrice(s.price_monthly);
+              const a = parsePrice(s.price_annual);
+              const gap = m > 0 ? Math.round(((m - a) / m) * 100) : 0;
+              return (
+                <tr key={s.slug} className="border-b border-border/30">
+                  <td className="py-2 pr-3">
+                    <Link to={`/reviews/${s.slug}`} className="text-secondary hover:underline">{s.name}</Link>
+                  </td>
+                  <td className="py-2 pr-3">{s.price_monthly}</td>
+                  <td className="py-2 pr-3">{s.price_annual}</td>
+                  <td className="py-2 pr-3 font-medium">{money(a * 12)}</td>
+                  <td className="py-2 pr-3 text-muted-foreground">{gap}%</td>
+                  <td className="py-2">{s.has_free_trial ? "Yes" : "—"}</td>
+                </tr>
+              );
+            })}
+            {shown.length === 0 && (
+              <tr><td colSpan={6} className="py-6 text-center text-sm text-muted-foreground">No site matches "{q}".</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+const CITATION = `TwinkVault Gay Porn Pricing Index (${currentYear}). https://twinkvault.com/gay-porn-pricing-index — CC-BY 4.0`;
+const CiteBox = () => {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(CITATION).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }).catch(() => {});
+    }
+  };
+  return (
+    <div className="mt-3 rounded-md border border-border/60 bg-muted/30 p-3">
+      <p className="text-xs font-semibold text-foreground">Copy the citation</p>
+      <div className="mt-2 flex items-start justify-between gap-3">
+        <code className="text-xs text-muted-foreground break-all leading-relaxed">{CITATION}</code>
+        <button
+          type="button"
+          onClick={copy}
+          className="shrink-0 rounded-button border border-primary/50 px-3 py-1 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
+        >
+          {copied ? "Copied ✓" : "Copy"}
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const PricingIndex = () => {
   const url = "https://twinkvault.com/gay-porn-pricing-index";
@@ -160,7 +292,7 @@ const PricingIndex = () => {
               { label: "Median monthly (sticker)", value: money(medianMonthly) },
               { label: "Median monthly on annual billing", value: money(medianAnnual) },
               { label: "Avg. annual-billing discount", value: `${avgGapPct}%` },
-              { label: "Sites with free trials", value: `${trialCount} of ${sites.length}` },
+              { label: "Avg. yearly overpay on monthly", value: money(avgYearlySavings) },
             ].map((s) => (
               <div key={s.label} className="glass-card rounded-lg p-4 text-center">
                 <p className="text-2xl font-heading font-bold text-secondary">{s.value}</p>
@@ -176,9 +308,11 @@ const PricingIndex = () => {
             </h2>
             <p className="mt-3 text-sm text-muted-foreground max-w-3xl">
               The industry prices in a surprisingly narrow band. {histogram.find((h) => h.count === histMax)?.label} per
-              month is the most common sticker bracket — {histMax} of {monthlies.length} sites land there. Genuine
-              budget options (under $10/month sticker) are rare; cheap entry points almost always come from annual
-              billing on a mid-priced site rather than a genuinely cheap monthly rate.
+              month is the most common sticker bracket, where {histMax} of {monthlies.length} sites land. A big reason:
+              many of these sites run on shared networks (Mania Media, Buddy Profits, the MEN network), so they inherit
+              near-identical sticker rates. The real price competition happens on the annual commitment, not the sticker.
+              Genuine budget options under $10/month sticker are rare, and cheap entry points almost always come from
+              annual billing on a mid-priced site rather than a truly cheap monthly rate.
             </p>
             <div className="mt-6 space-y-2" role="img" aria-label={`Bar chart of monthly price distribution across ${monthlies.length} sites`}>
               {histogram.map((h) => (
@@ -238,18 +372,25 @@ const PricingIndex = () => {
               Effective monthly cost on annual billing, cheapest first. Every one links to our full hands-on review;
               cheap only matters if the site is worth joining at all.
             </p>
-            <div className="mt-6 space-y-2" role="img" aria-label="Bar chart of the ten cheapest annual rates">
-              {cheapestAnnual.map((s) => (
-                <div key={s.slug} className="flex items-center gap-3">
-                  <Link to={`/reviews/${s.slug}`} className="w-40 shrink-0 truncate text-xs text-secondary hover:underline text-right">
-                    {s.name}
-                  </Link>
-                  <div className="flex-1 h-6 rounded bg-muted/40 overflow-hidden">
-                    <div className="h-full rounded bg-primary/70" style={{ width: `${(parsePrice(s.price_annual) / cheapMax) * 100}%` }} />
+            <div className="mt-6 space-y-2" role="img" aria-label="Bar chart of the ten cheapest annual rates, longer bars are cheaper">
+              {cheapestAnnual.map((s) => {
+                const rate = parsePrice(s.price_annual);
+                // Longer bar = cheaper (more savings vs the priciest rate shown), so the
+                // visual reads the intuitive way: the best deal has the biggest bar.
+                const cheapestRate = parsePrice(cheapestAnnual[0].price_annual);
+                const width = cheapMax === cheapestRate ? 100 : 15 + ((cheapMax - rate) / (cheapMax - cheapestRate)) * 85;
+                return (
+                  <div key={s.slug} className="flex items-center gap-3">
+                    <Link to={`/reviews/${s.slug}`} className="w-40 shrink-0 truncate text-xs text-secondary hover:underline text-right">
+                      {s.name}
+                    </Link>
+                    <div className="flex-1 h-6 rounded bg-muted/40 overflow-hidden">
+                      <div className="h-full rounded bg-primary/70" style={{ width: `${width}%` }} />
+                    </div>
+                    <span className="w-16 shrink-0 text-xs font-semibold">{s.price_annual}</span>
                   </div>
-                  <span className="w-16 shrink-0 text-xs font-semibold">{s.price_annual}/mo</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -283,7 +424,7 @@ const PricingIndex = () => {
                         <Link to={`/reviews/${site.slug}`} className="text-secondary hover:underline font-medium">{site.name}</Link>
                       </td>
                       <td className="py-2 pr-3">{site.overall_score}/5</td>
-                      <td className="py-2 pr-3">{site.price_annual}/mo</td>
+                      <td className="py-2 pr-3">{site.price_annual}</td>
                       <td className="py-2 font-semibold">{(ratio * 10).toFixed(2)}</td>
                     </tr>
                   ))}
@@ -303,39 +444,7 @@ const PricingIndex = () => {
               <Link to="/best-deals" className="text-secondary hover:underline">deals page</Link> tracks the current
               verified discounts.
             </p>
-            <div className="mt-6 overflow-x-auto">
-              <table className="w-full min-w-[640px] text-sm">
-                <thead>
-                  <tr className="border-b border-border/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
-                    <th className="py-2 pr-3">Site</th>
-                    <th className="py-2 pr-3">Monthly</th>
-                    <th className="py-2 pr-3">Annual (per mo)</th>
-                    <th className="py-2 pr-3">Total/yr</th>
-                    <th className="py-2 pr-3">Gap</th>
-                    <th className="py-2">Trial</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {priceTable.map((s) => {
-                    const m = parsePrice(s.price_monthly);
-                    const a = parsePrice(s.price_annual);
-                    const gap = m > 0 ? Math.round(((m - a) / m) * 100) : 0;
-                    return (
-                      <tr key={s.slug} className="border-b border-border/30">
-                        <td className="py-2 pr-3">
-                          <Link to={`/reviews/${s.slug}`} className="text-secondary hover:underline">{s.name}</Link>
-                        </td>
-                        <td className="py-2 pr-3">{s.price_monthly}</td>
-                        <td className="py-2 pr-3">{s.price_annual}</td>
-                        <td className="py-2 pr-3 font-medium">{money(a * 12)}</td>
-                        <td className="py-2 pr-3 text-muted-foreground">{gap}%</td>
-                        <td className="py-2">{s.has_free_trial ? "Yes" : "—"}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+            <PricingTable rows={priceTable} />
           </div>
 
           {/* Methodology + citation */}
@@ -357,6 +466,7 @@ const PricingIndex = () => {
                 </a>{" "}
                 — reuse them freely in articles, forums, or research with a link back to this page as the source.
               </p>
+              <CiteBox />
             </div>
           </div>
 
