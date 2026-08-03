@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import Layout from "../../components/Layout";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { sites, isPendingReview, isEditorialOnly, isAffiliated, type SiteData } from "../../data/sites";
-import { currentYear, currentMonthLong } from "../../lib/dates";
+import { currentYear } from "../../lib/dates";
 import DealAlertSignup from "../../components/DealAlertSignup";
 import priceHistory from "../../../docs/price-history.json";
 
@@ -41,6 +41,9 @@ const gaps = sites
 const avgGapPct = Math.round((gaps.reduce((acc, { m, a }) => acc + (m - a) / m, 0) / gaps.length) * 100);
 const avgYearlySavings = gaps.reduce((acc, { m, a }) => acc + (m - a) * 12, 0) / gaps.length;
 const trialCount = sites.filter((s) => s.has_free_trial).length;
+// Months at which the annual plan overtakes monthly on the typical site (used in
+// the bottom-line summary and the calculator).
+const breakevenMonths = Math.max(1, Math.ceil((medianAnnual * 12) / medianMonthly));
 
 // Histogram buckets over monthly sticker prices (full dataset).
 const BUCKETS = [
@@ -71,7 +74,6 @@ const bestValue = [...commercial]
 const priceTable = [...commercial]
   .filter((s) => parsePrice(s.price_annual) > 0)
   .sort((a, b) => parsePrice(a.price_annual) - parsePrice(b.price_annual));
-const priciest = [...sites].filter((s) => parsePrice(s.price_monthly) > 0).sort((a, b) => parsePrice(b.price_monthly) - parsePrice(a.price_monthly))[0];
 const biggestGap = [...commercial]
   .map((s) => ({ s, m: parsePrice(s.price_monthly), a: parsePrice(s.price_annual) }))
   .filter(({ m, a }) => m > 0 && a > 0)
@@ -113,6 +115,19 @@ const medAnnualFirst = medianAnnualAt(firstSnap);
 const medAnnualLast = medianAnnualAt(lastSnap);
 const trackedCount = Object.keys(lastSnap).length;
 const trackingSince = histDates[0];
+const latestSnapshot = histDates[histDates.length - 1];
+const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+// Deterministic date formatter (no locale/new Date() so SSR and client agree).
+const fmtSnapDate = (iso: string): string => {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  return `${MONTHS_SHORT[Number(m) - 1]} ${Number(d)}, ${y}`;
+};
+// Per-site "as of" = the most recent weekly snapshot that recorded the site. Honest
+// and ledger-backed: it is the last date our public price ledger captured this row,
+// not a claim of live re-scraping. histDates is ascending, so the last write wins.
+const lastSeen: Record<string, string> = {};
+for (const d of histDates) for (const slug of Object.keys(history[d])) lastSeen[slug] = d;
 
 const faqs = [
   {
@@ -133,7 +148,7 @@ const faqs = [
   },
   {
     q: "How is this pricing data collected?",
-    a: `Every price in the index comes from our own review process: we check each site's join page directly, record the published monthly, quarterly, and annual rates in USD, and re-verify on an ongoing cycle (last full verification pass: ${currentMonthLong} ${currentYear}). The dataset updates automatically as our catalog updates; numbers on this page are computed from the live dataset, not written by hand.`,
+    a: `Every price comes from our own review process: we check each site's join page directly and record the published monthly, quarterly, and annual rates in USD. The dataset is then snapshotted into a public weekly ledger (latest snapshot ${fmtSnapDate(latestSnapshot)}), which is how we can show what has moved over time. Numbers on this page are computed from that dataset, not written by hand.`,
   },
 ];
 
@@ -141,7 +156,7 @@ const faqs = [
 // (by annual rate, ascending) during SSR so the prerendered HTML holds every row
 // for crawlers; sort headers and the filter box activate on hydration. Nothing is
 // hidden before hydration — this is progressive enhancement, not a client-only view.
-type SortKey = "name" | "monthly" | "quarterly" | "annual" | "total" | "gap" | "trial";
+type SortKey = "name" | "monthly" | "quarterly" | "annual" | "total" | "gap" | "trial" | "asof";
 const PricingTable = ({ rows }: { rows: SiteData[] }) => {
   const [sortKey, setSortKey] = useState<SortKey>("annual");
   const [asc, setAsc] = useState(true);
@@ -158,6 +173,7 @@ const PricingTable = ({ rows }: { rows: SiteData[] }) => {
       case "total": return a * 12;
       case "gap": return m > 0 ? (m - a) / m : 0;
       case "trial": return s.has_free_trial ? 1 : 0;
+      case "asof": return lastSeen[s.slug] || "";
     }
   };
   const query = q.trim().toLowerCase();
@@ -183,6 +199,7 @@ const PricingTable = ({ rows }: { rows: SiteData[] }) => {
     { k: "total", label: "Total/yr" },
     { k: "gap", label: "Gap" },
     { k: "trial", label: "Trial" },
+    { k: "asof", label: "As of" },
   ];
   return (
     <div>
@@ -198,7 +215,7 @@ const PricingTable = ({ rows }: { rows: SiteData[] }) => {
         <span className="shrink-0 text-xs text-muted-foreground">{shown.length} of {rows.length}</span>
       </div>
       <div className="mt-3 overflow-x-auto">
-        <table className="w-full min-w-[720px] text-sm">
+        <table className="w-full min-w-[820px] text-sm">
           <thead>
             <tr className="border-b border-border/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
               {cols.map((c) => (
@@ -229,12 +246,13 @@ const PricingTable = ({ rows }: { rows: SiteData[] }) => {
                   <td className="py-2 pr-3">{s.price_annual}</td>
                   <td className="py-2 pr-3 font-medium">{money(a * 12)}</td>
                   <td className="py-2 pr-3 text-muted-foreground">{gap}%</td>
-                  <td className="py-2">{s.has_free_trial ? "Yes" : "—"}</td>
+                  <td className="py-2 pr-3">{s.has_free_trial ? "Yes" : "—"}</td>
+                  <td className="py-2 text-xs text-muted-foreground whitespace-nowrap">{fmtSnapDate(lastSeen[s.slug])}</td>
                 </tr>
               );
             })}
             {shown.length === 0 && (
-              <tr><td colSpan={7} className="py-6 text-center text-sm text-muted-foreground">No site matches "{q}".</td></tr>
+              <tr><td colSpan={8} className="py-6 text-center text-sm text-muted-foreground">No site matches "{q}".</td></tr>
             )}
           </tbody>
         </table>
@@ -380,6 +398,9 @@ const PricingIndex = () => {
             This page is computed directly from that dataset, so the numbers update as our catalog does.
             Cite it freely with a link; the data is original and licensed CC-BY.
           </p>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Prices as of <strong className="text-foreground">{fmtSnapDate(latestSnapshot)}</strong>, snapshotted weekly into a public ledger dating back to {fmtSnapDate(trackingSince)}.
+          </p>
         </div>
       </section>
 
@@ -399,6 +420,54 @@ const PricingIndex = () => {
               </div>
             ))}
           </div>
+
+          {/* The 5-second version — scannable takeaways for people who won't read prose */}
+          <div className="glass-card rounded-lg border-l-4 border-l-secondary p-5">
+            <p className="font-heading text-sm font-bold uppercase tracking-wide text-secondary">The bottom line</p>
+            <ul className="mt-3 space-y-2 text-sm">
+              <li>
+                <strong className="text-foreground">Go annual, always.</strong>{" "}
+                <span className="text-muted-foreground">Monthly costs {avgGapPct}% more for identical access, so the typical member overpays about {money(avgYearlySavings)} a year. Annual pulls ahead after ~{breakevenMonths} months.</span>
+              </li>
+              <li>
+                <strong className="text-foreground">The real price is {money(medianAnnual)}/mo, not the {money(medianMonthly)} sticker.</strong>{" "}
+                <span className="text-muted-foreground">The monthly rate is a convenience surcharge almost nobody should pay.</span>
+              </li>
+              <li>
+                {cheapestAnnual[0].slug === bestValue[0].site.slug ? (
+                  <>
+                    <strong className="text-foreground">Cheapest and best value: {cheapestAnnual[0].name} ({cheapestAnnual[0].price_annual}).</strong>{" "}
+                    <span className="text-muted-foreground">It has both the lowest effective rate and the top score-per-dollar.</span>
+                  </>
+                ) : (
+                  <>
+                    <strong className="text-foreground">Cheapest quality pick: {cheapestAnnual[0].name} ({cheapestAnnual[0].price_annual}).</strong>{" "}
+                    <span className="text-muted-foreground">Best score-per-dollar overall is {bestValue[0].site.name}.</span>
+                  </>
+                )}
+              </li>
+              <li>
+                <strong className="text-foreground">Free trials are rare.</strong>{" "}
+                <span className="text-muted-foreground">Only {trialCount} genuinely free trial{trialCount === 1 ? "" : "s"} in the catalog; most "trials" are cheap paid intros that auto-rebill at full price.</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Jump nav — skimmers leap straight to the tool/section they want */}
+          <nav aria-label="On this page" className="flex flex-wrap items-center gap-2 text-xs">
+            <span className="text-muted-foreground">Jump to:</span>
+            {[
+              { href: "#calculator", label: "Cost calculator" },
+              { href: "#cheapest", label: "Cheapest rates" },
+              { href: "#value", label: "Best value" },
+              { href: "#full-table", label: "Full pricing table" },
+              { href: "#faq", label: "FAQ" },
+            ].map((l) => (
+              <a key={l.href} href={l.href} className="rounded-button border border-border/60 px-2.5 py-1 hover:border-primary/50 hover:text-foreground transition-colors">
+                {l.label}
+              </a>
+            ))}
+          </nav>
 
           {/* Price movement — the part that makes this an index, not a snapshot */}
           <div>
@@ -463,12 +532,10 @@ const PricingIndex = () => {
               Where Prices Cluster: Monthly Sticker Rates
             </h2>
             <p className="mt-3 text-sm text-muted-foreground max-w-3xl">
-              The industry prices in a surprisingly narrow band. {histogram.find((h) => h.count === histMax)?.label} per
-              month is the most common sticker bracket, where {histMax} of {monthlies.length} sites land. A big reason:
-              many of these sites run on shared networks (Mania Media, Buddy Profits, the MEN network), so they inherit
-              near-identical sticker rates. The real price competition happens on the annual commitment, not the sticker.
-              Genuine budget options under $10/month sticker are rare, and cheap entry points almost always come from
-              annual billing on a mid-priced site rather than a truly cheap monthly rate.
+              <strong className="text-foreground">Sticker prices barely vary: {histMax} of {monthlies.length} sites sit in the {histogram.find((h) => h.count === histMax)?.label} band.</strong>{" "}
+              Many run on shared networks (Mania Media, Buddy Profits, the MEN network), so they inherit near-identical
+              rates. The real competition is on the annual commitment, not the sticker, and genuinely cheap entry points
+              come from annual billing on a mid-priced site rather than a low monthly rate.
             </p>
             <div className="mt-6 space-y-2" role="img" aria-label={`Bar chart of monthly price distribution across ${monthlies.length} sites`}>
               {histogram.map((h) => (
@@ -491,45 +558,39 @@ const PricingIndex = () => {
             <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
               The Annual-Billing Gap Is the Whole Story
             </h2>
-            <div className="mt-3 space-y-3 text-sm text-muted-foreground max-w-3xl leading-relaxed">
+            <div className="mt-3 space-y-4 text-sm text-muted-foreground max-w-3xl leading-relaxed">
               <p>
-                The single most important number in this index: the average site charges{" "}
-                <strong className="text-foreground">{avgGapPct}% more per month on monthly billing</strong> than on
-                annual billing, for identical access. Across the dataset that means the average subscriber who stays
-                on the monthly rate overpays by about <strong className="text-foreground">{money(avgYearlySavings)} a year</strong>.
+                The single most important number here: the average site charges{" "}
+                <strong className="text-foreground">{avgGapPct}% more on monthly billing</strong> than annual, for
+                identical access. The typical monthly subscriber overpays about{" "}
+                <strong className="text-foreground">{money(avgYearlySavings)} a year</strong>. The widest gap belongs
+                to {biggestGap.s.name} at {money((biggestGap.m - biggestGap.a) * 12)}/year for the same membership, and
+                the means confirm it ({money(meanMonthly)} sticker vs {money(meanAnnual)} annual), so this is the whole
+                category, not a few outliers.
               </p>
+              <blockquote className="border-l-4 border-l-primary pl-4 py-1 text-base font-semibold text-foreground">
+                Never pay the monthly rate past your first month.
+              </blockquote>
               <p>
-                The widest gap in the catalog right now belongs to {biggestGap.s.name}: {money(biggestGap.m)}/month
-                on monthly billing versus {money(biggestGap.a)}/month on the annual plan —{" "}
-                {money((biggestGap.m - biggestGap.a) * 12)} per year for the same membership. The pattern holds at the
-                top of the market too: the priciest sticker rate in the index is {priciest.name} at{" "}
-                {priciest.price_monthly}/month.
-              </p>
-              <p>
-                Mean prices tell the same story as medians: {money(meanMonthly)} sticker versus {money(meanAnnual)} on
-                annual billing, so this isn't a few outliers skewing the average. It's how the entire category prices.
-                If you take one thing from this page: never pay the monthly rate past your first month. Our{" "}
-                <Link to="/guide/gay-porn-billing-guide" className="text-secondary hover:underline">billing guide</Link>{" "}
+                Our <Link to="/guide/gay-porn-billing-guide" className="text-secondary hover:underline">billing guide</Link>{" "}
                 covers how the rebill structures work, and the{" "}
-                <Link to="/guide/how-to-cancel-gay-porn-subscriptions" className="text-secondary hover:underline">
-                  cancellation guide
-                </Link>{" "}
+                <Link to="/guide/how-to-cancel-gay-porn-subscriptions" className="text-secondary hover:underline">cancellation guide</Link>{" "}
                 shows how to exit cleanly before a renewal.
               </p>
             </div>
-            <div className="mt-6">
+            <div id="calculator" className="mt-6 scroll-mt-24">
               <BreakEvenCalculator />
             </div>
           </div>
 
           {/* Cheapest annual */}
-          <div>
+          <div id="cheapest" className="scroll-mt-24">
             <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
               The 10 Cheapest Annual Rates We've Verified
             </h2>
             <p className="mt-3 text-sm text-muted-foreground max-w-3xl">
-              Effective monthly cost on annual billing, cheapest first. Every one links to our full hands-on review;
-              cheap only matters if the site is worth joining at all.
+              <strong className="text-foreground">The ten lowest effective monthly rates we've verified.</strong>{" "}
+              Longer bar means cheaper. Each links to the full review, because cheap only matters if the site is worth joining.
             </p>
             <div className="mt-6 space-y-2" role="img" aria-label="Bar chart of the ten cheapest annual rates, longer bars are cheaper">
               {cheapestAnnual.map((s) => {
@@ -554,15 +615,15 @@ const PricingIndex = () => {
           </div>
 
           {/* Best value */}
-          <div>
+          <div id="value" className="scroll-mt-24">
             <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
               Score-per-Dollar: The Value Frontier
             </h2>
             <p className="mt-3 text-sm text-muted-foreground max-w-3xl">
-              Price only means something relative to quality, so this table divides each site's editorial score
-              (0–5, from our <Link to="/methodology" className="text-secondary hover:underline">scoring methodology</Link>)
-              by its effective annual rate. A high number means you're buying the most verified quality per dollar;
-              it's the closest thing to an objective "best deal" ranking we can compute.
+              <strong className="text-foreground">The best deal is quality per dollar, not the lowest price.</strong>{" "}
+              This ranks each site's editorial score (0–5, from our{" "}
+              <Link to="/methodology" className="text-secondary hover:underline">scoring methodology</Link>) divided by its
+              annual rate, so higher means more verified quality for your money.
             </p>
             <div className="mt-6 overflow-x-auto">
               <table className="w-full min-w-[560px] text-sm">
@@ -593,14 +654,14 @@ const PricingIndex = () => {
           </div>
 
           {/* Full table */}
-          <div>
+          <div id="full-table" className="scroll-mt-24">
             <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">
               Full Pricing Table — Every Reviewed Site
             </h2>
             <p className="mt-3 text-sm text-muted-foreground max-w-3xl">
-              All {priceTable.length} reviewed sites with their monthly, quarterly, and annual rates. Sort any column
-              or filter by name. "Total/yr" is the annual rate times 12, what a year actually costs on the plan we'd
-              recommend. Deals move; the{" "}
+              <strong className="text-foreground">Every reviewed site, sortable and filterable.</strong>{" "}
+              Monthly, quarterly, and annual rates for all {priceTable.length} sites. "Total/yr" is the annual rate
+              times 12. Deals move; the{" "}
               <Link to="/best-deals" className="text-secondary hover:underline">deals page</Link> tracks the current
               verified discounts.
             </p>
@@ -612,9 +673,11 @@ const PricingIndex = () => {
             <h2 className="font-heading text-lg font-bold">Methodology &amp; Reuse</h2>
             <div className="mt-3 space-y-3 text-sm text-muted-foreground leading-relaxed">
               <p>
-                Prices are recorded in USD from each site's public join page during our review process and re-verified
-                on an ongoing cycle (last full pass: {currentMonthLong} {currentYear}). "Annual" is the per-month
-                effective rate on a 12-month commitment as published at signup. Introductory teaser rates that rebill
+                Prices are recorded in USD from each site's public join page during our review process, then
+                snapshotted into a public weekly ledger so movement is tracked over time (latest snapshot{" "}
+                {fmtSnapDate(latestSnapshot)}; ledger running since {fmtSnapDate(trackingSince)}). The per-row "As of"
+                date in the table above is that site's most recent snapshot. "Annual" is the per-month effective
+                rate on a 12-month commitment as published at signup. Introductory teaser rates that rebill
                 higher are recorded at the rebill rate, not the teaser. Aggregate statistics cover the full{" "}
                 {sites.length}-site dataset; ranked tables only include sites with a completed editorial review.
               </p>
@@ -637,7 +700,7 @@ const PricingIndex = () => {
           />
 
           {/* FAQ */}
-          <div>
+          <div id="faq" className="scroll-mt-24">
             <h2 className="font-heading text-2xl font-bold heading-gradient inline-block">Pricing FAQ</h2>
             <div className="mt-6 space-y-3">
               {faqs.map((f) => (
