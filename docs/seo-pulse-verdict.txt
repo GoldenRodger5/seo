@@ -1,2 +1,2 @@
-IMPROVING
-stall_streak=0
+STALLED
+stall_streak=1
